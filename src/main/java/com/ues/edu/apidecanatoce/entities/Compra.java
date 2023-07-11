@@ -24,7 +24,7 @@ public class Compra {
     private long codigoCompra;
 
     @Column(name = "proveedor", length= 200)
-    private String provedor;
+    private String proveedor;
 
     @Column(name = "codigo_inicio")
     private long cod_inicio;
