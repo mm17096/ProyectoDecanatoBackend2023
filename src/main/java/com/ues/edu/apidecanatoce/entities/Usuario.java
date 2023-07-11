@@ -19,27 +19,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="tb_empleado")
-public class Empleado {
-
+@Table(name="tb_usuario")
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="codigo_enpleado")
-    private int codigoEmpleado;
+    @Column(name ="codigo_usuario")
+    private int codigoUsuario;
 
-    @Column(name ="nombre")
-    private String nombre;
-    @Column(name = "apellido")
-    private String apellido;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "dui")
-    private String dui;
-
-    @Column(name = "telefono")
-    private String telefono;
-
-    @Column(name = "licencia")
-    private String licencia;
+    @Column(name = "password")
+    private String password;
 
 
 
