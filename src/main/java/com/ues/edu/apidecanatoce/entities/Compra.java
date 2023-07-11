@@ -21,16 +21,16 @@ public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_compra")
-    private int codigoCompra;
+    private long codigoCompra;
 
     @Column(name = "proveedor", length= 200)
     private String provedor;
 
     @Column(name = "codigo_inicio")
-    private int cod_inicio;
+    private long cod_inicio;
 
     @Column(name = "codigo_fin")
-    private int cod_fin;
+    private long cod_fin;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

@@ -16,10 +16,10 @@ public class Vale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vale")
-    private int idVale;
+    private long idVale;
 
     @Column(name ="codigo_vale")
-    private int codigoVale;
+    private long codigoVale;
 
     @Column(name = "estado")
     private boolean estado;
