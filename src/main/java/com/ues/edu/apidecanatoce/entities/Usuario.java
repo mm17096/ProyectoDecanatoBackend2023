@@ -31,6 +31,39 @@ public class Usuario {
 
     @Column(name = "password")
     private String password;
+    // abajo hay relaciones
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @OneToMany(mappedBy="codigoUsuario", cascade= { CascadeType.ALL })
+    @JsonManagedReference
+    private List<SolicitudVehiculo> listSolicitudes;
 
 
 

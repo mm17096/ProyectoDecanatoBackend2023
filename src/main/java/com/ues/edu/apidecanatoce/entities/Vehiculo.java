@@ -1,10 +1,13 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,4 +45,7 @@ public class Vehiculo {
 
 
 
+    @OneToMany(mappedBy="codigoVehiculo", cascade= { CascadeType.ALL })
+    @JsonManagedReference
+    private List<SolicitudVehiculo> listVehiculos;
 }

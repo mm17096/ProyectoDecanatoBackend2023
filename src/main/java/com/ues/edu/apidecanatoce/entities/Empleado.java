@@ -43,4 +43,12 @@ public class Empleado {
 
 
 
+
+
+    @OneToMany(mappedBy="codigoMotorista", cascade= { CascadeType.ALL })
+    @JsonManagedReference
+    private List<SolicitudVehiculo> listMotoristas;
+
+
+
 }
