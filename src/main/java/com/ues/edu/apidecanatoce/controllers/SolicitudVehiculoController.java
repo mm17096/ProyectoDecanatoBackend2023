@@ -5,9 +5,7 @@ import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,4 +27,11 @@ public class SolicitudVehiculoController {
         List<SolicitudVehiculo> vehiculos = this.servicioSolicitudVehiculo.listar();
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
+
+    @GetMapping("/lista/{estado}")
+    public ResponseEntity<List<SolicitudVehiculo>> obtenerSolicitudesPorEstado(@PathVariable("estado") Integer estado) throws IOException {
+        List<SolicitudVehiculo> vehiculos = this.servicioSolicitudVehiculo.listarPorEstado(estado);
+        return new ResponseEntity<>(vehiculos, HttpStatus.OK);
+    }
+
 }
