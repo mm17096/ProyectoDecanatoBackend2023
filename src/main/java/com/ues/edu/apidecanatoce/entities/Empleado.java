@@ -1,7 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,15 +41,6 @@ public class Empleado {
 
     @Column(name = "licencia")
     private String licencia;
-
-
-
-
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "motorista", cascade = {CascadeType.ALL})
-    @JsonBackReference
-    private List<SolicitudVehiculo> listMotoristas;
-
 
 
 }

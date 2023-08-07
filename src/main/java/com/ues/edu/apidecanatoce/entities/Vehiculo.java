@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoVehiculo")
 public class Vehiculo {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_vehiculo")
     private Integer codigoVehiculo;
     @Column(name = "modelo")
@@ -43,10 +44,5 @@ public class Vehiculo {
     private String n_chasis;
     @Column(name = "numero_motor")
     private String n_motor;
-
-
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vehiculo", cascade = {CascadeType.ALL})
-    @JsonBackReference
-    private List<SolicitudVehiculo> listVehiculos;
 }
+

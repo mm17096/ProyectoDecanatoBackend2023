@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
-
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,40 +31,5 @@ public class Usuario {
 
     @Column(name = "password")
     private String password;
-    // abajo hay relaciones
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @OneToMany(mappedBy="usuario", cascade= { CascadeType.ALL })
-    @JsonBackReference
-    private List<SolicitudVehiculo> listSolicitudes;
-
-
 
 }

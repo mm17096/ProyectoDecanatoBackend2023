@@ -1,8 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_solicitud_vehiculo")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoSolicitudVehiculo")
 public class SolicitudVehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,26 +62,22 @@ public class SolicitudVehiculo {
     @Column(name = "estado", nullable = false)
     private int estado;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_usuario"))
-    @JsonManagedReference
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "codigo_motorista", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
-    @JsonManagedReference
     private Empleado motorista;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "codigo_vehiculo", nullable = false,
             foreignKey = @ForeignKey(name = "FK_solicitudV_vehiculo"))
-    @JsonManagedReference
     private Vehiculo vehiculo;
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
-    @JsonManagedReference
     private List<Documentos> listDocumentos;
 
 
