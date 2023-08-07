@@ -1,8 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_usuario")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoUsuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,8 +61,8 @@ public class Usuario {
 
 
 
-    @OneToMany(mappedBy="codigoUsuario", cascade= { CascadeType.ALL })
-    @JsonManagedReference
+    @OneToMany(mappedBy="usuario", cascade= { CascadeType.ALL })
+    @JsonBackReference
     private List<SolicitudVehiculo> listSolicitudes;
 
 

@@ -61,23 +61,23 @@ public class SolicitudVehiculo {
     @Column(name = "estado", nullable = false)
     private int estado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codigo_usuario", nullable = false,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_usuario"))
-    @JsonBackReference
-    private Usuario codigoUsuario;
+    @JsonManagedReference
+    private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codigo_motorista", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
-    @JsonBackReference
-    private Empleado codigoMotorista;
+    @JsonManagedReference
+    private Empleado motorista;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codigo_vehiculo", nullable = false,
             foreignKey = @ForeignKey(name = "FK_solicitudV_vehiculo"))
-    @JsonBackReference
-    private Vehiculo codigoVehiculo;
+    @JsonManagedReference
+    private Vehiculo vehiculo;
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     @JsonManagedReference

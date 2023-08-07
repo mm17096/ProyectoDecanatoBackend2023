@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_Vehiculo")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoVehiculo")
 public class Vehiculo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -45,7 +46,7 @@ public class Vehiculo {
 
 
 
-    @OneToMany(mappedBy="codigoVehiculo", cascade= { CascadeType.ALL })
-    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vehiculo", cascade = {CascadeType.ALL})
+    @JsonBackReference
     private List<SolicitudVehiculo> listVehiculos;
 }
