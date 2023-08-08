@@ -25,17 +25,10 @@ public class Vale {
     @Column(name ="codigo_vale")
     private long codigoVale;
 
+
     @Column(name = "estado")
     private boolean estado;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "fecha_caducidad", nullable = false)
-    private LocalDate fechaCaducidad;
-
-    @ManyToOne
-    @JoinColumn(name = "id_compra")
-    private Compra compra;
 
 
 }
