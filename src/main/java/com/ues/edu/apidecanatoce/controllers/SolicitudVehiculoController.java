@@ -49,7 +49,7 @@ public class SolicitudVehiculoController {
     }
 
     @PostMapping("/insertardto")
-    public ResponseEntity<GenericResponse<SolicitudVehiculoDTO>> guardarSolicitud(@RequestBody SolicitudVehiculoDTO solicitudDTO) {
+    public ResponseEntity<GenericResponse<SolicitudVehiculoDTO>> guardarSolicitudDto(@RequestBody SolicitudVehiculoDTO solicitudDTO) {
         HttpStatus http;
         GenericResponse<SolicitudVehiculoDTO> resp = new GenericResponse<SolicitudVehiculoDTO>(0,
                 "ERROR DE ALMACENAMIENTO DE LA CONSULTA", solicitudDTO);
@@ -97,5 +97,39 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<>(resp,http);
     }
 
+    @PutMapping("/editar")
+    public ResponseEntity<GenericResponse<SolicitudVehiculo>> editarSolicitudVehiculo(
+            @RequestBody SolicitudVehiculo solicitudVehiculo
+    ){
+        System.out.println("datos:"+solicitudVehiculo);
+        Optional<SolicitudVehiculo> optionalSolicitudVehiculo =
+                Optional.ofNullable(this.servicioSolicitudVehiculo.leerPorId(solicitudVehiculo
+                        .getCodigoSolicitudVehiculo()));
+        GenericResponse<SolicitudVehiculo> response;
+        SolicitudVehiculo solicitudVehiculoResp;
+        if (optionalSolicitudVehiculo.isPresent()){
+
+            // Convertir IDs en objetos antes de guardar la solicitud
+            Usuario usuario = new Usuario();
+            usuario.setCodigoUsuario(solicitudVehiculo.getUsuario().getCodigoUsuario());
+
+            Empleado motorista = new Empleado();
+            motorista.setCodigoEmpleado(solicitudVehiculo.getMotorista().getCodigoEmpleado());
+
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.setCodigoVehiculo(solicitudVehiculo.getVehiculo().getCodigoVehiculo());
+
+            solicitudVehiculo.setUsuario(usuario);
+            solicitudVehiculo.setMotorista(motorista);
+            solicitudVehiculo.setVehiculo(vehiculo);
+
+            solicitudVehiculoResp = guardarSolicitud(solicitudVehiculo);
+            response = new GenericResponse<>(1, "Solicitud Guardada con exito", solicitudVehiculoResp);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            response = new GenericResponse<>(0, "Solicitud en edicion no guardada", solicitudVehiculo);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
