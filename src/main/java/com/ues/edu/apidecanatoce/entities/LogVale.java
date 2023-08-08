@@ -10,32 +10,35 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
-@Table(name="tb_vale")
-public class Vale {
+@Table(name="tb_logvale")
+public class LogVale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_vale")
-    private long idVale;
+    @Column(name = "id_logvale")
+    private long idLogVale;
 
-    @Column(name ="codigo_vale")
-    private long codigoVale;
-
-    @Column(name = "estado")
-    private boolean estado;
+    @Column(name = "estado_vale")
+    private String estadoVale;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "fecha_caducidad", nullable = false)
-    private LocalDate fechaCaducidad;
+    @Column(name = "fecha_logvale", nullable = false)
+    private LocalDate fechaLogVale;
+
+    @Column(name = "actividad")
+    private String actividad;
+
+    @Column(name = "usuario")
+    private String usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_compra")
-    private Compra compra;
+    @JoinColumn(name = "id_vale")
+    private Vale vale;
 
 
 }
