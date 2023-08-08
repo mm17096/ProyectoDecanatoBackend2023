@@ -42,5 +42,4 @@ public class Empleado {
     @Column(name = "licencia")
     private String licencia;
 
-
 }
