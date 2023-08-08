@@ -44,6 +44,11 @@ public class DeptoServiceImp implements IDeptoService {
     }
 
     @Override
+    public List<Departamento> listarPorEstado(int estado) {
+        return null;
+    }
+
+    @Override
     public Departamento leerPorId(Integer id) {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
