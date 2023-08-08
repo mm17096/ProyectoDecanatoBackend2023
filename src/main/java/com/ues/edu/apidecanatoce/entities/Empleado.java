@@ -1,8 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_empleado")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoEmpleado")
 public class Empleado {
 
     @Id
@@ -40,7 +41,6 @@ public class Empleado {
 
     @Column(name = "licencia")
     private String licencia;
-
 
 
 }
