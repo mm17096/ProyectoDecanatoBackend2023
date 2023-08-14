@@ -25,7 +25,7 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="codigo_enpleado")
+    @Column(name ="codigo_empleado")
     private int codigoEmpleado;
 
     @Column(name ="nombre")
@@ -41,6 +41,5 @@ public class Empleado {
 
     @Column(name = "licencia")
     private String licencia;
-
 
 }
