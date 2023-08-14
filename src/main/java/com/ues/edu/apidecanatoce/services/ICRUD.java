@@ -8,6 +8,4 @@ public interface ICRUD<T> {
     List<T> listar();
     T leerPorId(Integer id);
     boolean eliminar(T obj);
-
-    List<T> listarPorEstado(int estado);
 }

@@ -48,9 +48,4 @@ public class DeptoServiceImp implements IDeptoService {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
 
-    @Override
-    public List<Departamento> listarPorEstado(int estado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarPorEstado'");
-    }
 }
