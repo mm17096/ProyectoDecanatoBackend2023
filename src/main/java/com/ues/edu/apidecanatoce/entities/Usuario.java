@@ -32,4 +32,9 @@ public class Usuario {
     @Column(name = "password")
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "id_empleado", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_usuario_empleado"))
+    private Empleado empleado;
+
 }
