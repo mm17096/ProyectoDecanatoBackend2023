@@ -42,4 +42,14 @@ public class Empleado {
     @Column(name = "licencia")
     private String licencia;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cargo", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_empleado_cargo"))
+    private Cargo cargo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_departamento", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_empleado_departamento"))
+    private Departamento departamento;
+
 }

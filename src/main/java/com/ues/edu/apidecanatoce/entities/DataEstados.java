@@ -3,9 +3,11 @@ package com.ues.edu.apidecanatoce.entities;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(1)
 public class DataEstados implements CommandLineRunner {
 
     private final EstadosRepository estadosRepository;
@@ -17,17 +19,17 @@ public class DataEstados implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Estados estado1 = new Estados(0,"En espera");
-        Estados estado2 = new Estados(0,"Por aprobar");
-        Estados estado3 = new Estados(0,"Aprobada");
-        Estados estado4 = new Estados(0,"Asignado");
-        Estados estado5 = new Estados(0,"Revision");
-        Estados estado6 = new Estados(0,"Finalizada");
-        Estados estado7 = new Estados(0,"Activo");
-        Estados estado8 = new Estados(0,"Inactivo");
-        Estados estado9 = new Estados(0,"Caducado");
-        Estados estado10 = new Estados(0,"Consumido");
-        Estados estado11 = new Estados(0,"Devuelto");
+        Estados estado1 = new Estados(1,"En espera");
+        Estados estado2 = new Estados(2,"Por aprobar");
+        Estados estado3 = new Estados(3,"Aprobada");
+        Estados estado4 = new Estados(4,"Asignado");
+        Estados estado5 = new Estados(5,"Revision");
+        Estados estado6 = new Estados(6,"Finalizada");
+        Estados estado7 = new Estados(7,"Activo");
+        Estados estado8 = new Estados(8,"Inactivo");
+        Estados estado9 = new Estados(9,"Caducado");
+        Estados estado10 = new Estados(10,"Consumido");
+        Estados estado11 = new Estados(11,"Devuelto");
 
         estadosRepository.save(estado1);
         estadosRepository.save(estado2);
