@@ -52,4 +52,5 @@ public class DeptoServiceImp implements IDeptoService {
     public Departamento leerPorId(Integer id) {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
+
 }
