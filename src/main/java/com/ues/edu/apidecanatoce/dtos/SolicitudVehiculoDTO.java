@@ -23,6 +23,6 @@ public class SolicitudVehiculoDTO {
     private int cantidadPersonas;
     private int estado;
     private int codigoUsuario; // ID del usuario
-    private int codigoMotorista; // ID del motorista
+    private String codigoMotorista; // ID del motorista
     private int codigoVehiculo; // ID del vehiculo
 }
