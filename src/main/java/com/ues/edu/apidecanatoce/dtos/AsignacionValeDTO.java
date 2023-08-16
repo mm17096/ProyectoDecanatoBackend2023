@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Getter
 @Builder
 public class AsignacionValeDTO implements Serializable {
-    private long codigoAsignacion;
-    private boolean estadoAsignacion;
+    private Integer codigoAsignacion;
+    private Integer estadoAsignacion;
     private String fechaAsignacion;
 }

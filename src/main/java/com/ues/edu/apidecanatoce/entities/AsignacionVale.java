@@ -18,10 +18,10 @@ public class AsignacionVale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_asignacion")
-    private long codigoAsignacion;
+    private Integer codigoAsignacion;
 
     @Column(name = "estado")
-    private boolean estado;
+    private Integer estado;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

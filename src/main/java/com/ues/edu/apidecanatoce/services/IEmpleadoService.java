@@ -7,4 +7,6 @@ import java.util.List;
 public interface IEmpleadoService extends ICRUD<Empleado>{
 
     List<Empleado> buscarEmpleado(String filtro);
+
+    boolean eliminar(Empleado obj);
 }
