@@ -43,10 +43,9 @@ public class DeptoServiceImp implements IDeptoService {
 
     }
 
-    @Override
-    public List<Departamento> listarPorEstado(int estado) {
-        return null;
-    }
+
+
+
 
     @Override
     public Departamento leerPorId(Integer id) {

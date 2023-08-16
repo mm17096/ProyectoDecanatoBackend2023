@@ -20,8 +20,8 @@ public class EmpleadoController {
 
     @GetMapping
     public ResponseEntity<List<Empleado>> mostrarEmpleados() {
-        List<Empleado> vehiculo = this.empleadoService.listar();
-        return new ResponseEntity<List<Empleado>>(vehiculo, HttpStatus.OK);
+        List<Empleado> empleado = this.empleadoService.listar();
+        return new ResponseEntity<List<Empleado>>(empleado, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface IEmpleadoRepository extends JpaRepository<Empleado,Integer> {
 
-    @Query("from Empleado m where (LOWER(m.dui) like %:filtro%) OR (LOWER(m.nombre) like %:filtro%) OR (LOWER(m.apellido) like %:filtro%)")
+    @Query("from Empleado m where (LOWER(m.DUI) like %:filtro%) OR (LOWER(m.nombre) like %:filtro%) OR (LOWER(m.apellido) like %:filtro%)")
     List<Empleado> buscarEmpleado(@Param("filtro") String filtro);
 }
