@@ -72,7 +72,7 @@ public class SolicitudVehiculoController {
             solicitudVehiculo.setUsuario(this.usuario); // Establecemos la relación con el usuario
 
             this.motorista = new Empleado();
-            this.motorista.setCodigoEmpleado(solicitudDTO.getCodigoMotorista());
+            this.motorista.setDUI(solicitudDTO.getCodigoMotorista());
             solicitudVehiculo.setMotorista(this.motorista);
 
             this.vehiculo = new Vehiculo();
@@ -114,7 +114,7 @@ public class SolicitudVehiculoController {
             usuario.setCodigoUsuario(solicitudVehiculo.getUsuario().getCodigoUsuario());
 
             Empleado motorista = new Empleado();
-            motorista.setCodigoEmpleado(solicitudVehiculo.getMotorista().getCodigoEmpleado());
+            motorista.setDUI(solicitudVehiculo.getMotorista().getDUI());
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.setCodigoVehiculo(solicitudVehiculo.getVehiculo().getCodigoVehiculo());
