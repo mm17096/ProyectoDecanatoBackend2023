@@ -57,8 +57,4 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         }
     }
 
-    @Override
-    public List<Empleado> listarPorEstado(int estado) {
-        return null;
-    }
 }
