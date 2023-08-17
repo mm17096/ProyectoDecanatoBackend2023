@@ -23,7 +23,7 @@ public class DeptoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Departamento>> showProducto(){
+    public ResponseEntity<List<Departamento>> showDepto(){
         List<Departamento> obj = this.deptoService.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

@@ -9,3 +9,4 @@ public interface ICRUD<T> {
     T leerPorId(Integer id);
     boolean eliminar(T obj);
 }
+
