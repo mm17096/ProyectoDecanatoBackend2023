@@ -21,11 +21,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_empleado")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "DUI")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dui")
 public class Empleado {
     @Id
     @Column(name ="DUI")
-    private String DUI;
+    private String dui;
 
     @Column(name ="nombre")
     private String nombre;
