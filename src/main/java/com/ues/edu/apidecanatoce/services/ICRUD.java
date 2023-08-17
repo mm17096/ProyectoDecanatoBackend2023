@@ -7,5 +7,5 @@ public interface ICRUD<T> {
     T modificar(T obj);
     List<T> listar();
     T leerPorId(Integer id);
-    List<T> listarPorEstado(int estado);
+    boolean eliminar(T obj);
 }
