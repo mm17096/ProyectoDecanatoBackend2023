@@ -38,6 +38,8 @@ public class SolicitudVehiculo {
     private LocalDate fechaSalida;
 
     //Unidad solicitante
+    @Column(name = "unidad", length = 50)
+    private String unidadSolicitante;
 
     //Vehiculo solicitado
     @ManyToOne
@@ -74,7 +76,8 @@ public class SolicitudVehiculo {
     private int cantidadPersonas;
 
     // listado de personas que asistiran, si son mas de 5 (incluye el responsable)
-
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Pasajeros> listaPasajeros;
 
     //Responsable de la solicitud
     @ManyToOne
