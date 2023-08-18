@@ -85,29 +85,28 @@ public class SolicitudVehiculo {
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_usuario"))
     private Usuario usuario;
 
-    //nombre del jefe que aprobo
+    //nombre del jefe que aprobo,se obtendra segun el usuario que apruebe
     @Column(name = "jefe_depto", length = 150)
     private String jefeDepto;
 
+    //Feccha de regreso de la mision
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha_entrada", nullable = false)
     private LocalDate fechaEntrada;
 
-
+    // para manejar los estados que va pasando la solicitud
     @Column(name = "estado", nullable = false)
     private int estado;
 
-
-
+    // Mortorista asignado
     @ManyToOne
-    @JoinColumn(name = "codigo_motorista", nullable = true,
+    @JoinColumn(name = "DUI_MOTORISTA", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
     private Empleado motorista;
 
+    //Lista de documentos que tiene la solicitud de vehiculo
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     private List<Documentos> listDocumentos;
-
-
 
 }
