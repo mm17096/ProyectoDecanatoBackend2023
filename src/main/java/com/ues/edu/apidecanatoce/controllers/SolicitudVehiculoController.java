@@ -2,10 +2,10 @@ package com.ues.edu.apidecanatoce.controllers;
 
 import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTO;
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +17,8 @@ import java.util.Optional;
 @RequestMapping("/solicitudvehiculo")
 public class SolicitudVehiculoController {
 
+    @Autowired
+    private ConfigSoliVeRepository configuracionRepository;
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
     private SolicitudVehiculo solicitudVehiculo;
     private Empleado motorista;
@@ -34,6 +36,13 @@ public class SolicitudVehiculoController {
         List<SolicitudVehiculo> vehiculos = this.servicioSolicitudVehiculo.listar();
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
+
+    @GetMapping("/config")
+    public ResponseEntity<List<ConfigSoliVe>> obtenerConfiguracion(){
+        List<ConfigSoliVe> configSoliVes = this.configuracionRepository.findAll();
+        return new ResponseEntity<>(configSoliVes, HttpStatus.OK);
+    }
+
 
     // metodo para filtrar las solicitudes segun estado
     @GetMapping("/lista/{estado}")
