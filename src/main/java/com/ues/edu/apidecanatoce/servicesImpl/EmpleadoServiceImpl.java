@@ -56,5 +56,4 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
             return false;
         }
     }
-
 }

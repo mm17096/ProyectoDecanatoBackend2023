@@ -1,10 +1,14 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,8 +25,10 @@ public class Vale {
     @Column(name ="codigo_vale")
     private long codigoVale;
 
+
     @Column(name = "estado")
     private boolean estado;
+
 
 
 }

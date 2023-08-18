@@ -14,16 +14,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/depto")
 public class DeptoController {
-
     private IDeptoService deptoService;
-
 
     public DeptoController(IDeptoService deptoService){
        this.deptoService = deptoService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Departamento>> showProducto(){
+    public ResponseEntity<List<Departamento>> showDepto(){
         List<Departamento> obj = this.deptoService.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

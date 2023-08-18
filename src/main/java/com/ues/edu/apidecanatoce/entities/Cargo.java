@@ -25,5 +25,9 @@ public class Cargo {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "estado")
+    private int estado;
+
+
 
 }
