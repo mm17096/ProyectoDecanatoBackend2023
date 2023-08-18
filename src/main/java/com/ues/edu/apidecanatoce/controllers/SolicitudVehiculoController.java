@@ -52,8 +52,6 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
 
-
-
     @PostMapping(value = "/insertar")
     public SolicitudVehiculo guardarSolicitud(@RequestBody SolicitudVehiculo solicitudVehiculo){
         System.out.println("objeto: "+solicitudVehiculo);
