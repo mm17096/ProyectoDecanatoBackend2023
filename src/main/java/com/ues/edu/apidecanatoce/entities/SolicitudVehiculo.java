@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_solicitud_vehiculo")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoSolicitudVehiculo")
 public class SolicitudVehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

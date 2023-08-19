@@ -21,7 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_empleado")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dui")
 public class Empleado {
     @Id
     @Column(name ="DUI")
