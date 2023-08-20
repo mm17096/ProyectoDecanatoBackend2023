@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="tb_usuario")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoUsuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
