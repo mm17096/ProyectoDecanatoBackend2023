@@ -1,6 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,4 +34,12 @@ public class Documentos {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
     private LocalDate fecha;
+
+
+    @ManyToOne
+    @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true,
+            foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
+    private SolicitudVehiculo codigoSolicitudVehiculo;
+
+
 }

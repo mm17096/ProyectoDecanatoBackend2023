@@ -1,10 +1,12 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -21,6 +23,8 @@ public class Mantenimeinto {
     private Integer codigoMantenimiento;
     @Column(name = "foto")
     private String foto;
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
     private LocalDate fecha;
     @Column(name = "monto")

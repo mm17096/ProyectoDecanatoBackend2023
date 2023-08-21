@@ -8,24 +8,37 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Getter
-@Setter
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
-@Table(name="tb_asignacion_vale")
-public class AsignacionVale {
+@Table(name="tb_logvale")
+public class LogVale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_asignacion")
-    private Integer codigoAsignacion;
+    @Column(name = "id_logvale")
+    private long idLogVale;
 
-    @Column(name = "estado")
-    private Integer estado;
+    @Column(name = "estado_vale")
+    private String estadoVale;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "fecha")
-    private String fecha;
+    @Column(name = "fecha_logvale", nullable = false)
+    private LocalDate fechaLogVale;
+
+    @Column(name = "actividad")
+    private String actividad;
+
+    @Column(name = "usuario")
+    private String usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_vale")
+    private Vale vale;
+
 
 }
