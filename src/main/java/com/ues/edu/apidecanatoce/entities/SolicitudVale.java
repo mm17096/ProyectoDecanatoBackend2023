@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import jakarta.persistence.*;
-import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

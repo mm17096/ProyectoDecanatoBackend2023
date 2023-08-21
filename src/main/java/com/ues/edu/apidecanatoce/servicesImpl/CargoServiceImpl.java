@@ -43,6 +43,10 @@ public class CargoServiceImpl implements ICargoService {
 
     }
 
+    @Override
+    public List<Cargo> listarPorEstado(int estado) {
+        return null;
+    }
 
 
     @Override
