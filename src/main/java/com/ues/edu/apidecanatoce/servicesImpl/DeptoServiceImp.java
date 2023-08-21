@@ -43,10 +43,6 @@ public class DeptoServiceImp implements IDeptoService {
 
     }
 
-
-
-
-
     @Override
     public Departamento leerPorId(Integer id) {
         return this.deptopService.findById(id).orElse(new Departamento());
