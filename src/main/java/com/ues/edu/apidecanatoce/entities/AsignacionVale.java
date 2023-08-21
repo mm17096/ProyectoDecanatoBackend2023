@@ -28,4 +28,7 @@ public class AsignacionVale {
     @Column(name = "fecha")
     private String fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "id_solicitud_vale", referencedColumnName = "id_solicitud_vale")
+    private SolicitudVale solicitudVale;
 }
