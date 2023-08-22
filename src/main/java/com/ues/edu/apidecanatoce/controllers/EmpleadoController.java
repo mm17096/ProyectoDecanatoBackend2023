@@ -1,13 +1,20 @@
 package com.ues.edu.apidecanatoce.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ues.edu.apidecanatoce.dtos.EmpleadoTablaDTO;
 import com.ues.edu.apidecanatoce.entities.Empleado;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.IEmpleadoService;
+import com.ues.edu.apidecanatoce.services.PathService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +23,13 @@ import java.util.List;
 public class EmpleadoController {
 
     private final IEmpleadoService empleadoService;
-
     private final IEmpleadoRepository empleadoRepository;
+    private final PathService pathService;
 
-    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository) {
+    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository, PathService pathService) {
         this.empleadoService = empleadoService;
         this.empleadoRepository = empleadoRepository;
+        this.pathService = pathService;
     }
 
     @GetMapping
@@ -73,7 +81,31 @@ public class EmpleadoController {
     }
 
     @PostMapping("/insertar")
-    public Empleado guardarEmpleado(@RequestBody Empleado empleado) {
-        return this.empleadoService.registrar(empleado);
+    public Empleado guardarEmpleado(@RequestParam("imagen") MultipartFile imagen, @RequestParam("empleado") String empleadoJson) {
+        try {
+            // Crear el objetmapper y agregar el mapeo de fechas
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
+
+            Empleado empleado = objectMapper.readValue(empleadoJson, Empleado.class);
+
+            // Guardar la imagen en la carpeta del proyecto
+            String filename = pathService.generateFileName(imagen);
+            pathService.storeFile(imagen, filename);
+            Path destinationFile = pathService.generatePath(filename);
+            Files.write(destinationFile, imagen.getBytes());
+
+            // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
+            empleado.setNombrefoto(filename);
+            empleado.setUrlfoto(destinationFile.toString());
+
+            // Guardar el empleado en la base de datos
+            return this.empleadoService.registrar(empleado);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
+
 }

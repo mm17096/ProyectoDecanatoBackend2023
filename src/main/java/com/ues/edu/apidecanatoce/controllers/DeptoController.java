@@ -14,9 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/depto")
 public class DeptoController {
-
     private IDeptoService deptoService;
-
 
     public DeptoController(IDeptoService deptoService){
        this.deptoService = deptoService;
