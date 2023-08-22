@@ -43,11 +43,14 @@ public class CargoServiceImpl implements ICargoService {
 
     }
 
-
-
     @Override
     public Cargo leerPorId(Integer id) {
         return this.cargoService.findById(id).orElse(new Cargo());
+    }
+
+    @Override
+    public Cargo leerPorDUI(String dui) {
+        return null;
     }
 
 
