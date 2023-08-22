@@ -5,8 +5,10 @@ import com.ues.edu.apidecanatoce.repositorys.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.services.IDetalleAsignacionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
 
     @Override
     public List<DetalleAsignacionVale> listar() {
-        return null;
+        return iDetalleAsignacionRepository.findAll();
     }
 
     @Override
@@ -42,5 +44,10 @@ public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
     @Override
     public List<DetalleAsignacionVale> listarPorEstado(int estado) {
         return null;
+    }
+
+    @Override
+    public Page<DetalleAsignacionVale> list(Pageable pageable) {
+        return iDetalleAsignacionRepository.findAll(pageable);
     }
 }
