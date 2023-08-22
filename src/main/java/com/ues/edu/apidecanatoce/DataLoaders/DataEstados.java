@@ -20,17 +20,18 @@ public class DataEstados implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Estados estado1 = new Estados(1,"En espera");
-        Estados estado2 = new Estados(2,"Por aprobar");
-        Estados estado3 = new Estados(3,"Aprobada");
-        Estados estado4 = new Estados(4,"Asignado");
-        Estados estado5 = new Estados(5,"Revision");
-        Estados estado6 = new Estados(6,"Finalizada");
-        Estados estado7 = new Estados(7,"Activo");
-        Estados estado8 = new Estados(8,"Inactivo");
-        Estados estado9 = new Estados(9,"Caducado");
-        Estados estado10 = new Estados(10,"Consumido");
-        Estados estado11 = new Estados(11,"Devuelto");
+        Estados estado1 = new Estados(1,"En espera por jefe");
+        Estados estado2 = new Estados(2,"Aprobado por jefe");
+        Estados estado3 = new Estados(3,"En espera por decano");
+        Estados estado4 = new Estados(4,"Aprobada");
+        Estados estado5 = new Estados(5,"Asignado");
+        Estados estado6 = new Estados(6,"Revision");
+        Estados estado7 = new Estados(7,"Finalizada");
+        Estados estado8 = new Estados(8,"Activo");
+        Estados estado9 = new Estados(9,"Inactivo");
+        Estados estado10 = new Estados(10,"Caducado");
+        Estados estado11 = new Estados(11,"Consumido");
+        Estados estado12 = new Estados(12,"Devuelto");
 
         estadosRepository.save(estado1);
         estadosRepository.save(estado2);
@@ -43,6 +44,7 @@ public class DataEstados implements CommandLineRunner {
         estadosRepository.save(estado9);
         estadosRepository.save(estado10);
         estadosRepository.save(estado11);
+        estadosRepository.save(estado12);
     }
 }
 
