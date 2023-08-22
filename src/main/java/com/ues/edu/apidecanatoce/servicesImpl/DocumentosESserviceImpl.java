@@ -35,6 +35,11 @@ public class DocumentosESserviceImpl implements IDocumentoESservice {
     }
 
     @Override
+    public Documentos leerPorDUI(String dui) {
+        return null;
+    }
+
+    @Override
     public boolean eliminar(Documentos obj) {
         try {
             this.documentosrepo.delete(obj);
