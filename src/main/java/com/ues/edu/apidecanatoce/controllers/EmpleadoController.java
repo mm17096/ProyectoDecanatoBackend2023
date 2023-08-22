@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class EmpleadoController {
         this.empleadoService = empleadoService;
         this.pathService = pathService;
         this.request = request;
+
     }
 
     @GetMapping
@@ -127,6 +129,7 @@ public class EmpleadoController {
             e.printStackTrace();
             return null;
         }
+
     }
 
     //Editar datos existentes
@@ -187,5 +190,6 @@ public class EmpleadoController {
         return new ResponseEntity<GenericResponse<Empleado>>(resp, HttpStatus.OK);
     }
 
+    }
 
 }
