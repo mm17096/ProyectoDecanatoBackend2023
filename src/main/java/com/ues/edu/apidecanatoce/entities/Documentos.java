@@ -16,13 +16,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "tb_documentos")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoDocumentos")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoDocumentos")
 public class Documentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigoDocumentos;
 
-    @Column(name = "tipo", length = 25)
+    @Column(name = "tipo")
     private String tipoDocumento;
 
     @Column(name = "foto")
