@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +31,7 @@ public class Vale {
     @Column(name = "estado")
     private boolean estado;
 
-
+    @OneToMany(mappedBy = "vale")
+    private Set<DetalleAsignacionVale> detalleAsignacionValeSet;
 
 }

@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVale;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.servicesImpl.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
