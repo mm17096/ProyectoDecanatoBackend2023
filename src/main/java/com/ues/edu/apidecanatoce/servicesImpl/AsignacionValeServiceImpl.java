@@ -32,6 +32,11 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
+    public AsignacionVale leerPorDUI(String dui) {
+        return null;
+    }
+
+    @Override
     public boolean eliminar(AsignacionVale obj) {
        try {
            asignacionValeRepository.delete(obj);

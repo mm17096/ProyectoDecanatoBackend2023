@@ -43,7 +43,12 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 
     @Override
     public Empleado leerPorId(Integer id) {
-        return this.empleadoRepository.findById(id).get();
+        return null;
+    }
+
+    @Override
+    public Empleado leerPorDUI(String dui) {
+        return this.empleadoRepository.findById(dui).get();
     }
 
     @Override
