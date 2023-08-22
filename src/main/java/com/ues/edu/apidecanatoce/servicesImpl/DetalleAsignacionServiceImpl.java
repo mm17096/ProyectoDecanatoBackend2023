@@ -1,14 +1,22 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.repositorys.IAsignacionValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.services.IDetalleAsignacionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
+
+    private final IDetalleAsignacionRepository iDetalleAsignacionRepository;
     @Override
     public DetalleAsignacionVale registrar(DetalleAsignacionVale obj) {
-        return null;
+        return iDetalleAsignacionRepository.save(obj);
     }
 
     @Override
