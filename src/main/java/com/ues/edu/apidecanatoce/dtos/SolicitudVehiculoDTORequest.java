@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SolicitudVehiculoDTO {
+public class SolicitudVehiculoDTORequest {
     private LocalDate fechaSolicitud;
     private String objetivoMision;
     private String lugarMision;

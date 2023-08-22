@@ -1,15 +1,18 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTO;
+import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTORequest;
+import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTOResponse;
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
+import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,11 @@ import java.util.Optional;
 @RequestMapping("/solicitudvehiculo")
 public class SolicitudVehiculoController {
 
+    @Autowired
+    private ConfigSoliVeRepository configuracionRepository;
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
+    @Autowired
+    private EstadosRepository estadosRepository;
     private SolicitudVehiculo solicitudVehiculo;
     private Empleado motorista;
     private Usuario usuario;
@@ -35,6 +42,52 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
 
+    // listar solicitudes vehiculo por DTO
+    @GetMapping("/listadto")
+    public ResponseEntity<List<SolicitudVehiculoDTOResponse>> listaSolicitudesDTO() throws IOException {
+        List<SolicitudVehiculo> soliVehiculos = this.servicioSolicitudVehiculo.listar();
+        List<SolicitudVehiculoDTOResponse> soliVehiculosDTOResp = new ArrayList<>();
+        List<Estados> estados = estadosRepository.findAll();
+
+        for (SolicitudVehiculo soliVe: soliVehiculos){
+            SolicitudVehiculoDTOResponse soliVeDTOResp = new SolicitudVehiculoDTOResponse();
+            soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
+            soliVeDTOResp.setFechaSolicitud(soliVe.getFechaSolicitud());
+            soliVeDTOResp.setFechaSalida(soliVe.getFechaSalida());
+            soliVeDTOResp.setUnidadSolicitante(soliVe.getUnidadSolicitante());
+            soliVeDTOResp.setVehiculo(soliVe.getVehiculo());
+            soliVeDTOResp.setObjetivoMision(soliVe.getObjetivoMision());
+            soliVeDTOResp.setLugarMision(soliVe.getLugarMision());
+            soliVeDTOResp.setDireccion(soliVe.getDireccion());
+            soliVeDTOResp.setHoraEntrada(soliVe.getHoraEntrada());
+            soliVeDTOResp.setHoraSalida(soliVe.getHoraSalida());
+            soliVeDTOResp.setCantidadPersonas(soliVe.getCantidadPersonas());
+            soliVeDTOResp.setListaPasajeros(soliVe.getListaPasajeros());
+            soliVeDTOResp.setSolicitante(soliVe.getUsuario());
+            soliVeDTOResp.setNombreJefeDepto(soliVe.getJefeDepto());
+            soliVeDTOResp.setFechaEntrada(soliVe.getFechaEntrada());
+
+            for (Estados estado: estados){
+                if (soliVe.getEstado() == estado.getCodigoEstado()){
+                    soliVeDTOResp.setEstado(estado.getNombreEstado());
+                }
+            }
+
+            soliVeDTOResp.setMotorista(soliVe.getMotorista());
+            soliVeDTOResp.setListDocumentos(soliVe.getListDocumentos());
+
+            soliVehiculosDTOResp.add(soliVeDTOResp);
+        }
+        return new ResponseEntity<List<SolicitudVehiculoDTOResponse>>(soliVehiculosDTOResp, HttpStatus.OK);
+    }
+
+    @GetMapping("/config")
+    public ResponseEntity<List<ConfigSoliVe>> obtenerConfiguracion(){
+        List<ConfigSoliVe> configSoliVes = this.configuracionRepository.findAll();
+        return new ResponseEntity<>(configSoliVes, HttpStatus.OK);
+    }
+
+
     // metodo para filtrar las solicitudes segun estado
     @GetMapping("/lista/{estado}")
     public ResponseEntity<List<SolicitudVehiculo>> obtenerSolicitudesPorEstado(@PathVariable("estado") Integer estado) throws IOException {
@@ -49,11 +102,11 @@ public class SolicitudVehiculoController {
     }
 
     @PostMapping("/insertardto")
-    public ResponseEntity<GenericResponse<SolicitudVehiculoDTO>> guardarSolicitudDto(@RequestBody SolicitudVehiculoDTO solicitudDTO) {
+    public ResponseEntity<GenericResponse<SolicitudVehiculoDTORequest>> guardarSolicitudDto(@RequestBody SolicitudVehiculoDTORequest solicitudDTO) {
         HttpStatus http;
-        GenericResponse<SolicitudVehiculoDTO> resp = new GenericResponse<SolicitudVehiculoDTO>(0,
+        GenericResponse<SolicitudVehiculoDTORequest> resp = new GenericResponse<SolicitudVehiculoDTORequest>(0,
                 "ERROR DE ALMACENAMIENTO DE LA CONSULTA", solicitudDTO);
-        Optional<SolicitudVehiculoDTO> opt = Optional.ofNullable(solicitudDTO);
+        Optional<SolicitudVehiculoDTORequest> opt = Optional.ofNullable(solicitudDTO);
 
         if (opt.isPresent()){
             this.solicitudVehiculo = new SolicitudVehiculo();
@@ -72,7 +125,7 @@ public class SolicitudVehiculoController {
             solicitudVehiculo.setUsuario(this.usuario); // Establecemos la relación con el usuario
 
             this.motorista = new Empleado();
-            this.motorista.setDUI(solicitudDTO.getCodigoMotorista());
+            this.motorista.setDui(solicitudDTO.getCodigoMotorista());
             solicitudVehiculo.setMotorista(this.motorista);
 
             this.vehiculo = new Vehiculo();
@@ -114,7 +167,7 @@ public class SolicitudVehiculoController {
             usuario.setCodigoUsuario(solicitudVehiculo.getUsuario().getCodigoUsuario());
 
             Empleado motorista = new Empleado();
-            motorista.setDUI(solicitudVehiculo.getMotorista().getDUI());
+            motorista.setDui(solicitudVehiculo.getMotorista().getDui());
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.setCodigoVehiculo(solicitudVehiculo.getVehiculo().getCodigoVehiculo());
