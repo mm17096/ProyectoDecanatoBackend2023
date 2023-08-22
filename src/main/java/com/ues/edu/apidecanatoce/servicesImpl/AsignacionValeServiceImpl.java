@@ -45,4 +45,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
            return false;
        }
     }
+
+    @Override
+    public List<AsignacionVale> listarPorEstado(int estado) {
+        return null;
+    }
 }

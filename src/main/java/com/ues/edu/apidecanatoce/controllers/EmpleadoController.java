@@ -190,6 +190,4 @@ public class EmpleadoController {
         return new ResponseEntity<GenericResponse<Empleado>>(resp, HttpStatus.OK);
     }
 
-    }
-
 }
