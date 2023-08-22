@@ -11,8 +11,8 @@ public class Generalmethods {
     public String generarCodigoAutor(){
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss");
-        String codigoAutor = fechaHoraActual.format(formato);
-        return codigoAutor;
+        String codigo = fechaHoraActual.format(formato);
+        return codigo;
     }
     
 }
