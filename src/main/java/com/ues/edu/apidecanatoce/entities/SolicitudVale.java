@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.entities;
 
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,5 +35,8 @@ public class SolicitudVale {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     //@JsonManagedReference
     private SolicitudVehiculo solicitudVehiculo;
+
+   // @OneToMany(mappedBy = "solicitudVale")
+   // private Set<AsignacionVale> asignacionValeSet;
 
 }

@@ -1,24 +1,22 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
 
+import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
 import com.ues.edu.apidecanatoce.entities.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamento;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.services.ICargoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class CargoServiceImpl implements ICargoService {
 
     private final ICargoRepository cargoService;
 
-    @Autowired
-    public CargoServiceImpl(ICargoRepository cargoService){
-        this.cargoService = cargoService;
-    }
+
 
     @Override
     public List<Cargo> listar(){
@@ -45,11 +43,40 @@ public class CargoServiceImpl implements ICargoService {
 
     }
 
+<<<<<<< HEAD
+    @Override
+    public List<Cargo> listarPorEstado(int estado) {
+        return null;
+    }
 
 
+=======
+>>>>>>> master
     @Override
     public Cargo leerPorId(Integer id) {
         return this.cargoService.findById(id).orElse(new Cargo());
+    }
+
+    @Override
+    public Cargo leerPorDUI(String dui) {
+        return null;
+    }
+
+
+    @Override
+    public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
+        List<ICargoxEstadoDTO> listCargo = this.cargoService.findCargoByEstado(estado);
+        return listCargo;
+    }
+
+    @Override
+    public List<Cargo> findCargoByEstado2(int estado) {
+        return this.cargoService.findAllByEstado(estado);
+    }
+
+    @Override
+    public List<Cargo> findAllByNombreCargo(String nombre) {
+        return this.cargoService.findAllByNombreCargo(nombre);
     }
 
 

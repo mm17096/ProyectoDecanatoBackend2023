@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.services;
 
 import java.util.List;
 
-public interface ICRUDSolVe<T> {
+public interface ICrudSolVe<T> {
     T registrar(T obj);
     T modificar(T obj);
     List<T> listar();
