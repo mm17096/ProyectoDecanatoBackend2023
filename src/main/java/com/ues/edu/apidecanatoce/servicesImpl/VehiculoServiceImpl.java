@@ -50,4 +50,9 @@ public class VehiculoServiceImpl implements IVehiculoService {
         }
     }
 
+    @Override
+    public List<Vehiculo> listarPorEstado(int estado) {
+        return null;
+    }
+
 }
