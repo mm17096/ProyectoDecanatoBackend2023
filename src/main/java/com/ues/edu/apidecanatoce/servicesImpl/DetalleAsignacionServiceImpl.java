@@ -41,8 +41,13 @@ public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
     }
 
     @Override
-    public DetalleAsignacionDto leerPorId(Integer id) {
+    public DetalleAsignacionVale leerPorDUI(String dui) {
         return null;
+    }
+
+    @Override
+    public boolean eliminar(DetalleAsignacionVale obj) {
+        return false;
     }
 
     @Override

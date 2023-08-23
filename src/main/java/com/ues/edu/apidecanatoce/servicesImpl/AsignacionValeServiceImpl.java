@@ -36,6 +36,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return null;
     }
 
+
     @Override
     public boolean eliminar(AsignacionVale obj) {
        try {
