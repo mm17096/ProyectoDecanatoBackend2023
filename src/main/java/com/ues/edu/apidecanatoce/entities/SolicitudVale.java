@@ -27,11 +27,14 @@ public class SolicitudVale {
     @Column(name = "cantidad_vale", nullable = false)
     private int cantidadVale;
 
+    @Column(name = "estado_entrada", nullable = false)
+    private int estadoEntrada;
+
    // @OneToMany(mappedBy = "solicitudVale")
   //  private Set<AsignacionVale> asignacionValeSet;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "solicitudvale_id")
+    @JoinColumn(name = "solicitud_vehiculo_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     //@JsonManagedReference
     private SolicitudVehiculo solicitudVehiculo;
