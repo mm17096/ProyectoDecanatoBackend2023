@@ -4,6 +4,6 @@ import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
 
 import java.util.List;
 
-public interface IEntradaSalidaService extends ICRUD<Entrada_Salidas>{
+public interface IEntradaSalidaService extends Icrud<Entrada_Salidas>{
     List<Entrada_Salidas> listarPorEstado(int estado);
 }

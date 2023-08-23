@@ -32,11 +32,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-<<<<<<< HEAD
-    public List<AsignacionVale> listarPorEstado(int estado) {
-=======
     public AsignacionVale leerPorDUI(String dui) {
->>>>>>> master
         return null;
     }
 

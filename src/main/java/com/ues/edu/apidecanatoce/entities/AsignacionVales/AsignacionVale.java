@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -19,9 +20,8 @@ import java.util.Set;
 @Table(name="tb_asignacion_vale")
 public class AsignacionVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_asignacion")
-    private Integer codigoAsignacion;
+    private String codigoAsignacion;
 
     @Column(name = "estado")
     private Integer estado;
@@ -29,7 +29,7 @@ public class AsignacionVale {
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
-    private String fecha;
+    private LocalDate fecha;
 
     @ManyToOne
     @JoinColumn(name = "solicitud_vale_id", referencedColumnName = "id_solicitud_vale")

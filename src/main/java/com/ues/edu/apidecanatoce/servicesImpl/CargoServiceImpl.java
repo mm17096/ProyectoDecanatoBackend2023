@@ -43,15 +43,12 @@ public class CargoServiceImpl implements ICargoService {
 
     }
 
-<<<<<<< HEAD
     @Override
     public List<Cargo> listarPorEstado(int estado) {
         return null;
     }
 
 
-=======
->>>>>>> master
     @Override
     public Cargo leerPorId(Integer id) {
         return this.cargoService.findById(id).orElse(new Cargo());

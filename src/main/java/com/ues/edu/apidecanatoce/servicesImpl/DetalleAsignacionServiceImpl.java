@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
-import com.ues.edu.apidecanatoce.repositorys.IAsignacionValeRepository;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionMapper;
 import com.ues.edu.apidecanatoce.repositorys.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.services.IDetalleAsignacionService;
 import lombok.RequiredArgsConstructor;
@@ -16,38 +16,47 @@ import java.util.List;
 public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
 
     private final IDetalleAsignacionRepository iDetalleAsignacionRepository;
+
+    private final DetalleAsignacionMapper detalleAsignacionMapper;
+
     @Override
-    public DetalleAsignacionVale registrar(DetalleAsignacionVale obj) {
-        return iDetalleAsignacionRepository.save(obj);
+    public Page<DetalleAsignacionDto> list(Pageable pageable) {
+        var detalles = iDetalleAsignacionRepository.findAll(pageable);
+        return detalles.map(detalleAsignacionMapper);
     }
 
     @Override
-    public DetalleAsignacionVale modificar(DetalleAsignacionVale obj) {
+    public DetalleAsignacionDto registrar(DetalleAsignacionDto obj) {
         return null;
     }
 
     @Override
-    public List<DetalleAsignacionVale> listar() {
-        return iDetalleAsignacionRepository.findAll();
-    }
-
-    @Override
-    public DetalleAsignacionVale leerPorId(Integer id) {
+    public DetalleAsignacionDto modificar(DetalleAsignacionDto obj) {
         return null;
     }
 
     @Override
-    public boolean eliminar(DetalleAsignacionVale obj) {
+    public List<DetalleAsignacionDto> listar() {
+        return null;
+    }
+
+    @Override
+    public DetalleAsignacionDto leerPorId(Integer id) {
+        return null;
+    }
+
+    @Override
+    public DetalleAsignacionDto leerPorDUI(String dui) {
+        return null;
+    }
+
+    @Override
+    public boolean eliminar(DetalleAsignacionDto obj) {
         return false;
     }
 
     @Override
-    public List<DetalleAsignacionVale> listarPorEstado(int estado) {
+    public List<DetalleAsignacionDto> listarPorEstado(int estado) {
         return null;
-    }
-
-    @Override
-    public Page<DetalleAsignacionVale> list(Pageable pageable) {
-        return iDetalleAsignacionRepository.findAll(pageable);
     }
 }

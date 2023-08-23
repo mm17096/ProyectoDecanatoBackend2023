@@ -22,17 +22,9 @@ public class DetalleAsignacionValeController {
     private final DetalleAsignacionServiceImpl detalleAsignacionService;
 
     @GetMapping
-    public ResponseEntity<Page<DetalleAsignacionVale>> listar(Pageable pageable){
+    public ResponseEntity<?> list(Pageable pageable){
         return ResponseEntity.ok(detalleAsignacionService.list(pageable));
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<DetalleAsignacionVale>> listarDetalleAsignacion(){
-        return ResponseEntity.ok(detalleAsignacionService.listar());
-    }
-    @PostMapping
-    public ResponseEntity<DetalleAsignacionVale> registrar(@RequestBody DetalleAsignacionVale detalleAsignacionVale){
-        return new ResponseEntity<>(detalleAsignacionService.registrar(detalleAsignacionVale), HttpStatus.OK);
-    }
 
 }
