@@ -20,9 +20,8 @@ import java.util.Set;
 @Table(name="tb_vale")
 public class Vale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vale")
-    private long idVale;
+    private String idVale;
 
     @Column(name ="codigo_vale")
     private long codigoVale;

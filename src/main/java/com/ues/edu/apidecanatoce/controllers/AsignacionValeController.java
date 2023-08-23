@@ -28,7 +28,7 @@ public class AsignacionValeController {
         return new ResponseEntity<AsignacionVale>(asignacionValeService.registrar(asignacionVale), HttpStatus.OK);
     }
 
-    @PutMapping("/modificar")
+   /* @PutMapping("/modificar")
     public ResponseEntity<GenericResponse<AsignacionVale>> modificar(@RequestBody AsignacionVale asignacionVale) {
         Optional<AsignacionVale> opt = Optional.ofNullable(this.asignacionValeService.leerPorId(asignacionVale.getCodigoAsignacion()));
         GenericResponse<AsignacionVale> resp;
@@ -41,7 +41,7 @@ public class AsignacionValeController {
             resp = new GenericResponse<AsignacionVale>(0, "No se pudo modficiar la Asignación o no se encontró", asignacionVale);
             return new ResponseEntity<GenericResponse<AsignacionVale>>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") Integer id) {
