@@ -11,8 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Data
@@ -108,5 +110,8 @@ public class SolicitudVehiculo {
     //Lista de documentos que tiene la solicitud de vehiculo
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     private List<Documentos> listDocumentos;
+
+    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
 }

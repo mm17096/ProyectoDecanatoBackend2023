@@ -34,6 +34,11 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
+    public Vehiculo leerPorDUI(String dui) {
+        return null;
+    }
+
+    @Override
     public boolean eliminar(Vehiculo obj) {
         // TODO Auto-generated method stub
         try {
@@ -43,6 +48,11 @@ public class VehiculoServiceImpl implements IVehiculoService {
             // TODO: handle exception
             return false;
         }
+    }
+
+    @Override
+    public List<Vehiculo> listarPorEstado(int estado) {
+        return null;
     }
 
 }
