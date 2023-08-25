@@ -27,7 +27,7 @@ public class DeptoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Departamento>consultaById(@PathVariable("id") Integer id){
+    public ResponseEntity<Departamento>consultaById(@PathVariable("id") String id){
         Departamento obj = this.deptoService.leerPorId(id);
 
         return new ResponseEntity<Departamento>(obj , HttpStatus.OK);
@@ -59,7 +59,7 @@ public class DeptoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Departamento>> deletePatient(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Departamento>> deletePatient(@PathVariable("id") String id){
         Optional<Departamento> opt = Optional.ofNullable(this.deptoService.leerPorId(id));
         GenericResponse<Departamento> response =  new GenericResponse<Departamento>();
         HttpStatus http = HttpStatus.OK;

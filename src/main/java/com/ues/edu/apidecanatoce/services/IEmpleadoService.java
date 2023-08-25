@@ -4,7 +4,7 @@ import com.ues.edu.apidecanatoce.entities.Empleado;
 
 import java.util.List;
 
-public interface IEmpleadoService extends ICRUD<Empleado>{
+public interface IEmpleadoService extends ICrud<Empleado> {
 
     List<Empleado> buscarEmpleado(String filtro);
 

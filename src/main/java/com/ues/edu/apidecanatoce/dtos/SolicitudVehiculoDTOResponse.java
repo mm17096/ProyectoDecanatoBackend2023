@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudVehiculoDTOResponse {
-    private int codigoSolicitudVehiculo;
+    private String codigoSolicitudVehiculo;
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
     private String unidadSolicitante;

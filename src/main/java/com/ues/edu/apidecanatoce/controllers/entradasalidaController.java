@@ -30,7 +30,7 @@ public class entradasalidaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") String id){
         Optional<Entrada_Salidas> opt= Optional.ofNullable(this.entradaSalidaService.leerPorId(id));
         GenericResponse<Entrada_Salidas> resp= new GenericResponse<>();
         HttpStatus http= HttpStatus.INTERNAL_SERVER_ERROR;

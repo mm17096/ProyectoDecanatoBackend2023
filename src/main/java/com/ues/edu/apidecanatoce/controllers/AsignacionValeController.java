@@ -44,7 +44,7 @@ public class AsignacionValeController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") Integer id) {
+    public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") String id) {
         Optional<AsignacionVale> opt = Optional.ofNullable(this.asignacionValeService.leerPorId(id));
         GenericResponse<AsignacionVale> resp;
         if (opt.isPresent()) {

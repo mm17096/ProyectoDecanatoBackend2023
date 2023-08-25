@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, Integer> {
+public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, String> {
     List<SolicitudVehiculo> findAllByEstado(int estado);
 }

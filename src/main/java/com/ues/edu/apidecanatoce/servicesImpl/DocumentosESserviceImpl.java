@@ -30,14 +30,10 @@ public class DocumentosESserviceImpl implements IDocumentoESservice {
     }
 
     @Override
-    public Documentos leerPorId(Integer id) {
+    public Documentos leerPorId(String id) {
         return this.documentosrepo.findById(id).get();
     }
 
-    @Override
-    public Documentos leerPorDUI(String dui) {
-        return null;
-    }
 
     @Override
     public boolean eliminar(Documentos obj) {

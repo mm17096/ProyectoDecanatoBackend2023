@@ -20,9 +20,8 @@ import java.util.List;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_solicitud_vehiculo")
-    private int codigoSolicitudVehiculo;
+    private String codigoSolicitudVehiculo;
 
     //Fecha en que se realiza de la solcitud
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)

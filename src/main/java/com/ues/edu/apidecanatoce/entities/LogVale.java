@@ -18,9 +18,8 @@ import java.time.LocalDate;
 @Table(name="tb_logvale")
 public class LogVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_logvale")
-    private long idLogVale;
+    private String idLogVale;
 
     @Column(name = "estado_vale")
     private String estadoVale;

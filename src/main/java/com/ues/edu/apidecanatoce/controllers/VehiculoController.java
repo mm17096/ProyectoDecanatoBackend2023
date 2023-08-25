@@ -32,7 +32,7 @@ public class VehiculoController {
     }
 
     @GetMapping("/{idVehiculo}")
-    public ResponseEntity<Vehiculo> obtenerVehiculo(@PathVariable("idVehiculo") Integer idVehiculo){
+    public ResponseEntity<Vehiculo> obtenerVehiculo(@PathVariable("idVehiculo") String idVehiculo){
         Vehiculo vehiculo = this.vehiculoService.leerPorId(idVehiculo);
         if (vehiculo==null){
             throw new ModeloNotFoundException("Vehiculo no encontrado");
@@ -141,7 +141,7 @@ public class VehiculoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Vehiculo>> eliminarVehiculo(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Vehiculo>> eliminarVehiculo(@PathVariable("id") String id){
         GenericResponse<Vehiculo> resp = new GenericResponse<>();
         Optional<Vehiculo> opt = Optional.ofNullable(this.vehiculoService.leerPorId(id));
         if (opt.isPresent()){

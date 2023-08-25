@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 public class Departamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_depto")
-    private int codigoDepto;
+    private String codigoDepto;
 
     private String nombre;
 

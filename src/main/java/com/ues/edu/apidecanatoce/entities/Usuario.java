@@ -21,9 +21,8 @@ import java.util.List;
 @Table(name="tb_usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_usuario")
-    private int codigoUsuario;
+    private String codigoUsuario;
 
     @Column(name = "email")
     private String email;

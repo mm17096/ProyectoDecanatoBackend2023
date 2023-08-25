@@ -32,7 +32,7 @@ public class SolicitudVehiculoServiceImpl implements ISolicitudVehiculoService {
     }
 
     @Override
-    public SolicitudVehiculo leerPorId(Integer id) {
+    public SolicitudVehiculo leerPorId(String id) {
         return this.solicitudVehiculoService.findById(id).orElseThrow();
     }
 

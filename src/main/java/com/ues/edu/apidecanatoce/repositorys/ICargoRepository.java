@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository
-public interface ICargoRepository extends JpaRepository<Cargo,Integer> {
+public interface ICargoRepository extends JpaRepository<Cargo, String> {
 
     @Query(value = "SELECT \n" +
             "tb_cargo.nombre_cargo as nombreCargo,\n" +

@@ -15,9 +15,8 @@ import lombok.Setter;
 public class Cargo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_cargo")
-    private int codigoCargo;
+    private String codigoCargo;
 
     @Column(name = "nombre_cargo")
     private String nombreCargo;

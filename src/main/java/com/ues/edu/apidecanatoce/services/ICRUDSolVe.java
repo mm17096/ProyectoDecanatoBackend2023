@@ -6,7 +6,7 @@ public interface ICRUDSolVe<T> {
     T registrar(T obj);
     T modificar(T obj);
     List<T> listar();
-    T leerPorId(Integer id);
+    T leerPorId(String id);
     boolean eliminar(T obj);
 
     List<T> listarPorEstado(int estado);

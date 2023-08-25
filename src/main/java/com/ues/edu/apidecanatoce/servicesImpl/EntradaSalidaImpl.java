@@ -30,13 +30,8 @@ public class EntradaSalidaImpl implements IEntradaSalidaService {
     }
 
     @Override
-    public Entrada_Salidas leerPorId(Integer id) {
+    public Entrada_Salidas leerPorId(String id) {
         return this.entradaSalidaRepo.findById(id).get();
-    }
-
-    @Override
-    public Entrada_Salidas leerPorDUI(String dui) {
-        return null;
     }
 
     @Override

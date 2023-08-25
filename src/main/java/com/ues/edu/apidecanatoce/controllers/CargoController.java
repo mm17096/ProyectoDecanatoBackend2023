@@ -32,7 +32,7 @@ public class CargoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cargo>consultaById(@PathVariable("id") Integer id){
+    public ResponseEntity<Cargo>consultaById(@PathVariable("id") String id){
         Cargo obj = this.cargoService.leerPorId(id);
 
         return new ResponseEntity<Cargo>(obj , HttpStatus.OK);
@@ -64,7 +64,7 @@ public class CargoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Cargo>> deletePatient(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Cargo>> deletePatient(@PathVariable("id") String id){
         Optional<Cargo> opt = Optional.ofNullable(this.cargoService.leerPorId(id));
         GenericResponse<Cargo> response =  new GenericResponse<Cargo>();
         HttpStatus http = HttpStatus.OK;

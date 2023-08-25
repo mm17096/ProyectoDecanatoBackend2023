@@ -16,9 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="tb_asignacion_vale")
 public class AsignacionVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_asignacion")
-    private Integer codigoAsignacion;
+    private String codigoAsignacion;
 
     @Column(name = "estado")
     private Integer estado;

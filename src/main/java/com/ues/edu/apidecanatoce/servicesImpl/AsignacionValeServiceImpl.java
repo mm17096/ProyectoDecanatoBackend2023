@@ -26,14 +26,10 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return asignacionValeRepository.findAll();
     }
 
-    @Override
-    public AsignacionVale leerPorId(Integer id) {
-        return asignacionValeRepository.findById(id).get();
-    }
 
     @Override
-    public AsignacionVale leerPorDUI(String dui) {
-        return null;
+    public AsignacionVale leerPorId(String id) {
+        return asignacionValeRepository.findById(id).get();
     }
 
     @Override

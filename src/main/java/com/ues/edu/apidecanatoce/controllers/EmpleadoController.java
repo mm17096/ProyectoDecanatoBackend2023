@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
 import com.ues.edu.apidecanatoce.dtos.EmpleadoTablaDTO;
 import com.ues.edu.apidecanatoce.entities.Empleado;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
@@ -31,12 +32,13 @@ public class EmpleadoController {
     private final IEmpleadoService empleadoService;
     private final PathService pathService;
     private final HttpServletRequest request;
+    private final Generalmethods generalmethods;
 
-    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository, PathService pathService, HttpServletRequest request) {
+    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository, PathService pathService, HttpServletRequest request, Generalmethods generalmethods) {
         this.empleadoService = empleadoService;
         this.pathService = pathService;
         this.request = request;
-
+        this.generalmethods = generalmethods;
     }
 
     @GetMapping
@@ -45,6 +47,11 @@ public class EmpleadoController {
         return new ResponseEntity<List<Empleado>>(empleado, HttpStatus.OK);
     }
 
+    @GetMapping("/codigo")
+    public ResponseEntity<String> mostrarCodigo() {
+        String codigo = this.generalmethods.generarCodigo();
+        return new ResponseEntity<String>(codigo, HttpStatus.OK);
+    }
 
     @GetMapping("/tabla")
     public ResponseEntity<List<EmpleadoTablaDTO>> listaEmpleadosTabla() {
@@ -99,11 +106,19 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empleado> empleadoById(@PathVariable("id") Integer ID) {
+    public ResponseEntity<Empleado> empleadoById(@PathVariable("id") String ID) {
         Empleado vehículo = this.empleadoService.leerPorId(ID);
         return new ResponseEntity<Empleado>(vehículo, HttpStatus.OK);
     }
 
+    //Metodo para insertar sin imagen
+    @PostMapping("/insertar")
+    public Empleado InsertarEmpleado(@RequestBody Empleado vehículo) {
+        return this.empleadoService.registrar(vehículo);
+    }
+
+/*
+    //Metodo para insertar con imagen
     @PostMapping("/insertar")
     public Empleado guardarEmpleado(@RequestParam("imagen") MultipartFile imagen, @RequestParam("empleado") String empleadoJson) {
         try {
@@ -131,15 +146,14 @@ public class EmpleadoController {
         }
 
     }
-
+*/
     //Editar datos existentes
     public Empleado modificarEmpleado(@RequestBody Empleado vehículo) {
         return this.empleadoService.registrar(vehículo);
     }
 
     @PutMapping("/modificarconImagen")
-    public ResponseEntity<GenericResponse<Empleado>> EditarEmpleadoConImagen(@RequestParam("imagen") MultipartFile imagen, @RequestParam("empleado") String empleadoJson) {
-        GenericResponse<Empleado> resp;
+    public ResponseEntity<Empleado> EditarEmpleadoConImagen(@RequestParam("imagen") MultipartFile imagen, @RequestParam("empleado") String empleadoJson) {
         Empleado empleadoResponse;
         try {
             // Crear el objetmapper y agregar el mapeo de fechas
@@ -164,9 +178,7 @@ public class EmpleadoController {
 
             // Guardar los cambios del vehículo en la base de datos
             empleadoResponse = modificarEmpleado(empleado);
-
-            resp = new GenericResponse<Empleado>(1, "Vehiculo modificado con exito", empleadoResponse);
-            return new ResponseEntity<GenericResponse<Empleado>>(resp, HttpStatus.OK);
+            return new ResponseEntity<Empleado>(empleadoResponse, HttpStatus.OK);
         } catch (IOException e) {
             // Manejar la excepción en caso de que ocurra un error al procesar la imagen
             e.printStackTrace();
@@ -175,19 +187,40 @@ public class EmpleadoController {
     }
 
     @PutMapping("/modificarsinImagen")
-    public ResponseEntity<GenericResponse<Empleado>> EditarEmpleado(@RequestBody Empleado empleado) {
-        GenericResponse<Empleado> resp;
+    public ResponseEntity<Empleado> EditarEmpleado(@RequestBody Empleado empleado) {
         Empleado empleadoResponse;
 
-        Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorDUI(empleado.getDui()));
+        Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorId(empleado.getDui()));
         Empleado empleadoMod = opt.get();
 
         //se la cambiamos porque viene con la url para mostrar
         empleado.setNombrefoto(empleadoMod.getNombrefoto());
 
         empleadoResponse = modificarEmpleado(empleado);
-        resp = new GenericResponse<Empleado>(1, "Empleado modificado con exito", empleadoResponse);
-        return new ResponseEntity<GenericResponse<Empleado>>(resp, HttpStatus.OK);
+        return new ResponseEntity<Empleado>(empleadoResponse, HttpStatus.OK);
     }
+
+
+    //Modificar Estado de empleado
+    public Empleado modificarestado(@RequestBody Empleado empleado) {
+        return this.empleadoService.registrar(empleado);
+    }
+
+    @PutMapping("/modificarestado")
+    public ResponseEntity<Empleado> CambiarEstado(@RequestParam("id") String id) {
+        Empleado empleadoResponse;
+        Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorId(id));
+        Empleado empleadoMod = opt.get();
+
+        if(empleadoMod.getEstado() == 8){
+            empleadoMod.setEstado(9);
+        }else{
+            empleadoMod.setEstado(8);
+        }
+
+        empleadoResponse = modificarestado(empleadoMod);
+        return new ResponseEntity<Empleado>(empleadoResponse, HttpStatus.OK);
+    }
+
 
 }

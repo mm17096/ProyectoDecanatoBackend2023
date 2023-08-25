@@ -29,13 +29,8 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public Vehiculo leerPorId(Integer id) {
+    public Vehiculo leerPorId(String id) {
         return this.vehiculoRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Vehiculo leerPorDUI(String dui) {
-        return null;
     }
 
     @Override

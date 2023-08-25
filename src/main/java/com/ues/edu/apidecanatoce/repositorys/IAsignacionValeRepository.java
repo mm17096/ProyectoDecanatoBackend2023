@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale, Integer> {
+public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale, String> {
 }

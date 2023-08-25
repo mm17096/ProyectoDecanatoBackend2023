@@ -19,9 +19,8 @@ import java.time.LocalDate;
 @Table(name="tb_compra")
 public class Compra {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_compra")
-    private int codigoCompra;
+    private String codigoCompra;
 
     @Column(name = "proveedor", length= 200)
     private String proveedor;
