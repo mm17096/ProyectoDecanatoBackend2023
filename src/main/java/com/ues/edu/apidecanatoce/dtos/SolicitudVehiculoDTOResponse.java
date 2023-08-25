@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos;
 
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,26 +1,24 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.vehiculo;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name="tb_vehiculo")
 public class Vehiculo {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_vehiculo")
-    private String codigoVehiculo;
+    private UUID codigoVehiculo;
     @Column(name = "placa")
     private String placa;
     @Column(name = "modelo")
@@ -51,5 +49,12 @@ public class Vehiculo {
     private String nombrefoto;
     @Column(name = "urlfoto")
     private String urlfoto;
+
+    public VehiculoDto toDTO(){
+        return VehiculoDto.builder().codigoVehiculo(codigoVehiculo).placa(placa).modelo(modelo)
+                .marca(marca).clase(clase).color(color).year(year).fecha_tarjeta(fecha_tarjeta)
+                .capacidad(capacidad).capacidadTanque(capacidadTanque).estado(estado).n_chasis(n_chasis)
+                .n_motor(n_motor).tipo_gas(tipo_gas).nombrefoto(nombrefoto).urlfoto(urlfoto).build();
+    }
 }
 
