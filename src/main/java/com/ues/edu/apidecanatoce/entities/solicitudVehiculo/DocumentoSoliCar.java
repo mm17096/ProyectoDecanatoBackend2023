@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -19,7 +20,9 @@ import java.time.LocalDate;
 public class DocumentoSoliCar {
 
     @Id
-    private int codigoDocumento;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "codigo_documento")
+    private UUID codigoDocumento;
 
     @Column(name = "nombredocment")
     private String nombreDocumento;

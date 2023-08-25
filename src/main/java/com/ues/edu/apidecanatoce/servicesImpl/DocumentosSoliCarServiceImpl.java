@@ -1,49 +1,56 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.DocumentoSoliCar;
-import com.ues.edu.apidecanatoce.entities.Documentos;
-import com.ues.edu.apidecanatoce.repositorys.IDocumentoSoliCarRepository;
-import com.ues.edu.apidecanatoce.services.IDocumentosSoliCarService;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.IDocumentoSoliCarRepository;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class DocumentosSoliCarServiceImpl implements IDocumentosSoliCarService {
+public class DocumentosSoliCarServiceImpl implements IDocumentosSoliCarService{
 
     @Autowired
     private IDocumentoSoliCarRepository documentosRepository;
 
+
     @Override
-    public DocumentoSoliCar registrar(DocumentoSoliCar obj) {
-        return this.documentosRepository.save(obj);
+    public DocumentoSoliCar registrar(MultipartFile data) {
+        return null;
     }
 
     @Override
-    public DocumentoSoliCar modificar(DocumentoSoliCar obj) {
-        return this.documentosRepository.save(obj);
+    public DocumentoSoliCar leerPorId(UUID id) {
+        return null;
     }
 
     @Override
-    public List<DocumentoSoliCar> listar() {
-        return this.documentosRepository.findAll();
+    public Page<DocumentoSoliCar> listar(Pageable pageable) {
+        return null;
     }
 
     @Override
-    public DocumentoSoliCar leerPorId(Integer id) {
-        return this.documentosRepository.findById(id).orElse(null);
+    public List<DocumentoSoliCar> listarSinPagina() {
+        return null;
     }
 
     @Override
-    public boolean eliminar(DocumentoSoliCar obj) {
-        // TODO Auto-generated method stub
-        try {
-            this.documentosRepository.delete(obj);
-            return true;
-        } catch (Exception e) {
-            // TODO: handle exception
-            return false;
-        }
+    public List<DocumentoSoliCar> listarPorClase() {
+        return null;
+    }
+
+    @Override
+    public DocumentoSoliCar actualizar(DocumentoSoliCar data) {
+        return null;
+    }
+
+    @Override
+    public DocumentoSoliCar eliminar(UUID id) {
+        return null;
     }
 }

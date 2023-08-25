@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class VehiculoDTORequest {
+public class VehiculoDto {
 
     private UUID codigoVehiculo;
 
@@ -26,10 +26,10 @@ public class VehiculoDTORequest {
     @NotNull(message = "El modelo es obligario")
     private String modelo;
 
-    @NotNull(message = "El marca es obligario")
+    @NotNull(message = "La marca es obligario")
     private String marca;
 
-    @NotNull(message = "El clase es obligario")
+    @NotNull(message = "La clase es obligario")
     private String clase;
 
     @NotNull(message = "El color es obligario")

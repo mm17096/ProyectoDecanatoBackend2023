@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,5 +25,5 @@ public class SolicitudVehiculoDTORequest {
     private int estado;
     private int codigoUsuario; // ID del usuario
     private String codigoMotorista; // ID del motorista
-    private int codigoVehiculo; // ID del vehiculo
+    private UUID codigoVehiculo; // ID del vehiculo
 }

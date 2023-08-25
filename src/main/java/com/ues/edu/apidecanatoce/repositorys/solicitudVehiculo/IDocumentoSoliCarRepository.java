@@ -1,13 +1,12 @@
-package com.ues.edu.apidecanatoce.repositorys;
+package com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo;
 
-import com.ues.edu.apidecanatoce.entities.DocumentoSoliCar;
-import com.ues.edu.apidecanatoce.entities.Documentos;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface IDocumentoSoliCarRepository extends JpaRepository<DocumentoSoliCar, Integer> {
+public interface IDocumentoSoliCarRepository extends JpaRepository<DocumentoSoliCar, UUID> {
 
 }

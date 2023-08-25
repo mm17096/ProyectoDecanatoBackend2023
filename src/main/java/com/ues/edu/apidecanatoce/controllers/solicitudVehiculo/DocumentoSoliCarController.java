@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,5 +17,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DocumentoSoliCarController {
     private final IDocumentosSoliCarService documentosService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<DocumentoSoliCar> uploadFile(@RequestParam("file") MultipartFile file){
+        return ResponseEntity.ok(documentosService.registrar(file));
+    }
 
 }
