@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.Vehiculo;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.IVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;

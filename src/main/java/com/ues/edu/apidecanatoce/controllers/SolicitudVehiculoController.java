@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.controllers;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTOResponse;
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;

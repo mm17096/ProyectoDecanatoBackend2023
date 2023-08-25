@@ -1,9 +1,8 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.dtos.VehiculoDTORequest;
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDTORequest;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
-import com.ues.edu.apidecanatoce.entities.Vehiculo;
-import com.ues.edu.apidecanatoce.exceptions.InvalidDataException;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.ModeloNotFoundException;
 import com.ues.edu.apidecanatoce.services.IVehiculoService;
 import jakarta.validation.Valid;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
