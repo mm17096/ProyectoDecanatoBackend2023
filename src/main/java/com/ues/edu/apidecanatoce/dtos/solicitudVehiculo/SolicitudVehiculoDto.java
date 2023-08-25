@@ -2,9 +2,11 @@ package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.repositorys.IVehiculoRepository;
+import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
+
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -51,7 +53,7 @@ public class SolicitudVehiculoDto {
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo.getCodigoVehiculo()).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista.getDui()).orElseThrow(
+        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista.getCodigoEmpleado()).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
 
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
