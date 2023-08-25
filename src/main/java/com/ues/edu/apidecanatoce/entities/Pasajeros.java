@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Pasajeros {
     @Id
+
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 

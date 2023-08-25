@@ -40,7 +40,6 @@ public class ValeDependeDto {
     @Min(value = 0, message = "Correlativo debe ser mayor o igual a 0")
     private Long correlativo;
 
-
     public Vale toEntitySaveDep() {
         return Vale.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).
                 compra(this.compra)

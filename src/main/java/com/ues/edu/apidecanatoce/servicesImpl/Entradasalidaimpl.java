@@ -2,15 +2,16 @@ package com.ues.edu.apidecanatoce.servicesImpl;
 
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
-import com.ues.edu.apidecanatoce.services.IEntradaSalidaService;
+import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class EntradaSalidaImpl implements IEntradaSalidaService {
+public class Entradasalidaimpl implements Ientradasalidaservice {
 
     private  final EntradaSalidaRepo entradaSalidaRepo;
     @Override
@@ -30,13 +31,8 @@ public class EntradaSalidaImpl implements IEntradaSalidaService {
     }
 
     @Override
-    public Entrada_Salidas leerPorId(Integer id) {
+    public Entrada_Salidas leerPorId(UUID id) {
         return this.entradaSalidaRepo.findById(id).get();
-    }
-
-    @Override
-    public Entrada_Salidas leerPorDUI(String dui) {
-        return null;
     }
 
     @Override

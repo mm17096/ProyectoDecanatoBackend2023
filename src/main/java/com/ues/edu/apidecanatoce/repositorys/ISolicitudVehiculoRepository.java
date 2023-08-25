@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
+
 public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, UUID> {
     List<SolicitudVehiculo> findAllByEstado(int estado);
 }

@@ -1,19 +1,16 @@
 package com.ues.edu.apidecanatoce.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -23,9 +20,10 @@ import java.util.List;
 @Table(name="tb_empleado")
 public class Empleado {
     @Id
-    @Column(name ="DUI")
+    @Column(name ="codigo_empleado")
+    private UUID codigoEmpleado;
+    @Column(name = "dui")
     private String dui;
-
     @Column(name ="nombre")
     private String nombre;
     @Column(name = "apellido")

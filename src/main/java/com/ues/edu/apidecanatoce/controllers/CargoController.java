@@ -2,16 +2,16 @@ package com.ues.edu.apidecanatoce.controllers;
 
 
 import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
-import com.ues.edu.apidecanatoce.entities.Cargo;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.services.ICargoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -32,7 +32,7 @@ public class CargoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cargo>consultaById(@PathVariable("id") Integer id){
+    public ResponseEntity<Cargo>consultaById(@PathVariable("id") UUID id){
         Cargo obj = this.cargoService.leerPorId(id);
 
         return new ResponseEntity<Cargo>(obj , HttpStatus.OK);
@@ -64,7 +64,7 @@ public class CargoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Cargo>> deletePatient(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Cargo>> deletePatient(@PathVariable("id") UUID id){
         Optional<Cargo> opt = Optional.ofNullable(this.cargoService.leerPorId(id));
         GenericResponse<Cargo> response =  new GenericResponse<Cargo>();
         HttpStatus http = HttpStatus.OK;
