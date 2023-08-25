@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl;
 
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
-import com.ues.edu.apidecanatoce.services.IEntradaSalidaService;
+import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class EntradaSalidaImpl implements IEntradaSalidaService {
+public class Entradasalidaimpl implements Ientradasalidaservice {
 
     private  final EntradaSalidaRepo entradaSalidaRepo;
     @Override
