@@ -46,7 +46,7 @@ public class SolicitudVvConsultasController {
 
         for (SolicitudVehiculo soliVe: soliVehiculos){
             SolicitudVvDTO soliVeDTOResp = new SolicitudVvDTO();
-            soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
+          //  soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
             soliVeDTOResp.setFechaSolicitud(soliVe.getFechaSolicitud());
             soliVeDTOResp.setFechaSalida(soliVe.getFechaSalida());
             soliVeDTOResp.setUnidadSolicitante(soliVe.getUnidadSolicitante());

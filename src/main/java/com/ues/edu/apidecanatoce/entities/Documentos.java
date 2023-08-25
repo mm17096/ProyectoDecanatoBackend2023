@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -19,8 +20,7 @@ import java.time.LocalDate;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoDocumentos")
 public class Documentos {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigoDocumentos;
+    private String codigoDocumentos;
 
     @Column(name = "tipo")
     private String tipoDocumento;
@@ -38,8 +38,8 @@ public class Documentos {
 
 
     @ManyToOne
-    @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true,
-            foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
+    @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true, foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
+    @JsonBackReference
     private SolicitudVehiculo codigoSolicitudVehiculo;
 
 

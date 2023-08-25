@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,9 +20,8 @@ import java.time.LocalTime;
 @Table(name="tb_EntradaSalida")
 public class Entrada_Salidas {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "codigo_entradasalida")
-    private Integer codigoEntradaSalida;
+    private UUID codigoEntradaSalida;
     @Column(name = "tipo")
     private String tipo;
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)

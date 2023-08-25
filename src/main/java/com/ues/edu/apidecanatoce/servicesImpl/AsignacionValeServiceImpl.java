@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class AsignacionValeServiceImpl implements IAsignacionValeService {
@@ -27,15 +29,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public AsignacionVale leerPorId(Integer id) {
+    public AsignacionVale leerPorId(UUID id) {
         return asignacionValeRepository.findById(id).get();
     }
-
-    @Override
-    public AsignacionVale leerPorDUI(String dui) {
-        return null;
-    }
-
 
     @Override
     public boolean eliminar(AsignacionVale obj) {

@@ -9,6 +9,5 @@ public interface ICrudSolVe<T> {
     List<T> listar();
     T leerPorId(UUID id);
     boolean eliminar(T obj);
-
     List<T> listarPorEstado(int estado);
 }
