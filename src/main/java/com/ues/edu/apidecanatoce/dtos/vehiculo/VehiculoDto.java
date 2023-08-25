@@ -1,19 +1,23 @@
-package com.ues.edu.apidecanatoce.dtos;
+package com.ues.edu.apidecanatoce.dtos.vehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import jakarta.validation.constraints.*;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
-public class VehiculoDTORequest {
+@Builder
+public class VehiculoDto {
 
-    private Integer codigoVehiculo;
+    private UUID codigoVehiculo;
 
     @NotNull(message = "La placa es obligatoria")
     @Size(max = 6, message = "La placa excede los limites de caracteres")
@@ -22,10 +26,10 @@ public class VehiculoDTORequest {
     @NotNull(message = "El modelo es obligario")
     private String modelo;
 
-    @NotNull(message = "El marca es obligario")
+    @NotNull(message = "La marca es obligario")
     private String marca;
 
-    @NotNull(message = "El clase es obligario")
+    @NotNull(message = "La clase es obligario")
     private String clase;
 
     @NotNull(message = "El color es obligario")
@@ -60,4 +64,11 @@ public class VehiculoDTORequest {
     private String nombrefoto;
 
     private String urlfoto;
+
+    public Vehiculo toEntity(){
+        return Vehiculo.builder().codigoVehiculo(codigoVehiculo).placa(placa).modelo(modelo)
+                .marca(marca).clase(clase).color(color).year(year).fecha_tarjeta(fecha_tarjeta)
+                .capacidad(capacidad).capacidadTanque(capacidadTanque).estado(estado).n_chasis(n_chasis)
+                .n_motor(n_motor).tipo_gas(tipo_gas).nombrefoto(nombrefoto).urlfoto(urlfoto).build();
+    }
 }
