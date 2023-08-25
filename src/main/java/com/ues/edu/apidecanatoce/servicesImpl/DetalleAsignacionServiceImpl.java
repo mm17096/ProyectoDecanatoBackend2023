@@ -15,14 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
 
-    private final IDetalleAsignacionRepository iDetalleAsignacionRepository;
-
-    private final DetalleAsignacionMapper detalleAsignacionMapper;
 
     @Override
     public Page<DetalleAsignacionDto> list(Pageable pageable) {
-        var detalles = iDetalleAsignacionRepository.findAll(pageable);
-        return detalles.map(detalleAsignacionMapper);
+        return null;
     }
 
     @Override
@@ -41,13 +37,8 @@ public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
     }
 
     @Override
-    public DetalleAsignacionVale leerPorDUI(String dui) {
+    public DetalleAsignacionDto leerPorId(Integer id) {
         return null;
-    }
-
-    @Override
-    public boolean eliminar(DetalleAsignacionVale obj) {
-        return false;
     }
 
     @Override

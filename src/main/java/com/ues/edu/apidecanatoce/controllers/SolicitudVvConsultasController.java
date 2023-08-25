@@ -38,7 +38,7 @@ public class SolicitudVvConsultasController {
     }
 
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<SolicitudVvDTO>> listaSolicitudesDTO() throws IOException {
         List<SolicitudVehiculo> soliVehiculos = this.servicioSolicitudVehiculo.listar();
         List<SolicitudVvDTO> soliVehiculosDTOResp = new ArrayList<>();
@@ -74,5 +74,5 @@ public class SolicitudVvConsultasController {
             soliVehiculosDTOResp.add(soliVeDTOResp);
         }
         return new ResponseEntity<List<SolicitudVvDTO>>(soliVehiculosDTOResp, HttpStatus.OK);
-    }
+    }*/
 }
