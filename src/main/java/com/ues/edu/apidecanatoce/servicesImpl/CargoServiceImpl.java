@@ -2,13 +2,14 @@ package com.ues.edu.apidecanatoce.servicesImpl;
 
 
 import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
-import com.ues.edu.apidecanatoce.entities.Cargo;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.services.ICargoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -50,15 +51,15 @@ public class CargoServiceImpl implements ICargoService {
 
 
     @Override
-    public Cargo leerPorId(Integer id) {
+    public Cargo leerPorId(UUID id) {
         return this.cargoService.findById(id).orElse(new Cargo());
     }
-
+    /*
     @Override
     public Cargo leerPorDUI(String dui) {
         return null;
     }
-
+*/
 
     @Override
     public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
