@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.services;
+package com.ues.edu.apidecanatoce.services.solicitudVehiculo;
 
 import java.util.List;
 import java.util.UUID;

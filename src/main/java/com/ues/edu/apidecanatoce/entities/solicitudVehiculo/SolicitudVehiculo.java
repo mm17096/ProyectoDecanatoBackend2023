@@ -3,9 +3,11 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +23,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
@@ -114,5 +117,16 @@ public class SolicitudVehiculo {
 
     @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
+
+    public SolicitudVehiculoDto toDto(){
+        return SolicitudVehiculoDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
+                .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+    }
 
 }

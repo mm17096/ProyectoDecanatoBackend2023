@@ -2,12 +2,17 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +24,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/solicitudvehiculo")
+@RequiredArgsConstructor
 public class SolicitudVehiculoController {
 
     @Autowired
     private ConfigSoliVeRepository configuracionRepository;
+
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
+    private final ISolicitudVehiculoServices servicioSolicitudVehiculos;
+
+
     @Autowired
     private EstadosRepository estadosRepository;
     private SolicitudVehiculo solicitudVehiculo;
@@ -31,16 +41,16 @@ public class SolicitudVehiculoController {
     private Usuario usuario;
     private Vehiculo vehiculo;
 
-    @Autowired
-    public SolicitudVehiculoController(ISolicitudVehiculoService servicioSolicitudVehiculo) {
-        this.servicioSolicitudVehiculo = servicioSolicitudVehiculo;
-    }
-
     // listar solicitudes
     @GetMapping("/lista")
     public ResponseEntity<List<SolicitudVehiculo>> obtenerSolicitudes() throws IOException {
         List<SolicitudVehiculo> vehiculos = this.servicioSolicitudVehiculo.listar();
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
+    }
+
+    @GetMapping("/listapage")
+    public ResponseEntity<Page<SolicitudVehiculoDto>> listar(Pageable pageable) {
+        return ResponseEntity.ok(servicioSolicitudVehiculos.listar(pageable));
     }
 
     // listar solicitudes vehiculo por DTO
