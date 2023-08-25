@@ -54,14 +54,9 @@ public class CargoServiceImpl implements ICargoService {
     public Cargo leerPorId(UUID id) {
         return this.cargoService.findById(id).orElse(new Cargo());
     }
-    /*
-    @Override
-    public Cargo leerPorDUI(String dui) {
-        return null;
-    }
-*/
 
     @Override
+
     public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
         List<ICargoxEstadoDTO> listCargo = this.cargoService.findCargoByEstado(estado);
         return listCargo;

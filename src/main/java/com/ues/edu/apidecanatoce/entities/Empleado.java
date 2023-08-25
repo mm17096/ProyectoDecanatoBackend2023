@@ -1,6 +1,5 @@
 package com.ues.edu.apidecanatoce.entities;
 
-
 import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import jakarta.persistence.*;
@@ -10,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -19,9 +20,10 @@ import java.time.LocalDate;
 @Table(name="tb_empleado")
 public class Empleado {
     @Id
-    @Column(name ="DUI")
+    @Column(name ="codigo_empleado")
+    private UUID codigoEmpleado;
+    @Column(name = "dui")
     private String dui;
-
     @Column(name ="nombre")
     private String nombre;
     @Column(name = "apellido")

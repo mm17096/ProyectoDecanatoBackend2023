@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SolicitudVehiculoDTOResponse {
     private UUID codigoSolicitudVehiculo;
+
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
     private String unidadSolicitante;

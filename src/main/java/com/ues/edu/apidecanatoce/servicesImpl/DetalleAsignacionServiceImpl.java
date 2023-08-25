@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +38,7 @@ public class DetalleAsignacionServiceImpl implements IDetalleAsignacionService {
     }
 
     @Override
-    public DetalleAsignacionDto leerPorId(Integer id) {
-        return null;
-    }
-
-    @Override
-    public DetalleAsignacionDto leerPorDUI(String dui) {
+    public DetalleAsignacionDto leerPorId(UUID id) {
         return null;
     }
 

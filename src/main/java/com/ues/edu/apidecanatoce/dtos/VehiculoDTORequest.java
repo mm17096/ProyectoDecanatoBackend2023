@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 public class VehiculoDTORequest {
 
-    private Integer codigoVehiculo;
+    private String codigoVehiculo;
 
     @NotNull(message = "La placa es obligatoria")
     @Size(max = 6, message = "La placa excede los limites de caracteres")

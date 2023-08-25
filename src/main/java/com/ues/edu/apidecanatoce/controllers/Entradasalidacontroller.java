@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
@@ -32,7 +33,8 @@ public class Entradasalidacontroller {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") Integer id){
+
+    public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") UUID id){
         Optional<Entrada_Salidas> opt= Optional.ofNullable(this.entradasalidaimpl.leerPorId(id));
         GenericResponse<Entrada_Salidas> resp= new GenericResponse<>();
         HttpStatus http= HttpStatus.INTERNAL_SERVER_ERROR;

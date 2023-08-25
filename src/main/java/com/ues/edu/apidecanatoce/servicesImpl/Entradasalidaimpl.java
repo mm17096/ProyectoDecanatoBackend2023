@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -30,13 +31,8 @@ public class Entradasalidaimpl implements Ientradasalidaservice {
     }
 
     @Override
-    public Entrada_Salidas leerPorId(Integer id) {
+    public Entrada_Salidas leerPorId(UUID id) {
         return this.entradaSalidaRepo.findById(id).get();
-    }
-
-    @Override
-    public Entrada_Salidas leerPorDUI(String dui) {
-        return null;
     }
 
     @Override

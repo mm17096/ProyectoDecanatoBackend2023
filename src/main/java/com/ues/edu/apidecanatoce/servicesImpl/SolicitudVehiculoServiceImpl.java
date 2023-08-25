@@ -16,6 +16,7 @@ public class SolicitudVehiculoServiceImpl implements ISolicitudVehiculoService {
 
     @Autowired
     private final ISolicitudVehiculoRepository solicitudVehiculoService;
+
     @Override
     public SolicitudVehiculo registrar(SolicitudVehiculo obj) {
         return this.solicitudVehiculoService.save(obj);

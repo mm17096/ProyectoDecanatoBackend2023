@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmpleadoServiceImpl implements IEmpleadoService {
@@ -40,14 +41,8 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         return  this.empleadoRepository.buscarEmpleado(filtro) ;
     }
 
-
     @Override
-    public Empleado leerPorId(Integer id) {
-        return null;
-    }
-
-    @Override
-    public Empleado leerPorDUI(String dui) {
+    public Empleado leerPorId(UUID dui) {
         return this.empleadoRepository.findById(dui).get();
     }
 

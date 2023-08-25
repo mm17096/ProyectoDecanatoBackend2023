@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class VehiculoServiceImpl implements IVehiculoService {
@@ -29,13 +30,8 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public Vehiculo leerPorId(Integer id) {
+    public Vehiculo leerPorId(UUID id) {
         return this.vehiculoRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Vehiculo leerPorDUI(String dui) {
-        return null;
     }
 
     @Override

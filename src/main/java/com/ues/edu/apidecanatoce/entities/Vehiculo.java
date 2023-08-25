@@ -19,9 +19,8 @@ import java.util.List;
 @Table(name="tb_vehiculo")
 public class Vehiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_vehiculo")
-    private Integer codigoVehiculo;
+    private String codigoVehiculo;
     @Column(name = "placa")
     private String placa;
     @Column(name = "modelo")

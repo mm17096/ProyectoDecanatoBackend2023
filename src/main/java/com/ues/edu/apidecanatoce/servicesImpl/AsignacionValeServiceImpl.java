@@ -29,16 +29,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public AsignacionVale leerPorId(Integer id) {
-        return null;
+    public AsignacionVale leerPorId(UUID id) {
+        return asignacionValeRepository.findById(id).get();
     }
-
-
-    @Override
-    public AsignacionVale leerPorDUI(String dui) {
-        return null;
-    }
-
 
     @Override
     public boolean eliminar(AsignacionVale obj) {

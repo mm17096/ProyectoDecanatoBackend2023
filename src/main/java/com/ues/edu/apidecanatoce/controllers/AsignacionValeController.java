@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -44,7 +45,7 @@ public class AsignacionValeController {
     }*/
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") Integer id) {
+    public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") UUID id) {
         Optional<AsignacionVale> opt = Optional.ofNullable(this.asignacionValeService.leerPorId(id));
         GenericResponse<AsignacionVale> resp;
         if (opt.isPresent()) {

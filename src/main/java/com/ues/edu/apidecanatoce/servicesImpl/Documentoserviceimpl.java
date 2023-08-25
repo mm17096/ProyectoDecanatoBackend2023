@@ -34,8 +34,6 @@ public class Documentoserviceimpl implements Idocumentoservice {
         return this.documentosrepo.findById(id).get();
     }
 
-
-
     @Override
     public boolean eliminar(Documentos obj) {
         try {
@@ -46,4 +44,8 @@ public class Documentoserviceimpl implements Idocumentoservice {
         }
     }
 
+    @Override
+    public List<Documentos> listarPorEstado(int estado) {
+        return null;
+    }
 }

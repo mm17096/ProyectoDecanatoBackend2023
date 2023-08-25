@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.dtos;
+package com.ues.edu.apidecanatoce.dtos.empleados;
 
 import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
@@ -28,5 +28,4 @@ public class EmpleadoTablaDTO {
     private String urlfoto;
     private Cargo cargo;
     private Departamento departamento;
-
 }

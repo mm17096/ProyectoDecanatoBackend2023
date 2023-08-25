@@ -6,6 +6,7 @@ import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import java.util.List;
 
 
+
 public interface ICargoService extends IcrudTemp<Cargo> {
 
 List<ICargoxEstadoDTO> findCargoByEstado(Integer estado);

@@ -21,7 +21,6 @@ import java.util.UUID;
 @Builder
 
 public class CompraDto {
-
     private UUID id;
 
     @NotBlank(message = "La factura es obligatoria")

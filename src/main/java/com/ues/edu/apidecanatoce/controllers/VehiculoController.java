@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/vehiculo")
@@ -32,7 +33,7 @@ public class VehiculoController {
     }
 
     @GetMapping("/{idVehiculo}")
-    public ResponseEntity<Vehiculo> obtenerVehiculo(@PathVariable("idVehiculo") Integer idVehiculo){
+    public ResponseEntity<Vehiculo> obtenerVehiculo(@PathVariable("idVehiculo") UUID idVehiculo){
         Vehiculo vehiculo = this.vehiculoService.leerPorId(idVehiculo);
         if (vehiculo==null){
             throw new ModeloNotFoundException("Vehiculo no encontrado");
@@ -141,7 +142,7 @@ public class VehiculoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Vehiculo>> eliminarVehiculo(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Vehiculo>> eliminarVehiculo(@PathVariable("id") UUID id){
         GenericResponse<Vehiculo> resp = new GenericResponse<>();
         Optional<Vehiculo> opt = Optional.ofNullable(this.vehiculoService.leerPorId(id));
         if (opt.isPresent()){

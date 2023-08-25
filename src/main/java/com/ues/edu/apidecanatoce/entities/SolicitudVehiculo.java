@@ -24,6 +24,7 @@ import java.util.Set;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
+
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
     private UUID codigoSolicitudVehiculo;

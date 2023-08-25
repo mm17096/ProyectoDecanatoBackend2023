@@ -7,7 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IDeptopRepo extends JpaRepository<Departamento, UUID> {
-
     List<Departamento> findAllByEstado(int estado);
-
 }

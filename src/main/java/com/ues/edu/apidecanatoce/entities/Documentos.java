@@ -20,8 +20,7 @@ import java.time.LocalDate;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoDocumentos")
 public class Documentos {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigoDocumentos;
+    private String codigoDocumentos;
 
     @Column(name = "tipo")
     private String tipoDocumento;

@@ -59,10 +59,4 @@ public class DeptoServiceImp implements IDeptoService {
 
     @Override
     public List<Departamento> findAllByEstado(int estado){ return  this.deptopService.findAllByEstado(estado);}
-
-    public Departamento leerPorDUI(String dui) {
-        return null;
-    }
-
-
 }

@@ -22,7 +22,7 @@ public class SolicitudVehiculoDTORequest {
     private LocalTime horaSalida;
     private int cantidadPersonas;
     private int estado;
-    private int codigoUsuario; // ID del usuario
+    private String codigoUsuario; // ID del usuario
     private String codigoMotorista; // ID del motorista
-    private int codigoVehiculo; // ID del vehiculo
+    private String codigoVehiculo; // ID del vehiculo
 }
