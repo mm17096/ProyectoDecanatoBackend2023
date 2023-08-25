@@ -3,7 +3,10 @@ package com.ues.edu.apidecanatoce.controllers;
 
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
-import com.ues.edu.apidecanatoce.services.IEntradaSalidaService;
+import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.servicesImpl.Entradasalidaimpl;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,29 +16,28 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/entradasalida")
-public class entradasalidaController {
+public class Entradasalidacontroller {
 
-    private final IEntradaSalidaService entradaSalidaService;
+    private final Entradasalidaimpl entradasalidaimpl;
 
-    public entradasalidaController(IEntradaSalidaService entradaSalidaService) {
-        this.entradaSalidaService = entradaSalidaService;
-    }
+
     private Entrada_Salidas entradaSalidas;
 
     @GetMapping
     public ResponseEntity<List<Entrada_Salidas>> mostrarEntradaSalidas(){
-        List<Entrada_Salidas> entradaSalidas1= this.entradaSalidaService.listar();
+        List<Entrada_Salidas> entradaSalidas1= this.entradasalidaimpl.listar();
         return new ResponseEntity<List<Entrada_Salidas>>(entradaSalidas1, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") Integer id){
-        Optional<Entrada_Salidas> opt= Optional.ofNullable(this.entradaSalidaService.leerPorId(id));
+        Optional<Entrada_Salidas> opt= Optional.ofNullable(this.entradasalidaimpl.leerPorId(id));
         GenericResponse<Entrada_Salidas> resp= new GenericResponse<>();
         HttpStatus http= HttpStatus.INTERNAL_SERVER_ERROR;
         if (opt.isPresent()){
-            if (this.entradaSalidaService.eliminar(opt.get())){
+            if (this.entradasalidaimpl.eliminar(opt.get())){
                 resp.setCode(1);
                 resp.setMessage("Exito - se elimio la información");
                 resp.setResponse(opt.get());
@@ -60,7 +62,7 @@ public class entradasalidaController {
         System.out.println(entradaSalidas);
         if (opt.isPresent()){
             try {
-                conSelect=this.entradaSalidaService.registrar(entradaSalidas);
+                conSelect=this.entradasalidaimpl.registrar(entradaSalidas);
                 resp.setCode(1);
                 resp.setMessage("Exito-- se almaceno la zona");
                 resp.setResponse(conSelect);
@@ -76,11 +78,11 @@ public class entradasalidaController {
 
 
     public Entrada_Salidas guardar(@RequestBody Entrada_Salidas entradaSalidas){
-        return this.entradaSalidaService.registrar(entradaSalidas);
+        return this.entradasalidaimpl.registrar(entradaSalidas);
     }
     @PutMapping
     public ResponseEntity<GenericResponse<Entrada_Salidas>> editarEntradaSalida(@RequestBody Entrada_Salidas entradaSalidas) {
-        Optional<Entrada_Salidas> opt = Optional.ofNullable(this.entradaSalidaService.leerPorId(entradaSalidas.getCodigoEntradaSalida()));
+        Optional<Entrada_Salidas> opt = Optional.ofNullable(this.entradasalidaimpl.leerPorId(entradaSalidas.getCodigoEntradaSalida()));
         GenericResponse<Entrada_Salidas> resp;
         Entrada_Salidas entradasalidasRespon;
         if(opt.isPresent()) {
