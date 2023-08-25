@@ -1,10 +1,10 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDTORequest;
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.ModeloNotFoundException;
-import com.ues.edu.apidecanatoce.services.IVehiculoService;
+import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,9 +39,9 @@ public class VehiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<GenericResponse<VehiculoDTORequest>> guardarVehiculo( @Valid @RequestBody VehiculoDTORequest vehiculo) {
-        GenericResponse<VehiculoDTORequest> resp = new GenericResponse<>(0,"Fallo - no pudo guardar la vehiculo", vehiculo);
-        Optional<VehiculoDTORequest> opt = Optional.ofNullable(vehiculo);
+    public ResponseEntity<GenericResponse<VehiculoDto>> guardarVehiculo(@Valid @RequestBody VehiculoDto vehiculo) {
+        GenericResponse<VehiculoDto> resp = new GenericResponse<>(0,"Fallo - no pudo guardar la vehiculo", vehiculo);
+        Optional<VehiculoDto> opt = Optional.ofNullable(vehiculo);
         if(opt.isPresent()){
             Vehiculo vehiculoEntity = new Vehiculo();
             vehiculoEntity.setCodigoVehiculo(vehiculo.getCodigoVehiculo());
@@ -72,10 +72,10 @@ public class VehiculoController {
     }
 
     @PostMapping(value = "/inserta", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<GenericResponse<VehiculoDTORequest>> guardardosParametre(@RequestPart(name = "imagen", required = false) MultipartFile imagen,
-                                                                  @Valid @RequestPart("vehiculo") VehiculoDTORequest vehiculo){
-        GenericResponse<VehiculoDTORequest> resp = new GenericResponse<>(0,"Fallo - no pudo guardar el vehiculo", vehiculo);
-        Optional<VehiculoDTORequest> opt = Optional.ofNullable(vehiculo);
+    public ResponseEntity<GenericResponse<VehiculoDto>> guardardosParametre(@RequestPart(name = "imagen", required = false) MultipartFile imagen,
+                                                                            @Valid @RequestPart("vehiculo") VehiculoDto vehiculo){
+        GenericResponse<VehiculoDto> resp = new GenericResponse<>(0,"Fallo - no pudo guardar el vehiculo", vehiculo);
+        Optional<VehiculoDto> opt = Optional.ofNullable(vehiculo);
         if(opt.isPresent()){
             Vehiculo vehiculoEntity = new Vehiculo();
             vehiculoEntity.setCodigoVehiculo(vehiculo.getCodigoVehiculo());
@@ -105,10 +105,10 @@ public class VehiculoController {
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
     @PutMapping(value = "/edita", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<GenericResponse<VehiculoDTORequest>> editaVehiculo(@RequestPart(name = "imagen", required = false) MultipartFile imagen,
-                                                                             @Valid @RequestPart("vehiculo") VehiculoDTORequest vehiculo){
-        GenericResponse<VehiculoDTORequest> resp = new GenericResponse<>(0,"Fallo - no pudo edito el vehiculo", vehiculo);
-        Optional<VehiculoDTORequest> opt = Optional.ofNullable(vehiculo);
+    public ResponseEntity<GenericResponse<VehiculoDto>> editaVehiculo(@RequestPart(name = "imagen", required = false) MultipartFile imagen,
+                                                                      @Valid @RequestPart("vehiculo") VehiculoDto vehiculo){
+        GenericResponse<VehiculoDto> resp = new GenericResponse<>(0,"Fallo - no pudo edito el vehiculo", vehiculo);
+        Optional<VehiculoDto> opt = Optional.ofNullable(vehiculo);
         if(opt.isPresent()){
             Vehiculo vehiculoEntity = new Vehiculo();
             vehiculoEntity.setCodigoVehiculo(vehiculo.getCodigoVehiculo());
