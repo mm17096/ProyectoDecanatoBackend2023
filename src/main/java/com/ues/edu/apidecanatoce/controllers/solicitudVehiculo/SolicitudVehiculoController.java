@@ -1,11 +1,12 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
-import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTORequest;
-import com.ues.edu.apidecanatoce.dtos.SolicitudVehiculoDTOResponse;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
-import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

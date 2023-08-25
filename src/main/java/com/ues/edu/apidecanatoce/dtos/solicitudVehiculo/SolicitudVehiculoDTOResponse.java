@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.dtos;
+package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.*;
 import lombok.AllArgsConstructor;

@@ -1,18 +1,10 @@
 package com.ues.edu.apidecanatoce.controllers;
 
 
-import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
-import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
-import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/solicitudVv")
