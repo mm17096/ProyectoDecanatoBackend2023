@@ -33,7 +33,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return asignacionValeRepository.findById(id).get();
     }
 
-
     @Override
     public boolean eliminar(AsignacionVale obj) {
        try {

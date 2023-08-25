@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl;
 
 
 import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
-import com.ues.edu.apidecanatoce.entities.Cargo;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.services.ICargoService;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +56,7 @@ public class CargoServiceImpl implements ICargoService {
     }
 
     @Override
+
     public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
         List<ICargoxEstadoDTO> listCargo = this.cargoService.findCargoByEstado(estado);
         return listCargo;

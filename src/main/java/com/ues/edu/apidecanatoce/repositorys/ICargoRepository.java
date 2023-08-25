@@ -1,9 +1,8 @@
 package com.ues.edu.apidecanatoce.repositorys;
 
 import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
-import com.ues.edu.apidecanatoce.entities.Cargo;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

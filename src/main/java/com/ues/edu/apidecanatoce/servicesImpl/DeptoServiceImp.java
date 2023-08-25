@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.Departamento;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
 import com.ues.edu.apidecanatoce.services.IDeptoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,9 @@ public class DeptoServiceImp implements IDeptoService {
        List<Departamento> listDepto = this.deptopService.findAll();
        return listDepto;
     }
+
+
+
 
     @Override
     public Departamento registrar(Departamento obj){return this.deptopService.save(obj);}
@@ -54,5 +57,6 @@ public class DeptoServiceImp implements IDeptoService {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
 
-
+    @Override
+    public List<Departamento> findAllByEstado(int estado){ return  this.deptopService.findAllByEstado(estado);}
 }

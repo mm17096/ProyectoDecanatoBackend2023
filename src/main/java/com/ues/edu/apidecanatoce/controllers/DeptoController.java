@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.entities.Departamento;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.services.IDeptoService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,13 @@ public class DeptoController {
         Departamento obj = this.deptoService.leerPorId(id);
 
         return new ResponseEntity<Departamento>(obj , HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/listar/{estado}")
+    public ResponseEntity<List<Departamento>> cargolistado(@PathVariable("estado") Integer estado) {
+
+        List<Departamento> deptos =  this.deptoService.findAllByEstado(estado);
+        return new ResponseEntity<List<Departamento>>(deptos,HttpStatus.OK);
     }
 
     @PostMapping
