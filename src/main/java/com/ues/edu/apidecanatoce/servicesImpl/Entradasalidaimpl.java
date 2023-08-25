@@ -35,6 +35,11 @@ public class Entradasalidaimpl implements Ientradasalidaservice {
     }
 
     @Override
+    public Entrada_Salidas leerPorDUI(String dui) {
+        return null;
+    }
+
+    @Override
     public boolean eliminar(Entrada_Salidas obj) {
         try {
             this.entradaSalidaRepo.delete(obj);

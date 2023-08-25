@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.services;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVale;
+
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.dtos;
+package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
 import lombok.*;
 
