@@ -2,11 +2,11 @@ package com.ues.edu.apidecanatoce.services;
 
 import java.util.List;
 
-public interface ICRUD<T> {
-    T registrar(T obj);
-    T modificar(T obj);
+public interface IcrudVv <T>{
+
+
     List<T> listar();
     T leerPorId(Integer id);
-    boolean eliminar(T obj);
-}
 
+    List<T> listarPorEstado(int estado);
+}

@@ -11,7 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,9 +23,9 @@ import java.util.List;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
-    private int codigoSolicitudVehiculo;
+    private UUID codigoSolicitudVehiculo;
 
     //Fecha en que se realiza de la solcitud
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
@@ -107,5 +110,8 @@ public class SolicitudVehiculo {
     //Lista de documentos que tiene la solicitud de vehiculo
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     private List<Documentos> listDocumentos;
+
+    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
 }
