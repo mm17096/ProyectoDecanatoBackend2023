@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmpleadoServiceImpl implements IEmpleadoService {
@@ -41,7 +42,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
     }
 
     @Override
-    public Empleado leerPorId(String dui) {
+    public Empleado leerPorId(UUID dui) {
         return this.empleadoRepository.findById(dui).get();
     }
 
@@ -54,5 +55,10 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
             // TODO: handle exception
             return false;
         }
+    }
+
+    @Override
+    public List<Empleado> listarPorEstado(int estado) {
+        return null;
     }
 }

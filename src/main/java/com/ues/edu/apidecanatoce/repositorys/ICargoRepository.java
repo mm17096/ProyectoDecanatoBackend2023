@@ -10,10 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Repository
-public interface ICargoRepository extends JpaRepository<Cargo, String> {
+public interface ICargoRepository extends JpaRepository<Cargo, UUID> {
 
     @Query(value = "SELECT \n" +
             "tb_cargo.nombre_cargo as nombreCargo,\n" +

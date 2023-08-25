@@ -5,8 +5,8 @@ import com.ues.edu.apidecanatoce.entities.Cargo;
 
 import java.util.List;
 
+public interface ICargoService extends Icrud<Cargo> {
 
-public interface ICargoService extends ICrud<Cargo> {
 
 List<ICargoxEstadoDTO> findCargoByEstado(Integer estado);
 

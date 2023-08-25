@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,8 +24,10 @@ import java.util.List;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
+
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
-    private String codigoSolicitudVehiculo;
+    private UUID codigoSolicitudVehiculo;
 
     //Fecha en que se realiza de la solcitud
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
@@ -74,8 +80,11 @@ public class SolicitudVehiculo {
     private int cantidadPersonas;
 
     // listado de personas que asistiran, si son mas de 5 (incluye el responsable)
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Pasajeros> listaPasajeros;
+
+
 
     //Responsable de la solicitud
     @ManyToOne
@@ -104,7 +113,13 @@ public class SolicitudVehiculo {
     private Empleado motorista;
 
     //Lista de documentos que tiene la solicitud de vehiculo
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
+
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @JsonManagedReference
     private List<Documentos> listDocumentos;
+
+
+    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
 }

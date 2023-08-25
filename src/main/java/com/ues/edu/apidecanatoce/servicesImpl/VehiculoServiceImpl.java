@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class VehiculoServiceImpl implements IVehiculoService {
@@ -29,7 +30,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public Vehiculo leerPorId(String id) {
+    public Vehiculo leerPorId(UUID id) {
         return this.vehiculoRepository.findById(id).orElse(null);
     }
 
@@ -43,6 +44,11 @@ public class VehiculoServiceImpl implements IVehiculoService {
             // TODO: handle exception
             return false;
         }
+    }
+
+    @Override
+    public List<Vehiculo> listarPorEstado(int estado) {
+        return null;
     }
 
 }

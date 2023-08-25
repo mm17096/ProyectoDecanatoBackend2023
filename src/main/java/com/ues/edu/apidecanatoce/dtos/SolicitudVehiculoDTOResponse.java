@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudVehiculoDTOResponse {
-    private String codigoSolicitudVehiculo;
+    private UUID codigoSolicitudVehiculo;
+
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
     private String unidadSolicitante;

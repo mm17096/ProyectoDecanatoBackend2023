@@ -3,9 +3,8 @@ package com.ues.edu.apidecanatoce.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
-import com.ues.edu.apidecanatoce.dtos.EmpleadoTablaDTO;
+import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoTablaDTO;
 import com.ues.edu.apidecanatoce.entities.Empleado;
-import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.IEmpleadoService;
 import com.ues.edu.apidecanatoce.services.PathService;
@@ -24,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/empleado")
@@ -106,7 +106,7 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empleado> empleadoById(@PathVariable("id") String ID) {
+    public ResponseEntity<Empleado> empleadoById(@PathVariable("id") UUID ID) {
         Empleado vehículo = this.empleadoService.leerPorId(ID);
         return new ResponseEntity<Empleado>(vehículo, HttpStatus.OK);
     }
@@ -190,7 +190,7 @@ public class EmpleadoController {
     public ResponseEntity<Empleado> EditarEmpleado(@RequestBody Empleado empleado) {
         Empleado empleadoResponse;
 
-        Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorId(empleado.getDui()));
+        Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorId(empleado.getCodigoEmpleado()));
         Empleado empleadoMod = opt.get();
 
         //se la cambiamos porque viene con la url para mostrar
@@ -207,7 +207,7 @@ public class EmpleadoController {
     }
 
     @PutMapping("/modificarestado")
-    public ResponseEntity<Empleado> CambiarEstado(@RequestParam("id") String id) {
+    public ResponseEntity<Empleado> CambiarEstado(@RequestParam("id") UUID id) {
         Empleado empleadoResponse;
         Optional<Empleado> opt = Optional.ofNullable(this.empleadoService.leerPorId(id));
         Empleado empleadoMod = opt.get();

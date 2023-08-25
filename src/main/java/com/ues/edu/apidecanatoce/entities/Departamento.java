@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class Departamento {
 
     @Id
     @Column(name ="codigo_depto")
-    private String codigoDepto;
+    private UUID codigoDepto;
 
     private String nombre;
 

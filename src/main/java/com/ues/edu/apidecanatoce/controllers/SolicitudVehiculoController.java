@@ -81,18 +81,62 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<List<SolicitudVehiculoDTOResponse>>(soliVehiculosDTOResp, HttpStatus.OK);
     }
 
+    // metodo para filtrar las solicitudes segun estado
+    @GetMapping("/listadtoestado/{estado}")
+    public ResponseEntity<List<SolicitudVehiculoDTOResponse>> listaSolicitudesDTOFiltroEst(
+            @PathVariable("estado") Integer estado) throws IOException {
+
+        List<SolicitudVehiculo> soliVehiculos = this.servicioSolicitudVehiculo.listarPorEstado(estado);
+        List<SolicitudVehiculoDTOResponse> soliVehiculosDTOResp = new ArrayList<>();
+        List<Estados> estados = estadosRepository.findAll();
+
+        for (SolicitudVehiculo soliVe: soliVehiculos){
+            SolicitudVehiculoDTOResponse soliVeDTOResp = new SolicitudVehiculoDTOResponse();
+            soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
+            soliVeDTOResp.setFechaSolicitud(soliVe.getFechaSolicitud());
+            soliVeDTOResp.setFechaSalida(soliVe.getFechaSalida());
+            soliVeDTOResp.setUnidadSolicitante(soliVe.getUnidadSolicitante());
+            soliVeDTOResp.setVehiculo(soliVe.getVehiculo());
+            soliVeDTOResp.setObjetivoMision(soliVe.getObjetivoMision());
+            soliVeDTOResp.setLugarMision(soliVe.getLugarMision());
+            soliVeDTOResp.setDireccion(soliVe.getDireccion());
+            soliVeDTOResp.setHoraEntrada(soliVe.getHoraEntrada());
+            soliVeDTOResp.setHoraSalida(soliVe.getHoraSalida());
+            soliVeDTOResp.setCantidadPersonas(soliVe.getCantidadPersonas());
+            soliVeDTOResp.setListaPasajeros(soliVe.getListaPasajeros());
+            soliVeDTOResp.setSolicitante(soliVe.getUsuario());
+            soliVeDTOResp.setNombreJefeDepto(soliVe.getJefeDepto());
+            soliVeDTOResp.setFechaEntrada(soliVe.getFechaEntrada());
+
+            for (Estados est: estados){
+                if (soliVe.getEstado() == est.getCodigoEstado()){
+                    soliVeDTOResp.setEstado(est.getNombreEstado());
+                }
+            }
+
+            soliVeDTOResp.setMotorista(soliVe.getMotorista());
+            soliVeDTOResp.setListDocumentos(soliVe.getListDocumentos());
+
+            soliVehiculosDTOResp.add(soliVeDTOResp);
+        }
+        return new ResponseEntity<List<SolicitudVehiculoDTOResponse>>(soliVehiculosDTOResp, HttpStatus.OK);
+    }
+
+    // obtener los estados
+    @GetMapping("/estados")
+    public ResponseEntity<List<Estados>> obtenerEstados(){
+        List<Estados> listEstados = estadosRepository.findAll();
+        Estados est = new Estados();
+        est.setCodigoEstado(0);
+        est.setNombreEstado("TODAS");
+        listEstados.add(0, est);
+        return new ResponseEntity<>(listEstados, HttpStatus.OK);
+    }
+
     @GetMapping("/config")
     public ResponseEntity<List<ConfigSoliVe>> obtenerConfiguracion(){
         List<ConfigSoliVe> configSoliVes = this.configuracionRepository.findAll();
         return new ResponseEntity<>(configSoliVes, HttpStatus.OK);
-    }
-
-
-    // metodo para filtrar las solicitudes segun estado
-    @GetMapping("/lista/{estado}")
-    public ResponseEntity<List<SolicitudVehiculo>> obtenerSolicitudesPorEstado(@PathVariable("estado") Integer estado) throws IOException {
-        List<SolicitudVehiculo> vehiculos = this.servicioSolicitudVehiculo.listarPorEstado(estado);
-        return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
 
     @PostMapping(value = "/insertar")

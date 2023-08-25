@@ -5,7 +5,8 @@ import com.ues.edu.apidecanatoce.entities.Documentos;
 
 import java.util.List;
 
-public interface IDocumentoESservice extends ICrud<Documentos> {
+
+public interface Idocumentoservice extends Icrudocumentos<Documentos> {
     List<Documentos> listarPorEstado(int estado);
 
 }

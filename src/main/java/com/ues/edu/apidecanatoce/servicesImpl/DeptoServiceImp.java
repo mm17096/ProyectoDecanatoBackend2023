@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DeptoServiceImp implements IDeptoService {
@@ -44,7 +45,12 @@ public class DeptoServiceImp implements IDeptoService {
     }
 
     @Override
-    public Departamento leerPorId(String id) {
+    public List<Departamento> listarPorEstado(int estado) {
+        return null;
+    }
+
+    @Override
+    public Departamento leerPorId(UUID id) {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class SolicitudVehiculoServiceImpl implements ISolicitudVehiculoService {
 
     @Autowired
     private final ISolicitudVehiculoRepository solicitudVehiculoService;
+
     @Override
     public SolicitudVehiculo registrar(SolicitudVehiculo obj) {
         return this.solicitudVehiculoService.save(obj);
@@ -32,7 +34,7 @@ public class SolicitudVehiculoServiceImpl implements ISolicitudVehiculoService {
     }
 
     @Override
-    public SolicitudVehiculo leerPorId(String id) {
+    public SolicitudVehiculo leerPorId(UUID id) {
         return this.solicitudVehiculoService.findById(id).orElseThrow();
     }
 

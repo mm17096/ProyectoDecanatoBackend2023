@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,9 +24,10 @@ import java.util.List;
 @Table(name="tb_empleado")
 public class Empleado {
     @Id
-    @Column(name ="DUI")
+    @Column(name ="codigo_empleado")
+    private UUID codigoEmpleado;
+    @Column(name = "dui")
     private String dui;
-
     @Column(name ="nombre")
     private String nombre;
     @Column(name = "apellido")

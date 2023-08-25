@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

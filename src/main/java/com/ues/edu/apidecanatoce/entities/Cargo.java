@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class Cargo {
 
     @Id
     @Column(name ="codigo_cargo")
-    private String codigoCargo;
+    private UUID codigoCargo;
 
     @Column(name = "nombre_cargo")
     private String nombreCargo;

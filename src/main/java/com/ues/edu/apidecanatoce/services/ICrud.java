@@ -1,12 +1,14 @@
 package com.ues.edu.apidecanatoce.services;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ICrud<T> {
+public interface Icrud<T> {
     T registrar(T obj);
     T modificar(T obj);
     List<T> listar();
-    T leerPorId(String id);
-    boolean eliminar(T obj);
-}
 
+    T leerPorId(UUID id);
+    boolean eliminar(T obj);
+    List<T> listarPorEstado(int estado);
+}
