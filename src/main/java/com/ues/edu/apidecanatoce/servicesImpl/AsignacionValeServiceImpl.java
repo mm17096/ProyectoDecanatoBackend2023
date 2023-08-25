@@ -1,12 +1,14 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVale;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.repositorys.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.services.IAsignacionValeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class AsignacionValeServiceImpl implements IAsignacionValeService {
@@ -28,8 +30,15 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public AsignacionVale leerPorId(Integer id) {
-        return asignacionValeRepository.findById(id).get();
+        return null;
     }
+
+
+    @Override
+    public AsignacionVale leerPorDUI(String dui) {
+        return null;
+    }
+
 
     @Override
     public boolean eliminar(AsignacionVale obj) {
@@ -39,5 +48,10 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
        }catch (Exception e){
            return false;
        }
+    }
+
+    @Override
+    public List<AsignacionVale> listarPorEstado(int estado) {
+        return null;
     }
 }

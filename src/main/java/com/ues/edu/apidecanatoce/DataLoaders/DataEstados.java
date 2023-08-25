@@ -20,9 +20,9 @@ public class DataEstados implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Estados estado1 = new Estados(1,"Iniciada");
-        Estados estado2 = new Estados(2,"En espera");
-        Estados estado3 = new Estados(3,"Por aprobar");
+        Estados estado1 = new Estados(1,"En espera por jefe");
+        Estados estado2 = new Estados(2,"Aprobado por jefe");
+        Estados estado3 = new Estados(3,"En espera por decano");
         Estados estado4 = new Estados(4,"Aprobada");
         Estados estado5 = new Estados(5,"Asignado");
         Estados estado6 = new Estados(6,"Revision");

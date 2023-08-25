@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,9 +17,9 @@ import lombok.Setter;
 public class Cargo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name ="codigo_cargo")
-    private int codigoCargo;
+    private UUID codigoCargo;
 
     @Column(name = "nombre_cargo")
     private String nombreCargo;

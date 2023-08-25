@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,7 +29,7 @@ public class DeptoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Departamento>consultaById(@PathVariable("id") Integer id){
+    public ResponseEntity<Departamento>consultaById(@PathVariable("id") UUID id){
         Departamento obj = this.deptoService.leerPorId(id);
 
         return new ResponseEntity<Departamento>(obj , HttpStatus.OK);
@@ -67,7 +68,7 @@ public class DeptoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Departamento>> deletePatient(@PathVariable("id") Integer id){
+    public ResponseEntity<GenericResponse<Departamento>> deletePatient(@PathVariable("id") UUID id){
         Optional<Departamento> opt = Optional.ofNullable(this.deptoService.leerPorId(id));
         GenericResponse<Departamento> response =  new GenericResponse<Departamento>();
         HttpStatus http = HttpStatus.OK;

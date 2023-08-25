@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -43,13 +44,22 @@ public class CargoServiceImpl implements ICargoService {
 
     }
 
+    @Override
+    public List<Cargo> listarPorEstado(int estado) {
+        return null;
+    }
 
 
     @Override
-    public Cargo leerPorId(Integer id) {
+    public Cargo leerPorId(UUID id) {
         return this.cargoService.findById(id).orElse(new Cargo());
     }
-
+    /*
+    @Override
+    public Cargo leerPorDUI(String dui) {
+        return null;
+    }
+*/
 
     @Override
     public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
