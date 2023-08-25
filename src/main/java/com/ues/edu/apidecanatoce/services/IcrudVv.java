@@ -9,6 +9,5 @@ public interface IcrudVv <T>{
     List<T> listar();
     T leerPorId(UUID id);
 
-
     List<T> listarPorEstado(int estado);
 }

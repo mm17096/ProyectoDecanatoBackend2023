@@ -1,10 +1,8 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.Cargos;
 
+import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -12,6 +10,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name="tb_cargo")
 public class Cargo {
@@ -30,6 +29,9 @@ public class Cargo {
     @Column(name = "estado")
     private int estado;
 
-
+    public CargosDto toDto(){
+        return  CargosDto.builder().codigoCargo(this.codigoCargo).nombreCargo(this.nombreCargo)
+                .descripcion(this.descripcion).estado(this.estado).build();
+    }
 
 }

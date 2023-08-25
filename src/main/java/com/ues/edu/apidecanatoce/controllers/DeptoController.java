@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.entities.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamento;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.services.IDeptoService;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.services;
 
-import com.ues.edu.apidecanatoce.entities.Departamento;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 
 import java.util.List;
 import java.util.UUID;

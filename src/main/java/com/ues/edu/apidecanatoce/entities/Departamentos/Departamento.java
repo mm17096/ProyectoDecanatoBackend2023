@@ -1,8 +1,9 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.Departamentos;
 
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "tb_departamento")
 public class Departamento {
 
@@ -20,6 +22,7 @@ public class Departamento {
     @Column(name ="codigo_depto")
     private UUID codigoDepto;
 
+    @Column(name ="nombre")
     private String nombre;
 
     private int estado;
