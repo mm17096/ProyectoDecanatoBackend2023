@@ -15,7 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/vale")
-@CrossOrigin(origins = "*")
 public class ValeController {
 
     private final IValeService valeService;
