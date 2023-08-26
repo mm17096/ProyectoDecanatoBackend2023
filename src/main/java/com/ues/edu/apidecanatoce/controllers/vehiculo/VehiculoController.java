@@ -1,5 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.vehiculo;
 
+
+import com.ues.edu.apidecanatoce.dtos.MensajeRecord;
 import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
@@ -7,8 +9,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,18 +40,18 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculoService.leerPorId(id));
     }
 
-    @PostMapping(value = "/insertar")
-    public ResponseEntity<VehiculoDto> registrar(@Valid @RequestBody VehiculoDto vehiculoDto) {
-        return ResponseEntity.ok(vehiculoService.registrar(vehiculoDto));
+    @PostMapping(value = "/insertar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<MensajeRecord> registrar(
+            @RequestPart(name = "imagen", required = false) MultipartFile imagen,
+            @Valid @RequestPart(name = "vehiculo") VehiculoDto vehiculoDto) {
+        return ResponseEntity.ok(vehiculoService.registrar(imagen, vehiculoDto));
     }
 
-    @PutMapping("/editar")
-    public ResponseEntity<VehiculoDto> actualizar(@Valid @RequestBody VehiculoDto vehiculo) {
-        return ResponseEntity.ok(vehiculoService.actualizar(vehiculo));
+    @PutMapping(value = "/editar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<MensajeRecord> actualizar(
+            @RequestPart(name = "imagen", required = false) MultipartFile imagen,
+            @Valid @RequestPart(name = "vehiculo") VehiculoDto vehiculo) {
+        return ResponseEntity.ok(vehiculoService.actualizar(imagen, vehiculo));
     }
-
-
-
-
 
 }
