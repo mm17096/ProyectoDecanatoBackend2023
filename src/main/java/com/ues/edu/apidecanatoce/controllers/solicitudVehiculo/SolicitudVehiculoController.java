@@ -49,6 +49,7 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
 
+    // con paginacion
     @GetMapping("/listapage")
     public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listar(Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculos.listar(pageable));

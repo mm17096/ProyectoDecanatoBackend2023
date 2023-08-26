@@ -39,6 +39,7 @@ public class SolicitudVehiculoPeticionDtO {
     private String nombreJefeDepto;
     private LocalDate fechaEntrada;
     private int estado;
+    private String estadoString;
 
     private Empleado motorista; // ID del motorista
 
