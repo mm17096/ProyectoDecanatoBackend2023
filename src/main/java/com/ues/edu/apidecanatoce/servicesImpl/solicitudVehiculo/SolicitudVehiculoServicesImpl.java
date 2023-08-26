@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
@@ -12,6 +13,7 @@ import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -35,7 +37,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO leerPorId(UUID id) {
-        return null;
+        SolicitudVehiculo solicitudVehiculo = solicitudVehiculoServices.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+        return solicitudVehiculo.toDto();
     }
 
     @Override
@@ -77,6 +81,8 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
-        return null;
+        ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+        data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
+        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository)).toDto();
     }
 }

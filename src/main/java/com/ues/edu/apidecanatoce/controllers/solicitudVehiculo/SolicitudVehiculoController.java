@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/solicitudvehiculo")
@@ -173,7 +174,7 @@ public class SolicitudVehiculoController {
     }
 
     @PostMapping("/insertardto")
-    public ResponseEntity<GenericResponse<SolicitudVehiculoDTORequest>> guardarSolicitudDto(@RequestBody SolicitudVehiculoDTORequest solicitudDTO) {
+    public ResponseEntity<GenericResponse<SolicitudVehiculoDTORequest>> guardarSolicitudDto(@Valid @RequestBody SolicitudVehiculoDTORequest solicitudDTO) {
         HttpStatus http;
         GenericResponse<SolicitudVehiculoDTORequest> resp = new GenericResponse<SolicitudVehiculoDTORequest>(0,
                 "ERROR DE ALMACENAMIENTO DE LA CONSULTA", solicitudDTO);
@@ -254,6 +255,12 @@ public class SolicitudVehiculoController {
             response = new GenericResponse<>(0, "Solicitud en edicion no guardada", solicitudVehiculo);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/edit/{codigoSolicitudVehiculo}")
+    public ResponseEntity<SolicitudVehiculoPeticionDtO> actualizarSoliVe(@PathVariable UUID codigoSolicitudVehiculo,
+                                                                         @Valid @RequestBody SolicitudVehiculoDto solicitudVehiculoDto){
+        return ResponseEntity.ok(servicioSolicitudVehiculos.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
 }

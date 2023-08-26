@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.Departamentos;
 
 
+import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,4 +28,7 @@ public class Departamento {
 
     private int estado;
 
+    public DepartamentoDto toDto(){
+        return  DepartamentoDto.builder().codigoDepto(this.codigoDepto).nombre(this.nombre).estado(this.estado).build();
+    }
 }

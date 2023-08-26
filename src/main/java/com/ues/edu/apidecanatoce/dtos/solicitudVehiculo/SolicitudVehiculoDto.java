@@ -43,7 +43,7 @@ public class SolicitudVehiculoDto {
     private LocalDate fechaEntrada;
     private int estado;
 
-    private Empleado motorista; // ID del motorista cambiar a string o uid cuando este dto
+    private UUID motorista; // ID del motorista cambiar a string o uid cuando este dto
 
     private List<Documentos> listDocumentos;
 
@@ -53,7 +53,7 @@ public class SolicitudVehiculoDto {
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista.getCodigoEmpleado()).orElseThrow(
+        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
 
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
