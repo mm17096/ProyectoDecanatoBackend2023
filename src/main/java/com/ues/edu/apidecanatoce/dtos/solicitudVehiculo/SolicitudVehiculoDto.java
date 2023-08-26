@@ -26,7 +26,7 @@ public class SolicitudVehiculoDto {
     private LocalDate fechaSalida;
     private String unidadSolicitante;
 
-    private Vehiculo vehiculo; // vehiculo cambiar a int cuando este
+    private UUID vehiculo; // vehiculo cambiar a int cuando este
 
     private String objetivoMision;
     private String lugarMision;
@@ -50,7 +50,7 @@ public class SolicitudVehiculoDto {
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository){
         // metodo para buscar el vehicul si existe
-        Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo.getCodigoVehiculo()).orElseThrow(
+        Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
         Empleado motoristaBuscar = empleadoRepository.findById(this.motorista.getCodigoEmpleado()).orElseThrow(

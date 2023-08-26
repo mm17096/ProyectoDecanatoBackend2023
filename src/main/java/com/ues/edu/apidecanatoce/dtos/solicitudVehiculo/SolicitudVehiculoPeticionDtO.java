@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
@@ -22,7 +23,7 @@ public class SolicitudVehiculoPeticionDtO {
     private String unidadSolicitante;
 
 
-    private Vehiculo vehiculo; // vehiculo cambiar a dto cuando lo hagan
+    private VehiculoDto vehiculo; // vehiculo cambiar a dto cuando lo hagan
 
     private String objetivoMision;
     private String lugarMision;
@@ -48,7 +49,7 @@ public class SolicitudVehiculoPeticionDtO {
         //this.vehiculo.toEntityComlete
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
-                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo).objetivoMision(this.objetivoMision)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo.toEntity()).objetivoMision(this.objetivoMision)
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)

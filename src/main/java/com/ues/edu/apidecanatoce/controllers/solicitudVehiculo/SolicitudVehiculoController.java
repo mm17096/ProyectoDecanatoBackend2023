@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
@@ -50,7 +50,7 @@ public class SolicitudVehiculoController {
     }
 
     @GetMapping("/listapage")
-    public ResponseEntity<Page<SolicitudVehiculoDto>> listar(Pageable pageable) {
+    public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listar(Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculos.listar(pageable));
     }
 

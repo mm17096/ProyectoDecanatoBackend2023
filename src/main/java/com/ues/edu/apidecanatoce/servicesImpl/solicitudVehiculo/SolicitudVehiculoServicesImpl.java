@@ -28,7 +28,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
-    public Page<SolicitudVehiculoDto> listar(Pageable pageable) {
+    public Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable) {
         Page<SolicitudVehiculo> solicitudes = solicitudVehiculoServices.findAll(pageable);
         return solicitudes.map(SolicitudVehiculo::toDto);
     }
