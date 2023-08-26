@@ -4,9 +4,11 @@ import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 import java.util.UUID;
 
+@Builder
 public class DepartamentoDto {
 
     private UUID codigoDepto;
