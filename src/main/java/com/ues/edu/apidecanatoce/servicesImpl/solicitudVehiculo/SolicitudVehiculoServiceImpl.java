@@ -1,8 +1,8 @@
-package com.ues.edu.apidecanatoce.servicesImpl;
+package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
-import com.ues.edu.apidecanatoce.entities.SolicitudVehiculo;
-import com.ues.edu.apidecanatoce.repositorys.ISolicitudVehiculoRepository;
-import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

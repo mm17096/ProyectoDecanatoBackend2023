@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CORS implements Filter{
+public class Cors implements Filter{
     @Override
     public void init (FilterConfig filterConfig) throws ServletException {
         // TODO Auto-generated method
