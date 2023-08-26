@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
@@ -10,6 +11,7 @@ import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -162,6 +164,12 @@ public class SolicitudVehiculoController {
     public SolicitudVehiculo guardarSolicitud(@RequestBody SolicitudVehiculo solicitudVehiculo){
         System.out.println("objeto: "+solicitudVehiculo);
         return this.servicioSolicitudVehiculo.registrar(solicitudVehiculo);
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity<SolicitudVehiculoPeticionDtO> registrarSoliVe( @RequestBody SolicitudVehiculoDto solicitudVehiculo) {
+        System.out.println("datos cont:"+solicitudVehiculo);
+        return ResponseEntity.ok(servicioSolicitudVehiculos.registrar(solicitudVehiculo));
     }
 
     @PostMapping("/insertardto")

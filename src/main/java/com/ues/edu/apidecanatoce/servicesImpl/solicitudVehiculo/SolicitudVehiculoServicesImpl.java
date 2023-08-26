@@ -5,7 +5,9 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticio
 import com.ues.edu.apidecanatoce.entities.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
+import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
+import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,9 +25,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     private final ISolicitudVehiculoRepository solicitudVehiculoServices;
     private final EstadosRepository estadosRepository;
+    private final IVehiculoRepository vehiculoRepository;
+    private final IEmpleadoRepository empleadoRepository;
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
-        return null;
+        System.out.println("datos: "+data);
+        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository)).toDto();
     }
 
     @Override
