@@ -1,6 +1,10 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
+import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
+import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import com.ues.edu.apidecanatoce.entities.Empleado;
+import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
+import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +18,25 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 
     private final IEmpleadoRepository empleadoRepository;
 
+    private final ICargoRepository cargoRepository;
+
+    private final IDeptopRepo deptopRepo;
+
     @Autowired
-    public EmpleadoServiceImpl(IEmpleadoRepository empleadoRepository) {
+    public EmpleadoServiceImpl(IEmpleadoRepository empleadoRepository, ICargoRepository cargoRepository, IDeptopRepo deptopRepo) {
         this.empleadoRepository = empleadoRepository;
+        this.cargoRepository = cargoRepository;
+        this.deptopRepo = deptopRepo;
     }
 
     @Override
     public Empleado registrar(Empleado obj) {
         return this.empleadoRepository.save(obj);
+    }
+
+    @Override
+    public EmpleadoPeticionDto registrar(EmpleadoDto data) {
+        return empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
     }
 
     @Override
@@ -38,7 +53,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 
     @Override
     public List<Empleado> buscarEmpleado(String filtro) {
-        return  this.empleadoRepository.buscarEmpleado(filtro) ;
+        return this.empleadoRepository.buscarEmpleado(filtro);
     }
 
     @Override

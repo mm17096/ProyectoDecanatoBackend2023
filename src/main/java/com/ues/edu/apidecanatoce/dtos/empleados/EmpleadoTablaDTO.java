@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmpleadoTablaDTO {
+    private UUID codigoEmpleado;
     private String dui;
     private String nombre;
     private String apellido;
