@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ import java.util.List;
 public class Usuario {
     @Id
     @Column(name ="codigo_usuario")
-    private String codigoUsuario;
+    private UUID codigoUsuario;
 
     @Column(name = "email")
     private String email;
