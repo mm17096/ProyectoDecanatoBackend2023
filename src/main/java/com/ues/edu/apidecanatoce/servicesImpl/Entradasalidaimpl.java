@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
+import com.ues.edu.apidecanatoce.repositorys.Entradasalidarepo;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 public class Entradasalidaimpl implements Ientradasalidaservice {
 
-    private  final EntradaSalidaRepo entradaSalidaRepo;
+    private  final Entradasalidarepo entradaSalidaRepo;
     @Override
     public Entrada_Salidas registrar(Entrada_Salidas obj) {
         return this.entradaSalidaRepo.save(obj);
