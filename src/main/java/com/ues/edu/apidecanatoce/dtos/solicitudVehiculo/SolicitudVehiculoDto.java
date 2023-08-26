@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
@@ -45,7 +46,7 @@ public class SolicitudVehiculoDto {
 
     private UUID motorista; // ID del motorista cambiar a string o uid cuando este dto
 
-    private List<Documentos> listDocumentos;
+    private List<DocumentoSoliCar> listDocumentos;
 
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository){

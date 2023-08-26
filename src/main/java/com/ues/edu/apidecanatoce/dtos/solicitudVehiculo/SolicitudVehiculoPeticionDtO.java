@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 
@@ -43,7 +44,7 @@ public class SolicitudVehiculoPeticionDtO {
 
     private Empleado motorista; // ID del motorista
 
-    private List<Documentos> listDocumentos;
+    private List<DocumentoSoliCar> listDocumentos;
 
     public SolicitudVehiculo toEntitySave() {
 
