@@ -12,6 +12,7 @@ public interface ISolicitudVehiculoServices {
     SolicitudVehiculoPeticionDtO leerPorId(UUID id);
 
     Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable);
+    Page<SolicitudVehiculoPeticionDtO> listarPorEstado(Integer id, Pageable pageable);
 
     SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data);
 }

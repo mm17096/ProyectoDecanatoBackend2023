@@ -52,6 +52,25 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public Page<SolicitudVehiculoPeticionDtO> listarPorEstado(Integer id, Pageable pageable) {
+        Page<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findAllByEstado(id, pageable);
+
+        List<Estados> estados = estadosRepository.findAll();
+
+        Map<Integer, String> estadoStringMap = new HashMap<>();
+        for (Estados estado: estados) {
+            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        }
+
+        return listSoliVe.map(solicitud -> {
+            SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
+            dto.setEstadoString(estadoAsString);
+            return dto;
+        });
+    }
+
+    @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
         return null;
     }

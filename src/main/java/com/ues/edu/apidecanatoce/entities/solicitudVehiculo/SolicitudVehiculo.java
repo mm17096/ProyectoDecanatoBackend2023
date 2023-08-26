@@ -107,7 +107,7 @@ public class SolicitudVehiculo {
     private LocalDate fechaEntrada;
 
     // para manejar los estados que va pasando la solicitud
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado", nullable = false,columnDefinition = "integer default 1") // valor defecto 1
     private int estado;
 
     // Mortorista asignado
