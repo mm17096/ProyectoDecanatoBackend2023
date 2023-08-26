@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.Departamentos;
 
 
+import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

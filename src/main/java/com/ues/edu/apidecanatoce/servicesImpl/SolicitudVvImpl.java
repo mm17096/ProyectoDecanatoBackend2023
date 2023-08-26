@@ -33,6 +33,7 @@ public class SolicitudVvImpl implements ISolicitudVvService {
 
     @Override
     public List<SolicitudVehiculo> listarPorEstado(int estado) {
-        return this.solicitudVehiculoService.findAllByEstado(estado);
+        //return this.solicitudVehiculoService.findAllByEstado(estado);
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,4 +35,10 @@ public class DocumentoSoliCar {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
     private LocalDate fecha;
+
+    @ManyToOne
+    @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true,
+            foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
+    @JsonBackReference
+    private SolicitudVehiculo codigoSolicitudVehiculo;
 }

@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
@@ -106,7 +107,7 @@ public class SolicitudVehiculo {
     private LocalDate fechaEntrada;
 
     // para manejar los estados que va pasando la solicitud
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado", nullable = false, columnDefinition = "int default 1")
     private int estado;
 
     // Mortorista asignado
@@ -119,16 +120,16 @@ public class SolicitudVehiculo {
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
     @JsonManagedReference
-    private List<Documentos> listDocumentos;
+    private List<DocumentoSoliCar> listDocumentos;
 
 
     @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
-    public SolicitudVehiculoDto toDto(){
-        return SolicitudVehiculoDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+    public SolicitudVehiculoPeticionDtO toDto(){
+        return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
-                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo.toDTO())
                 .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
                 .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)

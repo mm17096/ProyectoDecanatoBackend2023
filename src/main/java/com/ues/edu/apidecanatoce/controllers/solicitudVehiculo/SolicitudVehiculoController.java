@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
@@ -10,6 +11,7 @@ import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/solicitudvehiculo")
@@ -49,8 +52,9 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<>(vehiculos, HttpStatus.OK);
     }
 
+    // con paginacion
     @GetMapping("/listapage")
-    public ResponseEntity<Page<SolicitudVehiculoDto>> listar(Pageable pageable) {
+    public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listar(Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculos.listar(pageable));
     }
 
@@ -134,6 +138,12 @@ public class SolicitudVehiculoController {
         return new ResponseEntity<List<SolicitudVehiculoDTOResponse>>(soliVehiculosDTOResp, HttpStatus.OK);
     }
 
+    @GetMapping("/listapage/{estado}")
+    public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listaPorEstado(@PathVariable("estado") Integer estado,
+                                                                             Pageable pageable) {
+        return ResponseEntity.ok(servicioSolicitudVehiculos.listarPorEstado(estado, pageable));
+    }
+
     // obtener los estados
     @GetMapping("/estados")
     public ResponseEntity<List<Estados>> obtenerEstados(){
@@ -157,8 +167,14 @@ public class SolicitudVehiculoController {
         return this.servicioSolicitudVehiculo.registrar(solicitudVehiculo);
     }
 
+    @PostMapping("/insert")
+    public ResponseEntity<SolicitudVehiculoPeticionDtO> registrarSoliVe( @RequestBody SolicitudVehiculoDto solicitudVehiculo) {
+        System.out.println("datos cont:"+solicitudVehiculo);
+        return ResponseEntity.ok(servicioSolicitudVehiculos.registrar(solicitudVehiculo));
+    }
+
     @PostMapping("/insertardto")
-    public ResponseEntity<GenericResponse<SolicitudVehiculoDTORequest>> guardarSolicitudDto(@RequestBody SolicitudVehiculoDTORequest solicitudDTO) {
+    public ResponseEntity<GenericResponse<SolicitudVehiculoDTORequest>> guardarSolicitudDto(@Valid @RequestBody SolicitudVehiculoDTORequest solicitudDTO) {
         HttpStatus http;
         GenericResponse<SolicitudVehiculoDTORequest> resp = new GenericResponse<SolicitudVehiculoDTORequest>(0,
                 "ERROR DE ALMACENAMIENTO DE LA CONSULTA", solicitudDTO);
@@ -239,6 +255,12 @@ public class SolicitudVehiculoController {
             response = new GenericResponse<>(0, "Solicitud en edicion no guardada", solicitudVehiculo);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/edit/{codigoSolicitudVehiculo}")
+    public ResponseEntity<SolicitudVehiculoPeticionDtO> actualizarSoliVe(@PathVariable UUID codigoSolicitudVehiculo,
+                                                                         @Valid @RequestBody SolicitudVehiculoDto solicitudVehiculoDto){
+        return ResponseEntity.ok(servicioSolicitudVehiculos.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,5 +34,5 @@ public class SolicitudVehiculoDTOResponse {
     private LocalDate fechaEntrada;
     private String estado;
     private Empleado motorista; // ID del motorista
-    private List<Documentos> listDocumentos;
+    private List<DocumentoSoliCar> listDocumentos;
 }
