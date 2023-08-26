@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.servicesImpl;
+package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.IDocumentoSoliCarRepository;
