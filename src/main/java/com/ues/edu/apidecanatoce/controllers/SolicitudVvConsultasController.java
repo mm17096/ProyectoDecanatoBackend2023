@@ -6,6 +6,7 @@ import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class SolicitudVvConsultasController {
 
 
     @GetMapping
-    public ResponseEntity<List<SolicitudVvDTO>> listaSolicitudesDTO() throws IOException {
+    public ResponseEntity<List<SolicitudVvDTO>> listaSolicitudesDTO(Pageable pageable) throws IOException {
         List<SolicitudVehiculo> soliVehiculos = this.servicioSolicitudVehiculo.listar();
         List<SolicitudVvDTO> soliVehiculosDTOResp = new ArrayList<>();
         List<Estados> estados = estadosRepository.findAll();

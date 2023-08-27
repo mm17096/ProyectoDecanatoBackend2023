@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +21,9 @@ import java.util.Set;
 @Table(name = "tb_solicitud_vale")
 public class SolicitudVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_solicitud_vale")
-    private Integer idSolicitudVale;
+    private UUID idSolicitudVale;
 
     @Column(name = "cantidad_vale", nullable = false)
     private int cantidadVale;
