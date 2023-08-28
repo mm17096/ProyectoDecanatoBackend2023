@@ -20,7 +20,7 @@ import java.util.UUID;
 @Setter
 @Builder
 
-public class CompraDto {
+public class CompraInsertarDto {
     private UUID id;
 
     @NotBlank(message = "La factura es obligatoria")
@@ -33,10 +33,6 @@ public class CompraDto {
     @NotBlank(message = "La descripción es obligatoria")
     @Size(min = 2, max = 750, message = "La descripción debe tener entre 2 y 750 caracteres")
     private String descripcion;
-
-    @NotNull(message = "La cantidad es obligatoria")
-    @Min(value = 0, message = "La cantidad debe ser mayor o igual a 0")
-    private int cantidad;
 
     @NotNull(message = "Cod inicio es obligatorio")
     @Min(value = 0, message = "Cod inicio debe ser mayor o igual a 0")
@@ -53,17 +49,14 @@ public class CompraDto {
 
     @NotNull(message = "El precio unitario es obligatorio")
     @Digits(integer = 10, fraction = 2, message = "El precio unitario debe ser un número válido con máximo 10 dígitos en total y 2 decimales")
+    @Min(value = 0, message = "El precio unitario debe ser mayor o igual a 0")
     private double precio_unitario;
-
-    @NotNull(message = "El total compra es obligatorio")
-    @Digits(integer = 10, fraction = 2, message = "El total compra debe ser un número válido con máximo 10 dígitos en total y 2 decimales")
-    private double total_compra;
 
     public Compra toEntityComplete(IProveedorRepository proveedorRepository) {
         Proveedor proveedorbuscar = proveedorRepository.findById(this.proveedor).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro proveedor"));
-        return Compra.builder().id(this.id).factura(this.factura).proveedor(proveedorbuscar).descripcion(this.descripcion).cantidad(this.cantidad)
-                .cod_inicio(this.cod_inicio).cod_fin(this.cod_fin).fecha(this.fecha).precio_unitario(this.precio_unitario).total_compra(this.total_compra).build();
+        return Compra.builder().id(this.id).factura(this.factura).proveedor(proveedorbuscar).descripcion(this.descripcion)
+                .cod_inicio(this.cod_inicio).cod_fin(this.cod_fin).fecha(this.fecha).precio_unitario(this.precio_unitario).build();
     }
 
 }
