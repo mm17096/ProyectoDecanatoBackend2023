@@ -141,6 +141,7 @@ public class SolicitudVehiculoController {
     @GetMapping("/listapage/{estado}")
     public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listaPorEstado(@PathVariable("estado") Integer estado,
                                                                              Pageable pageable) {
+        System.out.println("Estadp recibido:"+estado);
         return ResponseEntity.ok(servicioSolicitudVehiculos.listarPorEstado(estado, pageable));
     }
 
