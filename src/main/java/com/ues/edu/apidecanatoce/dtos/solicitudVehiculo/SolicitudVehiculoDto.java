@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
@@ -26,7 +27,7 @@ public class SolicitudVehiculoDto {
     private LocalDate fechaSalida;
     private String unidadSolicitante;
 
-    private Vehiculo vehiculo; // vehiculo cambiar a int cuando este
+    private UUID vehiculo; // vehiculo cambiar a int cuando este
 
     private String objetivoMision;
     private String lugarMision;
@@ -43,17 +44,17 @@ public class SolicitudVehiculoDto {
     private LocalDate fechaEntrada;
     private int estado;
 
-    private Empleado motorista; // ID del motorista cambiar a string o uid cuando este dto
+    private UUID motorista; // ID del motorista cambiar a string o uid cuando este dto
 
-    private List<Documentos> listDocumentos;
+    private List<DocumentoSoliCar> listDocumentos;
 
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository){
         // metodo para buscar el vehicul si existe
-        Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo.getCodigoVehiculo()).orElseThrow(
+        Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista.getCodigoEmpleado()).orElseThrow(
+        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
 
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)

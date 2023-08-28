@@ -8,6 +8,7 @@ import com.ues.edu.apidecanatoce.entities.Empleado;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.IEmpleadoService;
 import com.ues.edu.apidecanatoce.services.PathService;
+import com.ues.edu.apidecanatoce.servicesImpl.EmpleadoServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,12 +31,14 @@ import java.util.UUID;
 public class EmpleadoController {
 
     private final IEmpleadoService empleadoService;
+    private final EmpleadoServiceImpl empleadoServiceimpl;
     private final PathService pathService;
     private final HttpServletRequest request;
     private final Generalmethods generalmethods;
 
-    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository, PathService pathService, HttpServletRequest request, Generalmethods generalmethods) {
+    public EmpleadoController(IEmpleadoService empleadoService, IEmpleadoRepository empleadoRepository, EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request, Generalmethods generalmethods) {
         this.empleadoService = empleadoService;
+        this.empleadoServiceimpl = empleadoServiceimpl;
         this.pathService = pathService;
         this.request = request;
         this.generalmethods = generalmethods;
@@ -59,6 +62,7 @@ public class EmpleadoController {
         List<Empleado> empleados = this.empleadoService.listar();
         for (Empleado empleado : empleados) {
             EmpleadoTablaDTO empleadoTablaDTO = new EmpleadoTablaDTO();
+            empleadoTablaDTO.setCodigoEmpleado(empleado.getCodigoEmpleado());
             empleadoTablaDTO.setDui(empleado.getDui());
             empleadoTablaDTO.setNombre(empleado.getNombre());
             empleadoTablaDTO.setApellido(empleado.getApellido());
