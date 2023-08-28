@@ -40,6 +40,11 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculoService.leerPorId(id));
     }
 
+    @GetMapping("/clase/{claseName}")
+    public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
+        return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
+    }
+
     @PostMapping(value = "/insertar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<MensajeRecord> registrar(
             @RequestPart(name = "imagen", required = false) MultipartFile imagen,

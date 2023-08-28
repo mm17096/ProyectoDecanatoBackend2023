@@ -75,8 +75,9 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public List<VehiculoDto> listarPorClase() {
-        return null;
+    public List<VehiculoDto> listarPorClase(String nombreClase) {
+        List<Vehiculo> vehiculos = this.vehiculoRepository.findByClaseIgnoreCase(nombreClase);
+        return vehiculos.stream().map(Vehiculo::toDTO).toList();
     }
 
     @Override
