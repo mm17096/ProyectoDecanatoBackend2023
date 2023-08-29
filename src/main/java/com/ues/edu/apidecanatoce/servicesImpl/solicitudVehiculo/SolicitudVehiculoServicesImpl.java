@@ -43,6 +43,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAll();
+        return solicitudVehiculos.stream().map(SolicitudVehiculo::toDto).toList();
+    }
+
+    @Override
     public Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable) {
         Page<SolicitudVehiculo> solicitudes = solicitudVehiculoServices.findAll(pageable);
         List<Estados> estados = estadosRepository.findAll();
