@@ -9,7 +9,7 @@ import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.services.estadosService.IEstadosService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
@@ -41,8 +41,8 @@ public class SolicitudVehiculoController {
     private final IEstadosService estadosService;
 
 
-    @Autowired
-    private EstadosRepository estadosRepository;
+
+    private final IEstadosRepository estadosRepository;
     private SolicitudVehiculo solicitudVehiculo;
     private Empleado motorista;
     private Usuario usuario;
