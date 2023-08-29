@@ -34,7 +34,12 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
 
         // Guardando la Asignación
-        this.asignacionValeRepository.save(data.toAsignacionValeComplete(solicitudValeRepository)).toAsignacionValeDTO();
+        try{
+            this.asignacionValeRepository.save(data.toAsignacionValeComplete(solicitudValeRepository)).toAsignacionValeDTO();
+        }catch (Exception e){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar la asignación");
+        }
+
 
         //Listar cantidad de vales segun el número solicitado
 
