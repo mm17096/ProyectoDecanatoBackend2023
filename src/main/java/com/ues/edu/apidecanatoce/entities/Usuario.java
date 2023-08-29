@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,9 +22,8 @@ import java.util.List;
 @Table(name="tb_usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="codigo_usuario")
-    private int codigoUsuario;
+    private UUID codigoUsuario;
 
     @Column(name = "email")
     private String email;

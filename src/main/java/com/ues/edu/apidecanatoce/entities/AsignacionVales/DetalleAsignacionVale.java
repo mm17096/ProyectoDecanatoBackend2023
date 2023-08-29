@@ -1,8 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.AsignacionVales;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.entities.Vale;
+import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.*;
 

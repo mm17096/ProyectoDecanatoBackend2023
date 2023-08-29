@@ -2,10 +2,8 @@ package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.DetalleAsignacionServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})

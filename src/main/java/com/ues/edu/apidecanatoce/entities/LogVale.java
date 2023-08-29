@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +19,8 @@ import java.time.LocalDate;
 @Table(name="tb_logvale")
 public class LogVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_logvale")
-    private long idLogVale;
+    private String idLogVale;
 
     @Column(name = "estado_vale")
     private String estadoVale;

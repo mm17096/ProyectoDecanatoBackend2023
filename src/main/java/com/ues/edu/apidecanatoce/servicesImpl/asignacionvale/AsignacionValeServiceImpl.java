@@ -21,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class AsignacionValeServiceImpl implements IAsignacionValeService {
+
     private final IAsignacionValeRepository asignacionValeRepository;
 
     private final IDetalleAsignacionRepository detalleAsignacionRepository;

@@ -1,15 +1,10 @@
 package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.entities.SolicitudVehiculo;
-import com.ues.edu.apidecanatoce.entities.Vale;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor

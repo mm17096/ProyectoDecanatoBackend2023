@@ -1,18 +1,10 @@
 package com.ues.edu.apidecanatoce.controllers;
 
 
-import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
-import com.ues.edu.apidecanatoce.entities.*;
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
-import com.ues.edu.apidecanatoce.services.ISolicitudVehiculoService;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/solicitudVv")
@@ -29,16 +21,17 @@ public class SolicitudVvConsultasController {
 
 
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
-    @Autowired
-    private EstadosRepository estadosRepository;
+
+    private final IEstadosRepository estadosRepository;
 
     @Autowired
-    public SolicitudVvConsultasController(ISolicitudVehiculoService servicioSolicitudVehiculo) {
+    public SolicitudVvConsultasController(ISolicitudVehiculoService servicioSolicitudVehiculo, IEstadosRepository estadosRepository) {
         this.servicioSolicitudVehiculo = servicioSolicitudVehiculo;
+        this.estadosRepository = estadosRepository;
     }
 
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<SolicitudVvDTO>> listaSolicitudesDTO() throws IOException {
         List<SolicitudVehiculo> soliVehiculos = this.servicioSolicitudVehiculo.listar();
         List<SolicitudVvDTO> soliVehiculosDTOResp = new ArrayList<>();
@@ -46,7 +39,7 @@ public class SolicitudVvConsultasController {
 
         for (SolicitudVehiculo soliVe: soliVehiculos){
             SolicitudVvDTO soliVeDTOResp = new SolicitudVvDTO();
-            soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
+          //  soliVeDTOResp.setCodigoSolicitudVehiculo(soliVe.getCodigoSolicitudVehiculo());
             soliVeDTOResp.setFechaSolicitud(soliVe.getFechaSolicitud());
             soliVeDTOResp.setFechaSalida(soliVe.getFechaSalida());
             soliVeDTOResp.setUnidadSolicitante(soliVe.getUnidadSolicitante());
@@ -74,5 +67,5 @@ public class SolicitudVvConsultasController {
             soliVehiculosDTOResp.add(soliVeDTOResp);
         }
         return new ResponseEntity<List<SolicitudVvDTO>>(soliVehiculosDTOResp, HttpStatus.OK);
-    }
+    }*/
 }

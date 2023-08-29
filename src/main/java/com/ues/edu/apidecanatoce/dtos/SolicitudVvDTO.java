@@ -1,12 +1,12 @@
 package com.ues.edu.apidecanatoce.dtos;
 
 import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
+
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Builder
 public class SolicitudVvDTO {
     private UUID idSolicitudVale;
-    private int codigoSolicitudVehiculo;
+    private UUID codigoSolicitudVehiculo;
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
     private String unidadSolicitante;

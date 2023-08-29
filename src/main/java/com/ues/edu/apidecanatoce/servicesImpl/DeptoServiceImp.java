@@ -1,12 +1,13 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.entities.Departamento;
+import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
 import com.ues.edu.apidecanatoce.services.IDeptoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DeptoServiceImp implements IDeptoService {
@@ -23,6 +24,9 @@ public class DeptoServiceImp implements IDeptoService {
        List<Departamento> listDepto = this.deptopService.findAll();
        return listDepto;
     }
+
+
+
 
     @Override
     public Departamento registrar(Departamento obj){return this.deptopService.save(obj);}
@@ -49,13 +53,10 @@ public class DeptoServiceImp implements IDeptoService {
     }
 
     @Override
-    public Departamento leerPorId(Integer id) {
+    public Departamento leerPorId(UUID id) {
         return this.deptopService.findById(id).orElse(new Departamento());
     }
 
     @Override
-    public Departamento leerPorDUI(String dui) {
-        return null;
-    }
-
+    public List<Departamento> findAllByEstado(int estado){ return  this.deptopService.findAllByEstado(estado);}
 }

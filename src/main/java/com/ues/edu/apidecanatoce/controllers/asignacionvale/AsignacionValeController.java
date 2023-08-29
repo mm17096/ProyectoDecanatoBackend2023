@@ -1,17 +1,14 @@
 package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeDto;
+
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeInDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeVistaDto;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -51,8 +48,13 @@ public class AsignacionValeController {
         }
     }*/
 
+
     /*@DeleteMapping("/eliminar/{id}")
     public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") Integer id) {
+=======
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<GenericResponse<AsignacionVale>> eliminar(@PathVariable("id") UUID id) {
+>>>>>>> master:src/main/java/com/ues/edu/apidecanatoce/controllers/AsignacionValeController.java
         Optional<AsignacionVale> opt = Optional.ofNullable(this.asignacionValeService.leerPorId(id));
         GenericResponse<AsignacionVale> resp;
         if (opt.isPresent()) {

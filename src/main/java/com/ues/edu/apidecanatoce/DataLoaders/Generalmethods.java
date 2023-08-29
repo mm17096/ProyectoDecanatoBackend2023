@@ -8,11 +8,11 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class Generalmethods {
 
-    public String generarCodigoAutor(){
+    public String generarCodigo(){
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss");
         String codigo = fechaHoraActual.format(formato);
         return codigo;
     }
-    
+
 }

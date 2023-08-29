@@ -6,7 +6,6 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeDto;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.entities.Vale;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
 import jakarta.persistence.*;

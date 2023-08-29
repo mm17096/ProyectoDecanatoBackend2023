@@ -1,14 +1,10 @@
 package com.ues.edu.apidecanatoce.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class RestControllerException {
 
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MensajeRecord> handleException(Exception e){
         return ResponseEntity.internalServerError()
@@ -26,13 +27,21 @@ public class RestControllerException {
                 .body(new MensajeRecord(e.getMessage()));
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<MensajeRecord> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
-        List<String> mensajes = new ArrayList<>();
-        e.getBindingResult().getAllErrors().forEach(err -> mensajes.add(err.getDefaultMessage()));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new MensajeRecord(mensajes.stream().collect(Collectors.joining(","))));
+
+
+
+    private String formatMessage(String message) {
+        return message.substring(0, 1).toUpperCase() + message.substring(1).toLowerCase();
     }
 
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<MensajeRecord> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<String> mensajes = new ArrayList<>();
+        e.getBindingResult().getAllErrors().forEach(err -> mensajes.add(formatMessage(err.getDefaultMessage())));
+        String formattedMessage = mensajes.stream().collect(Collectors.joining(". "));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeRecord(formattedMessage));
+    }
 
 }
