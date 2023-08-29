@@ -42,6 +42,11 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         if (empleadoRepository.existsByCorreo(data.getCorreo())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El Correo ya está registrado");
         }
+        if(!data.getLicencia().isEmpty()){
+            if (empleadoRepository.existsByLicencia(data.getLicencia())) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "La Licencia ya está registrada");
+            }
+        }
         return empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
     }
 
@@ -66,6 +71,11 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         }
         if (empleadoRepository.existsByCorreoAndCodigoEmpleadoNot(data.getCorreo(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El Correo ya está registrado");
+        }
+        if(!data.getLicencia().isEmpty()){
+            if (empleadoRepository.existsByLicenciaAndCodigoEmpleadoNot(data.getLicencia(), id)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "La Licencia ya está registrada");
+            }
         }
         data.setCodigoEmpleado(id);
         return empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();

@@ -5,8 +5,8 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticio
 import com.ues.edu.apidecanatoce.entities.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
@@ -26,7 +26,7 @@ import java.util.UUID;
 public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices {
 
     private final ISolicitudVehiculoRepository solicitudVehiculoServices;
-    private final EstadosRepository estadosRepository;
+    private final IEstadosRepository estadosRepository;
     private final IVehiculoRepository vehiculoRepository;
     private final IEmpleadoRepository empleadoRepository;
     @Override

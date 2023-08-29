@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
