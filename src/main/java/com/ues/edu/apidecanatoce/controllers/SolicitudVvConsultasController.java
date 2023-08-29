@@ -57,7 +57,7 @@ public class SolicitudVvConsultasController {
 
             for (Estados estado: estados){
                 if (soliVe.getEstado() == estado.getCodigoEstado()){
-                    soliVeDTOResp.setEstado(estado.getNombreEstado());
+                    soliVeDTOResp.setEstado(estado.getCodigoEstado());
                 }
             }
 
