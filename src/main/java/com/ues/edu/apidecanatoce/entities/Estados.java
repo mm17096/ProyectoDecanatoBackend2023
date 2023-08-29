@@ -1,10 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.core.annotation.Order;
 
 @Getter
@@ -12,6 +10,7 @@ import org.springframework.core.annotation.Order;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name="tb_estados")
 @Order(2)
 public class Estados {
@@ -22,5 +21,10 @@ public class Estados {
 
     @Column(name = "nombre_estado")
     private String nombreEstado;
+
+    public EstadosDTO toDTO() {
+        return EstadosDTO.builder().codigoEstado(this.codigoEstado)
+                .nombreEstado(this.nombreEstado).build();
+    }
 
 }

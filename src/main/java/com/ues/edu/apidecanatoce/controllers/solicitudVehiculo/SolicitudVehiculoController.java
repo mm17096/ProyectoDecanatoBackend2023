@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTORequest;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDTOResponse;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
@@ -9,6 +10,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
+import com.ues.edu.apidecanatoce.services.estadosService.IEstadosService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import jakarta.validation.Valid;
@@ -36,6 +38,7 @@ public class SolicitudVehiculoController {
 
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
     private final ISolicitudVehiculoServices servicioSolicitudVehiculos;
+    private final IEstadosService estadosService;
 
 
     @Autowired
@@ -146,14 +149,20 @@ public class SolicitudVehiculoController {
     }
 
     // obtener los estados
+//    @GetMapping("/estados")
+//    public ResponseEntity<List<Estados>> obtenerEstados(){
+//        List<Estados> listEstados = estadosRepository.findAll();
+//        Estados est = new Estados();
+//        est.setCodigoEstado(0);
+//        est.setNombreEstado("TODAS");
+//        listEstados.add(0, est);
+//        return new ResponseEntity<>(listEstados, HttpStatus.OK);
+//    }
+
     @GetMapping("/estados")
-    public ResponseEntity<List<Estados>> obtenerEstados(){
-        List<Estados> listEstados = estadosRepository.findAll();
-        Estados est = new Estados();
-        est.setCodigoEstado(0);
-        est.setNombreEstado("TODAS");
-        listEstados.add(0, est);
-        return new ResponseEntity<>(listEstados, HttpStatus.OK);
+    public ResponseEntity<List<EstadosDTO>> obtenerEstadosSoliVe() {
+        List<EstadosDTO> estados = estadosService.estadosSoliVe();
+        return ResponseEntity.ok(estados);
     }
 
     @GetMapping("/config")
