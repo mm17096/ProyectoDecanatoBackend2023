@@ -1,14 +1,27 @@
 package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
-import lombok.Builder;
-import lombok.Data;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.Vale;
+import lombok.*;
 
 import java.time.LocalDate;
-
+import java.util.List;
+import java.util.UUID;
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Data
 @Builder
 public class DetalleAsignacionDto {
-    private String codigoAsignacionVale;
-    private LocalDate fechaAsigancion;
-    private Long codigoVale;
+    private UUID idDetalleAsignacionVale;
+    private UUID codigoAsignacionVale;
+    private Vale Vale;
+
+    public DetalleAsignacionDto toDTODEntity() {
+        return DetalleAsignacionDto.builder().idDetalleAsignacionVale(this.idDetalleAsignacionVale)
+                .codigoAsignacionVale(this.codigoAsignacionVale)
+                .Vale(this.Vale)
+                .build();
+    }
 }

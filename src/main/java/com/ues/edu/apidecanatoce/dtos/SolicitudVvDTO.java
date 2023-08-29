@@ -7,13 +7,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Data
+@Builder
 public class SolicitudVvDTO {
+    private UUID idSolicitudVale;
     private int codigoSolicitudVehiculo;
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
@@ -29,8 +32,9 @@ public class SolicitudVvDTO {
     private Usuario solicitante; // usuario solicitante
     private String nombreJefeDepto;
     private LocalDate fechaEntrada;
-    private String estado;
+    private int estado;
     private Empleado motorista; // ID del motorista
     //private List<Documentos> listDocumentos;
+
 
 }

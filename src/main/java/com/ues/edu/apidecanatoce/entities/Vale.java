@@ -1,12 +1,10 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,6 +14,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name="tb_vale")
 public class Vale {
@@ -28,9 +27,16 @@ public class Vale {
 
 
     @Column(name = "estado")
-    private boolean estado;
+    private int estado;
 
     @OneToMany(mappedBy = "vale")
     private Set<DetalleAsignacionVale> detalleAsignacionValeSet;
+
+    public ValeDto toValeDto() {
+        return ValeDto.builder()
+                .idVale(this.idVale)
+                .codigoVale(this.codigoVale)
+                .build();
+    }
 
 }
