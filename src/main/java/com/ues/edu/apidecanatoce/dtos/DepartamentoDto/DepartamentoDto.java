@@ -5,9 +5,13 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
+@Setter
 @Builder
 public class DepartamentoDto {
 
@@ -20,7 +24,7 @@ public class DepartamentoDto {
     private int estado;
 
     public Departamento toEntityComplete(){
-        return Departamento.builder().codigoDepto(this.codigoDepto).estado(this.estado).build();
+        return Departamento.builder().codigoDepto(this.codigoDepto).nombre(this.nombre).estado(this.estado).build();
     }
 
 
