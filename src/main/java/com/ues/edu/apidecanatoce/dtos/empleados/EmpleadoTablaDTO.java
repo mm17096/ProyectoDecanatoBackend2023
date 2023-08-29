@@ -21,8 +21,8 @@ public class EmpleadoTablaDTO {
     private String apellido;
     private String telefono;
     private String licencia;
-    private String tipo_licencia;
-    private LocalDate fecha_licencia;
+    private String tipolicencia;
+    private LocalDate fechalicencia;
     private int estado;
     private boolean jefe;
     private String correo;

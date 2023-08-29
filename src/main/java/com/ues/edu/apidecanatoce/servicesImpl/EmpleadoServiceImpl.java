@@ -1,16 +1,20 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
+
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import com.ues.edu.apidecanatoce.entities.Empleado;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
 import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,51 +33,41 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         this.deptopRepo = deptopRepo;
     }
 
-    @Override
-    public Empleado registrar(Empleado obj) {
-        return this.empleadoRepository.save(obj);
-    }
-
+    ///////// Metodos reestructurados /////////
     @Override
     public EmpleadoPeticionDto registrar(EmpleadoDto data) {
+        if (empleadoRepository.existsByDui(data.getDui())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El DUI ya está registrado");
+        }
+        if (empleadoRepository.existsByCorreo(data.getCorreo())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El Correo ya está registrado");
+        }
         return empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
     }
 
     @Override
-    public Empleado modificar(Empleado obj) {
-        return null;
+    public Page<EmpleadoPeticionDto> listar(Pageable pageable) {
+        Page<Empleado> compras = empleadoRepository.findAll(pageable);
+        return compras.map(Empleado::toDTO);
     }
 
     @Override
-    public List<Empleado> listar() {
-        List<Empleado> listConsultas = this.empleadoRepository.findAll();
-        return listConsultas;
-    }
-
-
-    @Override
-    public List<Empleado> buscarEmpleado(String filtro) {
-        return this.empleadoRepository.buscarEmpleado(filtro);
+    public EmpleadoPeticionDto leerPorId(UUID id) {
+        Empleado empleado = empleadoRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro empleado"));
+        return empleado.toDTO();
     }
 
     @Override
-    public Empleado leerPorId(UUID dui) {
-        return this.empleadoRepository.findById(dui).get();
-    }
-
-    @Override
-    public boolean eliminar(Empleado obj) {
-        try {
-            this.empleadoRepository.delete(obj);
-            return true;
-        } catch (Exception e) {
-            // TODO: handle exception
-            return false;
+    public EmpleadoPeticionDto actualizar(UUID id, EmpleadoDto data) {
+        EmpleadoPeticionDto buscarEmpleado = leerPorId(id);
+        if (empleadoRepository.existsByDuiAndCodigoEmpleadoNot(data.getDui(), id)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El DUI ya está registrado");
         }
-    }
-
-    @Override
-    public List<Empleado> listarPorEstado(int estado) {
-        return null;
+        if (empleadoRepository.existsByCorreoAndCodigoEmpleadoNot(data.getCorreo(), id)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El Correo ya está registrado");
+        }
+        data.setCodigoEmpleado(id);
+        return empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
     }
 }
