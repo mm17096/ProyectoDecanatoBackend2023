@@ -24,7 +24,7 @@ public class DepartamentoDto {
     private int estado;
 
     public Departamento toEntityComplete(){
-        return Departamento.builder().codigoDepto(this.codigoDepto).estado(this.estado).build();
+        return Departamento.builder().codigoDepto(this.codigoDepto).nombre(this.nombre).estado(this.estado).build();
     }
 
 
