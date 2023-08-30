@@ -1,11 +1,17 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
 
-import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
+import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
+
+
 import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.services.ICargoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,61 +21,60 @@ import java.util.UUID;
 @Service
 public class CargoServiceImpl implements ICargoService {
 
-    private final ICargoRepository cargoService;
+    private final ICargoRepository cargoRepository;
 
 
 
     @Override
-    public List<Cargo> listar(){
-        List<Cargo> listCargo = this.cargoService.findAll();
-        return listCargo;
+    public List<CargosDto> listar(){
+        List<Cargo> listCargo = this.cargoRepository.findAll();
+        return listCargo.stream().map(Cargo::toDto).toList();
     }
 
     @Override
-    public Cargo registrar(Cargo obj){return this.cargoService.save(obj);}
-
+    public CargosDto registrar(CargosDto data){
+       if (cargoRepository.existsByNombreCargo(data.getNombreCargo())) {
+           throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
+       }
+       return cargoRepository.save(data.toEntityComplete()).toDto();
+    }
 
     @Override
-    public Cargo modificar(Cargo obj){return this.cargoService.save(obj);}
-
-    @Override
-    public boolean eliminar(Cargo obj) {
-        try{
-            this.cargoService.delete(obj);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+    public CargosDto modificar(CargosDto data){
+        if (this.cargoRepository.existsByNombreCargo(data.getNombreCargo())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
         }
-
+        return this.cargoRepository.save(data.toEntityComplete()).toDto();
     }
 
     @Override
-    public List<Cargo> listarPorEstado(int estado) {
-        return null;
-    }
-
-
-    @Override
-    public Cargo leerPorId(UUID id) {
-        return this.cargoService.findById(id).orElse(new Cargo());
+    public CargosDto leerPorId(UUID id) {
+        Cargo cargo = cargoRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el cargo"));
+        return cargo.toDto();
     }
 
     @Override
+    public CargosDto eliminar(UUID id) {
+        CargosDto cargo = leerPorId(id);
+        cargoRepository.delete(cargo.toEntityComplete());
+        return cargo;
+    }
 
-    public List<ICargoxEstadoDTO> findCargoByEstado( Integer estado)  {
-        List<ICargoxEstadoDTO> listCargo = this.cargoService.findCargoByEstado(estado);
-        return listCargo;
+    @Override
+    public Page<CargosDto> listarConPage(Pageable pageable) {
+        Page<Cargo> cargos = cargoRepository.findAll(pageable);
+        return cargos.map(Cargo::toDto);
     }
 
     @Override
     public List<Cargo> findCargoByEstado2(int estado) {
-        return this.cargoService.findAllByEstado(estado);
+        return this.cargoRepository.findAllByEstado(estado);
     }
 
     @Override
     public List<Cargo> findAllByNombreCargo(String nombre) {
-        return this.cargoService.findAllByNombreCargo(nombre);
+        return this.cargoRepository.findAllByNombreCargo(nombre);
     }
 
 

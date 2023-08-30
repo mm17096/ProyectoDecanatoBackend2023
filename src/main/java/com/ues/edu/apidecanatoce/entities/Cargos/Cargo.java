@@ -20,7 +20,7 @@ public class Cargo {
     @Column(name ="codigo_cargo")
     private UUID codigoCargo;
 
-    @Column(name = "nombre_cargo")
+    @Column(name = "nombre_cargo", unique = true)
     private String nombreCargo;
 
     @Column(name = "descripcion")
