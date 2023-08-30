@@ -14,6 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Optional;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/solicitudvale")
 @CrossOrigin("*")
@@ -40,7 +42,7 @@ public class SolicitudValeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SolicitudVale> actulizarSolicitudvale(@PathVariable Long id, @RequestBody SolicitudVale solicitudVale){
+    public ResponseEntity<SolicitudVale> actulizarSolicitudvale(@PathVariable UUID id, @RequestBody SolicitudVale solicitudVale){
         Optional<SolicitudVehiculo> solicitudVehiculoOptional = solicitudVehiculoRepository.findById(solicitudVale.getSolicitudVehiculo().getCodigoSolicitudVehiculo());
         if (!solicitudVehiculoOptional.isPresent()) {
             return  ResponseEntity.unprocessableEntity().build();
@@ -58,7 +60,7 @@ public class SolicitudValeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SolicitudVale> eliminarSalicitudVale(@PathVariable Long id){
+    public ResponseEntity<SolicitudVale> eliminarSalicitudVale(@PathVariable UUID id){
         Optional<SolicitudVale> solicitudVale1Opcional = solicitudValeRepository.findById(id);
         if (!solicitudVale1Opcional.isPresent()) {
             return  ResponseEntity.unprocessableEntity().build();
@@ -68,7 +70,7 @@ public class SolicitudValeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SolicitudVale> obtenerlibroPorID(@PathVariable Long id){
+    public ResponseEntity<SolicitudVale> obtenerlibroPorID(@PathVariable UUID id){
         Optional<SolicitudVale> solicitudVale1Opcional = solicitudValeRepository.findById(id);
         if (!solicitudVale1Opcional.isPresent()) {
             return  ResponseEntity.unprocessableEntity().build();
