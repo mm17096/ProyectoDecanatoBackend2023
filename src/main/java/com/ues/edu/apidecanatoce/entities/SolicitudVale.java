@@ -1,24 +1,26 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "tb_solicitud_vale")
 public class SolicitudVale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_solicitud_vale")
-    private Integer idSolicitudVale;
+    private UUID idSolicitudVale;
 
     @Column(name = "cantidad_vale", nullable = false)
     private int cantidadVale;
@@ -37,5 +39,9 @@ public class SolicitudVale {
 
    // @OneToMany(mappedBy = "solicitudVale")
    // private Set<AsignacionVale> asignacionValeSet;
+
+    public SolicitudvaleDto toDTO() {
+        return SolicitudvaleDto.builder().id(this.idSolicitudVale).cantidadVale(this.cantidadVale).estadoEntrada(this.estadoEntrada).build();
+    }
 
 }

@@ -20,12 +20,17 @@ import java.util.UUID;
 @Table(name="tb_empleado")
 public class Empleado {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name ="codigo_empleado")
     private UUID codigoEmpleado;
+
+
     @Column(name = "dui")
     private String dui;
+
     @Column(name ="nombre")
     private String nombre;
+
     @Column(name = "apellido")
     private String apellido;
 

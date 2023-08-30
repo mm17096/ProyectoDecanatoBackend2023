@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Entity
+@Data
 @Table(name="tb_cargo")
 public class Cargo {
 

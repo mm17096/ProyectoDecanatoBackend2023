@@ -1,51 +1,60 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
+import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.repositorys.Entradasalidarepo;
+import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class Entradasalidaimpl implements Ientradasalidaservice {
+    private final EntradaSalidaRepo entradaSalidaRepo;
 
-    private  final Entradasalidarepo entradaSalidaRepo;
+
     @Override
-    public Entrada_Salidas registrar(Entrada_Salidas obj) {
-        return this.entradaSalidaRepo.save(obj);
+    public EntradasalidaDto registrar(EntradasalidaDto data) {
+
+        return entradaSalidaRepo.save(data.toEntityComplete()).toDTO();
     }
 
     @Override
-    public Entrada_Salidas modificar(Entrada_Salidas obj) {
-        return null;
+    public EntradasalidaDto leerPorId(UUID id) {
+        Entrada_Salidas entradaSalidas = entradaSalidaRepo.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra ningun dato registrado del que desea actualizar"));
+        return entradaSalidas.toDTO();
     }
 
     @Override
-    public List<Entrada_Salidas> listar() {
-        List<Entrada_Salidas> entradaSalidasList = this.entradaSalidaRepo.findAll();
-        return entradaSalidasList;
+    public Page<EntradasalidaDto> listar(Pageable pageable) {
+        Page<Entrada_Salidas> entradaSalidas = entradaSalidaRepo.findAll(pageable);
+        return entradaSalidas.map(Entrada_Salidas::toDTO);
     }
 
     @Override
-    public Entrada_Salidas leerPorId(UUID id) {
-        return this.entradaSalidaRepo.findById(id).get();
+    public List<EntradasalidaDto> listarSinPagina() {
+        List<Entrada_Salidas> entradaSalidas= this.entradaSalidaRepo.findAll();
+        return entradaSalidas.stream().map(Entrada_Salidas::toDTO).toList();
     }
 
     @Override
-    public boolean eliminar(Entrada_Salidas obj) {
-        try {
-            this.entradaSalidaRepo.delete(obj);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public EntradasalidaDto actualizar(UUID id, EntradasalidaDto data) {
+        EntradasalidaDto buscar = leerPorId(id);
+        data.setId(id);
+        return entradaSalidaRepo.save(data.toEntityComplete()).toDTO();
     }
+
     @Override
-    public List<Entrada_Salidas> listarPorEstado(int estado) {
+    public EntradasalidaDto eliminar(UUID id) {
         return null;
     }
 }
