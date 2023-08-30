@@ -8,19 +8,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmpleadoTablaDTO {
+    private UUID codigoEmpleado;
     private String dui;
     private String nombre;
     private String apellido;
     private String telefono;
     private String licencia;
-    private String tipo_licencia;
-    private LocalDate fecha_licencia;
+    private String tipolicencia;
+    private LocalDate fechalicencia;
     private int estado;
     private boolean jefe;
     private String correo;

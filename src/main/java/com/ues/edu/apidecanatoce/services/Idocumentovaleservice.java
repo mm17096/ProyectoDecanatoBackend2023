@@ -1,6 +1,5 @@
 package com.ues.edu.apidecanatoce.services;
 
-import com.ues.edu.apidecanatoce.dtos.compras.CompraDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovaleDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
@@ -15,7 +14,6 @@ import java.util.UUID;
 
 
 public interface Idocumentovaleservice {
-    List<Documentos> listarPorEstado(int estado);
     DocumentovalepeticionDto registrar(DocumentovaleDto data);
 
     DocumentovalepeticionDto leerPorId(UUID id);

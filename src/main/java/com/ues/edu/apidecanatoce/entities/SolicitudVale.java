@@ -1,7 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
+
+import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
@@ -28,8 +29,8 @@ public class SolicitudVale {
     @Column(name = "estado_entrada", nullable = false)
     private int estadoEntrada;
 
-   // @OneToMany(mappedBy = "solicitudVale")
-  //  private Set<AsignacionVale> asignacionValeSet;
+    // @OneToMany(mappedBy = "solicitudVale")
+    //  private Set<AsignacionVale> asignacionValeSet;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "solicitud_vehiculo_id")
@@ -37,11 +38,33 @@ public class SolicitudVale {
     //@JsonManagedReference
     private SolicitudVehiculo solicitudVehiculo;
 
-   // @OneToMany(mappedBy = "solicitudVale")
-   // private Set<AsignacionVale> asignacionValeSet;
+    // @OneToMany(mappedBy = "solicitudVale")
+    // private Set<AsignacionVale> asignacionValeSet;
+
 
     public SolicitudvaleDto toDTO() {
         return SolicitudvaleDto.builder().id(this.idSolicitudVale).cantidadVale(this.cantidadVale).estadoEntrada(this.estadoEntrada).build();
     }
 
+    public SolicitudVvDTO tosolicitudVvDTO() {
+        return SolicitudVvDTO.builder()
+                .idSolicitudVale(this.idSolicitudVale)
+                .codigoSolicitudVehiculo(this.solicitudVehiculo.getCodigoSolicitudVehiculo())
+                .fechaSolicitud(this.solicitudVehiculo.getFechaSolicitud())
+                .fechaSalida(this.solicitudVehiculo.getFechaSalida())
+                .unidadSolicitante(this.solicitudVehiculo.getUnidadSolicitante())
+                .vehiculo(this.solicitudVehiculo.getVehiculo())
+                .objetivoMision(this.solicitudVehiculo.getObjetivoMision())
+                .lugarMision(this.solicitudVehiculo.getLugarMision())
+                .direccion(this.solicitudVehiculo.getDireccion())
+                .horaEntrada(this.solicitudVehiculo.getHoraEntrada())
+                .horaSalida(this.solicitudVehiculo.getHoraSalida())
+                .cantidadPersonas(this.solicitudVehiculo.getCantidadPersonas())
+                .solicitante(this.solicitudVehiculo.getUsuario())
+                .nombreJefeDepto(this.solicitudVehiculo.getJefeDepto())
+                .fechaEntrada(this.solicitudVehiculo.getFechaEntrada())
+                .estado(this.solicitudVehiculo.getEstado())
+                .motorista(this.solicitudVehiculo.getMotorista())
+                .build();
+    }
 }

@@ -15,7 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/proveedor")
-@CrossOrigin(origins = "*")
 public class ProveedorController {
 
     private final IProveedorService proveedorService;

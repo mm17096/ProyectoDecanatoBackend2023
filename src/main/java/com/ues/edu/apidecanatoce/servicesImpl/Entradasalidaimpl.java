@@ -1,9 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;

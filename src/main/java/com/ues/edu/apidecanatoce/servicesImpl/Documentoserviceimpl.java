@@ -24,11 +24,6 @@ public class Documentoserviceimpl implements Idocumentovaleservice {
     private final SolicitudValeRepository solicitudvalerepository;
 
     @Override
-    public List<Documentos> listarPorEstado(int estado) {
-        return null;
-    }
-
-    @Override
     public DocumentovalepeticionDto registrar(DocumentovaleDto data) {
 
         return documentosrepository.save(data.toEntityComplete(solicitudvalerepository)).toDTO();
