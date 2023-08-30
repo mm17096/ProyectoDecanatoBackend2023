@@ -1,10 +1,8 @@
 package com.ues.edu.apidecanatoce.controllers;
 import com.ues.edu.apidecanatoce.entities.Documentos;
 import com.ues.edu.apidecanatoce.repositorys.Documentosrepo;
-import com.ues.edu.apidecanatoce.services.Idocumentoservice;
 import com.ues.edu.apidecanatoce.servicesImpl.Documentoserviceimpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
