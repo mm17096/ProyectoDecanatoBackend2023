@@ -74,10 +74,10 @@ public class AsignacionVale {
         int i = 0;
         while (i < detalleAsignacionRepository.findAll().size()){
             // Comparo si el ID de la asignación es igual al ID de la asignación del detalle
-            if (detalleAsignacionDtoList.get(i).getCodigoAsignacionVale().equals(asignacionVale.codigoAsignacion)){
+           /* if (detalleAsignacionDtoList.get(i).getCodigoAsignacionVale().equals(asignacionVale.codigoAsignacion)){
                 // Si es así, se guarda en el arreglo de vales la clase completa del vale
                 vales.add(detalleAsignacionDtoList.get(i).getVale().toValeDto());
-            }
+            }*/
             i++;
         }
 
