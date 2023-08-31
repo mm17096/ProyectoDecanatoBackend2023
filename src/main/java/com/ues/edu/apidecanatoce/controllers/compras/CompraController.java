@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.compras;
 
-import com.ues.edu.apidecanatoce.dtos.compras.CompraDto;
+import com.ues.edu.apidecanatoce.dtos.compras.CompraInsertarDto;
+import com.ues.edu.apidecanatoce.dtos.compras.CompraModificarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import com.ues.edu.apidecanatoce.services.compras.ICompraService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class CompraController {
     private final ICompraService compraService;
 
     @PostMapping(value = "/insertar")
-    public ResponseEntity<CompraPeticionDto> registrar(@Valid @RequestBody CompraDto compra) {
+    public ResponseEntity<CompraPeticionDto> registrar(@Valid @RequestBody CompraInsertarDto compra) {
         return ResponseEntity.ok(compraService.registrar(compra));
     }
 
@@ -36,7 +37,7 @@ public class CompraController {
 
     @PutMapping("/editar/{id}")
     public ResponseEntity<CompraPeticionDto> actualizar(
-            @PathVariable UUID id, @Valid @RequestBody CompraDto compra) {
+            @PathVariable UUID id, @Valid @RequestBody CompraModificarDto compra) {
         return ResponseEntity.ok(compraService.actualizar(id, compra));
     }
 
