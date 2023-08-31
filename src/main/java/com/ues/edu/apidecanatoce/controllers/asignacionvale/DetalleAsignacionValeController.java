@@ -1,13 +1,9 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
-
-import com.ues.edu.apidecanatoce.servicesImpl.DetalleAsignacionServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.DetalleAsignacionServiceImpl;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Pageable;
-
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -17,10 +13,7 @@ public class DetalleAsignacionValeController {
 
     private final DetalleAsignacionServiceImpl detalleAsignacionService;
 
-    @GetMapping
-    public ResponseEntity<?> list(Pageable pageable){
-        return ResponseEntity.ok(detalleAsignacionService.list(pageable));
-    }
+
 
 
 }

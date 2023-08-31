@@ -22,10 +22,13 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name ="codigo_empleado")
     private UUID codigoEmpleado;
-    @Column(name = "dui")
+
+    @Column(name = "dui", length= 10, unique = true)
     private String dui;
+
     @Column(name ="nombre")
     private String nombre;
+
     @Column(name = "apellido")
     private String apellido;
 
@@ -35,11 +38,11 @@ public class Empleado {
     @Column(name = "licencia")
     private String licencia;
 
-    @Column(name = "tipo_licencia")
-    private String tipo_licencia;
+    @Column(name = "tipolicencia")
+    private String tipolicencia;
 
-    @Column(name = "fecha_licencia")
-    private LocalDate fecha_licencia;
+    @Column(name = "fechalicencia")
+    private LocalDate fechalicencia;
 
     @Column(name = "estado")
     private int estado;
@@ -70,8 +73,8 @@ public class Empleado {
     public EmpleadoPeticionDto toDTO() {
         return EmpleadoPeticionDto.builder().codigoEmpleado(this.codigoEmpleado).dui(this.dui).nombre(this.nombre)
                 .apellido(this.apellido).telefono(this.telefono).licencia(this.licencia)
-                .tipo_licencia(this.tipo_licencia)
-                .fecha_licencia(this.fecha_licencia).estado(this.estado).jefe(this.jefe)
+                .tipolicencia(this.tipolicencia)
+                .fechalicencia(this.fechalicencia).estado(this.estado).jefe(this.jefe)
                 .correo(this.correo).nombrefoto(this.nombrefoto).urlfoto(this.urlfoto)
                 .cargo(this.cargo.toDto()).departamento(this.departamento.toDto()).build();
     }

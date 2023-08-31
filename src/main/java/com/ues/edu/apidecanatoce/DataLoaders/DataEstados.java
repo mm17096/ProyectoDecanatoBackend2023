@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.DataLoaders;
 
 import com.ues.edu.apidecanatoce.entities.Estados;
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class DataEstados implements CommandLineRunner {
 
-    private final EstadosRepository estadosRepository;
+    private final IEstadosRepository estadosRepository;
 
     @Autowired
-    public DataEstados(EstadosRepository estadosRepository) {
+    public DataEstados(IEstadosRepository estadosRepository) {
         this.estadosRepository = estadosRepository;
     }
 

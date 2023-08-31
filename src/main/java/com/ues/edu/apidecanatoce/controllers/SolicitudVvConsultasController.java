@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers;
 
 
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +21,13 @@ public class SolicitudVvConsultasController {
 
 
     private final ISolicitudVehiculoService servicioSolicitudVehiculo;
-    @Autowired
-    private EstadosRepository estadosRepository;
+
+    private final IEstadosRepository estadosRepository;
 
     @Autowired
-    public SolicitudVvConsultasController(ISolicitudVehiculoService servicioSolicitudVehiculo) {
+    public SolicitudVvConsultasController(ISolicitudVehiculoService servicioSolicitudVehiculo, IEstadosRepository estadosRepository) {
         this.servicioSolicitudVehiculo = servicioSolicitudVehiculo;
+        this.estadosRepository = estadosRepository;
     }
 
 
@@ -56,7 +57,7 @@ public class SolicitudVvConsultasController {
 
             for (Estados estado: estados){
                 if (soliVe.getEstado() == estado.getCodigoEstado()){
-                    soliVeDTOResp.setEstado(estado.getNombreEstado());
+                    soliVeDTOResp.setEstado(estado.getCodigoEstado());
                 }
             }
 
