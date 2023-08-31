@@ -1,6 +1,6 @@
-package com.ues.edu.apidecanatoce.dtos.DepartamentoDto;
+package com.ues.edu.apidecanatoce.dtos.departamentoDto;
 
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,8 +1,8 @@
 package com.ues.edu.apidecanatoce.dtos.empleados;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 import com.ues.edu.apidecanatoce.entities.Empleado;
 
 import jakarta.validation.constraints.NotBlank;

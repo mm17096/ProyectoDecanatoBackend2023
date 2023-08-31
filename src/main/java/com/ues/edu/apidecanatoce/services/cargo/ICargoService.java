@@ -1,8 +1,8 @@
-package com.ues.edu.apidecanatoce.services;
+package com.ues.edu.apidecanatoce.services.cargo;
 
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
+import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,7 +20,7 @@ public interface ICargoService  {
 
     CargosDto registrar(CargosDto obj);
 
-    CargosDto modificar(CargosDto obj);
+    CargosDto modificar(UUID id, CargosDto obj);
 
     CargosDto eliminar(UUID obj);
 

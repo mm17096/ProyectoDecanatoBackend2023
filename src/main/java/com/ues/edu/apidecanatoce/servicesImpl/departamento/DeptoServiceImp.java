@@ -1,14 +1,11 @@
-package com.ues.edu.apidecanatoce.servicesImpl;
+package com.ues.edu.apidecanatoce.servicesImpl.departamento;
 
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
-import com.ues.edu.apidecanatoce.services.IDeptoService;
+import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
+import com.ues.edu.apidecanatoce.services.departamento.IDeptoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -38,8 +35,8 @@ public class DeptoServiceImp implements IDeptoService {
     }
 
     @Override
-    public DepartamentoDto modificar(DepartamentoDto data){
-        if (this.deptopRepository.existsByNombre(data.getNombre())) {
+    public DepartamentoDto modificar(UUID id, DepartamentoDto data){
+        if (this.deptopRepository.existsByNombreAndCodigoDeptoNot(data.getNombre(),id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
         }
         return this.deptopRepository.save(data.toEntityComplete()).toDto();

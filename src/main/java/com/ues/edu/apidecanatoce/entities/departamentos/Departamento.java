@@ -1,13 +1,11 @@
-package com.ues.edu.apidecanatoce.entities.Departamentos;
+package com.ues.edu.apidecanatoce.entities.departamentos;
 
 
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
-
 
 
 @Getter
@@ -24,7 +22,7 @@ public class Departamento {
     @Column(name ="codigo_depto")
     private UUID codigoDepto;
 
-    @Column(name ="nombre")
+    @Column(name ="nombre", unique = true)
     private String nombre;
 
     @Column(name ="estado")

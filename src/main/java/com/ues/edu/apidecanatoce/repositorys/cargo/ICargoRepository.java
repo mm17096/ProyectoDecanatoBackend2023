@@ -1,11 +1,8 @@
-package com.ues.edu.apidecanatoce.repositorys;
+package com.ues.edu.apidecanatoce.repositorys.cargo;
 
-import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,9 +27,8 @@ public interface ICargoRepository extends JpaRepository<Cargo, UUID> {
 
     List<Cargo> findAllByNombreCargo(String estado);
 
-    boolean existsByNombreCargo(String nombre);
+    boolean existsByNombreCargo(String nombreCargo);
 
-
-
+    boolean existsByNombreCargoAndIdNot(String nombreCargo, UUID id);
 
 }

@@ -1,11 +1,12 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.departamento;
 
 
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 
-import com.ues.edu.apidecanatoce.services.IDeptoService;
+import com.ues.edu.apidecanatoce.services.departamento.IDeptoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +43,10 @@ public class DeptoController {
         return ResponseEntity.ok(deptoService.registrar(data));
     }
 
-    @PutMapping
-    public ResponseEntity<DepartamentoDto> modificar(@RequestBody DepartamentoDto data){
-        return ResponseEntity.ok(deptoService.modificar(data));
+    @PutMapping("/{id}")
+    public ResponseEntity<DepartamentoDto> modificar(@PathVariable UUID id,
+                                                     @Valid @RequestBody DepartamentoDto data){
+        return ResponseEntity.ok(deptoService.modificar(id,data));
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +61,7 @@ public class DeptoController {
         return new ResponseEntity<List<Departamento>>(depto,HttpStatus.OK);
     }
 
-    @GetMapping(value = "listar/page/")
+    @GetMapping( "/lstpage")
     public ResponseEntity<Page<DepartamentoDto>> listarPaginable(Pageable pageable) {
         return ResponseEntity.ok(deptoService.listarConPage(pageable));
     }

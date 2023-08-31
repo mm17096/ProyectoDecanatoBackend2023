@@ -1,8 +1,7 @@
-package com.ues.edu.apidecanatoce.services;
+package com.ues.edu.apidecanatoce.services.departamento;
 
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +15,7 @@ public interface IDeptoService  {
 
     DepartamentoDto registrar(DepartamentoDto obj);
 
-    DepartamentoDto modificar(DepartamentoDto obj);
+    DepartamentoDto modificar(UUID id, DepartamentoDto obj);
 
     DepartamentoDto eliminar(UUID obj);
 

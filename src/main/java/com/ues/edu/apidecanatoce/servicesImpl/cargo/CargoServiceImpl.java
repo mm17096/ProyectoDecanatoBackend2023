@@ -1,13 +1,13 @@
-package com.ues.edu.apidecanatoce.servicesImpl;
+package com.ues.edu.apidecanatoce.servicesImpl.cargo;
 
 
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
+import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 
 
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
-import com.ues.edu.apidecanatoce.services.ICargoService;
+import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
+import com.ues.edu.apidecanatoce.services.cargo.ICargoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +33,7 @@ public class CargoServiceImpl implements ICargoService {
 
     @Override
     public CargosDto registrar(CargosDto data){
+        System.out.println(data.getNombreCargo());
        if (cargoRepository.existsByNombreCargo(data.getNombreCargo())) {
            throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
        }
@@ -40,10 +41,12 @@ public class CargoServiceImpl implements ICargoService {
     }
 
     @Override
-    public CargosDto modificar(CargosDto data){
-        if (this.cargoRepository.existsByNombreCargo(data.getNombreCargo())) {
+    public CargosDto modificar(UUID id, CargosDto data){
+        //CargosDto buscarCargo = leerPorId(id);
+        if (this.cargoRepository.existsByNombreCargoAndIdNot(data.getNombreCargo(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
         }
+        //data.setId(id);
         return this.cargoRepository.save(data.toEntityComplete()).toDto();
     }
 

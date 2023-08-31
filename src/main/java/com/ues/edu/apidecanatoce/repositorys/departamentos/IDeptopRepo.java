@@ -1,7 +1,6 @@
-package com.ues.edu.apidecanatoce.repositorys;
+package com.ues.edu.apidecanatoce.repositorys.departamentos;
 
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,5 +12,7 @@ public interface IDeptopRepo extends JpaRepository<Departamento, UUID> {
     List<Departamento> findAllByNombre(String estado);
 
     boolean existsByNombre(String nombre);
+
+    boolean existsByNombreAndCodigoDeptoNot(String nombre, UUID codigoDepto);
 
 }

@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.empleados;
 
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
