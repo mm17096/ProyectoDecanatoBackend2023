@@ -22,10 +22,13 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name ="codigo_empleado")
     private UUID codigoEmpleado;
+
     @Column(name = "dui", length= 10, unique = true)
     private String dui;
+
     @Column(name ="nombre")
     private String nombre;
+
     @Column(name = "apellido")
     private String apellido;
 

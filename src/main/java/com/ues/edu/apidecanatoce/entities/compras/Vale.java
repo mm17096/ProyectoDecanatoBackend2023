@@ -1,10 +1,12 @@
 package com.ues.edu.apidecanatoce.entities.compras;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -35,18 +37,17 @@ public class Vale {
             foreignKey=@ForeignKey(name="FK-compra"))
     private Compra compra;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "fecha_vencimiento")
+    private LocalDate fecha_vencimiento;
+
     @Column(name ="correlativo")
     private long correlativo;
 
     public ValeDependeDto toDTO() {
         return ValeDependeDto.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
-                .correlativo(this.correlativo).build();
-    }
-    public ValeDto toValeDto() {
-        return ValeDto.builder()
-                .idVale(this.id)
-                .codigoVale(this.codigoVale)
-                .build();
+                .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
     }
 
 

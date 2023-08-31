@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,10 +43,16 @@ public class CompraPeticionDto {
     @Min(value = 0, message = "Cod fin debe ser mayor o igual a 0")
     private int cod_fin;
 
-    @NotNull(message = "La fecha es obligatoria")
+    @NotNull(message = "La fecha de compra es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime fecha;
+    private LocalDateTime fecha_compra;
+
+    @NotNull(message = "La fecha de vencimiento es obligatoria")
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @FutureOrPresent(message = "Debe ser una fecha superior o igual al presente")
+    private LocalDate fecha_vencimiento;
 
     @NotNull(message = "El precio unitario es obligatorio")
     @Digits(integer = 10, fraction = 2, message = "El precio unitario debe ser un número válido con máximo 10 dígitos en total y 2 decimales")
@@ -58,6 +65,6 @@ public class CompraPeticionDto {
 
     public Compra toEntitySave() {
         return Compra.builder().id(this.id).factura(this.factura).proveedor(this.proveedor.toEntityComplete()).descripcion(this.descripcion).cantidad(this.cantidad)
-                .cod_inicio(this.cod_inicio).cod_fin(this.cod_fin).fecha(this.fecha).precio_unitario(this.precio_unitario).total_compra(this.total_compra).build();
+                .cod_inicio(this.cod_inicio).cod_fin(this.cod_fin).fecha_compra(this.fecha_compra).fecha_vencimiento(this.fecha_vencimiento).precio_unitario(this.precio_unitario).build();
     }
 }
