@@ -3,7 +3,6 @@ package com.ues.edu.apidecanatoce.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
-import com.ues.edu.apidecanatoce.dtos.compras.CompraDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
