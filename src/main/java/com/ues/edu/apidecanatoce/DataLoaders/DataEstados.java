@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.DataLoaders;
 
-import com.ues.edu.apidecanatoce.entities.Estados;
+import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

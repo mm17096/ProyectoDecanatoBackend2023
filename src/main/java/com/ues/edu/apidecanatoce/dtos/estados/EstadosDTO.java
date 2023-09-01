@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.dtos.estados;
 
-import com.ues.edu.apidecanatoce.entities.Estados;
+import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
