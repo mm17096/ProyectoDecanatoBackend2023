@@ -8,13 +8,17 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Data
+@Builder
 public class SolicitudVvDTO {
-    private int codigoSolicitudVehiculo;
+    private UUID idSolicitudVale;
+    private UUID codigoSolicitudVehiculo;
     private LocalDate fechaSolicitud;
     private LocalDate fechaSalida;
     private String unidadSolicitante;
@@ -29,8 +33,9 @@ public class SolicitudVvDTO {
     private Usuario solicitante; // usuario solicitante
     private String nombreJefeDepto;
     private LocalDate fechaEntrada;
-    private String estado;
+    private int estado;
     private Empleado motorista; // ID del motorista
     //private List<Documentos> listDocumentos;
+
 
 }
