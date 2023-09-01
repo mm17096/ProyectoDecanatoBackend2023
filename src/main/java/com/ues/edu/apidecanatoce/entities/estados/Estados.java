@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.estados;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import jakarta.persistence.*;
@@ -23,8 +23,7 @@ public class Estados {
     private String nombreEstado;
 
     public EstadosDTO toDTO() {
-        return EstadosDTO.builder().codigoEstado(this.codigoEstado)
-                .nombreEstado(this.nombreEstado).build();
+        return EstadosDTO.builder().codigoEstado(this.codigoEstado).nombreEstado(this.nombreEstado).build();
     }
 
 }

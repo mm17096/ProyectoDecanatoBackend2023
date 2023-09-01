@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.empleado;
 
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
