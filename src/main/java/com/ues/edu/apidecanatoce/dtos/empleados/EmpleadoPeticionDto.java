@@ -3,7 +3,7 @@ package com.ues.edu.apidecanatoce.dtos.empleados;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
 import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
-import com.ues.edu.apidecanatoce.entities.Empleado;
+import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

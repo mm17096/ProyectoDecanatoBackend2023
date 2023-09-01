@@ -28,7 +28,6 @@ public class CargoServiceImpl implements ICargoService {
     @Override
     public Cargo registrar(Cargo obj){return this.cargoService.save(obj);}
 
-
     @Override
     public Cargo modificar(Cargo obj){return this.cargoService.save(obj);}
 

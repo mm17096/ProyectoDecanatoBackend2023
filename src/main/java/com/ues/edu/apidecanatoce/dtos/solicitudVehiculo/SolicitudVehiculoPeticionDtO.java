@@ -1,11 +1,12 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
-import com.ues.edu.apidecanatoce.entities.*;
+import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.Pasajeros;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import lombok.Builder;
 import lombok.Data;
 

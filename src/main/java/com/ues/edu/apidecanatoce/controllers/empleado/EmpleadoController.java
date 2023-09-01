@@ -1,18 +1,13 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.empleado;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
-import com.ues.edu.apidecanatoce.dtos.compras.CompraDto;
-import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
+
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
-import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoTablaDTO;
-import com.ues.edu.apidecanatoce.entities.Empleado;
-import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.services.IEmpleadoService;
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.services.PathService;
-import com.ues.edu.apidecanatoce.servicesImpl.EmpleadoServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -23,18 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +33,7 @@ public class EmpleadoController {
     private final EmpleadoServiceImpl empleadoServiceimpl;
     private final PathService pathService;
     private final HttpServletRequest request;
+    private Usuario usuario;
 
     public EmpleadoController(EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request) {
         this.empleadoServiceimpl = empleadoServiceimpl;
