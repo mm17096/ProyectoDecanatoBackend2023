@@ -24,8 +24,7 @@ import java.util.UUID;
 public class CompraInsertarDto {
     private UUID id;
 
-    @NotBlank(message = "La factura es obligatoria")
-    @Size(min = 1, max = 100, message = "La factura debe tener entre 1 y 100 caracteres")
+    @Size(max = 100, message = "La factura debe tener entre 1 y 100 caracteres")
     private String factura;
 
     @NotNull(message = "Proveerdor es obligatorio")
@@ -51,7 +50,7 @@ public class CompraInsertarDto {
     @NotNull(message = "La fecha de vencimiento es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "Debe ser una fecha superior o igual al presente")
+    @FutureOrPresent(message = "Fecha de vencimiento debe ser una fecha superior o igual al presente")
     private LocalDate fecha_vencimiento;
 
     @NotNull(message = "El precio unitario es obligatorio")
