@@ -1,21 +1,19 @@
-package com.ues.edu.apidecanatoce.entities.Departamentos;
+package com.ues.edu.apidecanatoce.entities.departamentos;
 
 
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
-import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
 
-@Entity
-@Data
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "tb_departamento")
 public class Departamento {
 
@@ -24,9 +22,10 @@ public class Departamento {
     @Column(name ="codigo_depto")
     private UUID codigoDepto;
 
-    @Column(name ="nombre")
+    @Column(name ="nombre", unique = true)
     private String nombre;
 
+    @Column(name ="estado")
     private int estado;
 
      public DepartamentoDto toDto(){

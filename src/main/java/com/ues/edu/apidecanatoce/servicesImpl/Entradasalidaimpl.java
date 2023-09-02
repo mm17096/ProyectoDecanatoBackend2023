@@ -1,21 +1,33 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
-import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
+
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
+//import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
+//import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
+//import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+//import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class Entradasalidaimpl implements Ientradasalidaservice {
+
+
+
     private final EntradaSalidaRepo entradaSalidaRepo;
 
 
@@ -53,6 +65,7 @@ public class Entradasalidaimpl implements Ientradasalidaservice {
 
     @Override
     public EntradasalidaDto eliminar(UUID id) {
+
         return null;
     }
 }

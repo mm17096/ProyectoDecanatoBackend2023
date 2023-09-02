@@ -1,6 +1,6 @@
-package com.ues.edu.apidecanatoce.entities.Cargos;
+package com.ues.edu.apidecanatoce.entities.cargos;
 
-import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
+import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +18,10 @@ public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name ="codigo_cargo")
-    private UUID codigoCargo;
+    @Column(name ="id")
+    private UUID id;
 
-    @Column(name = "nombre_cargo")
+    @Column(name = "nombre_cargo", unique = true)
     private String nombreCargo;
 
     @Column(name = "descripcion")
@@ -31,7 +31,7 @@ public class Cargo {
     private int estado;
 
     public CargosDto toDto(){
-        return  CargosDto.builder().codigoCargo(this.codigoCargo).nombreCargo(this.nombreCargo)
+        return  CargosDto.builder().id(this.id).nombreCargo(this.nombreCargo)
                 .descripcion(this.descripcion).estado(this.estado).build();
     }
 
