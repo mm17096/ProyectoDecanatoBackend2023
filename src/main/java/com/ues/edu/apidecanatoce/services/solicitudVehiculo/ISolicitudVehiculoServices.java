@@ -5,6 +5,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticio
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ISolicitudVehiculoServices {
@@ -15,4 +16,6 @@ public interface ISolicitudVehiculoServices {
     Page<SolicitudVehiculoPeticionDtO> listarPorEstado(Integer id, Pageable pageable);
 
     SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data);
+
+    List<SolicitudVehiculoPeticionDtO> listarSinPagina();
 }
