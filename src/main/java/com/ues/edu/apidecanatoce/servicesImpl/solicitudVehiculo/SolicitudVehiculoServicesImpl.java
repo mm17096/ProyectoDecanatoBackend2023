@@ -64,7 +64,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         return solicitudes.map(solicitud -> {
             SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
-            String estadoAsString = estadoStringMap.get(Optional.of(solicitud.getEstado()));
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
             dto.setEstadoString(estadoAsString);
             return dto;
         });
@@ -83,7 +83,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         return listSoliVe.map(solicitud -> {
             SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
-            String estadoAsString = estadoStringMap.get(Optional.of(solicitud.getEstado()));
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
             dto.setEstadoString(estadoAsString);
             return dto;
         });
