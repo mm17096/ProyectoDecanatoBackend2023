@@ -24,22 +24,22 @@ public class SolicitudVehiculoPeticionDtO {
     private UUID codigoSolicitudVehiculo;
 
     @NotNull(message = "Fecha de realización de la solicitud es obligatoria")
-    @FutureOrPresent(message = "La fecha es superior a la actual")
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @PastOrPresent(message = "La fecha de solicitud es superior a la actual")
+    @FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSolicitud;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de misión es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSalida;
 
     @NotNull(message = "La unidad solicitante es obligataria")
-    @Max(value = 50, message = "Maximo 50 caracteres para la unidad solcitante")
+    @Size(max = 50, message = "Maximo 50 caracteres para la unidad solcitante")
     private String unidadSolicitante;
 
-    @NotNull(message = "El vehículo es obligaatorio")
+    @NotNull(message = "El vehículo es obligatorio")
     private VehiculoDto vehiculo;
 
     @NotNull(message = "El objetivo de misión es obligatorio")
@@ -70,10 +70,10 @@ public class SolicitudVehiculoPeticionDtO {
     @NotNull(message = "El responsable es obligatorio")
     private Usuario solicitante; // usuario solicitante
 
-    @Max(value = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
+    @Size(max = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
     private String nombreJefeDepto;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de regreso es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaEntrada;

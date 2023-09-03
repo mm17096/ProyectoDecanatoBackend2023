@@ -77,8 +77,7 @@ public class SolicitudVehiculoController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<SolicitudVehiculoPeticionDtO> registrarSoliVe( @RequestBody SolicitudVehiculoDto solicitudVehiculo) {
-        System.out.println("datos cont:"+solicitudVehiculo);
+    public ResponseEntity<SolicitudVehiculoPeticionDtO> registrarSoliVe(@Valid @RequestBody SolicitudVehiculoDto solicitudVehiculo) {
         return ResponseEntity.ok(servicioSolicitudVehiculo.registrar(solicitudVehiculo));
     }
 
