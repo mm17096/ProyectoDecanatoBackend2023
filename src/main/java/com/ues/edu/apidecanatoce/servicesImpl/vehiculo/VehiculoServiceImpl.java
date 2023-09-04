@@ -33,7 +33,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
 
     @Override
     public MensajeRecord registrar(MultipartFile imagen, VehiculoDto data) {
-        if (vehiculoRepository.existsByPlaca(data.getPlaca())) {
+        if (vehiculoRepository.existsByPlacaIgnoreCase(data.getPlaca())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El número de placa ya está registrado");
         }
         if (imagen != null && !imagen.isEmpty()) {

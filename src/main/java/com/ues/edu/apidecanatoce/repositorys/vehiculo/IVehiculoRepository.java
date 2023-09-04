@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface IVehiculoRepository extends JpaRepository<Vehiculo, UUID> {
-    boolean existsByPlaca(String placa);
+    boolean existsByPlacaIgnoreCase(String placa);
 
     boolean existsByPlacaAndCodigoVehiculoNot(String placa, UUID codigoVehiculo);
 
