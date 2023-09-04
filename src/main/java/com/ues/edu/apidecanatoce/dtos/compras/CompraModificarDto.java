@@ -20,8 +20,7 @@ import java.util.UUID;
 public class CompraModificarDto {
     private UUID id;
 
-    @NotBlank(message = "La factura es obligatoria")
-    @Size(min = 1, max = 100, message = "La factura debe tener entre 1 y 100 caracteres")
+    @Size(max = 100, message = "La factura debe tener entre 1 y 100 caracteres")
     private String factura;
 
     @NotNull(message = "Proveerdor es obligatorio")
