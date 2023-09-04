@@ -1,17 +1,14 @@
 package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 

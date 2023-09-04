@@ -1,0 +1,16 @@
+TABLA DE DOCUMENTOS de solicitud vale
+agregar datos y guardar documentos
+descargar documentos
+
+TABLA CONTROL ENTRADA Y SALIDA
+mostrar datos
+agregar salida
+agregar entrada
+modificar entrada o salida
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.entradasalidaDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,7 +1,8 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.entradaSalida;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,6 +39,11 @@ public class Entrada_Salidas {
 
     @Column(name = "kilometraje")
     private String kilometraje;
+
+    /*@ManyToOne
+    @JoinColumn(name = "id_", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_empleado_cargo"))
+    private Cargo cargo;*/
 
     public EntradasalidaDto toDTO() {
         return EntradasalidaDto.builder().id(this.codigoEntradaSalida).tipo(this.tipo).fecha(this.fecha).hora(this.hora).combustible(this.combustible).kilometraje(this.kilometraje).build();

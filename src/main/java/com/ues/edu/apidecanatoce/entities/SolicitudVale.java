@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
@@ -67,4 +66,6 @@ public class SolicitudVale {
                 .motorista(this.solicitudVehiculo.getMotorista())
                 .build();
     }
+
+
 }

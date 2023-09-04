@@ -1,12 +1,9 @@
-package com.ues.edu.apidecanatoce.controllers;
+package com.ues.edu.apidecanatoce.controllers.entradaSalida;
 
-import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +14,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/entradasalida")
-public class Entradasalidacontroller {
+public class EntradasalidaController {
 
     private final Ientradasalidaservice ientradasalidaservice;
 
@@ -31,7 +28,7 @@ public class Entradasalidacontroller {
     public ResponseEntity<EntradasalidaDto> registrar(@Valid @RequestBody EntradasalidaDto entradasalidadto) {
         return ResponseEntity.ok(ientradasalidaservice.registrar(entradasalidadto));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<EntradasalidaDto> actualizar(@PathVariable UUID id, @Valid @RequestBody EntradasalidaDto entradasalida) {
         return ResponseEntity.ok(ientradasalidaservice.actualizar(id, entradasalida));
     }
@@ -85,20 +82,7 @@ public class Entradasalidacontroller {
 
     public Entrada_Salidas guardar(@RequestBody Entrada_Salidas entradaSalidas){
         return this.entradasalidaimpl.registrar(entradaSalidas);
-    }
-    @PutMapping
-    public ResponseEntity<GenericResponse<Entrada_Salidas>> editarEntradaSalida(@RequestBody Entrada_Salidas entradaSalidas) {
-        Optional<Entrada_Salidas> opt = Optional.ofNullable(this.entradasalidaimpl.leerPorId(entradaSalidas.getCodigoEntradaSalida()));
-        GenericResponse<Entrada_Salidas> resp;
-        Entrada_Salidas entradasalidasRespon;
-        if(opt.isPresent()) {
-            entradasalidasRespon = guardar(entradaSalidas);
-            resp = new GenericResponse<Entrada_Salidas>(1,"Datos modificados con exito",entradasalidasRespon);
-            return new ResponseEntity<GenericResponse<Entrada_Salidas>>(resp,HttpStatus.OK);
-        }else {
-            resp = new GenericResponse<Entrada_Salidas>(0,"Error al modificar algunos datos",entradaSalidas);
-            return new ResponseEntity<GenericResponse<Entrada_Salidas>>(resp,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }*/
+
 
 }

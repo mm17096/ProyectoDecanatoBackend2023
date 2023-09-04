@@ -1,10 +1,5 @@
 package com.ues.edu.apidecanatoce.dtos.documentovaleDto;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
