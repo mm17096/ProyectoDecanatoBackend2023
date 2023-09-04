@@ -1,8 +1,6 @@
 package com.ues.edu.apidecanatoce.entities.entradaSalida;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

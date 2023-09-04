@@ -1,15 +1,15 @@
 package com.ues.edu.apidecanatoce.servicesImpl.entradaSalida;
-
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +21,6 @@ public class EntradasalidaImpl implements Ientradasalidaservice {
 
     @Override
     public EntradasalidaDto registrar(EntradasalidaDto data) {
-
         return entradasalidaRepository.save(data.toEntityComplete()).toDTO();
     }
 
@@ -53,6 +52,7 @@ public class EntradasalidaImpl implements Ientradasalidaservice {
 
     @Override
     public EntradasalidaDto eliminar(UUID id) {
+
         return null;
     }
 }
