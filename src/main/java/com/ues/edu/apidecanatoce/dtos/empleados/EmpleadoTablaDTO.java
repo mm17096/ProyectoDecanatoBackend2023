@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.empleados;
 
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,8 +21,8 @@ public class EmpleadoTablaDTO {
     private String apellido;
     private String telefono;
     private String licencia;
-    private String tipo_licencia;
-    private LocalDate fecha_licencia;
+    private String tipolicencia;
+    private LocalDate fechalicencia;
     private int estado;
     private boolean jefe;
     private String correo;

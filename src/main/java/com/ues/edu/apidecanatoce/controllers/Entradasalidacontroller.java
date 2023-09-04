@@ -1,38 +1,42 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-
-import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.entities.GenericResponse;
+import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
-import com.ues.edu.apidecanatoce.servicesImpl.Entradasalidaimpl;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-@RestController
 @RequiredArgsConstructor
+@RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/entradasalida")
 public class Entradasalidacontroller {
 
-    private final Entradasalidaimpl entradasalidaimpl;
+    private final Ientradasalidaservice ientradasalidaservice;
 
-
-    private Entrada_Salidas entradaSalidas;
-
+    //SEGUNDA FORMA DE HACERLO
     @GetMapping
-    public ResponseEntity<List<Entrada_Salidas>> mostrarEntradaSalidas(){
-        List<Entrada_Salidas> entradaSalidas1= this.entradasalidaimpl.listar();
-        return new ResponseEntity<List<Entrada_Salidas>>(entradaSalidas1, HttpStatus.OK);
+    public ResponseEntity<List<EntradasalidaDto>> listar() {
+        List<EntradasalidaDto> entradas = ientradasalidaservice.listarSinPagina();
+        return ResponseEntity.ok(entradas);
+    }
+    @PostMapping(value = "/insertar")
+    public ResponseEntity<EntradasalidaDto> registrar(@Valid @RequestBody EntradasalidaDto entradasalidadto) {
+        return ResponseEntity.ok(ientradasalidaservice.registrar(entradasalidadto));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<EntradasalidaDto> actualizar(@PathVariable UUID id, @Valid @RequestBody EntradasalidaDto entradasalida) {
+        return ResponseEntity.ok(ientradasalidaservice.actualizar(id, entradasalida));
     }
 
-    @DeleteMapping("/{id}")
+   /* @DeleteMapping("/{id}")
 
     public ResponseEntity<GenericResponse<Entrada_Salidas>> eliminarEntradaSalida(@PathVariable("id") UUID id){
         Optional<Entrada_Salidas> opt= Optional.ofNullable(this.entradasalidaimpl.leerPorId(id));
@@ -95,6 +99,6 @@ public class Entradasalidacontroller {
             resp = new GenericResponse<Entrada_Salidas>(0,"Error al modificar algunos datos",entradaSalidas);
             return new ResponseEntity<GenericResponse<Entrada_Salidas>>(resp,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
 }

@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl.compras;
 
-import com.ues.edu.apidecanatoce.dtos.compras.CompraDto;
+import com.ues.edu.apidecanatoce.dtos.compras.CompraInsertarDto;
+import com.ues.edu.apidecanatoce.dtos.compras.CompraModificarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
@@ -28,51 +29,39 @@ public class CompraServiceImpl implements ICompraService {
     private final IValeRepository valeRepository;
     private final IProveedorRepository proveedorRepository;
 
-    /*@Override
-    public CompraPeticionDto registrar(CompraDto data) {
-        if (compraRepository.existsByFactura(data.getFactura())) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
-        }
-        if (data.getCod_inicio() >= data.getCod_fin()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de de fin");
-        }
-        return compraRepository.save(data.toEntityComplete(proveedorRepository)).toDTO();
-    }*/
-
     @Override
-    public CompraPeticionDto registrar(CompraDto data) {
+    public CompraPeticionDto registrar(CompraInsertarDto data) {
         if (compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
+        } else if (data.getCod_inicio() > data.getCod_fin()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de fin");
+        } else {
+
+            Compra compraInsertar;
+            int cantidadVales = (data.getCod_fin() + 1) - data.getCod_inicio();
+            compraInsertar = data.toEntityComplete(proveedorRepository);
+            compraInsertar.setCantidad(cantidadVales);
+            Compra compraEntity = compraRepository.save(compraInsertar);
+
+            // Obtener la cantidad de vales a crear
+            for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
+                Vale valeEntity = new Vale();
+                valeEntity.setCodigoVale(generarCodigoValeUnico(compraEntity, i));  // Generar un código único para el vale
+                valeEntity.setEstado(8);  // Establecer el estado inicial
+                valeEntity.setValor(data.getPrecio_unitario());
+                valeEntity.setCorrelativo(i);  // Establecer el correlativo
+                valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
+                valeEntity.setCompra(compraEntity);  // Establecer la relación con la compra creada
+                valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
+            }
+            return compraEntity.toDTO();
         }
-        if (data.getCod_inicio() >= data.getCod_fin()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de de fin");
-        }
-
-        Compra compraEntity = compraRepository.save(data.toEntityComplete(proveedorRepository));
-
-        int cantidadVales = data.getCantidad();
-        // Obtener la cantidad de vales a crear
-        for (int i = 0; i < cantidadVales; i++) {
-            Vale valeEntity = new Vale();
-            long correlativo = data.getCod_inicio() + i;
-            valeEntity.setCodigoVale(generarCodigoValeUnico(compraEntity, correlativo));  // Generar un código único para el vale
-            valeEntity.setEstado(1);  // Establecer el estado inicial si es necesario
-            valeEntity.setValor(data.getPrecio_unitario());
-            valeEntity.setCorrelativo(correlativo);  // Establecer el correlativo
-
-            valeEntity.setCompra(compraEntity);  // Establecer la relación con la compra creada
-            valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
-        }
-
-        return compraEntity.toDTO();
     }
 
     private long generarCodigoValeUnico(Compra compraEntity, long correlativo) {
-        LocalDateTime fechaCompra = compraEntity.getFecha();
-
+        LocalDateTime fechaCompra = compraEntity.getFecha_compra();
         // Generar un número aleatorio de 3 dígitos
         int numeroAleatorio = generarNumeroAleatorio();
-
         // Supongamos que el formato del código de vale es "numRandom_yyyyMMdd_correlativo"
         String fechaString = fechaCompra.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         return Long.parseLong(numeroAleatorio + fechaString + correlativo);
@@ -97,13 +86,16 @@ public class CompraServiceImpl implements ICompraService {
     }
 
     @Override
-    public CompraPeticionDto actualizar(UUID id, CompraDto data) {
+    public CompraPeticionDto actualizar(UUID id, CompraModificarDto data) {
         CompraPeticionDto buscarCompra = leerPorId(id);
         if (compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         }
-        data.setId(id);
-        return compraRepository.save(data.toEntityComplete(proveedorRepository)).toDTO();
+        buscarCompra.setProveedor(proveedorRepository.findById(data.getProveedor()).get().toDTO());
+        buscarCompra.setFactura(data.getFactura());
+        buscarCompra.setDescripcion(data.getDescripcion());
+
+        return compraRepository.save(buscarCompra.toEntitySave()).toDTO();
     }
 
     @Override

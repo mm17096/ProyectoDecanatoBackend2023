@@ -2,9 +2,10 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
+import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

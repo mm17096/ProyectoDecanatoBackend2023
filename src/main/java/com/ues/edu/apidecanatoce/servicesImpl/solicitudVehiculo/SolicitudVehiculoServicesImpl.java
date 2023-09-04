@@ -2,11 +2,11 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.entities.Estados;
+import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.EstadosRepository;
-import com.ues.edu.apidecanatoce.repositorys.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
@@ -26,7 +26,7 @@ import java.util.UUID;
 public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices {
 
     private final ISolicitudVehiculoRepository solicitudVehiculoServices;
-    private final EstadosRepository estadosRepository;
+    private final IEstadosRepository estadosRepository;
     private final IVehiculoRepository vehiculoRepository;
     private final IEmpleadoRepository empleadoRepository;
     @Override
@@ -40,6 +40,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         SolicitudVehiculo solicitudVehiculo = solicitudVehiculoServices.findById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
         return solicitudVehiculo.toDto();
+    }
+
+    @Override
+    public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAll();
+        return solicitudVehiculos.stream().map(SolicitudVehiculo::toDto).toList();
     }
 
     @Override
