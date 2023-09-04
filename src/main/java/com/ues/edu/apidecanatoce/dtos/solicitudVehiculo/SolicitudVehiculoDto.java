@@ -67,6 +67,19 @@ public class SolicitudVehiculoDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime horaSalida;
 
+    @AssertTrue(message = "La hora de salida debe ser anterior a la hora de regreso en el mismo día")
+    public boolean isHorasValidas() {
+        // Verificar si la hora de salida es anterior a la hora de regreso solo si las fechas son iguales
+        if (fechaSalida != null && fechaEntrada != null && fechaSalida.equals(fechaEntrada)) {
+            if (horaSalida == null || horaEntrada == null) {
+                return true; // Si alguna de las horas es nula, no se realiza la validación
+            }
+            return !horaSalida.isAfter(horaEntrada);
+        }
+        return true; // Si las fechas son diferentes, no aplicar la validación de hora
+    }
+
+
     @NotNull(message = "La cantidad de pasajeros es obligatoria")
     @Min(value = 1, message = "La cantidad de personas debe ser mayor o igual a 1")
     private int cantidadPersonas;
