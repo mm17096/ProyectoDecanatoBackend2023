@@ -25,11 +25,18 @@ public class Departamento {
     @Column(name ="nombre", unique = true)
     private String nombre;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    @Column(name = "tipo")
+    private String tipo;
+
     @Column(name ="estado")
     private int estado;
 
      public DepartamentoDto toDto(){
-        return  DepartamentoDto.builder().codigoDepto(this.codigoDepto).nombre(this.nombre).estado(this.estado).build();
+        return  DepartamentoDto.builder().codigoDepto(this.codigoDepto).nombre(this.nombre)
+                .descripcion(this.descripcion).tipo(this.tipo).estado(this.estado).build();
     }
 
 }
