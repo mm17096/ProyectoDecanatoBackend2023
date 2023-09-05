@@ -18,7 +18,7 @@ public class AsignacionValeVistaDto {
     private LocalDate fechaAsignacion;
     private SolicitudVale mision;
 
-    List<ValeDto> vales;
+    List<ValeModDto> vales;
 
     //private List<DetalleAsignacionVale> listaVales;
 

@@ -67,4 +67,11 @@ public class SolicitudVale {
                 .motorista(this.solicitudVehiculo.getMotorista())
                 .build();
     }
+
+    public SolicitudValeModDto toSolicitudValeModDto(){
+        return SolicitudValeModDto.builder()
+                .idSolicitudVale(this.idSolicitudVale)
+                .estadoSolicutudVale(this.estadoEntrada)
+                .build();
+    }
 }

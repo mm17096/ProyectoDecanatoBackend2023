@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,17 @@ import java.util.UUID;
 @Repository
 public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale, UUID> {
 
-   /* @Query(value = "SELECT tb_asignacion_vale.codigo_asignacion as idAsignacionVale, concat ( tb_solicitud_vehiculo.objetivo, ', ', tb_solicitud_vehiculo.lugar_mision ) AS mision, tb_vale.codigo_vale AS vale, tb_asignacion_vale.fecha AS fechaAsignacion FROM tb_asignacion_vale INNER JOIN tb_detalle_asignacion_vale ON tb_asignacion_vale.codigo_asignacion = tb_detalle_asignacion_vale.id_asignacion_vale INNER JOIN tb_vale ON tb_detalle_asignacion_vale.valeid = tb_vale.id_vale INNER JOIN tb_solicitud_vale ON tb_asignacion_vale.solicitud_vale_id = tb_solicitud_vale.id_solicitud_vale INNER JOIN tb_solicitud_vehiculo ON tb_solicitud_vale.solicitud_vehiculo_id = tb_solicitud_vehiculo.codigo_solicitud_vehiculo WHERE tb_asignacion_vale.codigo_asignacion =:idAsignacionParam", nativeQuery = true)
-    List<IAsignacionValeVistaDto> listarAsignacionValeById(UUID idAsignacionParam);*/
+
+    @Query(value = "SELECT codigo_asignacion FROM tb_asignacion_vale WHERE solicitud_vale_id =:solicitudID ORDER BY codigo_asignacion DESC LIMIT 1", nativeQuery = true)
+    UUID findTopByOrderByIdDesc(UUID solicitudID);
+
+    @Query(value = "SELECT tb_v.id_vale AS idVale, tb_v.codigo_vale AS codigoVale, tb_v.correlativo AS correlativoVale FROM tb_vale AS tb_v WHERE tb_v.estado = 8 ORDER BY tb_v.correlativo ASC LIMIT :cantidadVales", nativeQuery = true)
+    List<IValeAsignarDto> listarValesAsignar(int cantidadVales);
+
+    @Query(value = "SELECT count(*) AS valesDisponibles FROM tb_vale AS tb_v WHERE tb_v.estado = 8", nativeQuery = true)
+    Integer valesDisponibles();
+
+    @Query(value = "SELECT SUM ( tv.valor ) AS totalDineroVales FROM tb_vale AS tv WHERE tv.id_vale IN ( SELECT id_vale FROM tb_vale LIMIT :cantidadVales )", nativeQuery = true)
+    Double totalDineroVales(int cantidadVales);
+
 }

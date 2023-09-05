@@ -1,5 +1,4 @@
 package com.ues.edu.apidecanatoce.entities.compras;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import jakarta.persistence.*;
@@ -47,7 +46,15 @@ public class Vale {
 
     public ValeDependeDto toDTO() {
         return ValeDependeDto.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
-                .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
+                .correlativo(this.correlativo).build();
+    }
+    public ValeModDto toValeDto() {
+        return ValeModDto.builder()
+                .idVale(this.id)
+                .codigoVale(this.codigoVale)
+                .estadoVale(this.estado)
+                .build();                
+
     }
 
 
