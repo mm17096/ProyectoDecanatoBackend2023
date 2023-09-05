@@ -89,19 +89,21 @@ public class VehiculoServiceImpl implements IVehiculoService {
         if (vehiculoRepository.existsByPlacaAndCodigoVehiculoNot(data.getPlaca(), data.getCodigoVehiculo())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La placa ya está registrado");
         }
-        try {
-            // Guardar la imagen en la carpeta del proyecto
-            String filename = pathService.generateFileName(imagen);
-            pathService.storeFile(imagen, filename);
-            Path destinationFile = pathService.generatePath(filename);
-            Files.write(destinationFile, imagen.getBytes());
+        if (imagen != null && !imagen.isEmpty()) {
+            try {
+                // Guardar la imagen en la carpeta del proyecto
+                String filename = pathService.generateFileName(imagen);
+                pathService.storeFile(imagen, filename);
+                Path destinationFile = pathService.generatePath(filename);
+                Files.write(destinationFile, imagen.getBytes());
 
-            // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-            data.setNombrefoto(filename);
-            data.setUrlfoto(destinationFile.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+                // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
+                data.setNombrefoto(filename);
+                data.setUrlfoto(destinationFile.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         vehiculoRepository.save(data.toEntity());
         return new MensajeRecord("exito se edito");
