@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
@@ -57,6 +58,13 @@ public class SolicitudVale {
                 .fechaEntrada(this.solicitudVehiculo.getFechaEntrada())
                 .estado(this.solicitudVehiculo.getEstado())
                 .motorista(this.solicitudVehiculo.getMotorista())
+                .build();
+    }
+
+    public SolicitudValeModDto toSolicitudValeModDto(){
+        return SolicitudValeModDto.builder()
+                .idSolicitudVale(this.idSolicitudVale)
+                .estadoSolicutudVale(this.estadoEntrada)
                 .build();
     }
 }

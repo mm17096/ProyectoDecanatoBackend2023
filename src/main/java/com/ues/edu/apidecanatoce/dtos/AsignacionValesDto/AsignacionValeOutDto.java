@@ -15,7 +15,7 @@ public class AsignacionValeOutDto {
     private UUID idAsignacionVale;
     private LocalDate fechaAsignacion;
     private String mision;
-    List<ValeDto> vales;
+    List<ValeModDto> vales;
     public AsignacionValeVistaDto toAsignacionValeVistaDto(){
         SolicitudVale solicitudVale = new SolicitudVale();
         return AsignacionValeVistaDto.builder()
