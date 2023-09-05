@@ -1,11 +1,13 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
+
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -38,6 +40,11 @@ public class SolicitudVale {
 
     // @OneToMany(mappedBy = "solicitudVale")
     // private Set<AsignacionVale> asignacionValeSet;
+
+
+    public SolicitudvaleDto toDTO() {
+        return SolicitudvaleDto.builder().id(this.idSolicitudVale).cantidadVale(this.cantidadVale).estadoEntrada(this.estadoEntrada).build();
+    }
 
     public SolicitudVvDTO tosolicitudVvDTO() {
         return SolicitudVvDTO.builder()

@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.DataLoaders;
 
-import com.ues.edu.apidecanatoce.entities.Estados;
+import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,6 +32,8 @@ public class DataEstados implements CommandLineRunner {
         Estados estado10 = new Estados(10,"Caducado");
         Estados estado11 = new Estados(11,"Consumido");
         Estados estado12 = new Estados(12,"Devuelto");
+        Estados estado13 = new Estados(13,"Gasolinera");
+        Estados estado14 = new Estados(14,"UES");
 
         estadosRepository.save(estado1);
         estadosRepository.save(estado2);
@@ -45,6 +47,8 @@ public class DataEstados implements CommandLineRunner {
         estadosRepository.save(estado10);
         estadosRepository.save(estado11);
         estadosRepository.save(estado12);
+        estadosRepository.save(estado13);
+        estadosRepository.save(estado14);
     }
 }
 

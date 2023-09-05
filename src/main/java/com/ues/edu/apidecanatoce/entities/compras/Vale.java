@@ -1,10 +1,11 @@
 package com.ues.edu.apidecanatoce.entities.compras;
-
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeModDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -35,6 +36,11 @@ public class Vale {
             foreignKey=@ForeignKey(name="FK-compra"))
     private Compra compra;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Column(name = "fecha_vencimiento")
+    private LocalDate fecha_vencimiento;
+
     @Column(name ="correlativo")
     private long correlativo;
 
@@ -47,7 +53,8 @@ public class Vale {
                 .idVale(this.id)
                 .codigoVale(this.codigoVale)
                 .estadoVale(this.estado)
-                .build();
+                .build();                
+
     }
 
 
