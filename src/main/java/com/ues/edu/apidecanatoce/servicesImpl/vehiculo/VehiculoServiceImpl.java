@@ -8,6 +8,7 @@ import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.PathService;
 import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
     private IVehiculoRepository vehiculoRepository;
 
     private final PathService pathService;
+    private final HttpServletRequest request;
 
     @Override
     public MensajeRecord registrar(MultipartFile imagen, VehiculoDto data) {
@@ -45,7 +47,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
                 Files.write(destinationFile, imagen.getBytes());
 
                 // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-                data.setNombrefoto(filename);
+                data.setNombrefoto(generateUrlImage(filename));
                 data.setUrlfoto(destinationFile.toString());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -56,6 +58,11 @@ public class VehiculoServiceImpl implements IVehiculoService {
         vehiculoRepository.save(data.toEntity());
 
         return new MensajeRecord("exito se guardo");
+    }
+
+    public String generateUrlImage(String imageName) {
+        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+        return host + "/api/vehiculo/imagen/" + imageName;
     }
 
     @Override
@@ -98,7 +105,7 @@ public class VehiculoServiceImpl implements IVehiculoService {
                 Files.write(destinationFile, imagen.getBytes());
 
                 // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-                data.setNombrefoto(filename);
+                data.setNombrefoto(generateUrlImage(filename));;
                 data.setUrlfoto(destinationFile.toString());
             } catch (IOException e) {
                 e.printStackTrace();
