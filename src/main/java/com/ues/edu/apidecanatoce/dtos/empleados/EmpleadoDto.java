@@ -1,12 +1,15 @@
 package com.ues.edu.apidecanatoce.dtos.empleados;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+
+
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
-import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
+import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
+import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
 
 
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.AsignacionVales;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionInDto;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Builder
 public class DetalleAsignacionVale {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_detalle_asignacion_vale")
     private UUID idDetalleAsignacionVale;
 
@@ -28,11 +29,17 @@ public class DetalleAsignacionVale {
     @JoinColumn(name = "valeid", referencedColumnName = "id_vale")
     private Vale vale;
 
-
     public DetalleAsignacionDto toDTODetalle() {
         return DetalleAsignacionDto.builder().idDetalleAsignacionVale(this.idDetalleAsignacionVale)
                 .codigoAsignacionVale(this.asignacionVale.getCodigoAsignacion())
                 .Vale(this.vale)
+                .build();
+    }
+
+    public DetalleAsignacionInDto toDto() {
+        return DetalleAsignacionInDto.builder().idDetalleAsignacionVale(this.idDetalleAsignacionVale)
+                .codigoAsignacionVale(this.asignacionVale.getCodigoAsignacion())
+                .idVale(this.vale.getId())
                 .build();
     }
 

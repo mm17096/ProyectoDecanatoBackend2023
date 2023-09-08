@@ -8,6 +8,7 @@ import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.PathService;
 import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,29 +31,38 @@ public class VehiculoServiceImpl implements IVehiculoService {
     private IVehiculoRepository vehiculoRepository;
 
     private final PathService pathService;
+    private final HttpServletRequest request;
 
     @Override
     public MensajeRecord registrar(MultipartFile imagen, VehiculoDto data) {
-        if (vehiculoRepository.existsByPlaca(data.getPlaca())) {
+        if (vehiculoRepository.existsByPlacaIgnoreCase(data.getPlaca())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El número de placa ya está registrado");
         }
-        try {
-            // Guardar la imagen en la carpeta del proyecto
-            String filename = pathService.generateFileName(imagen);
-            pathService.storeFile(imagen, filename);
-            Path destinationFile = pathService.generatePath(filename);
-            Files.write(destinationFile, imagen.getBytes());
+        if (imagen != null && !imagen.isEmpty()) {
+            try {
+                // Guardar la imagen en la carpeta del proyecto
+                String filename = pathService.generateFileName(imagen);
+                pathService.storeFile(imagen, filename);
+                Path destinationFile = pathService.generatePath(filename);
+                Files.write(destinationFile, imagen.getBytes());
 
-            // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-            data.setNombrefoto(filename);
-            data.setUrlfoto(destinationFile.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+                // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
+                data.setNombrefoto(generateUrlImage(filename));
+                data.setUrlfoto(destinationFile.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
+
         vehiculoRepository.save(data.toEntity());
 
         return new MensajeRecord("exito se guardo");
+    }
+
+    public String generateUrlImage(String imageName) {
+        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+        return host + "/api/vehiculo/imagen/" + imageName;
     }
 
     @Override
@@ -86,19 +96,21 @@ public class VehiculoServiceImpl implements IVehiculoService {
         if (vehiculoRepository.existsByPlacaAndCodigoVehiculoNot(data.getPlaca(), data.getCodigoVehiculo())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La placa ya está registrado");
         }
-        try {
-            // Guardar la imagen en la carpeta del proyecto
-            String filename = pathService.generateFileName(imagen);
-            pathService.storeFile(imagen, filename);
-            Path destinationFile = pathService.generatePath(filename);
-            Files.write(destinationFile, imagen.getBytes());
+        if (imagen != null && !imagen.isEmpty()) {
+            try {
+                // Guardar la imagen en la carpeta del proyecto
+                String filename = pathService.generateFileName(imagen);
+                pathService.storeFile(imagen, filename);
+                Path destinationFile = pathService.generatePath(filename);
+                Files.write(destinationFile, imagen.getBytes());
 
-            // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-            data.setNombrefoto(filename);
-            data.setUrlfoto(destinationFile.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+                // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
+                data.setNombrefoto(generateUrlImage(filename));;
+                data.setUrlfoto(destinationFile.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
         vehiculoRepository.save(data.toEntity());
         return new MensajeRecord("exito se edito");
