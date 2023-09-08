@@ -3,13 +3,17 @@ package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeInDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
+import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -18,19 +22,26 @@ import java.util.UUID;
 public class AsignacionValeController {
     private final AsignacionValeServiceImpl asignacionValeService;
 
-    /*@GetMapping("/listar")
-    public ResponseEntity<List<AsignacionVale>> listar() {
-        return new ResponseEntity<List<AsignacionVale>>(asignacionValeService.listar(), HttpStatus.OK);
-    }*/
-
-    @GetMapping("/listar/{id}")
-    public ResponseEntity<AsignacionValeOutDto> asignacionesValesByID(@PathVariable UUID id, Pageable pageable) throws Exception {
-        return ResponseEntity.ok(asignacionValeService.verAsignacionesById(id));
+    @GetMapping("/listar/{idAsignacion}")
+    public ResponseEntity<AsignacionValeOutDto> asignacionesValesByID(@PathVariable UUID idAsignacion, Pageable pageable) throws Exception {
+        return ResponseEntity.ok(asignacionValeService.verAsignacionesById(idAsignacion));
     }
 
     @PostMapping("/insertar")
-    public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionValeInDto asignacionVale) {
-        return ResponseEntity.ok(asignacionValeService.registrar(asignacionVale));
+    public ResponseEntity<GenericResponse<AsignacionValeInDto>> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
+        HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
+        GenericResponse<AsignacionValeInDto> resp = new GenericResponse<AsignacionValeInDto>(0,
+                "No se pudo realizar la asignación", asignacionVale);
+        try {
+            this.asignacionValeService.registrar(asignacionVale);
+            resp.setCode(1);
+            resp.setMessage("Exito - Asignación realizada !!");
+            http = HttpStatus.OK;
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        return new ResponseEntity<GenericResponse<AsignacionValeInDto>>(resp, http);
     }
 
    /* @PutMapping("/modificar")

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeModDto;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
@@ -70,7 +70,7 @@ public class AsignacionVale {
             detalleAsignacionDtoList.add(detalleAsignacionValeE.toDTODetalle());
         }
 
-        List<ValeDto> vales = new ArrayList<>();
+        List<ValeModDto> vales = new ArrayList<>();
         int i = 0;
         while (i < detalleAsignacionRepository.findAll().size()){
             // Comparo si el ID de la asignación es igual al ID de la asignación del detalle

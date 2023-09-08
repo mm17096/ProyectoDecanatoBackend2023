@@ -14,6 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +47,21 @@ public class VehiculoController {
     @GetMapping("/clase/{claseName}")
     public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
         return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
+    }
+
+    @GetMapping("/imagen/{nombrefoto}")
+    public ResponseEntity<byte[]> getImagen(@PathVariable("nombrefoto") String filename) {
+        byte[] image = new byte[0];
+        String path = "./uploads";
+        try {
+            Path fileName = Paths.get(path, filename);
+            image = Files.readAllBytes(fileName);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
     @PostMapping(value = "/insertar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

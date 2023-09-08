@@ -20,7 +20,7 @@ public class VehiculoDto {
     private UUID codigoVehiculo;
 
     @NotNull(message = "La placa es obligatoria")
-    @Size(max = 6, message = "La placa excede los limites de caracteres")
+    @Size(max = 8, message = "La placa excede los limites de caracteres")
     private String placa;
 
     @NotNull(message = "El modelo es obligario")
