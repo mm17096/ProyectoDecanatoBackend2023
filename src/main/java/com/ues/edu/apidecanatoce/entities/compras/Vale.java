@@ -49,10 +49,9 @@ public class Vale {
         return ValeDependeDto.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
                 .correlativo(this.correlativo).build();
     }
-    public ValeModDto toValeDto() {
+    public ValeModDto toValeModDto() {
         return ValeModDto.builder()
                 .idVale(this.id)
-                .codigoVale(this.codigoVale)
                 .estadoVale(this.estado)
                 .build();                
 

@@ -12,13 +12,11 @@ import java.util.UUID;
 @Builder
 public class ValeModDto {
     private UUID idVale;
-    private long codigoVale;
     private int estadoVale;
 
-    public Vale valeDto() {
+    public Vale toVale() {
         return Vale.builder()
                 .id(this.idVale)
-                .codigoVale(this.codigoVale)
                 .estado(this.estadoVale)
                 .build();
     }

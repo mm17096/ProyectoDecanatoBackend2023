@@ -11,6 +11,7 @@ import java.util.UUID;
 @Setter
 @Builder
 public class SolicitudValeModDto {
+
     private UUID idSolicitudVale;
     private int estadoSolicutudVale;
 

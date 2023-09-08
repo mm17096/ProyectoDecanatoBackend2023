@@ -10,6 +10,7 @@ import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRe
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,8 +35,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     private final IValeRepository valeRepository;
 
     @Override
+    @Transactional
     public AsignacionValeInDto registrar(AsignacionValeInDto data) {
-
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -109,8 +110,17 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public AsignacionValeDto actualizar(UUID id, AsignacionValeDto data) {
-        return null;
+    public DevolucionValeDto devolverVale(DevolucionValeDto data) {
+        //int estadoVales = 11;
+        try {
+            for (int i = 0; i < data.getValesDevueltos().size(); i++) {
+                System.out.println("entra a devolverVale");
+                actualizarEstadoVale(data.getValesDevueltos().get(i), data.getEstadoVales());
+            }
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo devolver el vale");
+        }
+        return data;
     }
 
     @Override
@@ -138,11 +148,15 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public ValeModDto actualizarEstadoVale(UUID id, int estadoVale) {
-        Vale vale = this.valeRepository.findById(id).orElseThrow(
-                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el vale"));
-        if (vale != null) {
-            vale.setEstado(estadoVale);
-            return valeRepository.save(vale).toValeDto();
+        System.out.println("entra a actualizarEstadoVale");
+
+        Vale valeEntity = this.valeRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el vale"));
+        System.out.println("Vales: "+ valeEntity);
+        if (valeEntity != null) {
+            valeEntity.setEstado(estadoVale);
+            System.out.println("entra a guardar");
+            return valeRepository.save(valeEntity).toValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar el vale");
         }
