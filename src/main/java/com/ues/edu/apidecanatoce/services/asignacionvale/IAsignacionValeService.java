@@ -14,7 +14,7 @@ public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data);
     AsignacionValeDto leerPorId(UUID id);
     Page<AsignacionValeDto> listar(Pageable pageable);
-    AsignacionValeDto actualizar(UUID id, AsignacionValeDto data);
+    DevolucionValeDto devolverVale(DevolucionValeDto data);
     AsignacionValeDto eliminar(UUID id);
     AsignacionValeOutDto verAsignacionesById(UUID id);
     DetalleAsignacionDto verDetalleById(UUID id);

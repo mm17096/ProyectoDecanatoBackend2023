@@ -46,7 +46,7 @@ public class Vale {
         return ValeDependeDto.builder().id(this.id).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
                 .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
     }
-    public ValeModDto toValeDto() {
+    public ValeModDto toValeModDto() {
         return ValeModDto.builder()
                 .idVale(this.id)
                 .estadoVale(this.estado)

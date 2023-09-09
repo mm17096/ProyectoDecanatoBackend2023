@@ -69,14 +69,13 @@ public class SolicitudVehiculoDto {
 
     @AssertTrue(message = "La hora de salida debe ser anterior a la hora de regreso en el mismo día")
     public boolean isHorasValidas() {
-        // Verificar si la hora de salida es anterior a la hora de regreso solo si las fechas son iguales
         if (fechaSalida != null && fechaEntrada != null && fechaSalida.equals(fechaEntrada)) {
             if (horaSalida == null || horaEntrada == null) {
-                return true; // Si alguna de las horas es nula, no se realiza la validación
+                return true;
             }
             return !horaSalida.isAfter(horaEntrada);
         }
-        return true; // Si las fechas son diferentes, no aplicar la validación de hora
+        return true;
     }
 
 
@@ -103,6 +102,8 @@ public class SolicitudVehiculoDto {
 
     private List<DocumentoSoliCar> listDocumentos;
 
+    private String observaciones;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository){
         // metodo para buscar el vehicul si existe
@@ -121,6 +122,7 @@ public class SolicitudVehiculoDto {
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 }
