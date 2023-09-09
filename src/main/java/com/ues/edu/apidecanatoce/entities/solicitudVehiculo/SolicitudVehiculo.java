@@ -120,12 +120,14 @@ public class SolicitudVehiculo {
     //Lista de documentos que tiene la solicitud de vehiculo
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
-    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
     @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
+
+    @Column(name = "observaciones")
+    private String observaciones;
 
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
@@ -135,7 +137,8 @@ public class SolicitudVehiculo {
                 .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 
 }

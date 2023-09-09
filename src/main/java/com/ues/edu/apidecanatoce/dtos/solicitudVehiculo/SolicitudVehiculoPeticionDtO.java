@@ -99,6 +99,8 @@ public class SolicitudVehiculoPeticionDtO {
 
     private List<DocumentoSoliCar> listDocumentos;
 
+    private String observaciones;
+
     public SolicitudVehiculo toEntitySave() {
 
         //this.vehiculo.toEntityComlete
@@ -108,6 +110,7 @@ public class SolicitudVehiculoPeticionDtO {
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 }
