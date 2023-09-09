@@ -25,7 +25,7 @@ public class ProveedorController {
     }
 
     @GetMapping("/listasinpagina")
-    public ResponseEntity<List<ProveedorDto>> listarVehiculos() {
+    public ResponseEntity<List<ProveedorDto>> listarSinPagina() {
         List<ProveedorDto> proveedor = proveedorService.listarSinPagina();
         return ResponseEntity.ok(proveedor);
     }
