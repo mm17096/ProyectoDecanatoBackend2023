@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.logVale;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +19,14 @@ import java.time.LocalDate;
 @Entity
 @Table(name="tb_logvale")
 public class LogVale {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_logvale")
-    private String idLogVale;
+    private UUID id;
 
     @Column(name = "estado_vale")
-    private String estadoVale;
+    private int estadoVale;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -39,6 +42,4 @@ public class LogVale {
     @ManyToOne
     @JoinColumn(name = "id_vale")
     private Vale vale;
-
-
 }
