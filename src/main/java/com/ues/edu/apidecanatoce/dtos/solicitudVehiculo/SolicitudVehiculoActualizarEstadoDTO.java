@@ -1,7 +1,11 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
@@ -10,4 +14,6 @@ import java.util.UUID;
 public class SolicitudVehiculoActualizarEstadoDTO {
     private UUID codigoSolicitudVehiculo;
     private int estado;
+
+
 }

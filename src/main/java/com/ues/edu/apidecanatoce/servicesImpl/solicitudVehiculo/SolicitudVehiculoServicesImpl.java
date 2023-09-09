@@ -1,8 +1,8 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -56,7 +55,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable) {
         Page<SolicitudVehiculo> solicitudes = solicitudVehiculoServices.findAll(pageable);
         List<Estados> estados = estadosRepository.findAll();
-
         Map<Integer, String> estadoStringMap = new HashMap<>();
         for (Estados estado: estados) {
             estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
@@ -94,5 +92,18 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
         return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository)).toDto();
+    }
+
+    @Override
+    public SolicitudVehiculoActualizarEstadoDTO updateEstado(
+            UUID codigoSolicitudVehiculo, SolicitudVehiculoActualizarEstadoDTO nuevoEstado) {
+        SolicitudVehiculo solicitudExistente =
+                solicitudVehiculoServices.findById(codigoSolicitudVehiculo).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+        solicitudExistente.setEstado(nuevoEstado.getEstado());
+        solicitudVehiculoServices.save(solicitudExistente);
+        return SolicitudVehiculoActualizarEstadoDTO.builder()
+                .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
+                .estado(solicitudExistente.getEstado()).build();
     }
 }
