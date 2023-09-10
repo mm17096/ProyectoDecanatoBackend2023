@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.Pasajeros;
@@ -30,22 +29,22 @@ public class SolicitudVehiculoDto {
     private UUID codigoSolicitudVehiculo;
 
     @NotNull(message = "Fecha de realización de la solicitud es obligatoria")
-    @FutureOrPresent(message = "La fecha es superior a la actual")
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @PastOrPresent(message = "La fecha de solicitud es superior a la actual")
+    @FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSolicitud;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de misión es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSalida;
 
     @NotNull(message = "La unidad solicitante es obligataria")
-    @Max(value = 50, message = "Maximo 50 caracteres para la unidad solcitante")
+    @Size(max = 50, message = "Maximo 50 caracteres para la unidad solcitante")
     private String unidadSolicitante;
 
-    @NotNull(message = "El vehículo es obligaatorio")
+    @NotNull(message = "El vehículo es obligatorio")
     private UUID vehiculo;
 
     @NotNull(message = "El objetivo de misión es obligatorio")
@@ -68,6 +67,18 @@ public class SolicitudVehiculoDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime horaSalida;
 
+    @AssertTrue(message = "La hora de salida debe ser anterior a la hora de regreso en el mismo día")
+    public boolean isHorasValidas() {
+        if (fechaSalida != null && fechaEntrada != null && fechaSalida.equals(fechaEntrada)) {
+            if (horaSalida == null || horaEntrada == null) {
+                return true;
+            }
+            return !horaSalida.isAfter(horaEntrada);
+        }
+        return true;
+    }
+
+
     @NotNull(message = "La cantidad de pasajeros es obligatoria")
     @Min(value = 1, message = "La cantidad de personas debe ser mayor o igual a 1")
     private int cantidadPersonas;
@@ -77,10 +88,10 @@ public class SolicitudVehiculoDto {
     @NotNull(message = "El responsable es obligatorio")
     private Usuario solicitante; // usuario solicitante
 
-    @Max(value = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
+    @Size(max = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
     private String nombreJefeDepto;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de regreso es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaEntrada;
@@ -91,21 +102,27 @@ public class SolicitudVehiculoDto {
 
     private List<DocumentoSoliCar> listDocumentos;
 
+    private String observaciones;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository){
         // metodo para buscar el vehicul si existe
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
-                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
-
+        Empleado motoristaBuscar;
+        if (this.motorista != null){
+            motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
+                    () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
+        }
+        motoristaBuscar = null;
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
                 .unidadSolicitante(this.unidadSolicitante).vehiculo(vehiculoBuscar).objetivoMision(this.objetivoMision)
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 }

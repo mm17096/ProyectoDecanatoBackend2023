@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.entities.compras;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeModDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,9 +23,6 @@ public class Vale {
     @Column(name = "id_vale")
     private UUID id;
 
-    @Column(name ="codigo_vale", unique = true)
-    private long codigoVale;
-
     @Column(name = "estado")
     private int estado;
 
@@ -46,8 +43,15 @@ public class Vale {
     private long correlativo;
 
     public ValeDependeDto toDTO() {
-        return ValeDependeDto.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
+        return ValeDependeDto.builder().id(this.id).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
                 .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
+    }
+    public ValeModDto toValeModDto() {
+        return ValeModDto.builder()
+                .idVale(this.id)
+                .estadoVale(this.estado)
+                .build();                
+
     }
 
 

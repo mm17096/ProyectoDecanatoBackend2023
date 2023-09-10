@@ -18,7 +18,7 @@ import java.util.UUID;
 @Builder
 public class UsuarioDto {
 
-    private UUID codigoUsuario;
+    private String codigoUsuario;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 35, message = "El nombre debe tener 35 caracteres como maximo")

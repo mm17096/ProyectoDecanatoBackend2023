@@ -24,22 +24,22 @@ public class SolicitudVehiculoPeticionDtO {
     private UUID codigoSolicitudVehiculo;
 
     @NotNull(message = "Fecha de realización de la solicitud es obligatoria")
-    @FutureOrPresent(message = "La fecha es superior a la actual")
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @PastOrPresent(message = "La fecha de solicitud es superior a la actual")
+    @FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSolicitud;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de misión es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSalida;
 
     @NotNull(message = "La unidad solicitante es obligataria")
-    @Max(value = 50, message = "Maximo 50 caracteres para la unidad solcitante")
+    @Size(max = 50, message = "Maximo 50 caracteres para la unidad solcitante")
     private String unidadSolicitante;
 
-    @NotNull(message = "El vehículo es obligaatorio")
+    @NotNull(message = "El vehículo es obligatorio")
     private VehiculoDto vehiculo;
 
     @NotNull(message = "El objetivo de misión es obligatorio")
@@ -61,6 +61,19 @@ public class SolicitudVehiculoPeticionDtO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime horaSalida;
 
+
+    @AssertTrue(message = "La hora de salida debe ser menor a la hora de regreso en el mismo día")
+    public boolean isHorasValidas() {
+        if (fechaSalida != null && fechaEntrada != null && fechaSalida.equals(fechaEntrada)) {
+            if (horaSalida == null || horaEntrada == null) {
+                return true;
+            }
+            return !horaSalida.isAfter(horaEntrada);
+        }
+        return true;
+    }
+
+
     @NotNull(message = "La cantidad de pasajeros es obligatoria")
     @Min(value = 1, message = "La cantidad de personas debe ser mayor o igual a 1")
     private int cantidadPersonas;
@@ -70,10 +83,10 @@ public class SolicitudVehiculoPeticionDtO {
     @NotNull(message = "El responsable es obligatorio")
     private Usuario solicitante; // usuario solicitante
 
-    @Max(value = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
+    @Size(max = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
     private String nombreJefeDepto;
 
-    @PastOrPresent(message = "La fecha es inferior a la actual")
+    @FutureOrPresent(message = "La fecha de regreso es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaEntrada;
@@ -86,6 +99,8 @@ public class SolicitudVehiculoPeticionDtO {
 
     private List<DocumentoSoliCar> listDocumentos;
 
+    private String observaciones;
+
     public SolicitudVehiculo toEntitySave() {
 
         //this.vehiculo.toEntityComlete
@@ -95,6 +110,7 @@ public class SolicitudVehiculoPeticionDtO {
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 }

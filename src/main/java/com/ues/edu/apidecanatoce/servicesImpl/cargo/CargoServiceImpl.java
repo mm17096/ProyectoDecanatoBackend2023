@@ -2,8 +2,6 @@ package com.ues.edu.apidecanatoce.servicesImpl.cargo;
 
 
 import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
-
-
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
@@ -22,8 +20,6 @@ import java.util.UUID;
 public class CargoServiceImpl implements ICargoService {
 
     private final ICargoRepository cargoRepository;
-
-
 
     @Override
     public List<CargosDto> listar(){
@@ -55,6 +51,19 @@ public class CargoServiceImpl implements ICargoService {
         Cargo cargo = cargoRepository.findById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el cargo"));
         return cargo.toDto();
+    }
+
+    @Override
+    public CargosDto leerPorNombre(String nombre) {
+        List<Cargo> cargos = cargoRepository.findAll();
+        Cargo cargoOb = new Cargo();
+
+        for (Cargo cargo: cargos) {
+            if(cargo.getNombreCargo().equals(nombre)){
+                cargoOb = cargo;
+            }
+        }
+        return cargoOb.toDto();
     }
 
     @Override

@@ -1,5 +1,4 @@
 package com.ues.edu.apidecanatoce.entities.cargos;
-
 import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 import jakarta.persistence.*;
 import lombok.*;

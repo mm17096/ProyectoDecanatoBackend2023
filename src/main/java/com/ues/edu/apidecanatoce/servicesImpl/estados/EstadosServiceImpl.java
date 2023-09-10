@@ -30,6 +30,9 @@ public class EstadosServiceImpl implements IEstadosService {
             if (estado.getCodigoEstado() >= 0 && estado.getCodigoEstado() <= 7) {
                 estadosDTO.add(estado.toDTO());
             }
+            if (estado.getCodigoEstado() == 15){
+                estadosDTO.add(estado.toDTO());
+            }
         }
         return estadosDTO;
     }

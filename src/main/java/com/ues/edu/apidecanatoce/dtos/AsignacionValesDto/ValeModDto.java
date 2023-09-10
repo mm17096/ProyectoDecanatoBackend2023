@@ -10,16 +10,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class ValeDto {
-
+public class ValeModDto {
     private UUID idVale;
-    private long codigoVale;
+    private Long correlativo;
+    private int estadoVale;
 
-    public Vale ValeDto() {
+    public Vale valeDto() {
         return Vale.builder()
                 .id(this.idVale)
-                .codigoVale(this.codigoVale)
+                .correlativo(this.correlativo)
+                .estado(this.estadoVale)
                 .build();
     }
-
 }
