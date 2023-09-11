@@ -191,7 +191,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
         if (solicitudVehiculo != null) {
             solicitudVehiculo.setEstado(estadoSolicitudVehiculo);
-            return solicitudVehiculoRepository.save(solicitudVehiculo).toSolicitudVehiculoModDto();
+            return solicitudVehiculoRepository.save(solicitudVehiculo).totoSolicitudVehiculoModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud del Vehículo");
         }

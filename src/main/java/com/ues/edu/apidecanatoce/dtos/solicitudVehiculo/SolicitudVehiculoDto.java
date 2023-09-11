@@ -128,6 +128,6 @@ public class SolicitudVehiculoDto {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).build();
+                .build();
     }
 }
