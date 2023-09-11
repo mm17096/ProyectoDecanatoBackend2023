@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LogValeDto;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ public class LogVale {
     private UUID idLogVale;
 
     @Column(name = "estado_vale")
-    private Integer estadoVale;
+    private String estadoVale;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -43,16 +42,5 @@ public class LogVale {
     @JoinColumn(name = "id_vale")
     private Vale vale;
 
-
-    public LogValeDto toLogValeDto(){
-        return LogValeDto.builder()
-                .idLogVale(this.idLogVale)
-                .estadoVale(this.estadoVale)
-                .fechaLogVale(this.fechaLogVale)
-                .actividad(this.actividad)
-                .usuario(this.usuario)
-                .vale(this.getVale().getId())
-                .build();
-    }
 
 }
