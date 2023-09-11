@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.dtos.usuario;
 
+import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Builder
 public class UsuarioPeticionDto {
 
-    private UUID codigoUsuario;
+    private String codigoUsuario;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 35, message = "El nombre debe tener 35 caracteres como maximo")

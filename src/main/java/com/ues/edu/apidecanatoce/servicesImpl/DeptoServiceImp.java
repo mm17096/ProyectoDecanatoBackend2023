@@ -1,5 +1,8 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
+import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
+import com.ues.edu.apidecanatoce.dtos.DepartamentoDto.DepartamentoDto;
+import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
 import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
 import com.ues.edu.apidecanatoce.services.IDeptoService;
@@ -55,6 +58,19 @@ public class DeptoServiceImp implements IDeptoService {
     @Override
     public Departamento leerPorId(UUID id) {
         return this.deptopService.findById(id).orElse(new Departamento());
+    }
+
+    @Override
+    public DepartamentoDto leerPorNombre(String nombre) {
+        List<Departamento> departamentos = deptopService.findAll();
+        Departamento departamentoOb = new Departamento();
+
+        for (Departamento departamento: departamentos) {
+            if(departamento.getNombre().equals(nombre)){
+                departamentoOb = departamento;
+            }
+        }
+        return departamentoOb.toDto();
     }
 
     @Override

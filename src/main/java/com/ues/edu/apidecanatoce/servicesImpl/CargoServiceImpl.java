@@ -1,8 +1,10 @@
 package com.ues.edu.apidecanatoce.servicesImpl;
 
 
+import com.ues.edu.apidecanatoce.dtos.CargosDto.CargosDto;
 import com.ues.edu.apidecanatoce.dtos.ICargoxEstadoDTO;
 import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
 import com.ues.edu.apidecanatoce.services.ICargoService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,6 @@ import java.util.UUID;
 public class CargoServiceImpl implements ICargoService {
 
     private final ICargoRepository cargoService;
-
-
 
     @Override
     public List<Cargo> listar(){
@@ -53,6 +53,20 @@ public class CargoServiceImpl implements ICargoService {
     public Cargo leerPorId(UUID id) {
         return this.cargoService.findById(id).orElse(new Cargo());
     }
+
+    @Override
+    public CargosDto leerPorNombre(String nombre) {
+        List<Cargo> cargos = cargoService.findAll();
+        Cargo cargoOb = new Cargo();
+
+        for (Cargo cargo: cargos) {
+            if(cargo.getNombreCargo().equals(nombre)){
+                cargoOb = cargo;
+            }
+        }
+        return cargoOb.toDto();
+    }
+
 
     @Override
 
