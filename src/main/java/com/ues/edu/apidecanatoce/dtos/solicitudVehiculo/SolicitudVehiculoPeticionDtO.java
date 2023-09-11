@@ -111,6 +111,6 @@ public class SolicitudVehiculoPeticionDtO {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
-                .build();
+                .observaciones(this.observaciones).build();
     }
 }
