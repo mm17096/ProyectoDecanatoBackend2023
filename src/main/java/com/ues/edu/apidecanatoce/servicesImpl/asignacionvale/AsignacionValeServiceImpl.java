@@ -1,25 +1,31 @@
 package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
+import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +44,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     private final ISolicitudVehiculoRepository solicitudVehiculoRepository;
 
+    private final ILogValeRepository logValeRepository;
+
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
@@ -48,6 +56,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         //8 = Activo para la asignación
         int estadoVales = 5;
         int estadoSolicitud = 7;
+
+        LogValeDto logVale = new LogValeDto();
+        LocalDate fechaActualLog = LocalDate.now();
 
 
         //Para guardar en la tabla detalle
@@ -88,6 +99,13 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                     actualizarEstadoSolicitud(data.getSolicitudVale(), estadoSolicitud);
                     // Guardar en la tabla detalle_asignación los id de los vales junto con la ültima asignación reistrada
                     detalleAsignacionRepository.save(detalleAsignacionInDto.toDto(asignacionValeRepository, valeRepository)).toDto();
+
+                    logVale.setEstadoVale(estadoVales);
+                    logVale.setFechaLogVale(fechaActualLog);
+                    logVale.setActividad("Vale asignado a una misión");
+                    logVale.setVale(valesAsignar.get(i));
+                    logVale(logVale);
+
                 } catch (Exception e) {
                     throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar el detalle");
                 }
@@ -116,10 +134,17 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA DEVOLVER LOS VALES
     @Override
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
+        LogValeDto logVale = new LogValeDto();
+        LocalDate fechaActualLog = LocalDate.now();
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
                 System.out.println("entra a devolverVale");
                 actualizarEstadoVale(data.getValesDevueltos().get(i), data.getEstadoVales());
+                logVale.setEstadoVale(data.getEstadoVales());
+                logVale.setFechaLogVale(fechaActualLog);
+                logVale.setActividad("Vale devuelto sin consumir en la misión");
+                logVale.setVale(data.getValesDevueltos().get(i));
+                logVale(logVale);
             }
         } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo devolver el vale");
@@ -203,6 +228,11 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Transactional
     public LiquidarValesDto liquidarVales(LiquidarValesDto data) {
         System.out.println("Dto: " + data);
+        LogValeDto logVale = new LogValeDto();
+
+        LocalDate fechaActualLog = LocalDate.now();
+
+
         // 11 = vale consumido
         // 7 = Finalizado para las solicitudes y la asignación
         int estadoVale = 11;
@@ -217,6 +247,11 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             for (int i = 0; i < data.getValesLiquidar().size(); i++) {
                 //Cambian el estado de los vales
                 actualizarEstadoVale(data.getValesLiquidar().get(i), estadoVale);
+                logVale.setEstadoVale(estadoVale);
+                logVale.setFechaLogVale(fechaActualLog);
+                logVale.setActividad("Vale consumido");
+                logVale.setVale(data.getValesLiquidar().get(i));
+                logVale(logVale);
             }
             //Cambian el estado de la asignación
             actualizarEstadoAsignacion(data.getIdAsignacionVale(), estadoSolicitudes);
@@ -243,6 +278,27 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud del Vehículo");
         }
+    }
+
+    @Override
+    public LogValeDto logVale(LogValeDto data) {
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MMMM/dd");
+        String fechaFormateadaLog = data.getFechaLogVale().format(formato);
+
+        LogValeDto logVale = new LogValeDto();
+
+        logVale.setEstadoVale(data.getEstadoVale());
+        logVale.setFechaLogVale(LocalDate.parse(fechaFormateadaLog));
+        logVale.setActividad(data.getActividad());
+        logVale.setVale(data.getVale());
+
+        try{
+            logValeRepository.save(logVale.toEntity(valeRepository));
+        }catch (Exception e){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
+        }
+        return  data;
     }
 }
 

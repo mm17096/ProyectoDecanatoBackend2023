@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
-@RequestMapping("/asignacionvale")
+@RequestMapping("/api/asignacionvale")
 public class AsignacionValeController {
     private final AsignacionValeServiceImpl asignacionValeService;
 
