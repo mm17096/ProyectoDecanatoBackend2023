@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -91,7 +91,6 @@ public class SolicitudVehiculo {
     private List<Pasajeros> listaPasajeros;
 
 
-
     //Responsable de la solicitud
     @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false,
@@ -120,11 +119,11 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
     @Column(name = "observaciones")
@@ -142,10 +141,11 @@ public class SolicitudVehiculo {
                 .observaciones(this.observaciones).build();
     }
 
-    public SolicitudVehiculoActualizarEstadoDTO toUpdateEstado(){
-        return SolicitudVehiculoActualizarEstadoDTO.builder()
-                .codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
-                .estado(this.estado).build();
+    public SolicitudVehiculoModDto totoSolicitudVehiculoModDto(){
+        return SolicitudVehiculoModDto.builder()
+                .idSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estadoSolicitudVehiculo(this.estado)
+                .build();
     }
 
 }

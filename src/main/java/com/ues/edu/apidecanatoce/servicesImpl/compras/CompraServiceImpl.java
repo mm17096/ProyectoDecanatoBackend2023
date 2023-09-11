@@ -32,7 +32,8 @@ public class CompraServiceImpl implements ICompraService {
 
     @Override
     public CompraPeticionDto registrar(CompraInsertarDto data) {
-        if (compraRepository.existsByFactura(data.getFactura())) {
+
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         } else if (data.getCod_inicio() > data.getCod_fin()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de fin");
@@ -59,7 +60,12 @@ public class CompraServiceImpl implements ICompraService {
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
                 logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
-                logEntity.setActividad("Adquisición de proveedor " + proveedor.getNombre());
+                if (compraEntity.getProveedor().getTipo() == 14) {
+
+                    logEntity.setActividad("Adquisición por prestamo de proveedor " + proveedor.getNombre());
+                } else {
+                    logEntity.setActividad("Adquisición por compra de proveedor " + proveedor.getNombre());
+                }
                 logEntity.setUsuario("N/A");
                 logEntity.setVale(valeEntity);
                 logValeRepository.save(logEntity);
@@ -84,7 +90,7 @@ public class CompraServiceImpl implements ICompraService {
     @Override
     public CompraPeticionDto actualizar(UUID id, CompraModificarDto data) {
         CompraPeticionDto buscarCompra = leerPorId(id);
-        if (compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         }
         buscarCompra.setProveedor(proveedorRepository.findById(data.getProveedor()).get().toDTO());

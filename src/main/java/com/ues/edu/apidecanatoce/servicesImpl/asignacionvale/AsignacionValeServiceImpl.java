@@ -4,11 +4,13 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     private final IValeRepository valeRepository;
 
+    private final ISolicitudVehiculoRepository solicitudVehiculoRepository;
+
+    //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
     public AsignacionValeInDto registrar(AsignacionValeInDto data) {
@@ -43,7 +48,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         //8 = Activo para la asignación
         int estadoVales = 5;
         int estadoSolicitud = 7;
-        int estadoAsignacion = 8;
 
 
         //Para guardar en la tabla detalle
@@ -109,9 +113,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return null;
     }
 
+    //METODO PARA DEVOLVER LOS VALES
     @Override
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
-        //int estadoVales = 11;
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
                 System.out.println("entra a devolverVale");
@@ -128,6 +132,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return null;
     }
 
+    //METODO PARA VER LAS ASIGNACIONES POR ID
     @Override
     public AsignacionValeOutDto verAsignacionesById(UUID id) {
 
@@ -146,6 +151,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return this.asignacionValeRepository.listarValesAsignar(cantidadVales);
     }
 
+    //METODO PARA ACTUALIZAR EL ESTADO DEL VALE
     @Override
     public ValeModDto actualizarEstadoVale(UUID id, int estadoVale) {
         System.out.println("entra a actualizarEstadoVale");
@@ -162,6 +168,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         }
     }
 
+
+    //METODO PARA ACTUALIZAR EL ESTADO DE LA SOLICITUD
     @Override
     public SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud) {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(
@@ -172,6 +180,68 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
+        }
+    }
+
+    //METODO PARA ACTUALIZAR EL ESTADO DE LA SOLICITUD DEL VEHÍCULO
+    @Override
+    public SolicitudVehiculoModDto actualizarEstadoSolicitudVehiculo(UUID id, int estadoSolicitudVehiculo) {
+        SolicitudVehiculo solicitudVehiculo = this.solicitudVehiculoRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud del Vale"));
+
+        if (solicitudVehiculo != null) {
+            solicitudVehiculo.setEstado(estadoSolicitudVehiculo);
+            return solicitudVehiculoRepository.save(solicitudVehiculo).totoSolicitudVehiculoModDto();
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud del Vehículo");
+        }
+    }
+
+
+    //METODO PARA LIQUIDAR LOS VALES
+    @Override
+    @Transactional
+    public LiquidarValesDto liquidarVales(LiquidarValesDto data) {
+        System.out.println("Dto: " + data);
+        // 11 = vale consumido
+        // 7 = Finalizado para las solicitudes y la asignación
+        int estadoVale = 11;
+        int estadoSolicitudes = 7;
+
+        // Se Utiliza para buscar el ID de la Solicitud del Vale
+        AsignacionVale asignacionVale = this.asignacionValeRepository.findById(data.getIdAsignacionVale()).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la asignacion"));
+
+        //Cambio el estado de las solicitudes, los vales y la asignación
+        try {
+            for (int i = 0; i < data.getValesLiquidar().size(); i++) {
+                //Cambian el estado de los vales
+                actualizarEstadoVale(data.getValesLiquidar().get(i), estadoVale);
+            }
+            //Cambian el estado de la asignación
+            actualizarEstadoAsignacion(data.getIdAsignacionVale(), estadoSolicitudes);
+            //Cambian el estado de la solicitud del vale
+            actualizarEstadoSolicitud(asignacionVale.getSolicitudVale().getIdSolicitudVale(), estadoSolicitudes);
+            //Cambian el estado de la solicitud del vehículo
+            actualizarEstadoSolicitudVehiculo(asignacionVale.getSolicitudVale().getSolicitudVehiculo().getCodigoSolicitudVehiculo(), estadoSolicitudes);
+
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo liquidar el vale");
+        }
+        return data;
+    }
+
+    //METODO PARA ACTUALIZAR EL ESTADO DE LA ASIGNACIÓN
+    @Override
+    public AsignacionValeModDto actualizarEstadoAsignacion(UUID id, int estadoAsignacion) {
+        AsignacionVale asignacionVale = this.asignacionValeRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la asignacion"));
+
+        if (asignacionVale != null) {
+            asignacionVale.setEstado(estadoAsignacion);
+            return asignacionValeRepository.save(asignacionVale).toAsignacionValeModDto();
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud del Vehículo");
         }
     }
 }
