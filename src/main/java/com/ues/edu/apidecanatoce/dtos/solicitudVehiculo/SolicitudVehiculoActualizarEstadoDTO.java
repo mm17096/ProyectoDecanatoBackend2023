@@ -14,6 +14,4 @@ import java.util.UUID;
 public class SolicitudVehiculoActualizarEstadoDTO {
     private UUID codigoSolicitudVehiculo;
     private int estado;
-
-
 }
