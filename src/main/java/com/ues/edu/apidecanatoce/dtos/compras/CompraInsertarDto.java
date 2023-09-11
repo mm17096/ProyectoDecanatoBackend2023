@@ -45,12 +45,13 @@ public class CompraInsertarDto {
     @NotNull(message = "La fecha de compra es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @PastOrPresent(message = "Fecha de compra debe ser inferior o igual al presente")
     private LocalDateTime fecha_compra;
 
     @NotNull(message = "La fecha de vencimiento es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "Fecha de vencimiento debe ser una fecha superior o igual al presente")
+    @FutureOrPresent(message = "Fecha de vencimiento debe ser superior o igual al presente")
     private LocalDate fecha_vencimiento;
 
     @NotNull(message = "El precio unitario es obligatorio")

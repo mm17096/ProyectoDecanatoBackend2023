@@ -4,11 +4,14 @@ import com.ues.edu.apidecanatoce.dtos.compras.CompraInsertarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraModificarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import com.ues.edu.apidecanatoce.entities.compras.Compra;
+import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
+import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.compras.ICompraRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IProveedorRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.services.compras.ICompraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,9 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -28,10 +28,12 @@ public class CompraServiceImpl implements ICompraService {
     private final ICompraRepository compraRepository;
     private final IValeRepository valeRepository;
     private final IProveedorRepository proveedorRepository;
+    private final ILogValeRepository logValeRepository;
 
     @Override
     public CompraPeticionDto registrar(CompraInsertarDto data) {
-        if (compraRepository.existsByFactura(data.getFactura())) {
+
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         } else if (data.getCod_inicio() > data.getCod_fin()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de fin");
@@ -42,34 +44,34 @@ public class CompraServiceImpl implements ICompraService {
             compraInsertar = data.toEntityComplete(proveedorRepository);
             compraInsertar.setCantidad(cantidadVales);
             Compra compraEntity = compraRepository.save(compraInsertar);
+            Proveedor proveedor = proveedorRepository.findById(data.getProveedor()).orElseThrow(
+                    () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra proveedor"));
 
             // Obtener la cantidad de vales a crear
             for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
                 Vale valeEntity = new Vale();
-                valeEntity.setCodigoVale(generarCodigoValeUnico(compraEntity, i));  // Generar un código único para el vale
-                valeEntity.setEstado(8);  // Establecer el estado inicial
+                valeEntity.setEstado(8);
                 valeEntity.setValor(data.getPrecio_unitario());
                 valeEntity.setCorrelativo(i);  // Establecer el correlativo
                 valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
-                valeEntity.setCompra(compraEntity);  // Establecer la relación con la compra creada
+                valeEntity.setCompra(compraEntity);
                 valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
+                //Insertar log a LogVale
+                LogVale logEntity = new LogVale();
+                logEntity.setEstadoVale(8);
+                logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
+                if (compraEntity.getProveedor().getTipo() == 14) {
+
+                    logEntity.setActividad("Adquisición por prestamo de proveedor " + proveedor.getNombre());
+                } else {
+                    logEntity.setActividad("Adquisición por compra de proveedor " + proveedor.getNombre());
+                }
+                logEntity.setUsuario("N/A");
+                logEntity.setVale(valeEntity);
+                logValeRepository.save(logEntity);
             }
             return compraEntity.toDTO();
         }
-    }
-
-    private long generarCodigoValeUnico(Compra compraEntity, long correlativo) {
-        LocalDateTime fechaCompra = compraEntity.getFecha_compra();
-        // Generar un número aleatorio de 3 dígitos
-        int numeroAleatorio = generarNumeroAleatorio();
-        // Supongamos que el formato del código de vale es "numRandom_yyyyMMdd_correlativo"
-        String fechaString = fechaCompra.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        return Long.parseLong(numeroAleatorio + fechaString + correlativo);
-    }
-
-    private int generarNumeroAleatorio() {
-        Random random = new Random();
-        return random.nextInt(900) + 100; // Generar un número entre 100 y 999
     }
 
     @Override
@@ -88,7 +90,7 @@ public class CompraServiceImpl implements ICompraService {
     @Override
     public CompraPeticionDto actualizar(UUID id, CompraModificarDto data) {
         CompraPeticionDto buscarCompra = leerPorId(id);
-        if (compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         }
         buscarCompra.setProveedor(proveedorRepository.findById(data.getProveedor()).get().toDTO());
