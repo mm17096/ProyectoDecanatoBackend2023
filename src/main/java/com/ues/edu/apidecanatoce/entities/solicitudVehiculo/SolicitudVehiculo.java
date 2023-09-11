@@ -91,7 +91,6 @@ public class SolicitudVehiculo {
     private List<Pasajeros> listaPasajeros;
 
 
-
     //Responsable de la solicitud
     @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false,
@@ -120,15 +119,13 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
-
-    @Column(name = "observaciones")
-    private String observaciones;
 
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
@@ -140,12 +137,6 @@ public class SolicitudVehiculo {
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
                 .observaciones(this.observaciones).build();
-    }
-
-    public SolicitudVehiculoActualizarEstadoDTO toUpdateEstado(){
-        return SolicitudVehiculoActualizarEstadoDTO.builder()
-                .codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
-                .estado(this.estado).build();
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="tb_logvale")
+@Table(name = "tb_logvale")
 public class LogVale {
 
     @Id

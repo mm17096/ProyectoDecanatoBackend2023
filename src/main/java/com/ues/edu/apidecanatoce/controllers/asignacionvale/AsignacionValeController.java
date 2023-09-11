@@ -4,6 +4,7 @@ package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeInDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DevolucionValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LiquidarValesDto;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -69,20 +70,15 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/liquidar")
-    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody DevolucionValeDto listVales){
+    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesDto listVales){
         String mensaje= "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
-                "No se pudo realizar la Devolución", listVales);
+                "No se pudo finalizar la Misión", listVales);
         try {
-            this.asignacionValeService.devolverVale(listVales);
+            this.asignacionValeService.liquidarVales(listVales);
             resp.setCode(1);
-            if (listVales.getValesDevueltos().size() == 1) {
-                mensaje = "Vale devuelto!!";
-            } else {
-                mensaje = "Vales devueltos!!";
-            }
-            resp.setMessage(mensaje);
+            resp.setMessage("Misión Finalizada!!");
             http = HttpStatus.OK;
         } catch (Exception e) {
             // TODO: handle exception
