@@ -91,7 +91,6 @@ public class SolicitudVehiculo {
     private List<Pasajeros> listaPasajeros;
 
 
-
     //Responsable de la solicitud
     @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false,
@@ -120,14 +119,14 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
-    
     @Column(name = "observaciones")
     private String observaciones;
 
