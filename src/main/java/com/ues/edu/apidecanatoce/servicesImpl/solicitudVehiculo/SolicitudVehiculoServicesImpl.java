@@ -9,6 +9,7 @@ import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
+import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     private final IEstadosRepository estadosRepository;
     private final IVehiculoRepository vehiculoRepository;
     private final IEmpleadoRepository empleadoRepository;
+    private final IUsuarioRepository usuarioRepository;
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
         LocalDate fechaActual = LocalDate.now();
@@ -35,7 +37,8 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         data.setEstado(1);
 
         // uniad solicitante
-        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository)).toDto();
+        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
+                usuarioRepository)).toDto();
     }
 
     @Override
@@ -91,7 +94,8 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
         ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
-        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository)).toDto();
+        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
+                usuarioRepository)).toDto();
     }
 
     @Override

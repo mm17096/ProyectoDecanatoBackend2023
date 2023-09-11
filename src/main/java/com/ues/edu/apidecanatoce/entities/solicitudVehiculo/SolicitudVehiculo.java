@@ -142,10 +142,4 @@ public class SolicitudVehiculo {
                 .observaciones(this.observaciones).build();
     }
 
-    public SolicitudVehiculoActualizarEstadoDTO toUpdateEstado(){
-        return SolicitudVehiculoActualizarEstadoDTO.builder()
-                .codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
-                .estado(this.estado).build();
-    }
-
 }
