@@ -127,6 +127,9 @@ public class SolicitudVehiculo {
     @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
+    @Column(name = "observaciones")
+    private String observaciones;
+
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
