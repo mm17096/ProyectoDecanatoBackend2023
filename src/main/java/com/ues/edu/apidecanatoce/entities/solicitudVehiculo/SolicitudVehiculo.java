@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -137,6 +137,13 @@ public class SolicitudVehiculo {
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
                 .observaciones(this.observaciones).build();
+    }
+
+    public SolicitudVehiculoModDto totoSolicitudVehiculoModDto(){
+        return SolicitudVehiculoModDto.builder()
+                .idSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estadoSolicitudVehiculo(this.estado)
+                .build();
     }
 
 }
