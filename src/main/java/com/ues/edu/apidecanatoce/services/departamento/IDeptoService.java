@@ -21,6 +21,8 @@ public interface IDeptoService  {
 
     DepartamentoDto leerPorId(UUID id);
 
+    DepartamentoDto leerPorNombre(String nombre);
+
     List<DepartamentoDto> listar();
 
     Page<DepartamentoDto> listarConPage(Pageable pageable);

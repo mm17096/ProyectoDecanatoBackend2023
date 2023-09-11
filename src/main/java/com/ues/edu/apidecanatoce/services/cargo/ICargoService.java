@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.services.cargo;
 
 import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
-
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +24,8 @@ public interface ICargoService  {
     CargosDto eliminar(UUID obj);
 
     CargosDto leerPorId(UUID id);
+
+    CargosDto leerPorNombre(String nombre);
 
     List<CargosDto> listar();
 

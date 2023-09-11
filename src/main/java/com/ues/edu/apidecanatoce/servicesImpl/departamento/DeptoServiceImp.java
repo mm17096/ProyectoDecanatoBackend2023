@@ -50,6 +50,20 @@ public class DeptoServiceImp implements IDeptoService {
     }
 
     @Override
+    public DepartamentoDto leerPorNombre(String nombre) {
+        List<Departamento> departamentos = deptopRepository.findAll();
+        Departamento departamentoOb = new Departamento();
+
+        for (Departamento departamento: departamentos) {
+            if(departamento.getNombre().equals(nombre)){
+                departamentoOb = departamento;
+            }
+        }
+        return departamentoOb.toDto();
+    }
+
+
+    @Override
     public DepartamentoDto eliminar(UUID id) {
         DepartamentoDto depto = leerPorId(id);
         deptopRepository.delete(depto.toEntityComplete());
