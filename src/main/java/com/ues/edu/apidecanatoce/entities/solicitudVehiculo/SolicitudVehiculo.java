@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -119,13 +120,15 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     private List<DocumentoSoliCar> listDocumentos;
 
 
     @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
+
+    @Column(name = "observaciones")
+    private String observaciones;
 
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
@@ -135,7 +138,14 @@ public class SolicitudVehiculo {
                 .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
+    }
+
+    public SolicitudVehiculoActualizarEstadoDTO toUpdateEstado(){
+        return SolicitudVehiculoActualizarEstadoDTO.builder()
+                .codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estado(this.estado).build();
     }
 
 }

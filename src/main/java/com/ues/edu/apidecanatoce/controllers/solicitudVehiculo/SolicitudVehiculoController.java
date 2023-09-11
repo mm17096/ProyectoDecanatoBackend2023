@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
@@ -85,6 +86,14 @@ public class SolicitudVehiculoController {
     public ResponseEntity<SolicitudVehiculoPeticionDtO> actualizarSoliVe(@PathVariable UUID codigoSolicitudVehiculo,
                                                                          @Valid @RequestBody SolicitudVehiculoDto solicitudVehiculoDto){
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
+    }
+
+    @PutMapping("/estado/{codigoSolicitudVehiculo}")
+    public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
+            @PathVariable UUID codigoSolicitudVehiculo,
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO nuevoEstado
+    ){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(codigoSolicitudVehiculo, nuevoEstado));
     }
 
 }

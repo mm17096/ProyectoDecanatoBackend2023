@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.empleado;
 
-
-import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.cargos.*;
 import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import org.springframework.data.jpa.repository.JpaRepository;

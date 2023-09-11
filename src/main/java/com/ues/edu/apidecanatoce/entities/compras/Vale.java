@@ -23,9 +23,6 @@ public class Vale {
     @Column(name = "id_vale")
     private UUID id;
 
-    @Column(name ="codigo_vale", unique = true)
-    private long codigoVale;
-
     @Column(name = "estado")
     private int estado;
 
@@ -46,13 +43,12 @@ public class Vale {
     private long correlativo;
 
     public ValeDependeDto toDTO() {
-        return ValeDependeDto.builder().id(this.id).codigoVale(this.codigoVale).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
-                .correlativo(this.correlativo).build();
+        return ValeDependeDto.builder().id(this.id).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
+                .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
     }
-    public ValeModDto toValeDto() {
+    public ValeModDto toValeModDto() {
         return ValeModDto.builder()
                 .idVale(this.id)
-                .codigoVale(this.codigoVale)
                 .estadoVale(this.estado)
                 .build();                
 
