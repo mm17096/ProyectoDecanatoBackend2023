@@ -9,11 +9,9 @@ import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
-import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.services.usuario.IUsuarioService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {

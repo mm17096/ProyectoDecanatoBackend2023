@@ -4,7 +4,6 @@ import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuario/auth")

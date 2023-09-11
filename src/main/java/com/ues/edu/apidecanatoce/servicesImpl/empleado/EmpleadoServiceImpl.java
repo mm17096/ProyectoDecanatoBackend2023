@@ -4,18 +4,22 @@ package com.ues.edu.apidecanatoce.servicesImpl.empleado;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
-import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioDto;
-import com.ues.edu.apidecanatoce.entities.Cargos.Cargo;
-import com.ues.edu.apidecanatoce.entities.Departamentos.Departamento;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+
+import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
-import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
+
+import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
+import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
+
+
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.services.empleado.IEmpleadoService;
-import com.ues.edu.apidecanatoce.servicesImpl.CargoServiceImpl;
+
+import com.ues.edu.apidecanatoce.servicesImpl.cargo.CargoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -91,7 +95,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
 
         //se verifica si el cargo seleccionado es diferente a motorista, para agregarle usuario
-        if (data.getCargo() != cargoService.leerPorNombre("Motorista").getCodigoCargo()) {
+        if (data.getCargo() != cargoService.leerPorNombre("Motorista").getId()) {
             RegisterRequest request = new RegisterRequest();
 
             request.setNombre(empleadoPeticionDto.getCorreo());

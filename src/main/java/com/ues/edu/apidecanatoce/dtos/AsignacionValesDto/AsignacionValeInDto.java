@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,10 +28,13 @@ public class AsignacionValeInDto {
     @Digits(integer = 10, fraction = 0)
     private int estadoAsignacion;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm", iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaAsignacion;
+
     private UUID solicitudVale;
+
+    private Integer cantidadVales;
 
     public AsignacionVale toAsignacionValeComplete(ISolicitudValeRepository iSolicitudValeRepository){
         SolicitudVale solicitudValeById = iSolicitudValeRepository.findById(solicitudVale).orElseThrow(

@@ -3,15 +3,13 @@ package com.ues.edu.apidecanatoce;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
-import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioDto;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
-import com.ues.edu.apidecanatoce.repositorys.ICargoRepository;
-import com.ues.edu.apidecanatoce.repositorys.IDeptopRepo;
+import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
+import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.CargoServiceImpl;
-import com.ues.edu.apidecanatoce.servicesImpl.DeptoServiceImp;
-import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
+
+import com.ues.edu.apidecanatoce.servicesImpl.cargo.CargoServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.departamento.DeptoServiceImp;
 import com.ues.edu.apidecanatoce.servicesImpl.estados.EstadosServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
 import org.springframework.boot.CommandLineRunner;
@@ -44,11 +42,8 @@ public class ApiDecanatoCeApplication {
                 data.setTelefono("0000-0000");
                 data.setNombrefoto("");
                 data.setUrlfoto("");
-                System.out.println("Cargo: " + cargoService.leerPorNombre("Docente").getCodigoCargo());
-                System.out.println("Depto: " + deptoServiceImp.leerPorNombre("Ing. De Sistemas").getCodigoDepto());
-                System.out.println("Estado: " + estadosService.leerPorNombre("Activo").getCodigoEstado());
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
-                data.setCargo(cargoService.leerPorNombre("Docente").getCodigoCargo());
+                data.setCargo(cargoService.leerPorNombre("Docente").getId());
                 data.setDepartamento(deptoServiceImp.leerPorNombre("Ing. De Sistemas").getCodigoDepto());
 
                 //primero se almacena el empleado
