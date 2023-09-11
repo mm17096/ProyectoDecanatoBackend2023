@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -90,7 +91,6 @@ public class SolicitudVehiculo {
     private List<Pasajeros> listaPasajeros;
 
 
-
     //Responsable de la solicitud
     @ManyToOne
     @JoinColumn(name = "codigo_usuario", nullable = false,
@@ -119,15 +119,15 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany (mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
     private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
-    public SolicitudVehiculoPeticionDtO toDto(){
+    public SolicitudVehiculoPeticionDtO toDto() {
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
                 .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo.toDTO())
@@ -136,6 +136,13 @@ public class SolicitudVehiculo {
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
+    }
+
+    public SolicitudVehiculoModDto toSolicitudVehiculoModDto() {
+        return SolicitudVehiculoModDto.builder().
+                idSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estadoSolicitudVehiculo(this.estado)
+                .build();
     }
 
 }
