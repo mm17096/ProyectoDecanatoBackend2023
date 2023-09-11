@@ -26,15 +26,15 @@ public class Compra {
     @Column(name = "codigo_compra")
     private UUID id;
 
-    @Column(name = "factura", length= 100, unique = true)
+    @Column(name = "factura", length = 100)
     private String factura;
 
     @ManyToOne
-    @JoinColumn(name="codigo_proveedor",nullable=false,
-            foreignKey=@ForeignKey(name="FK-proveedor"))
+    @JoinColumn(name = "codigo_proveedor", nullable = false,
+            foreignKey = @ForeignKey(name = "FK-proveedor"))
     private Proveedor proveedor;
 
-    @Column(name = "descripcion", length= 750)
+    @Column(name = "descripcion", length = 750)
     private String descripcion;
 
     @Column(name = "cantidad")
@@ -64,8 +64,9 @@ public class Compra {
                 .proveedor(this.proveedor.toDTO())
                 .descripcion(this.descripcion).cantidad(this.cantidad).cod_inicio(this.cod_inicio)
                 .cod_fin(this.cod_fin).fecha_compra(this.fecha_compra).fecha_vencimiento(this.fecha_vencimiento).precio_unitario(this.precio_unitario)
-                .total_compra(this.cantidad*this.precio_unitario).build();
+                .total_compra(this.cantidad * this.precio_unitario).build();
     }
+
     public Compra toDepDTO() {
         return Compra.builder().id(this.id).factura(this.factura)
                 .proveedor(this.proveedor)
