@@ -1,10 +1,9 @@
 package com.ues.edu.apidecanatoce.dtos.documentovaleDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.SolicitudValeRepository;
-import com.ues.edu.apidecanatoce.repositorys.documentoVale.Documentosrepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

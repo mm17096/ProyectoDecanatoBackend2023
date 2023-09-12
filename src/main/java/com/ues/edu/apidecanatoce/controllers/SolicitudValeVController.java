@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers;
 
 
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.repositorys.SolicitudValeRepository;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/solicitudvale")
 @CrossOrigin("*")
-public class SolicitudValeController {
+public class SolicitudValeVController {
     @Autowired
     private ISolicitudVehiculoRepository solicitudVehiculoRepository;
     @Autowired
