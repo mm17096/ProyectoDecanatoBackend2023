@@ -18,9 +18,8 @@ import java.time.LocalDate;
 @Table(name="tb_Mantenimiento")
 public class Mantenimeinto {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "codigo_mantenimiento")
-    private Integer codigoMantenimiento;
+    private String codigoMantenimiento;
     @Column(name = "foto")
     private String foto;
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)

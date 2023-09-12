@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.repositorys;
 
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
-import com.ues.edu.apidecanatoce.entities.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

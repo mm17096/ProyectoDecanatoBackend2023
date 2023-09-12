@@ -1,8 +1,8 @@
 package com.ues.edu.apidecanatoce.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +19,7 @@ import java.time.LocalDate;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigoDocumentos")
 public class Documentos {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigoDocumentos;
+    private String codigoDocumentos;
 
     @Column(name = "tipo")
     private String tipoDocumento;
@@ -35,12 +34,6 @@ public class Documentos {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
     private LocalDate fecha;
-
-
-    @ManyToOne
-    @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true,
-            foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
-    private SolicitudVehiculo codigoSolicitudVehiculo;
 
 
 }
