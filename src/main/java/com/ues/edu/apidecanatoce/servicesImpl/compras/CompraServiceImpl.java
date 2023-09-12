@@ -46,16 +46,15 @@ public class CompraServiceImpl implements ICompraService {
             Compra compraEntity = compraRepository.save(compraInsertar);
             Proveedor proveedor = proveedorRepository.findById(data.getProveedor()).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra proveedor"));
-
-            // Obtener la cantidad de vales a crear
             for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
+                //Insertar log a Vales
                 Vale valeEntity = new Vale();
                 valeEntity.setEstado(8);
                 valeEntity.setValor(data.getPrecio_unitario());
-                valeEntity.setCorrelativo(i);  // Establecer el correlativo
+                valeEntity.setCorrelativo(i);
                 valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
                 valeEntity.setCompra(compraEntity);
-                valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
+                valeRepository.save(valeEntity);
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
