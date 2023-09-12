@@ -12,7 +12,7 @@ import com.ues.edu.apidecanatoce.repositorys.compras.ICompraRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IProveedorRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
-import com.ues.edu.apidecanatoce.services.compras.ICompraService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.compras.ICompraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,25 +46,24 @@ public class CompraServiceImpl implements ICompraService {
             Compra compraEntity = compraRepository.save(compraInsertar);
             Proveedor proveedor = proveedorRepository.findById(data.getProveedor()).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra proveedor"));
-
-            // Obtener la cantidad de vales a crear
             for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
+                //Insertar log a Vales
                 Vale valeEntity = new Vale();
                 valeEntity.setEstado(8);
                 valeEntity.setValor(data.getPrecio_unitario());
-                valeEntity.setCorrelativo(i);  // Establecer el correlativo
+                valeEntity.setCorrelativo(i);
                 valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
                 valeEntity.setCompra(compraEntity);
-                valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
+                valeRepository.save(valeEntity);
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
                 logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
                 if (compraEntity.getProveedor().getTipo() == 14) {
 
-                    logEntity.setActividad("Adquisición por prestamo de proveedor " + proveedor.getNombre());
+                    logEntity.setActividad("Adquisición por concepto de préstamo a proveedor " + proveedor.getNombre());
                 } else {
-                    logEntity.setActividad("Adquisición por compra de proveedor " + proveedor.getNombre());
+                    logEntity.setActividad("Adquisición por concepto de compra a proveedor " + proveedor.getNombre());
                 }
                 logEntity.setUsuario("N/A");
                 logEntity.setVale(valeEntity);

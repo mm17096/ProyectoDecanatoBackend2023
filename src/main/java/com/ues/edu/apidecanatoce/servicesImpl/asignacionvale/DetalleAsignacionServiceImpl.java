@@ -4,7 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
-import com.ues.edu.apidecanatoce.services.asignacionvale.IDetalleAsignacionService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.asignacionvale.IDetalleAsignacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

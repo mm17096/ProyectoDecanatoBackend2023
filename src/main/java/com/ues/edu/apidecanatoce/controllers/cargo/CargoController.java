@@ -3,7 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.cargo;
 
 import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
-import com.ues.edu.apidecanatoce.services.cargo.ICargoService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.cargo.ICargoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

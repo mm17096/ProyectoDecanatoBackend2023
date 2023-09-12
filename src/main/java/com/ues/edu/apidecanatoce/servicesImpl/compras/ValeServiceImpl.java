@@ -10,7 +10,7 @@ import com.ues.edu.apidecanatoce.repositorys.compras.ICompraRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IProveedorRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
-import com.ues.edu.apidecanatoce.services.compras.IValeService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.compras.IValeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

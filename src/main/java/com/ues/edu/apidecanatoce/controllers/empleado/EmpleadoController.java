@@ -5,11 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
-import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
-import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 
-import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
-import com.ues.edu.apidecanatoce.services.PathService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.PathService;
 import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;

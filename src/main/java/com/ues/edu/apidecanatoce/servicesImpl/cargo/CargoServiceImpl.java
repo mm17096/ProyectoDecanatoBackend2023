@@ -5,7 +5,7 @@ import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
-import com.ues.edu.apidecanatoce.services.cargo.ICargoService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.cargo.ICargoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

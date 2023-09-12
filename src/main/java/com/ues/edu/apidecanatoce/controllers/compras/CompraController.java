@@ -3,7 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.compras;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraInsertarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraModificarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
-import com.ues.edu.apidecanatoce.services.compras.ICompraService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.compras.ICompraService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

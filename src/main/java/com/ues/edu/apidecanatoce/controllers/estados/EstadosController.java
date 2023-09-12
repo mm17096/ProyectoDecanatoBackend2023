@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.controllers.estados;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
-import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.estados.IEstadosService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

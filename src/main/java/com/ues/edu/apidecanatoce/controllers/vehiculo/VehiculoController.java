@@ -2,9 +2,8 @@ package com.ues.edu.apidecanatoce.controllers.vehiculo;
 
 
 import com.ues.edu.apidecanatoce.dtos.MensajeRecord;
-import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
-import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.vehiculo.IVehiculoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

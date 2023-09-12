@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.IDocumentoSoliCarRepository;
-import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.solicitudVehiculo.IDocumentosSoliCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

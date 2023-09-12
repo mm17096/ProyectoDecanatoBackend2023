@@ -15,7 +15,7 @@ import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
 
 
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
-import com.ues.edu.apidecanatoce.services.empleado.IEmpleadoService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.empleado.IEmpleadoService;
 
 import com.ues.edu.apidecanatoce.servicesImpl.cargo.CargoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
