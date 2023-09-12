@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/solicitudvehiculo")
+@RequestMapping("/api/solicitudvehiculo")
 @RequiredArgsConstructor
 public class SolicitudVehiculoController {
 
