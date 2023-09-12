@@ -25,5 +25,5 @@ public class SolicitudConsultaController {
     public ResponseEntity<Page<SolicitudVahiculoConsultaDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculo.listar(pageable));
     }
-    //este es un comendario
+    //este es un comendario este es un comentario
 }
