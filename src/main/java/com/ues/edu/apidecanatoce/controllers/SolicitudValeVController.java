@@ -5,6 +5,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.repositorys.SolicitudValeRepository;
+import com.ues.edu.apidecanatoce.servicesImpl.SolicitudVvImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,9 @@ public class SolicitudValeVController {
     private ISolicitudVehiculoRepository solicitudVehiculoRepository;
     @Autowired
     private SolicitudValeRepository solicitudValeRepository;
+
+    @Autowired
+    private SolicitudVvImpl solicitudVv;
 
     @GetMapping
     public ResponseEntity<Page<SolicitudVale>> lisraSolicitudVale(Pageable pageable){

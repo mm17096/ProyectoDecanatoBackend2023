@@ -297,6 +297,11 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         }
         return  data;
     }
+
+    @Override
+    public Page<SolicitudVale> listarSolicitudVale(Pageable pageable) {
+        return solicitudValeRepository.findAll(pageable);
+    }
 }
 
 
