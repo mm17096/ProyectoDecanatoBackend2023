@@ -80,6 +80,12 @@ public class ValeServiceImpl implements IValeService {
     }
 
     @Override
+    public List<ValeDependeDto> listarSinPagina() {
+        List<Vale> veles= this.valeRepository.findAll();
+        return veles.stream().map(Vale::toDTO).toList();
+    }
+
+    @Override
     public ValeDependeDto actualizar(UUID id, ValeDto data) {
         ValeDependeDto buscarVale = leerPorId(id);
         data.setId(id);
