@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.services.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.entities.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-@Service
+
 public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data);
     AsignacionValeDto leerPorId(UUID id);
@@ -31,6 +32,8 @@ public interface IAsignacionValeService {
     AsignacionValeModDto actualizarEstadoAsignacion(UUID id, int estadoAsignacion);
 
     LogValeDto logVale(LogValeDto data);
+
+    Page<SolicitudVale> listarSolicitudVale(Pageable pageable);
 
 
 

@@ -6,8 +6,11 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DevolucionValeDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LiquidarValesDto;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
+import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/asignacionvale")
 public class AsignacionValeController {
     private final AsignacionValeServiceImpl asignacionValeService;
+
+    private final IAsignacionValeService iAsignacionValeService;
 
     @GetMapping("/listar/{idAsignacion}")
     public ResponseEntity<AsignacionValeOutDto> asignacionesValesByID(@PathVariable UUID idAsignacion, Pageable pageable) throws Exception {
@@ -85,5 +89,10 @@ public class AsignacionValeController {
             System.out.println(e.getMessage());
         }
         return new ResponseEntity<GenericResponse<?>>(resp, http);
+    }
+
+    @GetMapping("/listarsolicitudvale")
+    public ResponseEntity<Page<SolicitudVale>> listarSolicitudVale(Pageable pageable) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.listarSolicitudVale(pageable));
     }
 }

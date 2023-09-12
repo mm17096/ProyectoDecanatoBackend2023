@@ -1,11 +1,9 @@
 package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
-import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
@@ -19,7 +17,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -299,6 +296,11 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
         }
         return  data;
+    }
+
+    @Override
+    public Page<SolicitudVale> listarSolicitudVale(Pageable pageable) {
+        return solicitudValeRepository.findAll(pageable);
     }
 }
 

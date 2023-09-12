@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import lombok.*;
 
 import java.time.LocalDate;
