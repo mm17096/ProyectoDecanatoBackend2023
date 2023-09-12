@@ -4,7 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.departamento.IDeptoService;
+import com.ues.edu.apidecanatoce.services.departamento.IDeptoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

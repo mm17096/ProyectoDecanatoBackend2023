@@ -4,7 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.estados.IEstadosService;
+import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

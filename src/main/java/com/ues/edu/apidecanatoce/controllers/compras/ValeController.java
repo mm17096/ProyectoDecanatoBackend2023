@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.controllers.compras;
 
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.compras.IValeService;
+import com.ues.edu.apidecanatoce.services.compras.IValeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

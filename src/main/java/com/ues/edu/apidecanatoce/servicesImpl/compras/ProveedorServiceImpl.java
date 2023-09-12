@@ -4,7 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.compras.IProveedorRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.compras.IProveedorService;
+import com.ues.edu.apidecanatoce.services.compras.IProveedorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

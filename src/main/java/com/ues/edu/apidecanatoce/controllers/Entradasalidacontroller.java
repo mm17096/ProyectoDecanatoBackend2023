@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers;
 
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

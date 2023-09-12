@@ -5,7 +5,7 @@ import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
 import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
 import com.ues.edu.apidecanatoce.repositorys.SolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.documentoVale.Documentosrepository;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.Idocumentovaleservice;
+import com.ues.edu.apidecanatoce.services.Idocumentovaleservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

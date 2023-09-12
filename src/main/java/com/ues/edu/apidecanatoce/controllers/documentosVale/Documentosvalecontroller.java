@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.documentosVale;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovaleDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.Idocumentovaleservice;
+import com.ues.edu.apidecanatoce.services.Idocumentovaleservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

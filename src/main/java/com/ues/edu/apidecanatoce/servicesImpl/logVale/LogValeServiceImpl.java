@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.logVale;
 
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.logVale.ILogValeService;
+import com.ues.edu.apidecanatoce.services.logVale.ILogValeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

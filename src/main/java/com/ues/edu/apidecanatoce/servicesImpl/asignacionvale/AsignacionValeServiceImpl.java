@@ -12,7 +12,7 @@ import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeReposi
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.asignacionvale.IAsignacionValeService;
+import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

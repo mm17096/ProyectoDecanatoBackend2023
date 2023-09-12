@@ -7,7 +7,7 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DevolucionValeDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LiquidarValesDto;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.asignacionvale.IAsignacionValeService;
+import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

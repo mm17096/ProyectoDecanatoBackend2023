@@ -3,7 +3,7 @@ package com.ues.edu.apidecanatoce.servicesImpl;
 
 import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.repositorys.EntradaSalidaRepo;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

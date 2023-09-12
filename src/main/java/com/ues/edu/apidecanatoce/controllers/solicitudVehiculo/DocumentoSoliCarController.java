@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.services.solicitudVehiculo.IDocumentosSoliCarService;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
