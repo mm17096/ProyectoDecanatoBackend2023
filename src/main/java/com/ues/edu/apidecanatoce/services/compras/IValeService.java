@@ -19,6 +19,8 @@ public interface IValeService {
 
     Page<ValeDependeDto> listar(Pageable pageable);
 
+    List<ValeDependeDto> listarSinPagina();
+
     ValeDependeDto actualizar(UUID id, ValeDto data);
 
     List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, UUID idProveedor);

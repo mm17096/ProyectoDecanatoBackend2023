@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,6 +40,12 @@ public class ValeController {
     public ResponseEntity<List<ValeDependeDto>> obtenerValesPorMontoTotal(@PathVariable double monto) {
         List<ValeDependeDto> valesDevueltos = valeService.obtenerValesPorMontoTotal(monto);
         return ResponseEntity.ok(valesDevueltos);
+    }
+
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
+        List<ValeDependeDto> vale = valeService.listarSinPagina();
+        return ResponseEntity.ok(vale);
     }
 
     @GetMapping("/lista")
