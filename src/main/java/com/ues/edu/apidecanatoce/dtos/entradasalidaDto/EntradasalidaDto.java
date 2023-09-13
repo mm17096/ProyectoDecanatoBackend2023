@@ -1,7 +1,12 @@
 package com.ues.edu.apidecanatoce.dtos.entradasalidaDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.entities.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +15,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -19,9 +26,6 @@ import java.util.UUID;
 @Builder
 public class EntradasalidaDto {
     private UUID id;
-
-    @NotBlank(message = "El campo tipo es obligatorio")
-    private String tipo;
 
     @NotNull(message = "La fecha es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
@@ -39,7 +43,15 @@ public class EntradasalidaDto {
     @Column(name = "kilometraje")
     private String kilometraje;
 
-    public Entrada_Salidas toEntityComplete() {
-        return Entrada_Salidas.builder().codigoEntradaSalida(this.id).tipo(this.tipo).fecha(this.fecha).hora(this.hora).combustible(this.combustible).kilometraje(this.kilometraje).build();
+    private int estado;
+
+    @NotNull(message = "El campo Misión es obligatorio")
+    private UUID solicitudvehiculo;
+
+    public Entrada_Salidas toEntityComplete(ISolicitudVehiculoRepository solicitudvehiculo) {
+        SolicitudVehiculo solicitudbuscar = solicitudvehiculo.findById(this.solicitudvehiculo).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontro el objetivo de la Misión"));
+
+        return Entrada_Salidas.builder().codigoEntradaSalida(this.id).fecha(this.fecha).hora(this.hora).combustible(this.combustible).kilometraje(this.kilometraje).estado(this.estado).solicitudvehiculo(solicitudbuscar).build();
     }
 }

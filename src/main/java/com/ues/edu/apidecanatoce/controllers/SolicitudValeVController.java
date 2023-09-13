@@ -21,6 +21,7 @@ import java.util.UUID;
 @RequestMapping("/api/solicitudvale")
 @CrossOrigin("*")
 public class SolicitudValeVController {
+
     @Autowired
     private ISolicitudVehiculoRepository solicitudVehiculoRepository;
     @Autowired

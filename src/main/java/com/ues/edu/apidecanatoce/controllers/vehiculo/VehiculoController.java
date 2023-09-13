@@ -1,6 +1,4 @@
 package com.ues.edu.apidecanatoce.controllers.vehiculo;
-
-
 import com.ues.edu.apidecanatoce.dtos.MensajeRecord;
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.services.vehiculo.IVehiculoService;
@@ -19,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/vehiculo")
 @RequiredArgsConstructor
@@ -46,6 +44,11 @@ public class VehiculoController {
     @GetMapping("/clase/{claseName}")
     public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
         return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
+    }
+
+    @GetMapping("/listasinpagina/{codigoplaca}")
+    public ResponseEntity<List<VehiculoDto>> BuscarPorplaca(@PathVariable String codigoplaca){
+        return ResponseEntity.ok(vehiculoService.listarPorPlaca(codigoplaca));
     }
 
     @GetMapping("/imagen/{nombrefoto}")

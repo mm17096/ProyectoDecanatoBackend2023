@@ -1,16 +1,17 @@
 package com.ues.edu.apidecanatoce.services;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.UUID;
 
 public interface Ientradasalidaservice {
-    EntradasalidaDto registrar(EntradasalidaDto data);
+    EntradasalidaPeticionDto registrar(EntradasalidaDto data);
 
-    EntradasalidaDto leerPorId(UUID id);
+    EntradasalidaPeticionDto leerPorId(UUID id);
 
-    Page<EntradasalidaDto> listar(Pageable pageable);
+    Page<EntradasalidaPeticionDto> listar(Pageable pageable);
 
     List<EntradasalidaDto> listarSinPagina();
 
