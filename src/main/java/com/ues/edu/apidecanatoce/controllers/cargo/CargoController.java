@@ -18,7 +18,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cargo")
+@RequestMapping("/api/cargo")
 public class CargoController {
 
     private final ICargoService cargoService;

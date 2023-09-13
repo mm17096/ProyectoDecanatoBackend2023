@@ -37,10 +37,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/usuario/auth/**").permitAll()
-                                .requestMatchers("/usuario/auth/login").permitAll()
-                                .requestMatchers("/usuario/auth/sesion").permitAll()
-                                .requestMatchers("/empleado/imagen/**").permitAll()
+                                .requestMatchers("/api/usuario/auth/**").permitAll()
+                                .requestMatchers("/api/usuario/auth/login").permitAll()
+                                .requestMatchers("/api/usuario/auth/sesion").permitAll()
+                                .requestMatchers("/api/vehiculo/imagen/**").permitAll()
+                                .requestMatchers("/api/empleado/imagen/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

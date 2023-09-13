@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/vale")
+@RequestMapping("/api/vale")
 public class ValeController {
 
     private final IValeService valeService;

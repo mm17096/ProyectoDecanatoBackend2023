@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/compra")
+@RequestMapping("/api/compra")
 public class CompraController {
 
     private final ICompraService compraService;
