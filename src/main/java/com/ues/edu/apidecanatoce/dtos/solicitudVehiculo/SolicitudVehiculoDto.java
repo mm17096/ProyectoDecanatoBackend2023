@@ -10,6 +10,7 @@ import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 
 import jakarta.validation.constraints.*;
@@ -70,14 +71,13 @@ public class SolicitudVehiculoDto {
 
     @AssertTrue(message = "La hora de salida debe ser anterior a la hora de regreso en el mismo día")
     public boolean isHorasValidas() {
-        // Verificar si la hora de salida es anterior a la hora de regreso solo si las fechas son iguales
         if (fechaSalida != null && fechaEntrada != null && fechaSalida.equals(fechaEntrada)) {
             if (horaSalida == null || horaEntrada == null) {
-                return true; // Si alguna de las horas es nula, no se realiza la validación
+                return true;
             }
             return !horaSalida.isAfter(horaEntrada);
         }
-        return true; // Si las fechas son diferentes, no aplicar la validación de hora
+        return true;
     }
 
 
@@ -88,7 +88,7 @@ public class SolicitudVehiculoDto {
     private List<Pasajeros> listaPasajeros;
 
     @NotNull(message = "El responsable es obligatorio")
-    private Usuario solicitante; // usuario solicitante
+    private String solicitante; // usuario solicitante
 
     @Size(max = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
     private String nombreJefeDepto;
@@ -104,8 +104,11 @@ public class SolicitudVehiculoDto {
 
     private List<DocumentoSoliCar> listDocumentos;
 
+    private String observaciones;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
-                                              IEmpleadoRepository empleadoRepository){
+                                              IEmpleadoRepository empleadoRepository,
+                                              IUsuarioRepository usuarioRepository){
         // metodo para buscar el vehicul si existe
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
@@ -116,13 +119,17 @@ public class SolicitudVehiculoDto {
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
         }
         motoristaBuscar = null;
+        Usuario usurioExiste = usuarioRepository.findById(this.solicitante).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el usuario"));
+
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
                 .unidadSolicitante(this.unidadSolicitante).vehiculo(vehiculoBuscar).objetivoMision(this.objetivoMision)
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
-                .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
-                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos).build();
+                .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 
     public SolicitudVehiculo toEntityComplete2() {

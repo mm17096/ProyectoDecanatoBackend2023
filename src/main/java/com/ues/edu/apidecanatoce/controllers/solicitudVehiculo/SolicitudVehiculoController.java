@@ -1,11 +1,11 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
-import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
@@ -64,6 +64,11 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstado(estado, pageable));
     }
 
+    @GetMapping("/lista/{estado}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> listaPorEstadoSinPagina(@PathVariable("estado") Integer estado) {
+        return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstadoSinPagina(estado));
+    }
+
     @GetMapping("/estados")
     public ResponseEntity<List<EstadosDTO>> obtenerEstadosSoliVe() {
         List<EstadosDTO> estados = estadosService.estadosSoliVe();
@@ -85,6 +90,14 @@ public class SolicitudVehiculoController {
     public ResponseEntity<SolicitudVehiculoPeticionDtO> actualizarSoliVe(@PathVariable UUID codigoSolicitudVehiculo,
                                                                          @Valid @RequestBody SolicitudVehiculoDto solicitudVehiculoDto){
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
+    }
+
+    @PutMapping("/estado/{codigoSolicitudVehiculo}")
+    public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
+            @PathVariable UUID codigoSolicitudVehiculo,
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO nuevoEstado
+    ){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(codigoSolicitudVehiculo, nuevoEstado));
     }
 
 }

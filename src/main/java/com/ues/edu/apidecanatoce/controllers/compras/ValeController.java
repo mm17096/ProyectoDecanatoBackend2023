@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,6 +30,24 @@ public class ValeController {
         return ResponseEntity.ok(valeService.leerPorId(id));
     }
 
+    @GetMapping("/devolucioncantidad/{cantidad}")
+    public ResponseEntity<List<ValeDependeDto>> devolverValesPorCantidad(@PathVariable int cantidad) {
+        List<ValeDependeDto> valesDevueltos = valeService.devolverValesPorCantidad(cantidad);
+        return ResponseEntity.ok(valesDevueltos);
+    }
+
+    @GetMapping("/devolucionmonto/{monto}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorMontoTotal(@PathVariable double monto) {
+        List<ValeDependeDto> valesDevueltos = valeService.obtenerValesPorMontoTotal(monto);
+        return ResponseEntity.ok(valesDevueltos);
+    }
+
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
+        List<ValeDependeDto> vale = valeService.listarSinPagina();
+        return ResponseEntity.ok(vale);
+    }
+
     @GetMapping("/lista")
     public ResponseEntity<Page<ValeDependeDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(valeService.listar(pageable));
@@ -40,10 +59,16 @@ public class ValeController {
         return ResponseEntity.ok(valeService.actualizar(id, vale));
     }
 
+    @PutMapping("/actualizarValesCantidad/{idproveedor}")
+    public ResponseEntity<List<ValeDependeDto>> actualizarVales(
+            @RequestBody List<ValeDependeDto> valesDto,
+            @PathVariable("idproveedor") UUID idProveedor
+    ) {
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor));
+    }
+
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<ValeDependeDto> eliminar(@PathVariable UUID id) {
         return ResponseEntity.ok(valeService.eliminar(id));
     }
-
-
 }

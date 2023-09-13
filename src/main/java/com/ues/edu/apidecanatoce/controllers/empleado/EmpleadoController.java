@@ -5,10 +5,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
-import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 
 import com.ues.edu.apidecanatoce.services.PathService;
 import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -34,15 +34,22 @@ public class EmpleadoController {
     private final EmpleadoServiceImpl empleadoServiceimpl;
     private final PathService pathService;
     private final HttpServletRequest request;
-    private Usuario usuario;
 
-    public EmpleadoController(EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request) {
+    private final UsuarioServiceImpl usuarioService;
+
+    public EmpleadoController(EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request, UsuarioServiceImpl usuarioService) {
         this.empleadoServiceimpl = empleadoServiceimpl;
         this.pathService = pathService;
         this.request = request;
+        this.usuarioService = usuarioService;
     }
 
 /////// Metodos reestructurados con EMpleadosServiceImplement /////////
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<EmpleadoPeticionDto> leerPorID(@PathVariable UUID uuid) {
+        return ResponseEntity.ok(empleadoServiceimpl.leerPorId(uuid));
+    }
 
     @GetMapping("/lista")
     public ResponseEntity<Page<EmpleadoPeticionDto>> listar(Pageable pageable) {
@@ -156,6 +163,4 @@ public class EmpleadoController {
         }
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
-
-
 }

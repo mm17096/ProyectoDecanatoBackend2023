@@ -1,9 +1,10 @@
-package com.ues.edu.apidecanatoce.entities;
+package com.ues.edu.apidecanatoce.entities.solicitudVale;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
+import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,9 @@ public class SolicitudVale {
     @Column(name = "estado_entrada", nullable = false)
     private int estadoEntrada;
 
+    @Column(name = "estado", nullable = false)
+    private int estado;
+
     // @OneToMany(mappedBy = "solicitudVale")
     //  private Set<AsignacionVale> asignacionValeSet;
 
@@ -44,6 +48,11 @@ public class SolicitudVale {
 
     public SolicitudvaleDto toDTO() {
         return SolicitudvaleDto.builder().id(this.idSolicitudVale).cantidadVale(this.cantidadVale).estadoEntrada(this.estadoEntrada).build();
+    }
+
+    public SolicitudValeDependeDto toDTOt() {
+        return SolicitudValeDependeDto.builder().idSolicitudVale(this.idSolicitudVale).cantidadVale(this.cantidadVale)
+                .estadoEntrada(this.estadoEntrada).solicitudVehiculo(this.solicitudVehiculo.toDepDTO()).build();
     }
 
     public SolicitudVvDTO tosolicitudVvDTO() {

@@ -1,7 +1,6 @@
 package com.ues.edu.apidecanatoce.entities.documentoVale;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovaleDto;
-import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

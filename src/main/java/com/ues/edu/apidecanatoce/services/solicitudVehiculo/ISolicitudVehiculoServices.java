@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.services.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,8 @@ public interface ISolicitudVehiculoServices {
     SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data);
 
     List<SolicitudVehiculoPeticionDtO> listarSinPagina();
+
+    SolicitudVehiculoActualizarEstadoDTO updateEstado(UUID codigoSolicitudVehiculo,
+                                                      SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
+    List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id);
 }

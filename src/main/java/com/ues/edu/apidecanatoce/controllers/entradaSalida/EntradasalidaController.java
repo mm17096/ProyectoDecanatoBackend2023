@@ -1,6 +1,4 @@
 package com.ues.edu.apidecanatoce.controllers.entradaSalida;
-
-import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
