@@ -23,7 +23,7 @@ public interface IValeService {
 
     ValeDependeDto actualizar(UUID id, ValeDto data);
 
-    List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, UUID idProveedor);
+    List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, UUID idProveedor, String concepto);
 
     ValeDependeDto eliminar(UUID id);
 

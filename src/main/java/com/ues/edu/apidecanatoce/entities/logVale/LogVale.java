@@ -32,7 +32,7 @@ public class LogVale {
     @Column(name = "fecha_logvale", nullable = false)
     private LocalDate fechaLogVale;
 
-    @Column(name = "actividad")
+    @Column(name = "actividad", length = 750)
     private String actividad;
 
     @Column(name = "usuario")
