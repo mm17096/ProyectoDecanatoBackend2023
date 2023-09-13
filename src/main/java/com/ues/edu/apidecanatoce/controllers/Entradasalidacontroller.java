@@ -1,12 +1,9 @@
 package com.ues.edu.apidecanatoce.controllers;
 
-import com.ues.edu.apidecanatoce.dtos.compras.ProveedorDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

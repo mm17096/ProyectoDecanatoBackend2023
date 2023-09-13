@@ -1,6 +1,5 @@
 package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

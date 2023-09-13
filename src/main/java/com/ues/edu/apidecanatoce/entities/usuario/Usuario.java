@@ -10,17 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="tb_usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})})
+@Table(name = "tb_usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})})
 public class Usuario implements UserDetails {
     @Id
-    @Column(name ="codigo_usuario")
+    @Column(name = "codigo_usuario")
     private String codigoUsuario;
 
     @Basic
@@ -33,8 +32,8 @@ public class Usuario implements UserDetails {
     @Column(name = "nuevo")
     private boolean nuevo;
 
-    @Enumerated(EnumType.STRING)
-    Role role;
+    @Column(name = "activo")
+    private boolean activo;
 
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false,
@@ -48,7 +47,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((role.name())));
+        return List.of(new SimpleGrantedAuthority(("USER")));
     }
 
     @Override
@@ -65,16 +64,20 @@ public class Usuario implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -6,7 +6,6 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
-import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/solicitudvehiculo")
+@RequestMapping("/api/solicitudvehiculo")
 @RequiredArgsConstructor
 public class SolicitudVehiculoController {
 
@@ -63,6 +62,11 @@ public class SolicitudVehiculoController {
     public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listaPorEstado(@PathVariable("estado") Integer estado,
                                                                              Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstado(estado, pageable));
+    }
+
+    @GetMapping("/lista/{estado}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> listaPorEstadoSinPagina(@PathVariable("estado") Integer estado) {
+        return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstadoSinPagina(estado));
     }
 
     @GetMapping("/estados")

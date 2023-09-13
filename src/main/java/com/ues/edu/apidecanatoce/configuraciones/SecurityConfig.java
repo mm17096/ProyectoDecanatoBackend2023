@@ -39,6 +39,7 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/usuario/auth/**").permitAll()
                                 .requestMatchers("/usuario/auth/login").permitAll()
+                                .requestMatchers("/usuario/auth/sesion").permitAll()
                                 .requestMatchers("/empleado/imagen/**").permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -2,12 +2,13 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
+import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ues.edu.apidecanatoce.entities.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -120,12 +121,11 @@ public class SolicitudVehiculo {
     //Lista de documentos que tiene la solicitud de vehiculo
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
-    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
-    private Set<SolicitudVale> solicitudVale = new HashSet<>();
+   // @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    //private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
     @Column(name = "observaciones")
     private String observaciones;
@@ -142,11 +142,34 @@ public class SolicitudVehiculo {
                 .observaciones(this.observaciones).build();
     }
 
+    public SolicitudVahiculoConsultaDto toDtot(){
+        return SolicitudVahiculoConsultaDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo.toDTO())
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas)
+                .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(this.motorista).build();
+    }
+
     public SolicitudVehiculoModDto totoSolicitudVehiculoModDto(){
         return SolicitudVehiculoModDto.builder()
                 .idSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .estadoSolicitudVehiculo(this.estado)
                 .build();
+    }
+
+    public SolicitudVehiculo toDepDTO() {
+        return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
+                .fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
     }
 
 }
