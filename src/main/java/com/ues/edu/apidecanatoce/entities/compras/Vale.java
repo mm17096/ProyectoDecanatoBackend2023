@@ -50,6 +50,7 @@ public class Vale {
         return ValeModDto.builder()
                 .idVale(this.id)
                 .estadoVale(this.estado)
+                .correlativo(this.correlativo)
                 .build();                
 
     }
