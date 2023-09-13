@@ -65,6 +65,11 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstado(estado, pageable));
     }
 
+    @GetMapping("/lista/{estado}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> listaPorEstadoSinPagina(@PathVariable("estado") Integer estado) {
+        return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorEstadoSinPagina(estado));
+    }
+
     @GetMapping("/estados")
     public ResponseEntity<List<EstadosDTO>> obtenerEstadosSoliVe() {
         List<EstadosDTO> estados = estadosService.estadosSoliVe();
