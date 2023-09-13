@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.compras;
 
+import com.ues.edu.apidecanatoce.dtos.compras.ActualizacionValesRequestDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
 import com.ues.edu.apidecanatoce.services.compras.IValeService;
@@ -59,12 +60,14 @@ public class ValeController {
         return ResponseEntity.ok(valeService.actualizar(id, vale));
     }
 
-    @PutMapping("/actualizarValesCantidad/{idproveedor}")
+    @PutMapping("/actualizarValesCantidad")
     public ResponseEntity<List<ValeDependeDto>> actualizarVales(
-            @RequestBody List<ValeDependeDto> valesDto,
-            @PathVariable("idproveedor") UUID idProveedor
+            @RequestBody ActualizacionValesRequestDto request
     ) {
-        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor));
+        List<ValeDependeDto> valesDto = request.getVales();
+        UUID idProveedor = request.getIdProveedor();
+        String concepto = request.getConcepto();
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor, concepto));
     }
 
     @DeleteMapping("/eliminar/{id}")

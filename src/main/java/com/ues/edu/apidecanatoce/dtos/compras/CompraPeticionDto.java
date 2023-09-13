@@ -45,7 +45,6 @@ public class CompraPeticionDto {
     @NotNull(message = "La fecha de compra es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @PastOrPresent(message = "Fecha de compra debe ser inferior o igual al presente")
     private LocalDateTime fecha_compra;
 
     @NotNull(message = "La fecha de vencimiento es obligatoria")

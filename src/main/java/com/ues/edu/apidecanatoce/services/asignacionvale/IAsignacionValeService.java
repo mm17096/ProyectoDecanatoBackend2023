@@ -1,11 +1,9 @@
 package com.ues.edu.apidecanatoce.services.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
-import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
