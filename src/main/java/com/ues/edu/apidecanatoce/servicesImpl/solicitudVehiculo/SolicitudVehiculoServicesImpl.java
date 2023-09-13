@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,8 +53,20 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
         List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAll();
-        return solicitudVehiculos.stream().map(SolicitudVehiculo::toDto).toList();
+        List<Estados> estados = estadosRepository.findAll();
+        Map<Integer, String> estadoStringMap = new HashMap<>();
+        for (Estados estado: estados) {
+            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        }
+
+        return solicitudVehiculos.stream().map(solicitud -> {
+            SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
+            dto.setEstadoString(estadoAsString);
+            return dto;
+        }).collect(Collectors.toList());
     }
+
 
     @Override
     public Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable) {
