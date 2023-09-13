@@ -39,6 +39,8 @@ public interface IAsignacionValeService {
 
     BuscarAsignacionValeDto codigoAsignacionVale(UUID id);
 
+    BuscarSolicitudVehiculoDto codigoSolicitudVehiculo(UUID id);
+
 
 
 
