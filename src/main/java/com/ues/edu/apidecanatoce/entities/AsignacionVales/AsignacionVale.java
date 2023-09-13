@@ -1,11 +1,8 @@
 package com.ues.edu.apidecanatoce.entities.AsignacionVales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ValeModDto;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
 import jakarta.persistence.*;
@@ -55,6 +52,12 @@ public class AsignacionVale {
                 .build();
     }
 
+    public AsignacionValeModDto toAsignacionValeModDto(){
+        return AsignacionValeModDto.builder()
+                .idAsignacionVale(this.codigoAsignacion)
+                .estadoAsignacion(this.estado)
+                .build();
+    }
 
     public AsignacionValeOutDto toDto(IAsignacionValeRepository asignacionValeRepository, IDetalleAsignacionRepository detalleAsignacionRepository, UUID id){
         //sSe busca la asiganción por ID

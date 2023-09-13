@@ -22,4 +22,5 @@ public interface ISolicitudVehiculoServices {
 
     SolicitudVehiculoActualizarEstadoDTO updateEstado(UUID codigoSolicitudVehiculo,
                                                       SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
+    List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id);
 }
