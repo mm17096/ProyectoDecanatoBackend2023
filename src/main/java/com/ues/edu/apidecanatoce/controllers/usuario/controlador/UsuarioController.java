@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
     private final UsuarioServiceImpl usuarioService;
 
+
+
     public UsuarioController(UsuarioServiceImpl usuarioService) {
         this.usuarioService = usuarioService;
     }
-
 
     @GetMapping("/{uuid}")
     public ResponseEntity<UsuarioPeticionDto> leerPorID(@PathVariable String uuid) {
         return ResponseEntity.ok(usuarioService.leerPorID(uuid));
     }
+
+
 }
