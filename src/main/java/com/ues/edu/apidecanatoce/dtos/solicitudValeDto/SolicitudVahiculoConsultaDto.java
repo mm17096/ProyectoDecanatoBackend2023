@@ -21,6 +21,7 @@ import java.util.UUID;
 @Setter
 @Builder
 public class SolicitudVahiculoConsultaDto {
+
     private UUID codigoSolicitudVehiculo;
 
     private LocalDate fechaSolicitud;

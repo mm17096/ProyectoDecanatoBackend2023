@@ -2,8 +2,9 @@ package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
+import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
@@ -23,9 +24,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -65,56 +64,62 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         int cantidadVales = data.getCantidadVales();
 
 
-        // Guardando la Asignación
-        try {
-            this.asignacionValeRepository.save(data.toAsignacionValeComplete(solicitudValeRepository)).toAsignacionValeDTO();
+        //Evaluando su hay vales para asignar
+        if (cantidadVales().getValesDisponibles() == 0) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para asignar");
+        }else{
+            // Guardando la Asignación
+            try {
+                this.asignacionValeRepository.save(data.toAsignacionValeComplete(solicitudValeRepository)).toAsignacionValeDTO();
 
-            //System.out.println("Los Vales: " + data.getIdVales());
-            System.out.println("Cantidad de Vales => : " + cantidadVales);
+                //System.out.println("Los Vales: " + data.getIdVales());
+                System.out.println("Cantidad de Vales => : " + cantidadVales);
 
-            // Obteniendo la última asignación reistrada
-            System.out.println("El código de la asignacion: " + this.asignacionValeRepository.findTopByOrderByIdDesc(data.getSolicitudVale()));
-            UUID codigoAsignacion = this.asignacionValeRepository.findTopByOrderByIdDesc(data.getSolicitudVale());
+                // Obteniendo la última asignación reistrada
+                System.out.println("El código de la asignacion: " + this.asignacionValeRepository.findTopByOrderByIdDesc(data.getSolicitudVale()));
+                UUID codigoAsignacion = this.asignacionValeRepository.findTopByOrderByIdDesc(data.getSolicitudVale());
 
-            //Listar cantidad de vales según el número solicitado
-            List<IValeAsignarDto> lsitValeAsignarDtos = lisIValeAsignarDtos(cantidadVales);
-            // Obtengo el array de los vales a asignar
-            for (IValeAsignarDto datos : lsitValeAsignarDtos) {
-                valesAsignar.add(datos.getIdVale());
-            }
-            System.out.println("Vales según cantidad: " + valesAsignar);
-
-            // Preparo la Dto para guardar en la tabla detalle_asignación
-            for (int i = 0; i < valesAsignar.size(); i++) {
-                detalleAsignacionInDto.setCodigoAsignacionVale(codigoAsignacion);
-                detalleAsignacionInDto.setIdVale(valesAsignar.get(i));
-
-                try {
-                    //Cambiar el estado del Vale
-                    actualizarEstadoVale(valesAsignar.get(i), estadoVales);
-                    //cambiar el estado de la solicitud del vale y del vehículo
-                    actualizarEstadoSolicitud(data.getSolicitudVale(), estadoSolicitud);
-                    // Guardar en la tabla detalle_asignación los id de los vales junto con la ültima asignación reistrada
-                    detalleAsignacionRepository.save(detalleAsignacionInDto.toDto(asignacionValeRepository, valeRepository)).toDto();
-
-                    logVale.setEstadoVale(estadoVales);
-                    logVale.setFechaLogVale(fechaActualLog);
-                    logVale.setActividad("Vale asignado a una misión");
-                    logVale.setVale(valesAsignar.get(i));
-                    logVale(logVale);
-
-                } catch (Exception e) {
-                    throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar el detalle");
+                //Listar cantidad de vales según el número solicitado
+                List<IValeAsignarDto> lsitValeAsignarDtos = lisIValeAsignarDtos(cantidadVales);
+                // Obtengo el array de los vales a asignar
+                for (IValeAsignarDto datos : lsitValeAsignarDtos) {
+                    valesAsignar.add(datos.getIdVale());
                 }
+                System.out.println("Vales según cantidad: " + valesAsignar);
+
+                // Preparo la Dto para guardar en la tabla detalle_asignación
+                for (int i = 0; i < valesAsignar.size(); i++) {
+                    detalleAsignacionInDto.setCodigoAsignacionVale(codigoAsignacion);
+                    detalleAsignacionInDto.setIdVale(valesAsignar.get(i));
+
+                    try {
+                        //Cambiar el estado del Vale
+                        actualizarEstadoVale(valesAsignar.get(i), estadoVales);
+                        //cambiar el estado de la solicitud del vale y del vehículo
+                        actualizarEstadoSolicitud(data.getSolicitudVale(), estadoSolicitud);
+                        // Guardar en la tabla detalle_asignación los id de los vales junto con la ültima asignación reistrada
+                        detalleAsignacionRepository.save(detalleAsignacionInDto.toDto(asignacionValeRepository, valeRepository)).toDto();
+
+                        logVale.setEstadoVale(estadoVales);
+                        logVale.setFechaLogVale(fechaActualLog);
+                        logVale.setActividad("Vale asignado a una misión");
+                        logVale.setVale(valesAsignar.get(i));
+                        logVale(logVale);
+
+                    } catch (Exception e) {
+                        throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar el detalle");
+                    }
+                }
+                System.out.println("El detalle: " + detalleAsignacionInDto);
+
+
+                // Retornar el mensaje que toso se guardó
+                return data;
+            } catch (Exception e) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar la asignación");
             }
-            System.out.println("El detalle: " + detalleAsignacionInDto);
-
-
-            // Retornar el mensaje que toso se guardó
-            return data;
-        } catch (Exception e) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo guardar la asignación");
         }
+
 
     }
 
@@ -170,7 +175,12 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public List<IValeAsignarDto> lisIValeAsignarDtos(int cantidadVales) throws IOException {
-        return this.asignacionValeRepository.listarValesAsignar(cantidadVales);
+        if (this.asignacionValeRepository.listarValesAsignar(cantidadVales).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para asignar");
+        }else {
+            return this.asignacionValeRepository.listarValesAsignar(cantidadVales);
+        }
+
     }
 
     //METODO PARA ACTUALIZAR EL ESTADO DEL VALE
@@ -283,15 +293,17 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MMMM/dd");
         String fechaFormateadaLog = data.getFechaLogVale().format(formato);
 
-        LogValeDto logVale = new LogValeDto();
+        Vale vale = this.valeRepository.findById(data.getVale()).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el vale"));
+        LogVale logVale = new LogVale();
 
         logVale.setEstadoVale(data.getEstadoVale());
-        logVale.setFechaLogVale(LocalDate.parse(fechaFormateadaLog));
+        logVale.setFechaLogVale(data.getFechaLogVale());
         logVale.setActividad(data.getActividad());
-        logVale.setVale(data.getVale());
+        logVale.setVale(vale);
 
         try{
-            logValeRepository.save(logVale.toEntity(valeRepository));
+            logValeRepository.save(logVale);
         }catch (Exception e){
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
         }
@@ -301,6 +313,29 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public Page<SolicitudVale> listarSolicitudVale(Pageable pageable) {
         return solicitudValeRepository.findAll(pageable);
+    }
+
+    @Override
+    public CantidadValesDto cantidadVales() {
+        CantidadValesDto cantidadValesDto = new CantidadValesDto();
+        cantidadValesDto.setValesDisponibles(this.asignacionValeRepository.valesDisponibles());
+        return cantidadValesDto;
+    }
+
+    @Override
+    public BuscarSolicitudValeDto codigoSolictudVale(UUID id) {
+        BuscarSolicitudValeDto buscarSolicitudValeDto = new BuscarSolicitudValeDto();
+
+        buscarSolicitudValeDto.setCodigoSolicitudVale(this.asignacionValeRepository.findByIDSolicitudVale(id));
+        return buscarSolicitudValeDto;
+    }
+
+    @Override
+    public BuscarAsignacionValeDto codigoAsignacionVale(UUID id) {
+        BuscarAsignacionValeDto buscarAsignacionValeDto = new BuscarAsignacionValeDto();
+
+        buscarAsignacionValeDto.setCodigoAsignacion(this.asignacionValeRepository.findByIdAsignacionVale(id));
+        return buscarAsignacionValeDto;
     }
 }
 
