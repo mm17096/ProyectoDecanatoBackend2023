@@ -105,6 +105,25 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id) {
+        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findAllByEstado(id);
+
+        List<Estados> estados = estadosRepository.findAll();
+
+        Map<Integer, String> estadoStringMap = new HashMap<>();
+        for (Estados estado: estados) {
+            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        }
+
+        return listSoliVe.stream().map(solicitud -> {
+            SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
+            dto.setEstadoString(estadoAsString);
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
         ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
