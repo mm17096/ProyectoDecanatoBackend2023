@@ -1,10 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeInDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DevolucionValeDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LiquidarValesDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
@@ -16,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -33,25 +33,13 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/insertar")
-    public ResponseEntity<GenericResponse<AsignacionValeInDto>> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
-        HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
-        GenericResponse<AsignacionValeInDto> resp = new GenericResponse<AsignacionValeInDto>(0,
-                "No se pudo realizar la asignación", asignacionVale);
-        try {
-            this.asignacionValeService.registrar(asignacionVale);
-            resp.setCode(1);
-            resp.setMessage("Exito - Asignación realizada !!");
-            http = HttpStatus.OK;
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println(e.getMessage());
-        }
-        return new ResponseEntity<GenericResponse<AsignacionValeInDto>>(resp, http);
+    public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale));
     }
 
     @PostMapping("/devolver")
-    public ResponseEntity<GenericResponse<?>> devolver(@RequestBody DevolucionValeDto listVales){
-        String mensaje= "";
+    public ResponseEntity<GenericResponse<?>> devolver(@RequestBody DevolucionValeDto listVales) {
+        String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo realizar la Devolución", listVales);
@@ -73,8 +61,8 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/liquidar")
-    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesDto listVales){
-        String mensaje= "";
+    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesDto listVales) {
+        String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo finalizar la Misión", listVales);
@@ -93,5 +81,28 @@ public class AsignacionValeController {
     @GetMapping("/listarsolicitudvale")
     public ResponseEntity<Page<SolicitudVale>> listarSolicitudVale(Pageable pageable) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.listarSolicitudVale(pageable));
+    }
+
+    @GetMapping("/cantidadvales")
+    public ResponseEntity<CantidadValesDto> cantidadVales() throws Exception {
+        CantidadValesDto cantidadValesDto = iAsignacionValeService.cantidadVales();
+        return ResponseEntity.ok(cantidadValesDto);
+    }
+
+    @GetMapping("/solitudvale/{id}")
+    public ResponseEntity<BuscarSolicitudValeDto> cantidadVales(@PathVariable UUID id) throws Exception {
+        BuscarSolicitudValeDto cantidadValesDto = iAsignacionValeService.codigoSolictudVale(id);
+        return ResponseEntity.ok(cantidadValesDto);
+    }
+
+    @GetMapping("/listarvalesasignar/{cantidadVales}")
+    public ResponseEntity<List<IValeAsignarDto>> listarValesAsignar(@PathVariable int cantidadVales) throws Exception {
+       return ResponseEntity.ok(iAsignacionValeService.lisIValeAsignarDtos(cantidadVales));
+    }
+
+    @GetMapping("/codigoasignacionvale/{id}")
+    public ResponseEntity<BuscarAsignacionValeDto> codigoAsignacionVale(@PathVariable UUID id) throws Exception {
+        BuscarAsignacionValeDto cantidadValesDto = iAsignacionValeService.codigoAsignacionVale(id);
+        return ResponseEntity.ok(cantidadValesDto);
     }
 }
