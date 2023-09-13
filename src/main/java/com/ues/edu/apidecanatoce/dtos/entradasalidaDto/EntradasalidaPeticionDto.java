@@ -1,12 +1,9 @@
 package com.ues.edu.apidecanatoce.dtos.entradasalidaDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
-import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
-import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -15,16 +12,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
-
 @Getter
 @Setter
 @Builder
-public class EntradasalidaDto {
+public class EntradasalidaPeticionDto {
     private UUID id;
 
     @NotNull(message = "La fecha es obligatoria")
@@ -46,12 +41,9 @@ public class EntradasalidaDto {
     private int estado;
 
     @NotNull(message = "El campo Misión es obligatorio")
-    private UUID solicitudvehiculo;
+    private SolicitudVehiculoDto solicitudvehiculo;
 
-    public Entrada_Salidas toEntityComplete(ISolicitudVehiculoRepository solicitudvehiculo) {
-        SolicitudVehiculo solicitudbuscar = solicitudvehiculo.findById(this.solicitudvehiculo).orElseThrow(
-                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontro el objetivo de la Misión"));
-
-        return Entrada_Salidas.builder().codigoEntradaSalida(this.id).fecha(this.fecha).hora(this.hora).combustible(this.combustible).kilometraje(this.kilometraje).estado(this.estado).solicitudvehiculo(solicitudbuscar).build();
+    public Entrada_Salidas toEntitySave() {
+        return Entrada_Salidas.builder().codigoEntradaSalida(this.id).fecha(this.fecha).hora(this.hora).combustible(this.combustible).kilometraje(this.kilometraje).estado(this.estado).solicitudvehiculo(this.solicitudvehiculo.toEntityComplete2()).build();
     }
 }

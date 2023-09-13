@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -29,7 +30,6 @@ import java.util.Set;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
-
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
     private UUID codigoSolicitudVehiculo;
@@ -138,4 +138,11 @@ public class SolicitudVehiculo {
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos).build();
     }
 
+    public SolicitudVehiculoDto toDto2() {
+        return SolicitudVehiculoDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada).estado(this.estado).build();
+    }
 }

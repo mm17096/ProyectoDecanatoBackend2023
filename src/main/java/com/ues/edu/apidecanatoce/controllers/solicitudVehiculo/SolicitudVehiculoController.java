@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/solicitudvehiculo")
+@RequestMapping("/api/solicitudvehiculo")
 @RequiredArgsConstructor
 public class SolicitudVehiculoController {
 

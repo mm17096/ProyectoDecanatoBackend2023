@@ -14,11 +14,14 @@ public interface IVehiculoService{
 
     VehiculoDto leerPorId(UUID id);
 
+
     Page<VehiculoDto> listar(Pageable pageable);
 
     List<VehiculoDto> listarSinPagina();
 
     List<VehiculoDto> listarPorClase(String nombreClase);
+
+    List<VehiculoDto> listarPorPlaca(String codigoplaca);
 
     MensajeRecord actualizar(MultipartFile imagen, VehiculoDto data);
 

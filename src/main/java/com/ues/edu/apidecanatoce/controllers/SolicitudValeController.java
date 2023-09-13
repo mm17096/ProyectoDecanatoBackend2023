@@ -16,9 +16,10 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/solicitudvale")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class SolicitudValeController {
     @Autowired
     private ISolicitudVehiculoRepository solicitudVehiculoRepository;
