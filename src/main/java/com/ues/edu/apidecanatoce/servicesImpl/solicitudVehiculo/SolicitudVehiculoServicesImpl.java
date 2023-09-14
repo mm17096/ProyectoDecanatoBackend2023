@@ -61,8 +61,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
 
-        System.out.println("El usuario activo es: " + userId);
-
         List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
@@ -122,8 +120,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         // Obtener el ID del usuario autenticado
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
-
-        System.out.println("El usuario activo es: " + userId);
 
         List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
 
