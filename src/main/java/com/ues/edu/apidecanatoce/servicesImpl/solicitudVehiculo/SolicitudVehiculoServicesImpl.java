@@ -117,7 +117,15 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id) {
-        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findAllByEstado(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String username = authentication.getName();
+        String userId = usuarioRepository.findIdByUsername(username);
+
+        System.out.println("El usuario activo es: " + userId);
+
+        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
 
         List<Estados> estados = estadosRepository.findAll();
 
