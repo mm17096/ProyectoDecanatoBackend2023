@@ -14,4 +14,5 @@ import java.util.UUID;
 public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, UUID> {
     Page<SolicitudVehiculo> findAllByEstado(int estado, Pageable pageable);
     List<SolicitudVehiculo> findAllByEstado(int estado);
+    List<SolicitudVehiculo> findByUsuarioCodigoUsuario(String usuario);
 }
