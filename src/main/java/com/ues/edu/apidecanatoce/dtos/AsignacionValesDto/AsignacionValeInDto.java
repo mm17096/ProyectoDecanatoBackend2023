@@ -2,7 +2,7 @@ package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import jakarta.validation.constraints.Digits;
@@ -13,7 +13,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor

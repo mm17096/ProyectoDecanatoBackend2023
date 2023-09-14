@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.Pasajeros;
@@ -9,6 +10,7 @@ import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
 
 import jakarta.validation.constraints.*;
@@ -86,7 +88,7 @@ public class SolicitudVehiculoDto {
     private List<Pasajeros> listaPasajeros;
 
     @NotNull(message = "El responsable es obligatorio")
-    private Usuario solicitante; // usuario solicitante
+    private String solicitante; // usuario solicitante
 
     @Size(max = 150, message = "El nombre del jefe de departamento que aprueba excede el límite de caracteres")
     private String nombreJefeDepto;
@@ -105,7 +107,8 @@ public class SolicitudVehiculoDto {
     private String observaciones;
 
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
-                                              IEmpleadoRepository empleadoRepository){
+                                              IEmpleadoRepository empleadoRepository,
+                                              IUsuarioRepository usuarioRepository){
         // metodo para buscar el vehicul si existe
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
@@ -116,13 +119,25 @@ public class SolicitudVehiculoDto {
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
         }
         motoristaBuscar = null;
+        Usuario usurioExiste = usuarioRepository.findById(this.solicitante).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el usuario"));
+
         return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
                 .unidadSolicitante(this.unidadSolicitante).vehiculo(vehiculoBuscar).objetivoMision(this.objetivoMision)
                 .lugarMision(this.lugarMision).direccion(this.direccion).horaEntrada(this.horaEntrada)
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
-                .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
+                .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
                 .observaciones(this.observaciones).build();
+    }
+
+    public SolicitudVehiculo toEntityComplete2() {
+        return SolicitudVehiculo.builder().fechaSolicitud(this.fechaSolicitud)
+                .unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision)
+                .lugarMision(this.lugarMision).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).jefeDepto(this.nombreJefeDepto)
+                .fechaEntrada(this.fechaEntrada).fechaSalida(this.fechaSalida).build();
     }
 }

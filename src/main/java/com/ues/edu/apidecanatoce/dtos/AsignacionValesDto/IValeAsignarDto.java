@@ -7,6 +7,5 @@ import java.util.UUID;
 
 public interface IValeAsignarDto {
     UUID getIdVale();
-    long getCodigoVale();
     Integer getCorrelativoVale();
 }

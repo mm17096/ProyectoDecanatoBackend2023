@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,7 +33,8 @@ public class CompraServiceImpl implements ICompraService {
 
     @Override
     public CompraPeticionDto registrar(CompraInsertarDto data) {
-        if (compraRepository.existsByFactura(data.getFactura())) {
+
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         } else if (data.getCod_inicio() > data.getCod_fin()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de fin");
@@ -45,21 +47,25 @@ public class CompraServiceImpl implements ICompraService {
             Compra compraEntity = compraRepository.save(compraInsertar);
             Proveedor proveedor = proveedorRepository.findById(data.getProveedor()).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra proveedor"));
-
-            // Obtener la cantidad de vales a crear
             for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
+                //Insertar log a Vales
                 Vale valeEntity = new Vale();
                 valeEntity.setEstado(8);
                 valeEntity.setValor(data.getPrecio_unitario());
-                valeEntity.setCorrelativo(i);  // Establecer el correlativo
+                valeEntity.setCorrelativo(i);
                 valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
                 valeEntity.setCompra(compraEntity);
-                valeRepository.save(valeEntity);  // Guardar el vale en la base de datos
+                valeRepository.save(valeEntity);
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
                 logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
-                logEntity.setActividad("Adquisición de proveedor " + proveedor.getNombre());
+                if (compraEntity.getProveedor().getTipo() == 14) {
+
+                    logEntity.setActividad("Adquisición por concepto de préstamo a proveedor " + proveedor.getNombre());
+                } else {
+                    logEntity.setActividad("Adquisición por concepto de compra a proveedor " + proveedor.getNombre());
+                }
                 logEntity.setUsuario("N/A");
                 logEntity.setVale(valeEntity);
                 logValeRepository.save(logEntity);
@@ -82,9 +88,15 @@ public class CompraServiceImpl implements ICompraService {
     }
 
     @Override
+    public List<CompraPeticionDto> listarSinPagina() {
+        List<Compra> compras = this.compraRepository.findAll();
+        return compras.stream().map(Compra::toDTO).toList();
+    }
+
+    @Override
     public CompraPeticionDto actualizar(UUID id, CompraModificarDto data) {
         CompraPeticionDto buscarCompra = leerPorId(id);
-        if (compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
+        if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFacturaAndIdNot(data.getFactura(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
         }
         buscarCompra.setProveedor(proveedorRepository.findById(data.getProveedor()).get().toDTO());

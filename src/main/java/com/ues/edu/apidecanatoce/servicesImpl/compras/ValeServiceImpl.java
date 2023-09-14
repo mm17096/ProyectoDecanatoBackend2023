@@ -80,6 +80,12 @@ public class ValeServiceImpl implements IValeService {
     }
 
     @Override
+    public List<ValeDependeDto> listarSinPagina() {
+        List<Vale> veles= this.valeRepository.findAll();
+        return veles.stream().map(Vale::toDTO).toList();
+    }
+
+    @Override
     public ValeDependeDto actualizar(UUID id, ValeDto data) {
         ValeDependeDto buscarVale = leerPorId(id);
         data.setId(id);
@@ -87,7 +93,7 @@ public class ValeServiceImpl implements IValeService {
     }
 
     @Override
-    public List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, UUID idProveedor) {
+    public List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, UUID idProveedor, String concepto) {
         List<ValeDependeDto> valesActualizados = new ArrayList<>();
         LocalDate fechaActual = LocalDate.now();
         Proveedor proveedor = proveedorRepository.findById(idProveedor).orElseThrow(
@@ -102,7 +108,7 @@ public class ValeServiceImpl implements IValeService {
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(9);
                 logEntity.setFechaLogVale(fechaActual);
-                logEntity.setActividad("Devolución a proveedor " + proveedor.getNombre());
+                logEntity.setActividad("Ajuste a " + proveedor.getNombre() + ", " + concepto);
                 logEntity.setUsuario("N/A");
                 logEntity.setVale(vale);
                 logValeRepository.save(logEntity);

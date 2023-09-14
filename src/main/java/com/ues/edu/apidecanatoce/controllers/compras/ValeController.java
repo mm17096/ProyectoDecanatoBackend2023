@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.compras;
 
+import com.ues.edu.apidecanatoce.dtos.compras.ActualizacionValesRequestDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
 import com.ues.edu.apidecanatoce.services.compras.IValeService;
@@ -10,13 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/vale")
+@RequestMapping("/api/vale")
 public class ValeController {
 
     private final IValeService valeService;
@@ -43,6 +43,12 @@ public class ValeController {
         return ResponseEntity.ok(valesDevueltos);
     }
 
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
+        List<ValeDependeDto> vale = valeService.listarSinPagina();
+        return ResponseEntity.ok(vale);
+    }
+
     @GetMapping("/lista")
     public ResponseEntity<Page<ValeDependeDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(valeService.listar(pageable));
@@ -54,12 +60,14 @@ public class ValeController {
         return ResponseEntity.ok(valeService.actualizar(id, vale));
     }
 
-    @PutMapping("/actualizarValesCantidad/{idproveedor}")
+    @PutMapping("/actualizarValesCantidad")
     public ResponseEntity<List<ValeDependeDto>> actualizarVales(
-            @RequestBody List<ValeDependeDto> valesDto,
-            @PathVariable("idproveedor") UUID idProveedor
+            @RequestBody ActualizacionValesRequestDto request
     ) {
-        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor));
+        List<ValeDependeDto> valesDto = request.getVales();
+        UUID idProveedor = request.getIdProveedor();
+        String concepto = request.getConcepto();
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor, concepto));
     }
 
     @DeleteMapping("/eliminar/{id}")

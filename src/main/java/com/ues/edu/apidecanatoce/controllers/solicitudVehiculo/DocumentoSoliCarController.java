@@ -3,7 +3,6 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 import com.ues.edu.apidecanatoce.dtos.MensajeRecord;
 import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
-import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/documentosoli")
