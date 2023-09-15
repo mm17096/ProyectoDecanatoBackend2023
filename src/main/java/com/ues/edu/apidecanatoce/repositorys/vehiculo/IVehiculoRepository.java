@@ -14,4 +14,6 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, UUID> {
     boolean existsByPlacaAndCodigoVehiculoNot(String placa, UUID codigoVehiculo);
 
     List<Vehiculo> findByClaseIgnoreCase(String clase);
+
+    List<Vehiculo> findByPlacaIgnoreCase(String mio);
 }

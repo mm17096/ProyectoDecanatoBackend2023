@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/empleado")
+@RequestMapping("/api/empleado")
 @CrossOrigin(origins = "*")
 public class EmpleadoController {
 

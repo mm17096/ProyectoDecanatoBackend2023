@@ -91,6 +91,12 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
+    public List<VehiculoDto> listarPorPlaca(String codigoplaca) {
+        List<Vehiculo> vehiculos = this.vehiculoRepository.findByPlacaIgnoreCase(codigoplaca);
+        return vehiculos.stream().map(Vehiculo::toDTO).toList();
+    }
+
+    @Override
     public MensajeRecord actualizar(MultipartFile imagen,VehiculoDto data) {
         VehiculoDto buscarProveedor = leerPorId(data.getCodigoVehiculo());
         if (vehiculoRepository.existsByPlacaAndCodigoVehiculoNot(data.getPlaca(), data.getCodigoVehiculo())) {

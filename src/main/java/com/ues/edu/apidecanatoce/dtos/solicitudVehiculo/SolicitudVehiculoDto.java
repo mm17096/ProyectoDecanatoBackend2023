@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.Pasajeros;
@@ -129,5 +130,14 @@ public class SolicitudVehiculoDto {
                 .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
                 .observaciones(this.observaciones).build();
+    }
+
+    public SolicitudVehiculo toEntityComplete2() {
+        return SolicitudVehiculo.builder().fechaSolicitud(this.fechaSolicitud)
+                .unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision)
+                .lugarMision(this.lugarMision).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).jefeDepto(this.nombreJefeDepto)
+                .fechaEntrada(this.fechaEntrada).fechaSalida(this.fechaSalida).build();
     }
 }

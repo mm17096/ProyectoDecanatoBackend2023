@@ -95,7 +95,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                     try {
                         //Cambiar el estado del Vale
                         actualizarEstadoVale(valesAsignar.get(i), estadoVales);
-
+                        // Guardar en la tabla detalle_asignación los id de los vales junto con la ültima asignación reistrada
+                        detalleAsignacionRepository.save(detalleAsignacionInDto.toDto(asignacionValeRepository, valeRepository)).toDto();
+                        System.out.println("El detalle: " + detalleAsignacionInDto);
                         logVale.setEstadoVale(estadoVales);
                         logVale.setFechaLogVale(fechaActualLog);
                         logVale.setActividad("Vale asignado a una misión");
@@ -119,9 +121,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 // Actuliza el estado de la Solictud del Vehículo
                 actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
 
-                // Guardar en la tabla detalle_asignación los id de los vales junto con la ültima asignación reistrada
-                detalleAsignacionRepository.save(detalleAsignacionInDto.toDto(asignacionValeRepository, valeRepository)).toDto();
-                System.out.println("El detalle: " + detalleAsignacionInDto);
+
 
 
                 // Retornar el mensaje que toso se guardó

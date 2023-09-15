@@ -1,5 +1,4 @@
 package com.ues.edu.apidecanatoce.dtos.documentovaleDto;
-
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

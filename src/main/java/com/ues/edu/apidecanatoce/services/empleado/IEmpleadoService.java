@@ -4,7 +4,6 @@ import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import java.util.UUID;
 
 

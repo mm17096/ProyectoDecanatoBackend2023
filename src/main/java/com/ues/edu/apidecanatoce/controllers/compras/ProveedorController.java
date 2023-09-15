@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/proveedor")
+@RequestMapping("/api/proveedor")
 public class ProveedorController {
 
     private final IProveedorService proveedorService;
