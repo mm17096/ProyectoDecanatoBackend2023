@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/api/vehiculo")
 @RequiredArgsConstructor
@@ -41,14 +41,14 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculoService.leerPorId(id));
     }
 
-    @GetMapping("/clase/{claseName}")
-    public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
-        return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
-    }
-
     @GetMapping("/listasinpagina/{codigoplaca}")
     public ResponseEntity<List<VehiculoDto>> BuscarPorplaca(@PathVariable String codigoplaca){
         return ResponseEntity.ok(vehiculoService.listarPorPlaca(codigoplaca));
+    }
+
+    @GetMapping("/clase/{claseName}")
+    public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
+        return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
     }
 
     @GetMapping("/imagen/{nombrefoto}")
