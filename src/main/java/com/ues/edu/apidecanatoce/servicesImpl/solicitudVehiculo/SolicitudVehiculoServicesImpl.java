@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,8 +59,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         // Obtener el ID del usuario autenticado
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
-
-        System.out.println("El usuario activo es: " + userId);
 
         List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
         List<Estados> estados = estadosRepository.findAll();
@@ -122,8 +119,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         // Obtener el ID del usuario autenticado
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
-
-        System.out.println("El usuario activo es: " + userId);
 
         List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
 
