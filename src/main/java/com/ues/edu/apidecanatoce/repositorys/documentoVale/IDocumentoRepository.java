@@ -10,8 +10,6 @@ import java.util.UUID;
 public interface IDocumentoRepository extends JpaRepository<Documentovale, UUID> {
 
 
-    //boolean existsComprobante(String comprobante);
-    boolean existsByComprobante(String comprobante);
 
-    //boolean existsComprobante(String comprobante);
+    boolean existsByComprobante(String comprobante);
 }

@@ -36,15 +36,7 @@ public class Documentovale {
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    /*public DocumentovalepeticionDto toDTO() {
-        return DocumentovalepeticionDto.builder()
-                .id(this.codigodocumentos)
-                .tipo(this.tipo)
-                .foto(this.foto)
-                .url(this.url)
-                .comprobante(this.comprobante)
-                .fecha(this.fecha).build();
-    }*/public DocumentovaleDto toDTO() {
+    public DocumentovaleDto toDTO() {
         return DocumentovaleDto.builder()
                 .id(this.codigodocumentos)
                 .tipo(this.tipo)
@@ -53,13 +45,6 @@ public class Documentovale {
                 .comprobante(this.comprobante)
                 .fecha(this.fecha).build();
     }
-
-
-    /*public Documentovale toDepDTO() {
-        return Documentovale.builder().codigodocumentos(this.codigodocumentos).tipo(this.tipo).foto(this.foto).comprobante(this.comprobante).fecha(this.fecha).build();
-    }*/
-
-
     //para mostrar en tabla
     public DocumentovaleDto toDTO2() {
         return DocumentovaleDto.builder().id(this.codigodocumentos).tipo(this.tipo).foto(this.foto).comprobante(this.comprobante).fecha(this.fecha).build();
