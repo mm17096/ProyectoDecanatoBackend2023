@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.entities.AsignacionVales;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DetalleAsignacionInDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,14 @@ public class DetalleAsignacionVale {
         return DetalleAsignacionDto.builder().idDetalleAsignacionVale(this.idDetalleAsignacionVale)
                 .codigoAsignacionVale(this.asignacionVale.getCodigoAsignacion())
                 .Vale(this.vale)
+                .build();
+    }
+
+    public ConsultaValeDto toDTODetalleC() {
+        return ConsultaValeDto.builder().idDetalleAsignacionVale(this.idDetalleAsignacionVale)
+                .asignacionVale(this.asignacionVale.getCodigoAsignacion())
+                .valeid(this.vale.getId()).vale(this.vale).estado(this.asignacionVale.getEstado())
+                .fecha(this.asignacionVale.getFecha()).solicitudVale(this.asignacionVale.getSolicitudVale())
                 .build();
     }
 

@@ -6,7 +6,7 @@ import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.AsignacionValeOutDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.DevolucionValeDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LiquidarValesDto;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
-import com.ues.edu.apidecanatoce.entities.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import lombok.RequiredArgsConstructor;
