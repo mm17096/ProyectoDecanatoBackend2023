@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -52,7 +54,16 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
-        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAll();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String username = authentication.getName();
+        String userId = usuarioRepository.findIdByUsername(username);
+
+        System.out.println("El usuario activo es: " + userId);
+
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
         for (Estados estado: estados) {
@@ -106,7 +117,15 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id) {
-        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findAllByEstado(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String username = authentication.getName();
+        String userId = usuarioRepository.findIdByUsername(username);
+
+        System.out.println("El usuario activo es: " + userId);
+
+        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
 
         List<Estados> estados = estadosRepository.findAll();
 
