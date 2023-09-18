@@ -11,11 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/compra")
+@RequestMapping("/api/compra")
 public class CompraController {
 
     private final ICompraService compraService;
@@ -23,6 +24,12 @@ public class CompraController {
     @PostMapping(value = "/insertar")
     public ResponseEntity<CompraPeticionDto> registrar(@Valid @RequestBody CompraInsertarDto compra) {
         return ResponseEntity.ok(compraService.registrar(compra));
+    }
+
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<CompraPeticionDto>> listarSinPagina() {
+        List<CompraPeticionDto> compra = compraService.listarSinPagina();
+        return ResponseEntity.ok(compra);
     }
 
     @GetMapping("/lista/{id}")

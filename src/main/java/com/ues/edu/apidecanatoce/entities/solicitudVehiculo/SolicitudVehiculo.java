@@ -1,12 +1,12 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
-import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import jakarta.persistence.*;
@@ -31,7 +31,6 @@ import java.util.Set;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
-
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
     private UUID codigoSolicitudVehiculo;
@@ -121,6 +120,7 @@ public class SolicitudVehiculo {
     //Lista de documentos que tiene la solicitud de vehiculo
 
     @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
@@ -172,4 +172,11 @@ public class SolicitudVehiculo {
                 .observaciones(this.observaciones).build();
     }
 
+    public SolicitudVehiculoDto toDto2() {
+        return SolicitudVehiculoDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada).estado(this.estado).build();
+    }
 }

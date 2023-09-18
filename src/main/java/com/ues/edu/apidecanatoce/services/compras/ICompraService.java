@@ -7,6 +7,7 @@ import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ICompraService {
@@ -15,6 +16,8 @@ public interface ICompraService {
     CompraPeticionDto leerPorId(UUID id);
 
     Page<CompraPeticionDto> listar(Pageable pageable);
+
+    List<CompraPeticionDto> listarSinPagina();
 
     CompraPeticionDto actualizar(UUID id, CompraModificarDto data);
 

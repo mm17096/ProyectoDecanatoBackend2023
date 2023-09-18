@@ -1,11 +1,8 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVale;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
-import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;

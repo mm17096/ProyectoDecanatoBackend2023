@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -84,6 +85,12 @@ public class CompraServiceImpl implements ICompraService {
     public Page<CompraPeticionDto> listar(Pageable pageable) {
         Page<Compra> compras = compraRepository.findAll(pageable);
         return compras.map(Compra::toDTO);
+    }
+
+    @Override
+    public List<CompraPeticionDto> listarSinPagina() {
+        List<Compra> compras = this.compraRepository.findAll();
+        return compras.stream().map(Compra::toDTO).toList();
     }
 
     @Override

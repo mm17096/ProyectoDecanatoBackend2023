@@ -14,9 +14,12 @@ public interface IVehiculoService{
 
     VehiculoDto leerPorId(UUID id);
 
+
     Page<VehiculoDto> listar(Pageable pageable);
 
     List<VehiculoDto> listarSinPagina();
+
+    List<VehiculoDto> listarPorPlaca(String codigoplaca);
 
     List<VehiculoDto> listarPorClase(String nombreClase);
 
