@@ -62,18 +62,20 @@ public class UsuarioServiceImpl implements IUsuarioService {
         if(this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()){
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
         }
-
+/*
+no se esta usando
         if(usuario.isActivo()){
             throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe una sesión activa");
         }
-
+*/
         //autenticacion y retorno de datos del usuario
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNombre(), request.getClave()));
         UserDetails user = usuarioRepository.findByNombre(request.getNombre()).orElseThrow();
         //generacion del token
         String token = jwtService.getToken(user);
         //modificamos el estado de la cuenta del usuario a activa
-        usuario.setActivo(true);
+        // usuario.setActivo(true); no se esta usando
+        usuario.setToken(token); //almacenamos el token en base de datos
         usuarioRepository.save(usuario);
         //retorno de datos
         return AuthResponse.builder()
@@ -100,7 +102,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 .nombre(request.getNombre())
                 .clave(passwordEncoder.encode(request.getClave()))
                 .nuevo(true)
-                .activo(false)
+                //.activo(false) no se esta usando
                 .empleado(empleado)
                 .build();
 
