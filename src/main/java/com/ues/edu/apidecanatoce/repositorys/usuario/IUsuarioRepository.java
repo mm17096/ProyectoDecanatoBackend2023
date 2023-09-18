@@ -10,11 +10,12 @@ import java.util.UUID;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, String> {
     Optional<Usuario> findByNombre(String username);
-
     Usuario findByCodigoUsuario(String id);
+    Usuario findUsuarioByNombre(String nombre);
 
     @Query("SELECT u.codigoUsuario " +
             "FROM Usuario u WHERE u.nombre = :username")
     String findIdByUsername(@Param("username") String username);
+
 
 }

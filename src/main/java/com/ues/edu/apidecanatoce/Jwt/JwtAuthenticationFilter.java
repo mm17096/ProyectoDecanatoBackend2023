@@ -1,5 +1,7 @@
 package com.ues.edu.apidecanatoce.Jwt;
 
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
+import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,13 +18,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    public final IUsuarioRepository usuaripService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -41,9 +44,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
         {
-            UserDetails userDetails=userDetailsService.loadUserByUsername(username);
-
-            if (jwtService.isTokenValid(token, userDetails))
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            Usuario usuario = usuaripService.findUsuarioByNombre(username);
+            if (jwtService.isTokenValid(token, userDetails, usuario))
             {
                 UsernamePasswordAuthenticationToken authToken= new UsernamePasswordAuthenticationToken(
                     userDetails,
@@ -51,7 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     userDetails.getAuthorities());
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
 
