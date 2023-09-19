@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -122,8 +123,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
 
 
-
-
                 // Retornar el mensaje que toso se guardó
                 return data;
             } catch (Exception e) {
@@ -149,10 +148,23 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
         LogValeDto logVale = new LogValeDto();
         LocalDate fechaActualLog = LocalDate.now();
+        UUID codigoAsignacion;
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
+
+                //Busco el detalle de la Asignación por medio del codigo del Vale
+                codigoAsignacion = this.asignacionValeRepository.findDetalleAsigancionVale(data.getValesDevueltos().get(i));
+
+                //Elimino el detalle de la Asignación
+                DetalleAsignacionVale detalleAsignacionVale = this.detalleAsignacionRepository.findById(codigoAsignacion).orElseThrow(()
+                        -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el detalle de la asignación"));
+                detalleAsignacionRepository.delete(detalleAsignacionVale);
+
+                //Actualizo los estados de los vales
                 System.out.println("entra a devolverVale");
                 actualizarEstadoVale(data.getValesDevueltos().get(i), data.getEstadoVales());
+
+                //Dejo el registro del movimiento del Vale
                 logVale.setEstadoVale(data.getEstadoVales());
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale devuelto sin consumir en la misión");
