@@ -12,6 +12,9 @@ import java.util.UUID;
 
 public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data);
+
+    AnularMisionDto anularMision(AnularMisionDto data);
+
     AsignacionValeDto leerPorId(UUID id);
     Page<AsignacionValeDto> listar(Pageable pageable);
     DevolucionValeDto devolverVale(DevolucionValeDto data);
