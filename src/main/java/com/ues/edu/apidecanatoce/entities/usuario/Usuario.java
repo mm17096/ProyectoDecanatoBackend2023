@@ -31,9 +31,13 @@ public class Usuario implements UserDetails {
 
     @Column(name = "nuevo")
     private boolean nuevo;
-
+/*
+no se esta usando
     @Column(name = "activo")
     private boolean activo;
+*/
+    @Column(name = "token")
+    private String token;
 
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false,
