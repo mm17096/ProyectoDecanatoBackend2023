@@ -157,4 +157,28 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
                 .estado(solicitudExistente.getEstado()).build();
     }
+
+    @Override
+    public List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String username = authentication.getName();
+        String userId = usuarioRepository.findIdByUsername(username);
+
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
+        List<Estados> estados = estadosRepository.findAll();
+        Map<Integer, String> estadoStringMap = new HashMap<>();
+        for (Estados estado: estados) {
+            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        }
+
+        return solicitudVehiculos.stream().map(solicitud -> {
+            SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
+            dto.setEstadoString(estadoAsString);
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }

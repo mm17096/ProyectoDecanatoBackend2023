@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/solicitudvehiculo")
 @RequiredArgsConstructor
@@ -98,6 +97,17 @@ public class SolicitudVehiculoController {
             @RequestBody SolicitudVehiculoActualizarEstadoDTO nuevoEstado
     ){
         return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(codigoSolicitudVehiculo, nuevoEstado));
+    }
+
+    // LISTADO
+
+    // listar solicitudes
+    @GetMapping("/listado")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> obtenerSolicitudesRol(
+            @RequestParam (name = "ROL") String rol
+    ) throws IOException {
+        List<SolicitudVehiculoPeticionDtO> vehiculos = servicioSolicitudVehiculo.listarSinPaginaRol(rol);
+        return ResponseEntity.ok(vehiculos);
     }
 
 }
