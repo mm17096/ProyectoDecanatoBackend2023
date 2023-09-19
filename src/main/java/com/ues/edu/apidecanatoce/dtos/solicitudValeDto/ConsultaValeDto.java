@@ -23,5 +23,5 @@ public class ConsultaValeDto {
     private Integer estado;
     private LocalDate fecha;
     private SolicitudVale solicitudVale;
-    private List<LogVale> logVale;
+   // private List<LogVale> logVale;
 }
