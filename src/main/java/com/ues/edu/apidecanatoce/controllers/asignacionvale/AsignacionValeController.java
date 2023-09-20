@@ -105,4 +105,9 @@ public class AsignacionValeController {
         BuscarAsignacionValeDto cantidadValesDto = iAsignacionValeService.codigoAsignacionVale(id);
         return ResponseEntity.ok(cantidadValesDto);
     }
+
+    @PostMapping("/anular")
+    public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionDto anularMisionDto) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto));
+    }
 }
