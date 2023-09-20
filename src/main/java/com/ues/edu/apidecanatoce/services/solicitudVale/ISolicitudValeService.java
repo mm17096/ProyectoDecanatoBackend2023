@@ -1,10 +1,12 @@
 package com.ues.edu.apidecanatoce.services.solicitudVale;
 
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ISolicitudValeService {
@@ -17,4 +19,6 @@ public interface ISolicitudValeService {
     SolicitudValeDependeDto actualizar(UUID id, SolicitudValeADto data);
 
     SolicitudValeDependeDto eliminar(UUID id);
+
+    List<SolicitudValeDependeDto> listarSinPaginas();
 }

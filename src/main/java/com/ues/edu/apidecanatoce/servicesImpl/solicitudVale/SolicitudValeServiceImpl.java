@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
+import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVale.ISolicitudValeVRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -50,5 +52,11 @@ public class SolicitudValeServiceImpl implements ISolicitudValeService {
         SolicitudValeDependeDto vale = leerPorId(id);
         solicitudValeRepository.delete(vale.toEntitySaveDep());
         return vale;
+    }
+
+    @Override
+    public List<SolicitudValeDependeDto> listarSinPaginas() {
+        List<SolicitudVale> documento = this.solicitudValeRepository.findAll();
+        return documento.stream().map(SolicitudVale::toDTOt).toList();
     }
 }

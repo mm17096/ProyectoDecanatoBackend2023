@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -41,5 +43,11 @@ public class SolicitudValeController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<SolicitudValeDependeDto> eliminar(@PathVariable UUID id) {
         return ResponseEntity.ok(solicitudValeService.eliminar(id));
+    }
+
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<SolicitudValeDependeDto>> listarSinPagina() {
+        List<SolicitudValeDependeDto> solicitud = solicitudValeService.listarSinPaginas();
+        return ResponseEntity.ok(solicitud);
     }
 }
