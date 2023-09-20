@@ -35,6 +35,11 @@ public class Usuario implements UserDetails {
     @Column(name = "activo")
     private boolean activo;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false,
             foreignKey = @ForeignKey(name = "FK_usuario_empleado"))
@@ -42,12 +47,13 @@ public class Usuario implements UserDetails {
 
     public UsuarioPeticionDto toDTO() {
         return UsuarioPeticionDto.builder().codigoUsuario(this.codigoUsuario).nombre(this.nombre).clave(this.clave)
-                .nuevo(this.nuevo).empleado(this.empleado).build();
+                .nuevo(this.nuevo).role(this.role).empleado(this.empleado).build();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(("USER")));
+           return List.of(new SimpleGrantedAuthority((role.name())));
+       // return role.getAuthorities();
     }
 
     @Override

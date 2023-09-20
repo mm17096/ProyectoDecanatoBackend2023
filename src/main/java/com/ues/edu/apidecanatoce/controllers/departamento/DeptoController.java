@@ -6,12 +6,15 @@ import com.ues.edu.apidecanatoce.dtos.departamentoDto.DepartamentoDto;
 import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 
 import com.ues.edu.apidecanatoce.services.departamento.IDeptoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +25,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/depto")
+
 public class DeptoController {
+
+
+
+
     private final IDeptoService deptoService;
+
+
 
     @GetMapping
     public ResponseEntity<List<DepartamentoDto>> showCargo(){
