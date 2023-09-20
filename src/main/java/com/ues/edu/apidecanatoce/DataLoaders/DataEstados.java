@@ -35,6 +35,7 @@ public class DataEstados implements CommandLineRunner {
         Estados estado13 = new Estados(13,"Gasolinera");
         Estados estado14 = new Estados(14,"UES");
         Estados estado15 = new Estados(15,"Rechazada");
+        Estados estado16 = new Estados(16,"Anulada");
 
         estadosRepository.save(estado1);
         estadosRepository.save(estado2);
@@ -51,6 +52,7 @@ public class DataEstados implements CommandLineRunner {
         estadosRepository.save(estado13);
         estadosRepository.save(estado14);
         estadosRepository.save(estado15);
+        estadosRepository.save(estado16);
     }
 }
 
