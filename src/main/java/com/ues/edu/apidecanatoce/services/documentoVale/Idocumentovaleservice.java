@@ -11,7 +11,8 @@ import java.util.UUID;
 
 public interface Idocumentovaleservice {
 
-    DocumentovaleDto registrar(DocumentovaleDto data);
+    //DocumentovaleDto registrar(DocumentovaleDto data);
+    DocumentovalepeticionDto registrar(DocumentovaleDto data);
 
     DocumentovaleDto leerPorId(UUID id);
 
@@ -23,4 +24,5 @@ public interface Idocumentovaleservice {
     DocumentovalepeticionDto eliminar(UUID id);
 
     List<DocumentovaleDto> listarSinPagina();
+    List<DocumentovalepeticionDto> listarSinPaginas();
 }
