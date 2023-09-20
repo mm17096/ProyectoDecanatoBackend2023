@@ -102,9 +102,9 @@ public class SolicitudVehiculoController {
     // LISTADO
 
     // listar solicitudes
-    @GetMapping("/listado")
+    @GetMapping("/listado/{ROL}")
     public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> obtenerSolicitudesRol(
-            @RequestParam (name = "ROL") String rol
+            @PathVariable (name = "ROL") String rol
     ) throws IOException {
         List<SolicitudVehiculoPeticionDtO> vehiculos = servicioSolicitudVehiculo.listarSinPaginaRol(rol);
         return ResponseEntity.ok(vehiculos);

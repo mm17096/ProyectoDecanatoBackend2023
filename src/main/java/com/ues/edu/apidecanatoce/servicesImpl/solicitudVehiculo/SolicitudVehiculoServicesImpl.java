@@ -161,13 +161,24 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol) {
 
+        int estadoFilter = 0;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
-        String username = authentication.getName();
-        String userId = usuarioRepository.findIdByUsername(username);
+        String userName = authentication.getName();
+        String userId = usuarioRepository.findIdByUsername(userName);
 
-        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
+        if (Objects.equals(rol, "JEFE_DEPTO")) {
+            estadoFilter = 1;
+        } else if (Objects.equals(rol, "SECR_DECANATO")) {
+            estadoFilter = 2;
+        } else if (Objects.equals(rol, "DECANO")) {
+            estadoFilter = 3;
+        }
+
+
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
         for (Estados estado: estados) {
