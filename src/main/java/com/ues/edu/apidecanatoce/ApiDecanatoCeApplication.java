@@ -43,8 +43,8 @@ public class ApiDecanatoCeApplication {
                 data.setNombrefoto("");
                 data.setUrlfoto("");
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
-                data.setCargo(cargoService.leerPorNombre("Docente").getId());
-                data.setDepartamento(deptoServiceImp.leerPorNombre("Ing. De Sistemas").getCodigoDepto());
+                data.setCargo(cargoService.leerPorNombre("DOCENTE").getId());
+                data.setDepartamento(deptoServiceImp.leerPorNombre("ING DE SISTEMAS").getCodigoDepto());
 
                 //primero se almacena el empleado
                 EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();

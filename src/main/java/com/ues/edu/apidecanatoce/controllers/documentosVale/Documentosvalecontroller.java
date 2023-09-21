@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/document")
+@RequestMapping("/api/document")
 @CrossOrigin(origins = "*")
 public class Documentosvalecontroller {
 
@@ -27,27 +27,10 @@ public class Documentosvalecontroller {
     private final PathService pathService;
     private final HttpServletRequest request;
 
-    //sin imagen
-    /*@PostMapping(value = "/insertar")
-    public ResponseEntity<DocumentovalepeticionDto> registrar(@Valid @RequestBody DocumentovaleDto documentovale, ) {
-        return ResponseEntity.ok(idocumentovaleservice.registrar(documentovale));
-    }*/
-
-    //la de boni
-    /*
-    @PostMapping(value = "/insertar")
-    public ResponseEntity<DocumentovalepeticionDto> registrar(  @PathVariable MultipartFile imagen, @Valid @RequestParam("documento") String documentovale )throws IOException {
-        return ResponseEntity.ok(idocumentovaleservice.registrar(documentovale, imagen));
-    }*/
-
-
-    /*@GetMapping
-    public ResponseEntity<Page<DocumentovalepeticionDto>> listar(Pageable pageable) {
-        return ResponseEntity.ok(idocumentovaleservice.listar(pageable));
-    }*/
     public String generateUrlImage(String imageName) {
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-        return host + "/document/imagen/" + imageName;
+        //return host + "/document/imagen/" + imageName;
+        return imageName;
     }
 
     @PostMapping("/insertar")

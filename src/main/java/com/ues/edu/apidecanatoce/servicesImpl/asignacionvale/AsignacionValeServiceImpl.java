@@ -149,6 +149,12 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
         LogValeDto logVale = new LogValeDto();
         LocalDate fechaActualLog = LocalDate.now();
+        //Consulta para buscar en el detalle_asignación SELECT
+        //	*
+        //FROM
+        //	tb_detalle_asignacion_vale AS tb_dav
+        //WHERE
+        //	tb_dav.valeid = '125a158a-c27f-4bb0-9184-f9c512703cfd'
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
                 System.out.println("entra a devolverVale");
