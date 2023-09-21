@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface ConsultaValeGDto {
     UUID getIddetalleasignacionvale();
+    UUID getIdasignacionvale();
+    UUID getValeid();
     Integer getEstadoav();
     LocalDate getFecha();
     Integer getCantidadvale();

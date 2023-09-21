@@ -17,6 +17,6 @@ public interface IConsultaCompraRepository extends JpaRepository<Compra, UUID> {
             "c.codigo_inicio AS codigoinicio, CAST(c.fecha_hora_compra AS DATE) AS fechacompra,\n" +
             "c.fecha_vencimiento_vale AS fechavencimientovale, precio_unitario AS preciounitario FROM tb_compra c \n" +
             "WHERE CAST(c.fecha_hora_compra AS DATE) >=:fechaI AND CAST(c.fecha_hora_compra AS DATE) <=:fechaF\n" +
-            "ORDER BY CAST(c.fecha_hora_compra AS DATE) DESC", nativeQuery = true)
+            "ORDER BY CAST(c.fecha_hora_compra AS DATE), c.cantidad DESC", nativeQuery = true)
     List<ConsultaCompraDto> listarCompraDeVales(LocalDate fechaI, LocalDate fechaF);
 }
