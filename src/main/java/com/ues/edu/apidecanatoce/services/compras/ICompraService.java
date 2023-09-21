@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICompraService {
-    CompraPeticionDto registrar(CompraInsertarDto data);
+    CompraPeticionDto registrar(CompraInsertarDto data, String idUsuarioLogueado);
 
     CompraPeticionDto leerPorId(UUID id);
 

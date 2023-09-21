@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.compras;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraInsertarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraModificarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
+import com.ues.edu.apidecanatoce.dtos.compras.CompraUsuarioRequestDto;
 import com.ues.edu.apidecanatoce.services.compras.ICompraService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,12 @@ public class CompraController {
     private final ICompraService compraService;
 
     @PostMapping(value = "/insertar")
-    public ResponseEntity<CompraPeticionDto> registrar(@Valid @RequestBody CompraInsertarDto compra) {
-        return ResponseEntity.ok(compraService.registrar(compra));
+    public ResponseEntity<CompraPeticionDto> registrar(@Valid @RequestBody CompraUsuarioRequestDto request) {
+        CompraInsertarDto compra = request.getCompra();
+        String idUsuarioLogueado = request.getIdusuariologueado();
+        return ResponseEntity.ok(compraService.registrar(compra, idUsuarioLogueado));
     }
+
 
     @GetMapping("/listasinpagina")
     public ResponseEntity<List<CompraPeticionDto>> listarSinPagina() {
