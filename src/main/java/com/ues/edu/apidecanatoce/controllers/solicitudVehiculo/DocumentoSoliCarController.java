@@ -1,12 +1,9 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.MensajeRecord;
-import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

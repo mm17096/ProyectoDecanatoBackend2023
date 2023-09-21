@@ -52,6 +52,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public List<SolicitudVehiculoPeticionDtO> listarPorPlaca(String codigoplaca) {
+        List<SolicitudVehiculo> solicitud=this.solicitudVehiculoServices.findByVehiculoPlaca(codigoplaca);
+        return solicitud.stream().map(SolicitudVehiculo::toDto).toList();
+    }
+
+    @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

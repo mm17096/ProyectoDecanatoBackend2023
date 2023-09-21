@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
@@ -51,7 +52,10 @@ public class SolicitudVehiculoController {
         List<SolicitudVehiculoPeticionDtO> vehiculos = servicioSolicitudVehiculo.listarSinPagina();
         return ResponseEntity.ok(vehiculos);
     }
-
+    @GetMapping("/listasinpagina/{codigoplaca}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> BuscarPorplaca(@PathVariable String codigoplaca){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorPlaca(codigoplaca));
+    }
     // con paginacion
     @GetMapping("/listapage")
     public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listar(Pageable pageable) {

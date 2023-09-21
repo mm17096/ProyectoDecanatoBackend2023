@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -180,7 +181,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public AsignacionValeDto leerPorId(UUID id) {
-        return null;
+        AsignacionVale cargo = asignacionValeRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el cargo"));
+        return cargo.toDTOSolicitud();
     }
 
     @Override
