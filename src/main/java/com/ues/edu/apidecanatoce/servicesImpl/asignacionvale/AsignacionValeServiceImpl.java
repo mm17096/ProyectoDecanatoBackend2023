@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -180,7 +181,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public AsignacionValeDto leerPorId(UUID id) {
-        return null;
+        AsignacionVale cargo = asignacionValeRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el cargo"));
+        return cargo.toDTOSolicitud();
     }
 
     @Override
@@ -273,7 +276,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
 
         if (solicitudVale != null) {
-            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
@@ -410,6 +413,16 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         buscarSolicitudVehiculoDto.setCodigoSolicitudVehiculo(this.asignacionValeRepository.findByIdSolicitudVehiculo(id));
         return buscarSolicitudVehiculoDto;
     }
+
+    @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) {
+        if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de vehículos");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+        }
+    }
+
 }
 
 

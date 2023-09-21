@@ -113,7 +113,7 @@ public class SolicitudVehiculo {
 
     // Mortorista asignado
     @ManyToOne
-    @JoinColumn(name = "DUI_MOTORISTA", nullable = true,
+    @JoinColumn(name = "codigo_motorista", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
     private Empleado motorista;
 

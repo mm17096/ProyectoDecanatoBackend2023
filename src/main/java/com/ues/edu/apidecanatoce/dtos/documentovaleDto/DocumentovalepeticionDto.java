@@ -36,6 +36,10 @@ public class DocumentovalepeticionDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
+    private SolicitudvaleDto solicitudvale;
+
+
+
     /*@NotNull(message = "codigo de solicitud es obligatorio")
     private SolicitudvaleDto codigosolicitudvale;*/
 

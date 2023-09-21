@@ -15,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthResponse {
     String codigoUsuario;
+    Usuario usuario;
     Empleado empleado;
     String token; 
 }

@@ -13,7 +13,9 @@ import java.util.UUID;
 
 @Repository
 public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacionVale, UUID> {
-    @Query(value = "SELECT dav.id_detalle_asignacion_vale AS iddetalleasignacionvale, av.estado AS estadoav, av.fecha AS fecha, sv.cantidad_vale AS cantidadvale, \n" +
+    @Query(value = "SELECT dav.id_detalle_asignacion_vale AS iddetalleasignacionvale," +
+            "dav.id_asignacion_vale AS idasignacionvale, dav.valeid AS valeid," +
+            "av.estado AS estadoav, av.fecha AS fecha, sv.cantidad_vale AS cantidadvale, \n" +
             "sv.estado AS estadosv, sv.estado_entrada AS estadoentrada,\n" +
             "v.correlativo AS correlativo, v.estado AS estadovale, v.fecha_vencimiento \n" +
             "AS fechavencimiento, v.valor AS valor\n" +
@@ -22,6 +24,6 @@ public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacio
             "FULL JOIN tb_solicitud_vale as sv ON av.solicitud_vale_id = sv.id_solicitud_vale\n" +
             "INNER JOIN tb_vale AS v ON dav.valeid = v.id_vale\n" +
             "WHERE av.fecha >=:fechaI AND av.fecha <= :fechaF\n" +
-            "ORDER BY av.fecha desc", nativeQuery = true)
+            "ORDER BY av.fecha, sv.cantidad_vale desc", nativeQuery = true)
     List<ConsultaValeGDto> listarVales(LocalDate fechaI, LocalDate fechaF);
 }
