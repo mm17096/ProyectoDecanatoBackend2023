@@ -420,32 +420,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         }
     }
 
-    @Override
-    public SolicitudValeFiltroDto solicitudesValeFiltradas(int estado) {
-        SolicitudValeFiltroDto solicitudValeFiltroDtos = new SolicitudValeFiltroDto();
-        List<ISolicitudValeFiltradasDto> solitudFiltrada = findSolicitudValeByEstado(estado);
-        for (int i = 0; i < solitudFiltrada.size(); i++) {
-            solicitudValeFiltroDtos.setCodigoSolicitudVale(solitudFiltrada.get(i).getCodigoSolicitudVale());
-            solicitudValeFiltroDtos.setCantidadVales(solitudFiltrada.get(i).getCantidadVales());
-            solicitudValeFiltroDtos.setEstadoSolicitud(solitudFiltrada.get(i).getEstadoSolicitud());
-            solicitudValeFiltroDtos.setEstadoEntradaSolicitudVale(solitudFiltrada.get(i).getEstadoEntradaSolicitudVale());
-            solicitudValeFiltroDtos.setObservacionesSolicitudVale(solitudFiltrada.get(i).getobservacionesSolicitudVale());
-            solicitudValeFiltroDtos.setModeloVehiculo(solitudFiltrada.get(i).getModeloVehiculo());
-            solicitudValeFiltroDtos.setCodigoSolicitudVehiculoS(solitudFiltrada.get(i).getCodigoSolicitudVehiculoS());
-            solicitudValeFiltroDtos.setCantidadPersonas(solitudFiltrada.get(i).getCantidadPersonas());
-            solicitudValeFiltroDtos.setLugarMision(solitudFiltrada.get(i).getLugarMision());
-            solicitudValeFiltroDtos.setDireccionMision(solitudFiltrada.get(i).getDireccionMision());
-            solicitudValeFiltroDtos.setObjetivoMision(solitudFiltrada.get(i).getObjetivoMision());
-            solicitudValeFiltroDtos.setFechaSalida(solitudFiltrada.get(i).getFechaSalida());
-            solicitudValeFiltroDtos.setFechaEntrada(solitudFiltrada.get(i).getFechaEntrada());
-            solicitudValeFiltroDtos.setEstadoSolicitudVehiculo(solitudFiltrada.get(i).getEstadoSolicitudVehiculo());
-            solicitudValeFiltroDtos.setNombreSolicitante(solitudFiltrada.get(i).getNombreSolicitante());
-            solicitudValeFiltroDtos.setNombreMotorista(solitudFiltrada.get(i).getNombreMotorista());
-            solicitudValeFiltroDtos.setCodigoEmpleado(solitudFiltrada.get(i).getCodigoEmpleado());
-            solicitudValeFiltroDtos.setCorreoEmpleado(solitudFiltrada.get(i).getCorreoEmpleado());
-        }
-        return  solicitudValeFiltroDtos;
-    }
 }
 
 
