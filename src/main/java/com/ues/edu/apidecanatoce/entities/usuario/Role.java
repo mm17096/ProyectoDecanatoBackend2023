@@ -13,24 +13,12 @@ import static com.ues.edu.apidecanatoce.entities.usuario.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {
-  ADMIN(
-          Set.of(
-                  ADMIN_LEER,
-                  ADMIN_CREAR,
-                  ADMIN_MODIFICAR,
-                  ADMIN_BUSCAR
-          )
-  ),
+  ADMIN(Collections.emptySet()),
   USER(Collections.emptySet()),
   JEFE_DEPTO(Collections.emptySet()),
 
   SECR_DECANATO(Collections.emptySet()),
-  DECANO( Set.of(
-          ADMIN_LEER,
-          ADMIN_CREAR,
-          ADMIN_MODIFICAR,
-          ADMIN_BUSCAR
-  )),
+  DECANO(Collections.emptySet() ),
   ASIS_FINANCIERO(Collections.emptySet()),
   JEFE_FINANACIERO(Collections.emptySet()),
   VIGILANTE(Collections.emptySet()),
