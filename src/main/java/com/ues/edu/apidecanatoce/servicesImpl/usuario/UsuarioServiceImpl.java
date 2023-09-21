@@ -49,17 +49,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
     public AuthResponse login(LoginRequest request) {
         usuario = OptenerUsuario(request.getNombre());
         //validamos que el usuario exista y retorne
-        if(usuario.getCodigoUsuario() == null){
+        if (usuario.getCodigoUsuario() == null) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario no existe");
         }
 
         empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
 
-        if(!passwordEncoder.matches(request.getClave(), usuario.getPassword())){
+        if (!passwordEncoder.matches(request.getClave(), usuario.getPassword())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La contraseña no coincide");
         }
 
-        if(this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()){
+        if (this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
         }
 /*
@@ -80,6 +80,7 @@ no se esta usando
         //retorno de datos
         return AuthResponse.builder()
                 .codigoUsuario(usuario.getCodigoUsuario())
+                .usuario(usuario)
                 .empleado(empleado)
                 .token(token)
                 .build();
@@ -114,9 +115,9 @@ no se esta usando
     }
 
     @Override
-    public UsuarioPeticionDto leerPorID(String id) {
+    public Usuario leerPorID(String id) {
         Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
-        return usuario.toDTO();
+        return usuario;
     }
 
 }
