@@ -5,6 +5,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
@@ -167,7 +168,15 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         // Obtener el ID del usuario autenticado
         String userName = authentication.getName();
-        String userId = usuarioRepository.findIdByUsername(userName);
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String depto = "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            depto = usuario.getEmpleado().getDepartamento().getNombre();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
 
         if (Objects.equals(rol, "JEFE_DEPTO")) {
             estadoFilter = 1;
@@ -177,8 +186,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             estadoFilter = 3;
         }
 
-
-        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
+        List<SolicitudVehiculo> solicitudVehiculos;
+        if (Objects.equals(rol, "SECR_DECANATO")){
+            solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
+        }else{
+            solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
+        }
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
         for (Estados estado: estados) {
