@@ -2,6 +2,8 @@ package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
+import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -122,8 +124,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
 
 
-
-
                 // Retornar el mensaje que toso se guardó
                 return data;
             } catch (Exception e) {
@@ -135,8 +135,55 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
+    public AnularMisionDto anularMision(AnularMisionDto data) {
+        int estadoVale = 8;
+        int estadoSolicitudes = 16;
+        UUID codigoDetalleAsignacion;
+        LocalDate fechaActualLog = LocalDate.now();
+        LogValeDto logVale = new LogValeDto();
+        try {
+            //actualizar el estado de la asignación
+            actualizarEstadoAsignacion(data.getCosdigoAsignacion(), estadoSolicitudes);
+
+            //Actualizar el estado de la solicitud del vale
+            AsignacionVale asignacionVale = this.asignacionValeRepository.findById(data.getCosdigoAsignacion()).orElseThrow(()
+                    -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la asignacion"));
+            actualizarEstadoSolicitud(asignacionVale.getSolicitudVale().getIdSolicitudVale(), estadoSolicitudes);
+
+            //Actualizar el estado de la solicitud del vehículo
+            actualizarEstadoSolicitudVehiculo(asignacionVale.getSolicitudVale().getSolicitudVehiculo().getCodigoSolicitudVehiculo(), estadoSolicitudes);
+
+
+            for (int i = 0; i < data.getValesAsignacion().size(); i++) {
+                //Actualizar el estado de la solicitud del vale
+                actualizarEstadoVale(data.getValesAsignacion().get(i), estadoVale);
+
+                //Eliminar del detalle de asignación
+                codigoDetalleAsignacion = this.asignacionValeRepository.findDetalleAsigancionVale(data.getValesAsignacion().get(i));
+                DetalleAsignacionVale detalleAsignacionVale = this.detalleAsignacionRepository.findById(codigoDetalleAsignacion).orElseThrow(()
+                        -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el detalle de la asignación"));
+                detalleAsignacionRepository.delete(detalleAsignacionVale);
+
+                //Dejo el registro del movimiento del Vale
+                logVale.setEstadoVale(estadoVale);
+                logVale.setFechaLogVale(fechaActualLog);
+                logVale.setActividad("Vale devuelto sin consumir, misión anulada");
+                logVale.setVale(data.getValesAsignacion().get(i));
+                logVale(logVale);
+            }
+
+        }catch (Exception e){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo anular la misión");
+        }
+
+        return data;
+    }
+
+    @Override
     public AsignacionValeDto leerPorId(UUID id) {
-        return null;
+        AsignacionVale cargo = asignacionValeRepository.findById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra el cargo"));
+        return cargo.toDTOSolicitud();
     }
 
     @Override
@@ -149,16 +196,23 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
         LogValeDto logVale = new LogValeDto();
         LocalDate fechaActualLog = LocalDate.now();
-        //Consulta para buscar en el detalle_asignación SELECT
-        //	*
-        //FROM
-        //	tb_detalle_asignacion_vale AS tb_dav
-        //WHERE
-        //	tb_dav.valeid = '125a158a-c27f-4bb0-9184-f9c512703cfd'
+        UUID codigoDetalleAsignacion;
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
+
+                //Busco el detalle de la Asignación por medio del codigo del Vale
+                codigoDetalleAsignacion = this.asignacionValeRepository.findDetalleAsigancionVale(data.getValesDevueltos().get(i));
+
+                //Elimino el detalle de la Asignación
+                DetalleAsignacionVale detalleAsignacionVale = this.detalleAsignacionRepository.findById(codigoDetalleAsignacion).orElseThrow(()
+                        -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el detalle de la asignación"));
+                detalleAsignacionRepository.delete(detalleAsignacionVale);
+
+                //Actualizo los estados de los vales
                 System.out.println("entra a devolverVale");
                 actualizarEstadoVale(data.getValesDevueltos().get(i), data.getEstadoVales());
+
+                //Dejo el registro del movimiento del Vale
                 logVale.setEstadoVale(data.getEstadoVales());
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale devuelto sin consumir en la misión");
@@ -222,7 +276,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
 
         if (solicitudVale != null) {
-            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
@@ -325,6 +379,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return solicitudValeRepository.findAll(pageable);
     }
 
+    //METODO PARA VER LA CANTIDAD DE VALES DISPONIBLES
     @Override
     public CantidadValesDto cantidadVales() {
         CantidadValesDto cantidadValesDto = new CantidadValesDto();
@@ -332,6 +387,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return cantidadValesDto;
     }
 
+    //METODO PARA VER EL CÓDIGO DE LA SOLICITUD DEL VALE
     @Override
     public BuscarSolicitudValeDto codigoSolictudVale(UUID id) {
         BuscarSolicitudValeDto buscarSolicitudValeDto = new BuscarSolicitudValeDto();
@@ -340,6 +396,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return buscarSolicitudValeDto;
     }
 
+    //METODO PARA VER EL CÓDIGO DE LA ASIGNACIÓN
     @Override
     public BuscarAsignacionValeDto codigoAsignacionVale(UUID id) {
         BuscarAsignacionValeDto buscarAsignacionValeDto = new BuscarAsignacionValeDto();
@@ -348,6 +405,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return buscarAsignacionValeDto;
     }
 
+    //METODO PARA VER EL CÓDIGO DE LA SOLICITUD DEL VEHÍCULO
     @Override
     public BuscarSolicitudVehiculoDto codigoSolicitudVehiculo(UUID id) {
         BuscarSolicitudVehiculoDto buscarSolicitudVehiculoDto = new BuscarSolicitudVehiculoDto();
@@ -355,6 +413,16 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         buscarSolicitudVehiculoDto.setCodigoSolicitudVehiculo(this.asignacionValeRepository.findByIdSolicitudVehiculo(id));
         return buscarSolicitudVehiculoDto;
     }
+
+    @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) {
+        if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de vehículos");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+        }
+    }
+
 }
 
 

@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -31,6 +29,12 @@ public class AsignacionValeController {
     public ResponseEntity<AsignacionValeOutDto> asignacionesValesByID(@PathVariable UUID idAsignacion, Pageable pageable) throws Exception {
         return ResponseEntity.ok(asignacionValeService.verAsignacionesById(idAsignacion));
     }
+
+    @GetMapping("/ver/{idAsignacion}")
+    public ResponseEntity<AsignacionValeDto> asignacionSolicitudValesByID(@PathVariable UUID idAsignacion) throws Exception {
+        return ResponseEntity.ok(asignacionValeService.leerPorId(idAsignacion));
+    }
+
 
     @PostMapping("/insertar")
     public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
@@ -89,6 +93,11 @@ public class AsignacionValeController {
         return ResponseEntity.ok(cantidadValesDto);
     }
 
+    @GetMapping("/listarsolicitudvaleestado/{estado}")
+    public ResponseEntity<List<ISolicitudValeFiltradasDto>> listarSolicitudValeEstado(@PathVariable int estado) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByEstado(estado));
+    }
+
     @GetMapping("/solitudvale/{id}")
     public ResponseEntity<BuscarSolicitudValeDto> cantidadVales(@PathVariable UUID id) throws Exception {
         BuscarSolicitudValeDto cantidadValesDto = iAsignacionValeService.codigoSolictudVale(id);
@@ -104,5 +113,10 @@ public class AsignacionValeController {
     public ResponseEntity<BuscarAsignacionValeDto> codigoAsignacionVale(@PathVariable UUID id) throws Exception {
         BuscarAsignacionValeDto cantidadValesDto = iAsignacionValeService.codigoAsignacionVale(id);
         return ResponseEntity.ok(cantidadValesDto);
+    }
+
+    @PostMapping("/anular")
+    public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionDto anularMisionDto) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto));
     }
 }

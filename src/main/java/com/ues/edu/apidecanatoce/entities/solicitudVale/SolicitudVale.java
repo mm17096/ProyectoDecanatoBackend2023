@@ -33,6 +33,9 @@ public class SolicitudVale {
     @Column(name = "estado", nullable = false)
     private int estado;
 
+    @Column(name = "observaiones")
+    private String observaciones;
+
     // @OneToMany(mappedBy = "solicitudVale")
     //  private Set<AsignacionVale> asignacionValeSet;
 

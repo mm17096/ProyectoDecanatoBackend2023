@@ -1,8 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.compras;
 
-import com.ues.edu.apidecanatoce.dtos.compras.ActualizacionValesRequestDto;
-import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
-import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
+import com.ues.edu.apidecanatoce.dtos.compras.*;
 import com.ues.edu.apidecanatoce.services.compras.IValeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -65,9 +63,14 @@ public class ValeController {
             @RequestBody ActualizacionValesRequestDto request
     ) {
         List<ValeDependeDto> valesDto = request.getVales();
-        UUID idProveedor = request.getIdProveedor();
         String concepto = request.getConcepto();
-        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor, concepto));
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, concepto));
+    }
+
+    @PostMapping("/validarusuario")
+    public ResponseEntity<UsuarioRespuestaDto> validarUsuario(@RequestBody UsuarioMandarDto request)
+    {
+        return ResponseEntity.ok(valeService.validarUsuario(request));
     }
 
     @DeleteMapping("/eliminar/{id}")
