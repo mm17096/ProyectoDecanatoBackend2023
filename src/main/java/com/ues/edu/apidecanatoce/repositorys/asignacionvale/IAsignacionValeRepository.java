@@ -31,6 +31,8 @@ public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale,
     @Query(value = "SELECT tb_asv.codigo_asignacion FROM tb_asignacion_vale as tb_asv WHERE tb_asv.solicitud_vale_id =:codigoAsignacionVale", nativeQuery = true)
     UUID findByIdAsignacionVale(UUID codigoAsignacionVale);
 
+
+
     @Query(value = "SELECT tb_sv.solicitud_vehiculo_id FROM tb_solicitud_vale AS tb_sv WHERE tb_sv.id_solicitud_vale =:codigoSolicituVehiculo", nativeQuery = true)
     UUID findByIdSolicitudVehiculo(UUID codigoSolicituVehiculo);
 

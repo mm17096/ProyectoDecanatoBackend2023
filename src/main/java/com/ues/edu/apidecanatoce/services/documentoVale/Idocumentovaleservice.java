@@ -23,6 +23,6 @@ public interface Idocumentovaleservice {
 
     DocumentovalepeticionDto eliminar(UUID id);
 
-    List<DocumentovaleDto> listarSinPagina();
+    List<DocumentovaleDto> listarSinPagina(UUID id);
     List<DocumentovalepeticionDto> listarSinPaginas();
 }

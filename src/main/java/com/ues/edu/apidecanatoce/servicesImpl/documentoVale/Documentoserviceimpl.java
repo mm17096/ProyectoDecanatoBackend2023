@@ -37,6 +37,7 @@ public class Documentoserviceimpl implements Idocumentovaleservice
     }*/
     @Override
     public DocumentovalepeticionDto registrar(DocumentovaleDto data) {
+        System.out.println(data);
         if (documentosrepository.existsByComprobante(data.getComprobante())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El codigo de comprobante ya esta registrado");
         }
@@ -67,8 +68,8 @@ public class Documentoserviceimpl implements Idocumentovaleservice
     }
 
     @Override
-    public List<DocumentovaleDto> listarSinPagina() {
-        List<Documentovale> document= this.documentosrepository.findAll();
+    public List<DocumentovaleDto> listarSinPagina(UUID id) {
+        List<Documentovale> document= this.documentosrepository.findBySolicitudvale_IdSolicitudVale(id);
         return document.stream().map(Documentovale::toDTO2).toList();
     }
 

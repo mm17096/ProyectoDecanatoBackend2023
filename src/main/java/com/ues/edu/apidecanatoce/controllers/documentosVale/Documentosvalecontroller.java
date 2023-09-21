@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -98,10 +99,10 @@ public class Documentosvalecontroller {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<DocumentovaleDto>> listarVehiculos() {
-        List<DocumentovaleDto> document = idocumentovaleservice.listarSinPagina();
-        return ResponseEntity.ok(document);
+    @GetMapping("/{id}")
+    public ResponseEntity<List<DocumentovaleDto>> listarVehiculos(@PathVariable UUID id) {
+
+        return ResponseEntity.ok(idocumentovaleservice.listarSinPagina(id));
     }
 
     @GetMapping(value = "/descarga/{filename}")

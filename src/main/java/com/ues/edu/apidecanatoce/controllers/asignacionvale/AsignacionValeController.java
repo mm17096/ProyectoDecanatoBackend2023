@@ -32,6 +32,12 @@ public class AsignacionValeController {
         return ResponseEntity.ok(asignacionValeService.verAsignacionesById(idAsignacion));
     }
 
+    @GetMapping("/ver/{idAsignacion}")
+    public ResponseEntity<AsignacionValeDto> asignacionSolicitudValesByID(@PathVariable UUID idAsignacion) throws Exception {
+        return ResponseEntity.ok(asignacionValeService.leerPorId(idAsignacion));
+    }
+
+
     @PostMapping("/insertar")
     public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale));
