@@ -13,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -87,6 +85,11 @@ public class AsignacionValeController {
     public ResponseEntity<CantidadValesDto> cantidadVales() throws Exception {
         CantidadValesDto cantidadValesDto = iAsignacionValeService.cantidadVales();
         return ResponseEntity.ok(cantidadValesDto);
+    }
+
+    @GetMapping("/listarsolicitudvaleestado/{estado}")
+    public ResponseEntity<List<ISolicitudValeFiltradasDto>> listarSolicitudValeEstado(@PathVariable int estado) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByEstado(estado));
     }
 
     @GetMapping("/solitudvale/{id}")

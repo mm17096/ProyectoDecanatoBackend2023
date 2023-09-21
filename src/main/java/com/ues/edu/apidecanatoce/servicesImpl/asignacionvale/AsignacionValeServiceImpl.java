@@ -273,7 +273,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
 
         if (solicitudVale != null) {
-            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
@@ -410,6 +410,16 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         buscarSolicitudVehiculoDto.setCodigoSolicitudVehiculo(this.asignacionValeRepository.findByIdSolicitudVehiculo(id));
         return buscarSolicitudVehiculoDto;
     }
+
+    @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) {
+        if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de vehículos");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+        }
+    }
+
 }
 
 
