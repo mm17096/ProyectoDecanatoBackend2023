@@ -113,12 +113,12 @@ public class SolicitudVehiculoDto {
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar;
+        Empleado motoristaBuscar = null;
         if (this.motorista != null){
             motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
         }
-        motoristaBuscar = null;
+
         Usuario usurioExiste = usuarioRepository.findById(this.solicitante).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el usuario"));
 
