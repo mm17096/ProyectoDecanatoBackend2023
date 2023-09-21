@@ -29,7 +29,7 @@ public class CargoController {
     }
 */
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<CargosDto>> showCargo(){
         List<CargosDto> obj = this.cargoService.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);

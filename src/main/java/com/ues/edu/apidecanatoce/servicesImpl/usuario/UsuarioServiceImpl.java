@@ -6,12 +6,15 @@ import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
 import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.services.usuario.IUsuarioService;
+import com.ues.edu.apidecanatoce.servicesImpl.cargo.CargoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.estados.EstadosServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +32,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IUsuarioRepository usuarioRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final EstadosServiceImpl estadosService;
+    private final CargoServiceImpl cargoService;
     private final Generalmethods generalmethods;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
@@ -36,7 +40,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private Usuario usuario;
     private Empleado empleado;
 
-    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository, IEmpleadoRepository empleadoRepository, EstadosServiceImpl estadosService, Generalmethods generalmethods, JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository, IEmpleadoRepository empleadoRepository, EstadosServiceImpl estadosService, Generalmethods generalmethods, JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, CargoServiceImpl cargoService) {
         this.usuarioRepository = usuarioRepository;
         this.empleadoRepository = empleadoRepository;
         this.estadosService = estadosService;
@@ -44,6 +48,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.cargoService = cargoService;
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -98,12 +103,53 @@ no se esta usando
     }
 
     public AuthResponse register(RegisterRequest request, Empleado empleado) {
+
+        Role rol;
+
+        switch (empleado.getCargo().getNombreCargo()){
+            case "JEFE DEPARTAMENTO" : {
+                rol = Role.JEFE_DEPTO;
+                break;
+            }
+            case "SECRETARIO DECANATO" : {
+                rol = Role.SECR_DECANATO;
+                break;
+            }
+            case "DECANO" : {
+                rol = Role.DECANO;
+                break;
+            }
+            case "ASISTENTE FINANCIERA" : {
+                rol = Role.ASIS_FINANCIERO;
+                break;
+            }
+            case "JEFE FINANCIERO" : {
+                rol = Role.JEFE_FINANACIERO;
+                break;
+            }
+            case "VIGILANTE" : {
+                rol = Role.VIGILANTE;
+                break;
+            }
+            case "ADMINISTRADOR" : {
+                rol = Role.ADMIN;
+                break;
+            }
+            default:{
+                rol = Role.USER;
+                break;
+            }
+
+        }
+
+
         Usuario user = Usuario.builder()
                 .codigoUsuario(generalmethods.generarCodigo())
                 .nombre(request.getNombre())
                 .clave(passwordEncoder.encode(request.getClave()))
                 .nuevo(true)
-                //.activo(false) no se esta usando
+                //.activo(false)no se esta usando
+                .role(rol)
                 .empleado(empleado)
                 .build();
 
