@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,10 +27,10 @@ public class LogVale {
     @Column(name = "estado_vale")
     private int estadoVale;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_logvale", nullable = false)
-    private LocalDate fechaLogVale;
+    private LocalDateTime fechaLogVale;
 
     @Column(name = "actividad", length = 750)
     private String actividad;

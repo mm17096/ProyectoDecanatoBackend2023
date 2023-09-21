@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -56,7 +57,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         int estadoSolicitud = 7;
 
         LogValeDto logVale = new LogValeDto();
-        LocalDate fechaActualLog = LocalDate.now();
+        LocalDateTime fechaActualLog = LocalDateTime.now();
 
 
         //Para guardar en la tabla detalle
@@ -139,7 +140,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         int estadoVale = 8;
         int estadoSolicitudes = 16;
         UUID codigoDetalleAsignacion;
-        LocalDate fechaActualLog = LocalDate.now();
+        LocalDateTime fechaActualLog = LocalDateTime.now();
         LogValeDto logVale = new LogValeDto();
         try {
             //actualizar el estado de la asignación
@@ -195,7 +196,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public DevolucionValeDto devolverVale(DevolucionValeDto data) {
         LogValeDto logVale = new LogValeDto();
-        LocalDate fechaActualLog = LocalDate.now();
+        LocalDateTime fechaActualLog = LocalDateTime.now();
         UUID codigoDetalleAsignacion;
         try {
             for (int i = 0; i < data.getValesDevueltos().size(); i++) {
@@ -304,7 +305,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         System.out.println("Dto: " + data);
         LogValeDto logVale = new LogValeDto();
 
-        LocalDate fechaActualLog = LocalDate.now();
+        LocalDateTime fechaActualLog = LocalDateTime.now();
 
 
         // 11 = vale consumido
