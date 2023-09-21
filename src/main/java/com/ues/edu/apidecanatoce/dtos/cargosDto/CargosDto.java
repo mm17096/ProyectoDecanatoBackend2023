@@ -18,7 +18,7 @@ public class CargosDto {
 
     @NotBlank(message = "La nombre del cargo es obligatorio")
     @Size(min = 2, max = 750, message = "El nombre debe tener mas 2 caracteres")
-    private String nombreCargo;
+     private String nombreCargo;
 
     @NotBlank(message = "La descripcion del cargo es obligatorio")
     @Size(min = 2, max = 750, message = "La descripción debe tener mas 2")
