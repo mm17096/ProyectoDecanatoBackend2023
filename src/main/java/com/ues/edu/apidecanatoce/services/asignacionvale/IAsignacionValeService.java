@@ -14,7 +14,6 @@ public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data);
 
     AnularMisionDto anularMision(AnularMisionDto data);
-
     AsignacionValeDto leerPorId(UUID id);
     Page<AsignacionValeDto> listar(Pageable pageable);
     DevolucionValeDto devolverVale(DevolucionValeDto data);
@@ -43,6 +42,10 @@ public interface IAsignacionValeService {
     BuscarAsignacionValeDto codigoAsignacionVale(UUID id);
 
     BuscarSolicitudVehiculoDto codigoSolicitudVehiculo(UUID id);
+
+    List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) throws IOException;
+
+    SolicitudValeFiltroDto solicitudesValeFiltradas(int estado);
 
 
 

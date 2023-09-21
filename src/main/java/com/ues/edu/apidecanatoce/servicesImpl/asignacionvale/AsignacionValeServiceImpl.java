@@ -273,7 +273,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
 
         if (solicitudVale != null) {
-            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
@@ -409,6 +409,42 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
         buscarSolicitudVehiculoDto.setCodigoSolicitudVehiculo(this.asignacionValeRepository.findByIdSolicitudVehiculo(id));
         return buscarSolicitudVehiculoDto;
+    }
+
+    @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) {
+        if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de vehículos");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+        }
+    }
+
+    @Override
+    public SolicitudValeFiltroDto solicitudesValeFiltradas(int estado) {
+        SolicitudValeFiltroDto solicitudValeFiltroDtos = new SolicitudValeFiltroDto();
+        List<ISolicitudValeFiltradasDto> solitudFiltrada = findSolicitudValeByEstado(estado);
+        for (int i = 0; i < solitudFiltrada.size(); i++) {
+            solicitudValeFiltroDtos.setCodigoSolicitudVale(solitudFiltrada.get(i).getCodigoSolicitudVale());
+            solicitudValeFiltroDtos.setCantidadVales(solitudFiltrada.get(i).getCantidadVales());
+            solicitudValeFiltroDtos.setEstadoSolicitud(solitudFiltrada.get(i).getEstadoSolicitud());
+            solicitudValeFiltroDtos.setEstadoEntradaSolicitudVale(solitudFiltrada.get(i).getEstadoEntradaSolicitudVale());
+            solicitudValeFiltroDtos.setObservacionesSolicitudVale(solitudFiltrada.get(i).getobservacionesSolicitudVale());
+            solicitudValeFiltroDtos.setModeloVehiculo(solitudFiltrada.get(i).getModeloVehiculo());
+            solicitudValeFiltroDtos.setCodigoSolicitudVehiculoS(solitudFiltrada.get(i).getCodigoSolicitudVehiculoS());
+            solicitudValeFiltroDtos.setCantidadPersonas(solitudFiltrada.get(i).getCantidadPersonas());
+            solicitudValeFiltroDtos.setLugarMision(solitudFiltrada.get(i).getLugarMision());
+            solicitudValeFiltroDtos.setDireccionMision(solitudFiltrada.get(i).getDireccionMision());
+            solicitudValeFiltroDtos.setObjetivoMision(solitudFiltrada.get(i).getObjetivoMision());
+            solicitudValeFiltroDtos.setFechaSalida(solitudFiltrada.get(i).getFechaSalida());
+            solicitudValeFiltroDtos.setFechaEntrada(solitudFiltrada.get(i).getFechaEntrada());
+            solicitudValeFiltroDtos.setEstadoSolicitudVehiculo(solitudFiltrada.get(i).getEstadoSolicitudVehiculo());
+            solicitudValeFiltroDtos.setNombreSolicitante(solitudFiltrada.get(i).getNombreSolicitante());
+            solicitudValeFiltroDtos.setNombreMotorista(solitudFiltrada.get(i).getNombreMotorista());
+            solicitudValeFiltroDtos.setCodigoEmpleado(solitudFiltrada.get(i).getCodigoEmpleado());
+            solicitudValeFiltroDtos.setCorreoEmpleado(solitudFiltrada.get(i).getCorreoEmpleado());
+        }
+        return  solicitudValeFiltroDtos;
     }
 }
 
