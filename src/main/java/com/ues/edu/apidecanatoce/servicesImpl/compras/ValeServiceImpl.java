@@ -109,7 +109,7 @@ public class ValeServiceImpl implements IValeService {
     }
 
     @Override
-    public List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, String concepto) {
+    public List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, String concepto, String idusuariologueado) {
         List<ValeDependeDto> valesActualizados = new ArrayList<>();
         LocalDate fechaActual = LocalDate.now();
         for (ValeDependeDto valeDto : data) {
@@ -123,7 +123,7 @@ public class ValeServiceImpl implements IValeService {
                 logEntity.setEstadoVale(9);
                 logEntity.setFechaLogVale(fechaActual);
                 logEntity.setActividad(concepto);
-                logEntity.setUsuario("N/A");
+                logEntity.setUsuario(idusuariologueado);
                 logEntity.setVale(vale);
                 logValeRepository.save(logEntity);
             }
