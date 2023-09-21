@@ -59,7 +59,7 @@ public class CargoServiceImpl implements ICargoService {
         Cargo cargoOb = new Cargo();
 
         for (Cargo cargo: cargos) {
-            if(cargo.getNombreCargo().equals(nombre)){
+            if(cargo.getNombreCargo().equals(nombre.toUpperCase())){
                 cargoOb = cargo;
             }
         }

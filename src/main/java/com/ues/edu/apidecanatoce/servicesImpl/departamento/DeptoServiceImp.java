@@ -55,7 +55,7 @@ public class DeptoServiceImp implements IDeptoService {
         Departamento departamentoOb = new Departamento();
 
         for (Departamento departamento: departamentos) {
-            if(departamento.getNombre().equals(nombre)){
+            if(departamento.getNombre().equals(nombre.toUpperCase())){
                 departamentoOb = departamento;
             }
         }

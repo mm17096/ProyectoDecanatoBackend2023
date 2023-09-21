@@ -145,7 +145,7 @@ public class EmpleadoController {
     ///////// para generar la url //////////
     public String generateUrlImage(String imageName) {
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-        return host + "/empleado/imagen/" + imageName;
+        return host + "/api/empleado/imagen/" + imageName;
     }
 
     //////// para mostrar la imagen /////////

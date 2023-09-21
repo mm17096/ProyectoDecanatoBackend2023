@@ -16,6 +16,4 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, String> {
     @Query("SELECT u.codigoUsuario " +
             "FROM Usuario u WHERE u.nombre = :username")
     String findIdByUsername(@Param("username") String username);
-
-
 }
