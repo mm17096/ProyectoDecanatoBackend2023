@@ -13,21 +13,28 @@ public interface ISolicitudValeFiltradasDto {
     public Integer getEstadoEntradaSolicitudVale();
 
     public String getobservacionesSolicitudVale();
+
     public String getModeloVehiculo();
+
     public UUID getCodigoSolicitudVehiculoS();
+
     public Integer getCantidadPersonas();
 
-    public String getLugarMision();
-
+    public String getMision();
     public String getDireccionMision();
 
-    public String getObjetivoMision();
     public String getFechaSalida();
+
     public String getFechaEntrada();
+
     public Integer getEstadoSolicitudVehiculo();
+
     public String getNombreSolicitante();
+
     public String getNombreMotorista();
+
     public UUID getCodigoEmpleado();
+
     public String getCorreoEmpleado();
 
 

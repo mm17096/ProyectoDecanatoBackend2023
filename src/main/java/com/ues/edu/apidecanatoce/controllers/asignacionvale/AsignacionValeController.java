@@ -87,11 +87,6 @@ public class AsignacionValeController {
         return ResponseEntity.ok(cantidadValesDto);
     }
 
-    /*@GetMapping("/listarsolicitudvaleestado/{estado}")
-    public ResponseEntity<SolicitudValeFiltroDto> listarSolicitudValeEstado(Pageable pageable, @PathVariable int estado) throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.solicitudesValeFiltradas(estado));
-    }*/
-
     @GetMapping("/listarsolicitudvaleestado/{estado}")
     public ResponseEntity<List<ISolicitudValeFiltradasDto>> listarSolicitudValeEstado(@PathVariable int estado) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByEstado(estado));

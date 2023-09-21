@@ -45,8 +45,6 @@ public interface IAsignacionValeService {
 
     List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) throws IOException;
 
-    SolicitudValeFiltroDto solicitudesValeFiltradas(int estado);
-
 
 
 
