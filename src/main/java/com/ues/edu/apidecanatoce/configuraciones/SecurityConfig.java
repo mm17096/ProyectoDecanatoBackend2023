@@ -20,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
+import static com.ues.edu.apidecanatoce.entities.usuario.Role.DECANO;
 
 
 @Configuration
@@ -46,7 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/usuario/auth/sesion").permitAll()
                                 .requestMatchers("/api/vehiculo/imagen/**").permitAll()
                                 .requestMatchers("/api/empleado/imagen/**").permitAll()
-                               // .requestMatchers("/api/depto/**").hasRole(ADMIN.name())
+                                //.requestMatchers("/api/depto/**").hasRole(DECANO.name())
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

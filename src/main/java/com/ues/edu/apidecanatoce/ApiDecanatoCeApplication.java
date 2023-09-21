@@ -58,7 +58,7 @@ public class ApiDecanatoCeApplication {
                 request.setNombre(empleadoPeticionDto.getCorreo());
                 request.setClave(empleadoPeticionDto.getDui());
                 request.setEmpleado(empleadoPeticionDto.getCodigoEmpleado());
-                request.setRole(ADMIN);
+                request.setRole(Role.ADMIN);
 
                 System.out.println("Token: " + usuarioService.register(request, empleado).getToken());
             }else{

@@ -25,16 +25,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/depto")
-
+//@PreAuthorize("hasRole('ADMIN')")
 public class DeptoController {
-
-
-
 
     private final IDeptoService deptoService;
 
-
-
+  //@PreAuthorize("hasAuthority('admin:leer')")
     @GetMapping
     public ResponseEntity<List<DepartamentoDto>> showCargo(){
         List<DepartamentoDto> obj = this.deptoService.listar();

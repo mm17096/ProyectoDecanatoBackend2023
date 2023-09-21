@@ -112,7 +112,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 rol = Role.SECR_DECANATO;
                 break;
             }
-            case "DECANATO" : {
+            case "DECANO" : {
                 rol = Role.DECANO;
                 break;
             }
@@ -126,6 +126,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
             }
             case "VIGILANTE" : {
                 rol = Role.VIGILANTE;
+                break;
+            }
+            case "ADMINISTRADOR" : {
+                rol = Role.ADMIN;
                 break;
             }
             default:{
