@@ -1,18 +1,23 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
+import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
-import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
 
 @RestController
 @CrossOrigin("*")
@@ -20,11 +25,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SolicitudConsultaController {
     private final ISolicitudVehiculoConsultaService servicioSolicitudVehiculo;
-    private final IEstadosService estadosService;
+    private final IConsultaValeService consultaValeService;
+
     @GetMapping("/listapage")
     public ResponseEntity<Page<SolicitudVahiculoConsultaDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(servicioSolicitudVehiculo.listar(pageable));
     }
-    //este es un comendario este es un comentario comentario
-    //este es un comentario
+
+    @GetMapping("/listaconsulta")
+    public ResponseEntity<List<ConsultaValeDto>> listarVehiculos() {
+        List<ConsultaValeDto> consulta = consultaValeService.listarSinPagina();
+        return ResponseEntity.ok(consulta);
+    }
+
+    @GetMapping("/listarconsultadto")
+   // public ResponseEntity<List<ConsultaValeGDto>> listarValesAsignar(@PathVariable UUID id) throws Exception {
+    public ResponseEntity<List<ConsultaValeGDto>> listarValesAsignar(@RequestParam("fechaI") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaI,@RequestParam("fechaF") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaF) throws Exception {
+        return ResponseEntity.ok(consultaValeService.lisConsultaValeGDto(fechaI, fechaF));
+        // return  String.format("parametros: f1 %s, f2 %s",fechaI,fechaF);
+    }
+
+    @GetMapping("/listarcompradto")
+    public ResponseEntity<List<ConsultaCompraDto>> listarCompraDeVales(@RequestParam("fechaI") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaI, @RequestParam("fechaF") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaF) throws Exception {
+        return ResponseEntity.ok(consultaValeService.lisConsultaCompraDto(fechaI, fechaF));
+    }
+   /* @GetMapping("/api")
+    public String obtenerDatos(@RequestParam("fecha") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fecha) {
+        // Aquí puedes usar la fecha (convertida en LocalDate) en tu lógica de negocio
+        return "Fecha recibida: " + fecha;
+    }*/
 }

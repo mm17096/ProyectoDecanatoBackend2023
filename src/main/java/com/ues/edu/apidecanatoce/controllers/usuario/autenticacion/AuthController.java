@@ -43,7 +43,8 @@ public class AuthController {
         Empleado empleado = empleadoRepository.findById(request.getEmpleado()).orElse(null);
         return ResponseEntity.ok(authService.register(request, empleado));
     }
-
+/*
+solo para cambiar el estado de la sesion, no se esta usando
     @PutMapping("/sesion")
     public ResponseEntity<?> cambiarSesion(@RequestBody String id) {
         Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
@@ -51,19 +52,21 @@ public class AuthController {
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(true);
     }
-
+*/
     // Endpoint para renovar el token
     @GetMapping("/renew")
     public ResponseEntity<AuthResponse> renewToken(HttpServletRequest request) {
         // Obtén el token de la cabecera 'x-token'
         String token = request.getHeader("x-token");
+        UserDetails userDetails = jwtTokenUtil.getUserDetailsFromToken(token);
+        Usuario usuario = authService.OptenerUsuario(userDetails.getUsername());
 
-        if (token != null && jwtTokenUtil.validateToken(token)) {
+        if (token != null && jwtTokenUtil.isTokenValid(token, userDetails, usuario)) {
             // El token es válido, genera un nuevo token y devuélvelo
-            UserDetails userDetails = jwtTokenUtil.getUserDetailsFromToken(token);
-            Usuario usuario = authService.OptenerUsuario(userDetails.getUsername());
             Empleado empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
             String newToken = jwtTokenUtil.getToken(userDetails);
+            usuario.setToken(newToken);
+            usuarioRepository.save(usuario);
 
             Map<String, Object> response = new HashMap<>();
             AuthResponse authResponse = new AuthResponse();

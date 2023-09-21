@@ -49,35 +49,38 @@ public class UsuarioServiceImpl implements IUsuarioService {
     public AuthResponse login(LoginRequest request) {
         usuario = OptenerUsuario(request.getNombre());
         //validamos que el usuario exista y retorne
-        if(usuario.getCodigoUsuario() == null){
+        if (usuario.getCodigoUsuario() == null) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario no existe");
         }
 
         empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
 
-        if(!passwordEncoder.matches(request.getClave(), usuario.getPassword())){
+        if (!passwordEncoder.matches(request.getClave(), usuario.getPassword())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La contraseña no coincide");
         }
 
-        if(this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()){
+        if (this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
         }
-
+/*
+no se esta usando
         if(usuario.isActivo()){
             throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe una sesión activa");
         }
-
+*/
         //autenticacion y retorno de datos del usuario
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNombre(), request.getClave()));
         UserDetails user = usuarioRepository.findByNombre(request.getNombre()).orElseThrow();
         //generacion del token
         String token = jwtService.getToken(user);
         //modificamos el estado de la cuenta del usuario a activa
-        usuario.setActivo(true);
+        // usuario.setActivo(true); no se esta usando
+        usuario.setToken(token); //almacenamos el token en base de datos
         usuarioRepository.save(usuario);
         //retorno de datos
         return AuthResponse.builder()
                 .codigoUsuario(usuario.getCodigoUsuario())
+                .usuario(usuario)
                 .empleado(empleado)
                 .token(token)
                 .build();
@@ -100,7 +103,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
                 .nombre(request.getNombre())
                 .clave(passwordEncoder.encode(request.getClave()))
                 .nuevo(true)
-                .activo(false)
+                //.activo(false) no se esta usando
                 .empleado(empleado)
                 .build();
 
@@ -112,9 +115,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public UsuarioPeticionDto leerPorID(String id) {
+    public Usuario leerPorID(String id) {
         Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
-        return usuario.toDTO();
+        return usuario;
     }
 
 }

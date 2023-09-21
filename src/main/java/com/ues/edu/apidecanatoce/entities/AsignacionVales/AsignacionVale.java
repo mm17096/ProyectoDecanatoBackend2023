@@ -51,6 +51,12 @@ public class AsignacionVale {
                 .solicitudVale(this.solicitudVale)
                 .build();
     }
+    public AsignacionValeDto toDTOSolicitud(){
+        return AsignacionValeDto.builder()
+                .codigoAsignacion(this.codigoAsignacion)
+                .solicitudVale(this.solicitudVale)
+                .build();
+    }
 
     public AsignacionValeModDto toAsignacionValeModDto(){
         return AsignacionValeModDto.builder()

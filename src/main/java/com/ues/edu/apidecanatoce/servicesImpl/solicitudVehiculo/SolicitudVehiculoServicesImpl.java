@@ -5,6 +5,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +53,12 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public List<SolicitudVehiculoPeticionDtO> listarPorPlaca(String codigoplaca) {
+        List<SolicitudVehiculo> solicitud=this.solicitudVehiculoServices.findByVehiculoPlaca(codigoplaca);
+        return solicitud.stream().map(SolicitudVehiculo::toDto).toList();
+    }
+
+    @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPagina() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,8 +66,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         // Obtener el ID del usuario autenticado
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
-
-        System.out.println("El usuario activo es: " + userId);
 
         List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
         List<Estados> estados = estadosRepository.findAll();
@@ -123,8 +127,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
 
-        System.out.println("El usuario activo es: " + userId);
-
         List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
 
         List<Estados> estados = estadosRepository.findAll();
@@ -161,5 +163,52 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
                 .estado(solicitudExistente.getEstado()).build();
+    }
+
+    @Override
+    public List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol) {
+
+        int estadoFilter = 0;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String depto = "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            depto = usuario.getEmpleado().getDepartamento().getNombre();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+        if (Objects.equals(rol, "JEFE_DEPTO")) {
+            estadoFilter = 1;
+        } else if (Objects.equals(rol, "SECR_DECANATO")) {
+            estadoFilter = 2;
+        } else if (Objects.equals(rol, "DECANO")) {
+            estadoFilter = 3;
+        }
+
+        List<SolicitudVehiculo> solicitudVehiculos;
+        if (Objects.equals(rol, "SECR_DECANATO")){
+            solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
+        }else{
+            solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
+        }
+        List<Estados> estados = estadosRepository.findAll();
+        Map<Integer, String> estadoStringMap = new HashMap<>();
+        for (Estados estado: estados) {
+            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        }
+
+        return solicitudVehiculos.stream().map(solicitud -> {
+            SolicitudVehiculoPeticionDtO dto = solicitud.toDto();
+            String estadoAsString = estadoStringMap.get(solicitud.getEstado());
+            dto.setEstadoString(estadoAsString);
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

@@ -2,10 +2,15 @@ package com.ues.edu.apidecanatoce.dtos.documentovaleDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.SolicitudValeRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -33,10 +38,26 @@ public class DocumentovaleDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
+    private UUID solicitudvale;
+
     /*@NotNull(message = "codigo de solicitud es obligatorio")
     private UUID codigosolicitudvale;*/
 
-    public Documentovale toEntityComplete() {
+    public Documentovale toEntityComplete(SolicitudValeRepository solicitudValerepository) {
+        SolicitudVale buscar= solicitudValerepository.findById(this.solicitudvale).orElseThrow(
+                ()-> new CustomException(HttpStatus.NOT_FOUND, "No se encontro ninguna solicitud vale"));
+
+        return Documentovale.builder()
+                .codigodocumentos(this.id)
+                .tipo(this.tipo)
+                .foto(this.foto)
+                .url(this.url)
+                .comprobante(this.comprobante)
+                .fecha(this.fecha).solicitudvale(buscar).build();
+    }
+
+    /*public Documentovale toEntityComplete() {
+
         return Documentovale.builder()
                 .codigodocumentos(this.id)
                 .tipo(this.tipo)
@@ -44,5 +65,5 @@ public class DocumentovaleDto {
                 .url(this.url)
                 .comprobante(this.comprobante)
                 .fecha(this.fecha).build();
-    }
+    }*/
 }

@@ -39,5 +39,6 @@ public class DocumentoSoliCar {
     @ManyToOne
     @JoinColumn(name = "codigoSolicitudVehiculo", nullable = true,
             foreignKey = @ForeignKey(name = "FK_documentos_soli_vehiculo"))
+    @JsonBackReference
     private SolicitudVehiculo codigoSolicitudVehiculo;
 }
