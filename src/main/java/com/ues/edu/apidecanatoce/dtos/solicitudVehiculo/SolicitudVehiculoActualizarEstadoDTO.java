@@ -13,5 +13,6 @@ import java.util.UUID;
 @Builder
 public class SolicitudVehiculoActualizarEstadoDTO {
     private UUID codigoSolicitudVehiculo;
+    private String jefeDepto;
     private int estado;
 }

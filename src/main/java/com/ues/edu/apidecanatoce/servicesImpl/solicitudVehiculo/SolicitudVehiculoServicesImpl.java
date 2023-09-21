@@ -153,12 +153,38 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
-    public SolicitudVehiculoActualizarEstadoDTO updateEstado(
-            UUID codigoSolicitudVehiculo, SolicitudVehiculoActualizarEstadoDTO nuevoEstado) {
+    public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String jefeDeptoA = "";
+        String rol = "JEFE_DEPTO";
+        int estado = 0;
+
+        if (Objects.equals(rol, "JEFE_DEPTO")) {
+            estado = 2;
+        } else if (Objects.equals(rol, "SECR_DECANATO")) {
+            estado = 3;
+        } else if (Objects.equals(rol, "DECANO")) {
+            estado = 4;
+        }
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            jefeDeptoA = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+
+
         SolicitudVehiculo solicitudExistente =
-                solicitudVehiculoServices.findById(codigoSolicitudVehiculo).orElseThrow(
+                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
-        solicitudExistente.setEstado(nuevoEstado.getEstado());
+        solicitudExistente.setEstado(data.getEstado());
+        solicitudExistente.setJefeDepto(jefeDeptoA);
+        solicitudExistente.setEstado(estado);
         solicitudVehiculoServices.save(solicitudExistente);
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
@@ -193,7 +219,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         List<SolicitudVehiculo> solicitudVehiculos;
-        if (Objects.equals(rol, "SECR_DECANATO")){
+        if (Objects.equals(rol, "SECR_DECANATO") || Objects.equals(rol, "DECANO")){
             solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
         }else{
             solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
