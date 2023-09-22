@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface IValeAsignarDto {
     UUID getIdVale();
     Integer getCorrelativoVale();
+    Double getValorVale();
 }
