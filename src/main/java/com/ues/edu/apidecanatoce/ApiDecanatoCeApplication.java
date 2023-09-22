@@ -46,7 +46,7 @@ public class ApiDecanatoCeApplication {
                 data.setNombrefoto("");
                 data.setUrlfoto("");
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
-                data.setCargo(cargoService.leerPorNombre("DOCENTE").getId());
+                data.setCargo(cargoService.leerPorNombre("ADMINISTRADOR").getId());
                 data.setDepartamento(deptoServiceImp.leerPorNombre("ING DE SISTEMAS").getCodigoDepto());
 
                 //primero se almacena el empleado
