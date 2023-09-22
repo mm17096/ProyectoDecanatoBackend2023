@@ -1,9 +1,14 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
+
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.*;
+
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
+
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +51,12 @@ public class SolicitudConsultaController {
     @GetMapping("/listarcompradto")
     public ResponseEntity<List<ConsultaCompraDto>> listarCompraDeVales(@RequestParam("fechaI") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaI, @RequestParam("fechaF") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaF) throws Exception {
         return ResponseEntity.ok(consultaValeService.lisConsultaCompraDto(fechaI, fechaF));
+    }
+
+    @GetMapping("/listarvalesdelal/{id}")
+    public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@PathVariable UUID id) throws Exception {
+     //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
+        return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
     }
    /* @GetMapping("/api")
     public String obtenerDatos(@RequestParam("fecha") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fecha) {

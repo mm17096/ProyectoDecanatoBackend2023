@@ -1,5 +1,9 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
+
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
+
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
@@ -54,6 +58,15 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para mostrar");
         } else {
             return this.consultaCompraRepository.listarCompraDeVales(fechaI,fechaF);
+        }
+    }
+
+    @Override
+    public List<ConsultaCantidadValesDelAlDto> lisConsultaValesDelAlDto(UUID id) throws IOException {
+        if (this.consultaValeGRepository.listarValesDelAl(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para mostrar");
+        } else {
+            return this.consultaValeGRepository.listarValesDelAl(id);
         }
     }
 }
