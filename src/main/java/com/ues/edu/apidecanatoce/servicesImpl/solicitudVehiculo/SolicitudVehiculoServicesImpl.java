@@ -166,6 +166,10 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String rol = "";
         int estado = 0;
 
+        SolicitudVehiculo solicitudExistente =
+                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+
         if (user.isPresent()){
             Usuario usuario = user.get();
             jefeDeptoA = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
@@ -175,20 +179,23 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         if (Objects.equals(rol, "JEFE_DEPTO")) {
+            solicitudExistente.setJefeDepto(jefeDeptoA);
             estado = 2;
         } else if (Objects.equals(rol, "SECR_DECANATO")) {
+            solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 3;
         } else if (Objects.equals(rol, "DECANO")) {
+            solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 4;
         }
 
-
-        SolicitudVehiculo solicitudExistente =
-                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
-                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
-
-        solicitudExistente.setEstado(estado);
-        solicitudExistente.setJefeDepto(jefeDeptoA);
+        if (data.getEstado() == 6){
+            solicitudExistente.setEstado(6);
+        } else if(data.getEstado() == 15){
+            solicitudExistente.setEstado(15);
+        }else{
+            solicitudExistente.setEstado(estado);
+        }
         solicitudVehiculoServices.save(solicitudExistente);
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
