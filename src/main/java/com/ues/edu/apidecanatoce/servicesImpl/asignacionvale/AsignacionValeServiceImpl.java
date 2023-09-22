@@ -417,7 +417,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) {
         if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de vehículos");
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
         } else {
             return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
         }
