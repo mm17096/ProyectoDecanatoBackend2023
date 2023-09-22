@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;

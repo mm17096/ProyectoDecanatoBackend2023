@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.*;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
@@ -12,6 +12,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsulta
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
+import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
