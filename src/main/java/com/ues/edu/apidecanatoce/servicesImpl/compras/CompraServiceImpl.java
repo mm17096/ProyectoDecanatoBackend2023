@@ -59,7 +59,7 @@ public class CompraServiceImpl implements ICompraService {
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
-                logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
+                logEntity.setFechaLogVale(data.getFecha_compra());
                 if (compraEntity.getProveedor().getTipo() == 14) {
 
                     logEntity.setActividad("Adquisición en préstamo a proveedor " + proveedor.getNombre() + "en concepto de:" + compraEntity.getDescripcion());

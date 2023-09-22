@@ -16,16 +16,23 @@ public interface ISolicitudValeFiltradasDto {
 
     public String getModeloVehiculo();
 
+    public String getPlacaVehiculo();
+
     public UUID getCodigoSolicitudVehiculoS();
 
     public Integer getCantidadPersonas();
 
     public String getMision();
+
     public String getDireccionMision();
 
     public String getFechaSalida();
 
     public String getFechaEntrada();
+
+    public String getFechaSolicitud();
+
+    public String getUnidadSolicitante();
 
     public Integer getEstadoSolicitudVehiculo();
 
@@ -36,8 +43,6 @@ public interface ISolicitudValeFiltradasDto {
     public UUID getCodigoEmpleado();
 
     public String getCorreoEmpleado();
-
-
 
 
 }

@@ -4,14 +4,12 @@ import com.ues.edu.apidecanatoce.dtos.compras.UsuarioMandarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.UsuarioRespuestaDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
-import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.compras.ICompraRepository;
-import com.ues.edu.apidecanatoce.repositorys.compras.IProveedorRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
@@ -26,9 +24,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+
+import static com.ues.edu.apidecanatoce.entities.usuario.Role.JEFE_FINANACIERO;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,6 @@ public class ValeServiceImpl implements IValeService {
 
     private final IValeRepository valeRepository;
     private final ICompraRepository compraRepository;
-    private final IProveedorRepository proveedorRepository;
     private final ILogValeRepository logValeRepository;
 
     private final IUsuarioRepository usuarioRepository;
@@ -111,7 +112,7 @@ public class ValeServiceImpl implements IValeService {
     @Override
     public List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, String concepto, String idusuariologueado) {
         List<ValeDependeDto> valesActualizados = new ArrayList<>();
-        LocalDate fechaActual = LocalDate.now();
+        LocalDateTime fechaActual = LocalDateTime.now();
         for (ValeDependeDto valeDto : data) {
             Vale vale = valeRepository.findById(valeDto.getId()).orElse(null);
             if (vale != null) {
@@ -148,6 +149,10 @@ public class ValeServiceImpl implements IValeService {
 
         if (this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
+        }
+
+        if (!Objects.equals(usuario.getRole(), JEFE_FINANACIERO)) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Este usuario no es jefe de unidad financiera");
         }
 
         return UsuarioRespuestaDto.builder()
