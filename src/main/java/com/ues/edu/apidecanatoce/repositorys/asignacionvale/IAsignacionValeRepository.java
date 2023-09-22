@@ -16,7 +16,7 @@ public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale,
     @Query(value = "SELECT codigo_asignacion FROM tb_asignacion_vale WHERE solicitud_vale_id =:solicitudID ORDER BY codigo_asignacion DESC LIMIT 1", nativeQuery = true)
     UUID findTopByOrderByIdDesc(UUID solicitudID);
 
-    @Query(value = "SELECT tb_v.id_vale AS idVale, tb_v.correlativo AS correlativoVale FROM tb_vale AS tb_v WHERE tb_v.estado = 8 ORDER BY tb_v.correlativo ASC LIMIT :cantidadVales", nativeQuery = true)
+    @Query(value = "SELECT tb_v.id_vale AS idVale, tb_v.correlativo AS correlativoVale, tb_v.valor AS valorVale FROM tb_vale AS tb_v WHERE tb_v.estado = 8 ORDER BY tb_v.correlativo ASC LIMIT :cantidadVales", nativeQuery = true)
     List<IValeAsignarDto> listarValesAsignar(int cantidadVales);
 
     @Query(value = "SELECT count(*) AS valesDisponibles FROM tb_vale AS tb_v WHERE tb_v.estado = 8", nativeQuery = true)
