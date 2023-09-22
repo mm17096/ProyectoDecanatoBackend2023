@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.repositorys.solicitudVale;
 
 
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +27,18 @@ public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacio
             "WHERE av.fecha >=:fechaI AND av.fecha <= :fechaF\n" +
             "ORDER BY av.fecha, sv.cantidad_vale desc", nativeQuery = true)
     List<ConsultaValeGDto> listarVales(LocalDate fechaI, LocalDate fechaF);
+    @Query(value = "SELECT sv.cantidad_vale AS cantidadvale, \n" +
+            "v.correlativo AS correlativo, \n" +
+            "v.estado AS estadovale, \n" +
+            "v.fecha_vencimiento AS fechavencimiento, \n" +
+            "v.valor AS valor,\n" +
+            "sv.solicitud_vehiculo_id AS solicitudvehiculoid,\n" +
+            "dav.valeid AS valeid\n" +
+            "FROM tb_detalle_asignacion_vale dav\n" +
+            "FULL JOIN tb_asignacion_vale as av ON dav.id_asignacion_vale = av.codigo_asignacion\n" +
+            "FULL JOIN tb_solicitud_vale as sv ON av.solicitud_vale_id = sv.id_solicitud_vale\n" +
+            "FULL JOIN tb_vale AS v ON dav.valeid = v.id_vale\n" +
+            "WHERE sv.solicitud_vehiculo_id = :id\n" +
+            "ORDER BY v.correlativo ASC", nativeQuery = true)
+    List<ConsultaCantidadValesDelAlDto> listarValesDelAl(UUID id);
 }
