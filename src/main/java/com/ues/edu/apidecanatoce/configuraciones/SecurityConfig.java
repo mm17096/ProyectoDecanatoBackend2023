@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,10 +19,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
+import static com.ues.edu.apidecanatoce.entities.usuario.Role.DECANO;
+
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity // metodo agregado
 public class SecurityConfig {
 
     @Autowired
@@ -42,6 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/usuario/auth/sesion").permitAll()
                                 .requestMatchers("/api/vehiculo/imagen/**").permitAll()
                                 .requestMatchers("/api/empleado/imagen/**").permitAll()
+                                //.requestMatchers("/api/depto/**").hasRole(DECANO.name())
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

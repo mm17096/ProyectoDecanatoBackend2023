@@ -32,7 +32,7 @@ public class CompraServiceImpl implements ICompraService {
     private final ILogValeRepository logValeRepository;
 
     @Override
-    public CompraPeticionDto registrar(CompraInsertarDto data) {
+    public CompraPeticionDto registrar(CompraInsertarDto data, String idUsuarioLogueado) {
 
         if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
@@ -59,14 +59,14 @@ public class CompraServiceImpl implements ICompraService {
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
-                logEntity.setFechaLogVale(data.getFecha_compra().toLocalDate());
+                logEntity.setFechaLogVale(data.getFecha_compra());
                 if (compraEntity.getProveedor().getTipo() == 14) {
 
-                    logEntity.setActividad("Adquisición por concepto de préstamo a proveedor " + proveedor.getNombre());
+                    logEntity.setActividad("Adquisición en préstamo a proveedor " + proveedor.getNombre() + "en concepto de:" + compraEntity.getDescripcion());
                 } else {
-                    logEntity.setActividad("Adquisición por concepto de compra a proveedor " + proveedor.getNombre());
+                    logEntity.setActividad("Adquisición en compra a proveedor " + proveedor.getNombre() + " en concepto de: " + compraEntity.getDescripcion());
                 }
-                logEntity.setUsuario("N/A");
+                logEntity.setUsuario(idUsuarioLogueado);
                 logEntity.setVale(valeEntity);
                 logValeRepository.save(logEntity);
             }

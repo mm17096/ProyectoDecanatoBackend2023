@@ -5,13 +5,12 @@ import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
-import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -25,10 +24,10 @@ public class LogValeDto {
 
     private Integer estadoVale;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_logvale", nullable = false)
-    private LocalDate fechaLogVale;
+    private LocalDateTime fechaLogVale;
 
     private String actividad;
     /*private String usuario;*/

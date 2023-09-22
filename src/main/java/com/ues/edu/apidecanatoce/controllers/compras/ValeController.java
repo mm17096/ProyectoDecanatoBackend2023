@@ -64,7 +64,8 @@ public class ValeController {
     ) {
         List<ValeDependeDto> valesDto = request.getVales();
         String concepto = request.getConcepto();
-        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, concepto));
+        String idusuariologueado = request.getIdusuariologueado();
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, concepto, idusuariologueado));
     }
 
     @PostMapping("/validarusuario")
