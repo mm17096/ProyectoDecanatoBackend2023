@@ -119,7 +119,7 @@ public class SolicitudVehiculo {
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
