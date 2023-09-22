@@ -7,5 +7,5 @@ import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import java.util.UUID;
 
 public interface IUsuarioService {
-    UsuarioPeticionDto leerPorID(String id);
+    Usuario leerPorID(String id);
 }

@@ -3,7 +3,7 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
@@ -18,10 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.Set;
 
 @Entity
 @Data
@@ -113,13 +111,13 @@ public class SolicitudVehiculo {
 
     // Mortorista asignado
     @ManyToOne
-    @JoinColumn(name = "DUI_MOTORISTA", nullable = true,
+    @JoinColumn(name = "codigo_motorista", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
     private Empleado motorista;
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
     @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 

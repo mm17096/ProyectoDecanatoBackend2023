@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
+import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/solicitudvehiculo")
 @RequiredArgsConstructor
@@ -51,7 +51,10 @@ public class SolicitudVehiculoController {
         List<SolicitudVehiculoPeticionDtO> vehiculos = servicioSolicitudVehiculo.listarSinPagina();
         return ResponseEntity.ok(vehiculos);
     }
-
+    @GetMapping("/listasinpagina/{codigoplaca}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> BuscarPorplaca(@PathVariable String codigoplaca){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.listarPorPlaca(codigoplaca));
+    }
     // con paginacion
     @GetMapping("/listapage")
     public ResponseEntity<Page<SolicitudVehiculoPeticionDtO>> listar(Pageable pageable) {
@@ -92,12 +95,22 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
-    @PutMapping("/estado/{codigoSolicitudVehiculo}")
+    @PutMapping("/estadoupdate")
     public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
-            @PathVariable UUID codigoSolicitudVehiculo,
-            @RequestBody SolicitudVehiculoActualizarEstadoDTO nuevoEstado
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO data
     ){
-        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(codigoSolicitudVehiculo, nuevoEstado));
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(data));
+    }
+
+    // LISTADO
+
+    // listar solicitudes
+    @GetMapping("/listado/{ROL}")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> obtenerSolicitudesRol(
+            @PathVariable (name = "ROL") String rol
+    ) throws IOException {
+        List<SolicitudVehiculoPeticionDtO> vehiculos = servicioSolicitudVehiculo.listarSinPaginaRol(rol);
+        return ResponseEntity.ok(vehiculos);
     }
 
 }

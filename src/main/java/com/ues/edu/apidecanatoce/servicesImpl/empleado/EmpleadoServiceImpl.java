@@ -161,6 +161,25 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         }
 
         data.setCodigoEmpleado(id);
-        return empleadoRepository.save(data.toEntityCompletes(cargoRepository, deptopRepo)).toDTO();
+        EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
+        //codigo agregado para probar el modificar el rol si el cargo cambio
+            if(!buscarEmpleado.getCargo().getNombreCargo().equals(cargo.getNombreCargo()) ){
+
+                if (data.getCargo() != cargoService.leerPorNombre("MOTORISTA").getId()) {
+                    RegisterRequest request = new RegisterRequest();
+
+                    request.setNombre(empleadoPeticionDto.getCorreo());
+                    request.setClave(empleadoPeticionDto.getDui());
+                    request.setEmpleado(empleadoPeticionDto.getCodigoEmpleado());
+
+                    Empleado empleado = empleadoRepository.findById(request.getEmpleado()).orElse(null); //Buscamos el empleado y lo mandamos a insertar
+
+                    usuarioService.modificar(request, empleado); //Almacenamos el usuario
+                }
+            }
+        // final del segmento -----------------------------------------
+
+       // return empleadoRepository.save(data.toEntityCompletes(cargoRepository, deptopRepo)).toDTO();
+            return empleadoPeticionDto;
     }
 }

@@ -1,7 +1,8 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVale;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudValeModDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeAprobarDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeModDto;
 import com.ues.edu.apidecanatoce.dtos.SolicitudVvDTO;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
@@ -32,6 +33,9 @@ public class SolicitudVale {
 
     @Column(name = "estado", nullable = false)
     private int estado;
+
+    @Column(name = "observaiones")
+    private String observaciones;
 
     // @OneToMany(mappedBy = "solicitudVale")
     //  private Set<AsignacionVale> asignacionValeSet;
@@ -81,6 +85,14 @@ public class SolicitudVale {
         return SolicitudValeModDto.builder()
                 .idSolicitudVale(this.idSolicitudVale)
                 .estadoSolicutudVale(this.estadoEntrada)
+                .build();
+    }
+
+    public SolicitudValeAprobarDto toSolicitudValeAprobarDto(){
+        return SolicitudValeAprobarDto.builder()
+                .codigoSolicitudVale(this.idSolicitudVale)
+                .cantidadVales(this.cantidadVale)
+                .estadoSolicitudVale(this.estadoEntrada)
                 .build();
     }
 }

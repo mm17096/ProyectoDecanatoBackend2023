@@ -1,6 +1,9 @@
 package com.ues.edu.apidecanatoce.services.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +15,8 @@ import java.util.UUID;
 
 public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data);
+
+    AnularMisionDto anularMision(AnularMisionDto data);
     AsignacionValeDto leerPorId(UUID id);
     Page<AsignacionValeDto> listar(Pageable pageable);
     DevolucionValeDto devolverVale(DevolucionValeDto data);
@@ -40,6 +45,11 @@ public interface IAsignacionValeService {
     BuscarAsignacionValeDto codigoAsignacionVale(UUID id);
 
     BuscarSolicitudVehiculoDto codigoSolicitudVehiculo(UUID id);
+
+    List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) throws IOException;
+
+    SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data);
+
 
 
 

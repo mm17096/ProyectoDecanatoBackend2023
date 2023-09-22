@@ -5,13 +5,17 @@ import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
+import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioDto;
 import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
+import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.services.usuario.IUsuarioService;
+import com.ues.edu.apidecanatoce.servicesImpl.cargo.CargoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.estados.EstadosServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +33,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IUsuarioRepository usuarioRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final EstadosServiceImpl estadosService;
+    private final CargoServiceImpl cargoService;
     private final Generalmethods generalmethods;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
@@ -36,7 +41,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private Usuario usuario;
     private Empleado empleado;
 
-    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository, IEmpleadoRepository empleadoRepository, EstadosServiceImpl estadosService, Generalmethods generalmethods, JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UsuarioServiceImpl(IUsuarioRepository usuarioRepository, IEmpleadoRepository empleadoRepository, EstadosServiceImpl estadosService, Generalmethods generalmethods, JwtService jwtService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, CargoServiceImpl cargoService) {
         this.usuarioRepository = usuarioRepository;
         this.empleadoRepository = empleadoRepository;
         this.estadosService = estadosService;
@@ -44,22 +49,23 @@ public class UsuarioServiceImpl implements IUsuarioService {
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.cargoService = cargoService;
     }
 
     public AuthResponse login(LoginRequest request) {
         usuario = OptenerUsuario(request.getNombre());
         //validamos que el usuario exista y retorne
-        if(usuario.getCodigoUsuario() == null){
+        if (usuario.getCodigoUsuario() == null) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario no existe");
         }
 
         empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
 
-        if(!passwordEncoder.matches(request.getClave(), usuario.getPassword())){
+        if (!passwordEncoder.matches(request.getClave(), usuario.getPassword())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La contraseña no coincide");
         }
 
-        if(this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()){
+        if (this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
         }
 /*
@@ -80,6 +86,7 @@ no se esta usando
         //retorno de datos
         return AuthResponse.builder()
                 .codigoUsuario(usuario.getCodigoUsuario())
+                .usuario(usuario)
                 .empleado(empleado)
                 .token(token)
                 .build();
@@ -97,12 +104,53 @@ no se esta usando
     }
 
     public AuthResponse register(RegisterRequest request, Empleado empleado) {
+
+        Role rol;
+
+        switch (empleado.getCargo().getNombreCargo()){
+            case "JEFE DEPARTAMENTO" : {
+                rol = Role.JEFE_DEPTO;
+                break;
+            }
+            case "SECRETARIO DECANATO" : {
+                rol = Role.SECR_DECANATO;
+                break;
+            }
+            case "DECANO" : {
+                rol = Role.DECANO;
+                break;
+            }
+            case "ASISTENTE FINANCIERA" : {
+                rol = Role.ASIS_FINANCIERO;
+                break;
+            }
+            case "JEFE FINANCIERO" : {
+                rol = Role.JEFE_FINANACIERO;
+                break;
+            }
+            case "VIGILANTE" : {
+                rol = Role.VIGILANTE;
+                break;
+            }
+            case "ADMINISTRADOR" : {
+                rol = Role.ADMIN;
+                break;
+            }
+            default:{
+                rol = Role.USER;
+                break;
+            }
+
+        }
+
+
         Usuario user = Usuario.builder()
                 .codigoUsuario(generalmethods.generarCodigo())
                 .nombre(request.getNombre())
                 .clave(passwordEncoder.encode(request.getClave()))
                 .nuevo(true)
-                //.activo(false) no se esta usando
+                //.activo(false)no se esta usando
+                .role(rol)
                 .empleado(empleado)
                 .build();
 
@@ -114,9 +162,68 @@ no se esta usando
     }
 
     @Override
-    public UsuarioPeticionDto leerPorID(String id) {
+    public Usuario leerPorID(String id) {
         Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
-        return usuario.toDTO();
+        return usuario;
     }
+
+    // codigo agregado de prueba
+    public void modificar(RegisterRequest request, Empleado empleado) {
+
+        System.out.println("ingreso al modificar");
+        Role rol;
+
+        switch (empleado.getCargo().getNombreCargo()) {
+            case "JEFE DEPARTAMENTO": {
+                rol = Role.JEFE_DEPTO;
+                break;
+            }
+            case "SECRETARIO DECANATO": {
+                rol = Role.SECR_DECANATO;
+                break;
+            }
+            case "DECANO": {
+                rol = Role.DECANO;
+                break;
+            }
+            case "ASISTENTE FINANCIERA": {
+                rol = Role.ASIS_FINANCIERO;
+                break;
+            }
+            case "JEFE FINANCIERO": {
+                rol = Role.JEFE_FINANACIERO;
+                break;
+            }
+            case "VIGILANTE": {
+                rol = Role.VIGILANTE;
+                break;
+            }
+            case "ADMINISTRADOR": {
+                rol = Role.ADMIN;
+                break;
+            }
+            default: {
+                rol = Role.USER;
+                break;
+            }
+
+        }
+
+        Usuario carga = usuarioRepository.findUsuarioByNombre(request.getNombre());
+        Usuario user = Usuario.builder()
+                .codigoUsuario(carga.getCodigoUsuario())
+                .nombre(carga.getUsername())
+                .clave(passwordEncoder.encode(carga.getClave()))
+                .nuevo(carga.isNuevo())
+                //.activo(false)no se esta usando
+                .role(rol)
+                .empleado(carga.getEmpleado())
+                .token(carga.getToken())
+                .build();
+        usuarioRepository.save(user);
+
+    }
+
+    //
 
 }
