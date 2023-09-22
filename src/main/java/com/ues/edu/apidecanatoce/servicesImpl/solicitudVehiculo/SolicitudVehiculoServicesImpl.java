@@ -149,7 +149,8 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
-        ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+        SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+        data.setEstado(3);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
         return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
                 usuarioRepository)).toDto();

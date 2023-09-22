@@ -14,7 +14,6 @@ public interface IVehiculoService{
 
     VehiculoDto leerPorId(UUID id);
 
-
     Page<VehiculoDto> listar(Pageable pageable);
 
     List<VehiculoDto> listarSinPagina();
@@ -22,6 +21,8 @@ public interface IVehiculoService{
     List<VehiculoDto> listarPorPlaca(String codigoplaca);
 
     List<VehiculoDto> listarPorClase(String nombreClase);
+
+    List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada);
 
     MensajeRecord actualizar(MultipartFile imagen, VehiculoDto data);
 
