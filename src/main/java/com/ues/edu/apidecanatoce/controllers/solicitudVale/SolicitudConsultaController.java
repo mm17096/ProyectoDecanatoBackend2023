@@ -1,6 +1,5 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController

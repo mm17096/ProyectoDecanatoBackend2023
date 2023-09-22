@@ -1,5 +1,6 @@
-package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
+package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones;
 
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.ValeModDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import lombok.*;
 

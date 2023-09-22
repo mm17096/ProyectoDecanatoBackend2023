@@ -1,7 +1,11 @@
 package com.ues.edu.apidecanatoce.entities.AsignacionVales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.AsignacionValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.AsignacionValeModDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.AsignacionValeOutDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.ValeModDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
