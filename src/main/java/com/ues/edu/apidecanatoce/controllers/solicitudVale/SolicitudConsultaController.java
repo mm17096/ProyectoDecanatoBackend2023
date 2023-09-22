@@ -57,6 +57,7 @@ public class SolicitudConsultaController {
     @GetMapping("/listarvalesdelal/{id}")
     public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@PathVariable UUID id) throws Exception {
      //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
+        System.out.println("id: "+ id);
         return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
     }
    /* @GetMapping("/api")
