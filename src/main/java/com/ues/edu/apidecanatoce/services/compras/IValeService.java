@@ -25,7 +25,7 @@ public interface IValeService {
 
     ValeDependeDto actualizar(UUID id, ValeDto data);
 
-    List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, String concepto);
+    List<ValeDependeDto> actualizarTodosValesPorCantidad(List<ValeDependeDto> data, String concepto, String idusuariologueado);
 
     UsuarioRespuestaDto validarUsuario(UsuarioMandarDto data);
 
