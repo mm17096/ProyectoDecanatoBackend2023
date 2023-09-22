@@ -5,6 +5,7 @@ import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
+import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioDto;
 import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
 import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
@@ -165,5 +166,64 @@ no se esta usando
         Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
         return usuario;
     }
+
+    // codigo agregado de prueba
+    public void modificar(RegisterRequest request, Empleado empleado) {
+
+        System.out.println("ingreso al modificar");
+        Role rol;
+
+        switch (empleado.getCargo().getNombreCargo()) {
+            case "JEFE DEPARTAMENTO": {
+                rol = Role.JEFE_DEPTO;
+                break;
+            }
+            case "SECRETARIO DECANATO": {
+                rol = Role.SECR_DECANATO;
+                break;
+            }
+            case "DECANO": {
+                rol = Role.DECANO;
+                break;
+            }
+            case "ASISTENTE FINANCIERA": {
+                rol = Role.ASIS_FINANCIERO;
+                break;
+            }
+            case "JEFE FINANCIERO": {
+                rol = Role.JEFE_FINANACIERO;
+                break;
+            }
+            case "VIGILANTE": {
+                rol = Role.VIGILANTE;
+                break;
+            }
+            case "ADMINISTRADOR": {
+                rol = Role.ADMIN;
+                break;
+            }
+            default: {
+                rol = Role.USER;
+                break;
+            }
+
+        }
+
+        Usuario carga = usuarioRepository.findUsuarioByNombre(request.getNombre());
+        Usuario user = Usuario.builder()
+                .codigoUsuario(carga.getCodigoUsuario())
+                .nombre(carga.getUsername())
+                .clave(passwordEncoder.encode(carga.getClave()))
+                .nuevo(carga.isNuevo())
+                //.activo(false)no se esta usando
+                .role(rol)
+                .empleado(carga.getEmpleado())
+                .token(carga.getToken())
+                .build();
+        usuarioRepository.save(user);
+
+    }
+
+    //
 
 }

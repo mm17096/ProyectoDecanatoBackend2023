@@ -22,7 +22,6 @@ public interface ISolicitudVehiculoServices {
     List<SolicitudVehiculoPeticionDtO> listarSinPagina();
     List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol);
 
-    SolicitudVehiculoActualizarEstadoDTO updateEstado(UUID codigoSolicitudVehiculo,
-                                                      SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
+    SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
     List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id);
 }
