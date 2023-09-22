@@ -187,13 +187,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
                 solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
 
-//        SolicitudVale solicitudVale = null;
-//        solicitudVale.setSolicitudVehiculo(solicitudExistente);
-//        solicitudVale.setCantidadVale(0);
-//        solicitudVale.setEstadoEntrada(1);
-//        solicitudVale.setEstado(estado);
-//        solicitudValeRepository.save(solicitudVale);
-
         solicitudExistente.setEstado(estado);
         solicitudExistente.setJefeDepto(jefeDeptoA);
         solicitudVehiculoServices.save(solicitudExistente);
