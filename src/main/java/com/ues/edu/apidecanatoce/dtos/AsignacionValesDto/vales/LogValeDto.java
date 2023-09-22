@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
+package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;

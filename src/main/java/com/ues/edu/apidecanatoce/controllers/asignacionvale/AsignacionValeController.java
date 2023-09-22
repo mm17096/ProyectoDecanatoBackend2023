@@ -1,7 +1,10 @@
 package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.BuscarSolicitudValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeAprobarDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
@@ -118,5 +121,10 @@ public class AsignacionValeController {
     @PostMapping("/anular")
     public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionDto anularMisionDto) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto));
+    }
+
+    @PostMapping("/solitudaprobar")
+    public ResponseEntity<SolicitudValeAprobarDto> actualizarSolicitudAprobar(@RequestBody SolicitudValeAprobarDto solicitudValeAprobarDto) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto));
     }
 }

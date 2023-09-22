@@ -1,9 +1,7 @@
 package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.ISolicitudValeFiltradasDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.ISolicitudValeFiltradasDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

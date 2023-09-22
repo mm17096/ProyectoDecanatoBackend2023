@@ -1,4 +1,4 @@
-package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto;
+package com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles;
 
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
