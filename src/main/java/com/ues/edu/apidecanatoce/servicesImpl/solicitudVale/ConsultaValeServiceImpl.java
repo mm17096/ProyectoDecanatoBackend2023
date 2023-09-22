@@ -1,16 +1,14 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
+
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.IValeAsignarDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
+
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
-import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
-import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
@@ -20,7 +18,6 @@ import com.ues.edu.apidecanatoce.repositorys.solicitudVale.IConsultaValeGReposit
 import com.ues.edu.apidecanatoce.repositorys.solicitudVale.IConsultaValeRepository;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +58,15 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para mostrar");
         } else {
             return this.consultaCompraRepository.listarCompraDeVales(fechaI,fechaF);
+        }
+    }
+
+    @Override
+    public List<ConsultaCantidadValesDelAlDto> lisConsultaValesDelAlDto(UUID id) throws IOException {
+        if (this.consultaValeGRepository.listarValesDelAl(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para mostrar");
+        } else {
+            return this.consultaValeGRepository.listarValesDelAl(id);
         }
     }
 }
