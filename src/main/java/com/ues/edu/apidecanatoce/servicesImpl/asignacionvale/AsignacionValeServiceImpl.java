@@ -22,6 +22,8 @@ import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -254,6 +256,31 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             return this.asignacionValeRepository.listarValesAsignar(cantidadVales);
         }
 
+    }
+
+    @Override
+    public Page<IValeAsignarDto> lisIValeAsignarDtosPage(int cantidadVales, Pageable pageable) throws IOException {
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+
+        // Calcular la cantidad total de elementos disponibles en tu base de datos
+        List<IValeAsignarDto> totalElementos = lisIValeAsignarDtos(cantidadVales); // Supongamos que tienes un método count para contar elementos
+
+        // Calcular el número de páginas requerido para la cantidad solicitada de elementos
+        int totalPages = (int) Math.ceil((double) totalElementos.size() / pageSize);
+
+        // Asegurarse de que el número de página no sea mayor que el número total de páginas
+        if (pageNumber >= totalPages) {
+            pageNumber = totalPages - 1;
+        }
+
+        // Calcular el offset basado en la página y el tamaño de la página
+        int offset = pageNumber * pageSize;
+
+        // Obtener los elementos de la página actual
+        List<IValeAsignarDto> lisIValeAsignarPage = asignacionValeRepository.listarValesAsignarPage(offset, pageSize);
+
+        return new PageImpl<>(lisIValeAsignarPage, PageRequest.of(pageNumber, pageSize), totalElementos.size());
     }
 
     //METODO PARA ACTUALIZAR EL ESTADO DEL VALE

@@ -24,6 +24,9 @@ public interface IAsignacionValeService {
     AsignacionValeOutDto verAsignacionesById(UUID id);
     DetalleAsignacionDto verDetalleById(UUID id);
     List<IValeAsignarDto> lisIValeAsignarDtos(int cantidadVales) throws IOException;
+
+    Page<IValeAsignarDto> lisIValeAsignarDtosPage(int cantidadVales, Pageable pageable) throws IOException;
+
     ValeModDto actualizarEstadoVale(UUID id, int estadoVale);
 
     SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud);

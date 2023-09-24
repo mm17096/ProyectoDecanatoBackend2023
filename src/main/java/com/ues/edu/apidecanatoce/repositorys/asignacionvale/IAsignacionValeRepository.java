@@ -2,8 +2,11 @@ package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.IValeAsignarDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +18,11 @@ public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale,
 
     @Query(value = "SELECT codigo_asignacion FROM tb_asignacion_vale WHERE solicitud_vale_id =:solicitudID ORDER BY codigo_asignacion DESC LIMIT 1", nativeQuery = true)
     UUID findTopByOrderByIdDesc(UUID solicitudID);
-
-    @Query(value = "SELECT tb_v.id_vale AS idVale, tb_v.correlativo AS correlativoVale, tb_v.valor AS valorVale FROM tb_vale AS tb_v WHERE tb_v.estado = 8 ORDER BY tb_v.correlativo ASC LIMIT :cantidadVales", nativeQuery = true)
+    @Query(value = "SELECT tb_v.id_vale AS idvale, tb_v.correlativo AS correlativovale, tb_v.valor AS valorvale, tb_v.fecha_vencimiento AS fechaVencimiento FROM tb_vale AS tb_v INNER JOIN tb_compra AS tb_c ON tb_v.codigo_compra = tb_c.codigo_compra WHERE tb_v.estado = 8 ORDER BY tb_c.fecha_hora_compra ASC LIMIT :cantidadVales", nativeQuery = true)
     List<IValeAsignarDto> listarValesAsignar(int cantidadVales);
+
+    @Query(value = "SELECT tb_v.id_vale AS idvale, tb_v.correlativo AS correlativovale, tb_v.valor AS valorvale, tb_v.fecha_vencimiento AS fechaVencimiento FROM tb_vale AS tb_v INNER JOIN tb_compra AS tb_c ON tb_v.codigo_compra = tb_c.codigo_compra WHERE tb_v.estado = 8 ORDER BY tb_c.fecha_hora_compra, tb_v.correlativo ASC OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY", nativeQuery = true)
+    List<IValeAsignarDto> listarValesAsignarPage(@Param("offset") int offset, @Param("limit") int limit);
 
     @Query(value = "SELECT count(*) AS valesDisponibles FROM tb_vale AS tb_v WHERE tb_v.estado = 8", nativeQuery = true)
     Integer valesDisponibles();
