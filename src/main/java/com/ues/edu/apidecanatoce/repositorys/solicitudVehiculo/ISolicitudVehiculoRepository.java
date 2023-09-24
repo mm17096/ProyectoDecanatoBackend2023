@@ -4,6 +4,8 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +21,10 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
     List<SolicitudVehiculo> findByUsuarioCodigoUsuario(String usuario);
     List<SolicitudVehiculo> findByUsuarioCodigoUsuarioAndEstado(String usuario, int estado);
     List<SolicitudVehiculo> findByVehiculoPlaca(String placa);
+
+    @Query("SELECT sv " +
+            "FROM SolicitudVehiculo sv " +
+            "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision")
+    List<SolicitudVehiculo> findByAllSecre(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
+
 }

@@ -1,9 +1,12 @@
 package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionInDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.*;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
-import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -24,7 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -422,6 +424,25 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         } else {
             return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
         }
+    }
+
+    @Override
+    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data) {
+        System.out.println(data);
+
+        SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getCodigoSolicitudVale()).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + data.getCodigoSolicitudVale())
+        );
+        try{
+            solicitudVale.setEstado(data.getEstadoSolicitudVale());
+            solicitudVale.setCantidadVale(data.getCantidadVales());
+            solicitudVale.setObservaciones(data.getObservaciones());
+            this.solicitudValeRepository.save(solicitudVale).toSolicitudValeAprobarDto();
+
+        }catch (Exception e){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo modificar la solicitud para aprobar");
+        }
+        return data;
     }
 
 }

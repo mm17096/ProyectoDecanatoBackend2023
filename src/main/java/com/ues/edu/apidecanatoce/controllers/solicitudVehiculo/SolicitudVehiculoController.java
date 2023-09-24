@@ -95,12 +95,11 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
-    @PutMapping("/estado/{codigoSolicitudVehiculo}")
+    @PutMapping("/estadoupdate")
     public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
-            @PathVariable UUID codigoSolicitudVehiculo,
-            @RequestBody SolicitudVehiculoActualizarEstadoDTO nuevoEstado
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO data
     ){
-        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(codigoSolicitudVehiculo, nuevoEstado));
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(data));
     }
 
     // LISTADO

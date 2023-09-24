@@ -66,6 +66,12 @@ public class VehiculoController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 
+    @GetMapping("/disponibilidad")
+    public ResponseEntity<List<VehiculoDto>> listadoPorDisponibilidad(
+            @RequestParam String claseName, @RequestParam String fechaSalida, @RequestParam String fechaEntrada) {
+        return ResponseEntity.ok(vehiculoService.listarPorDisponibilidad(claseName, fechaSalida, fechaEntrada));
+    }
+
     @PostMapping(value = "/insertar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<MensajeRecord> registrar(
             @RequestPart(name = "imagen", required = false) MultipartFile imagen,

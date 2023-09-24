@@ -32,7 +32,7 @@ public class SolicitudVehiculoDto {
 
     @NotNull(message = "Fecha de realización de la solicitud es obligatoria")
     @PastOrPresent(message = "La fecha de solicitud es superior a la actual")
-    @FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
+    //@FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSolicitud;

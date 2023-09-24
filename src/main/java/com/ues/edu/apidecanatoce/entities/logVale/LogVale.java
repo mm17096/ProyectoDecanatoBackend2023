@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.logVale;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.LogValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.LogValeDto;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,7 +32,7 @@ public class LogVale {
     @Column(name = "fecha_logvale", nullable = false)
     private LocalDateTime fechaLogVale;
 
-    @Column(name = "actividad", length = 750)
+    @Column(name = "actividad", length = 1000)
     private String actividad;
 
     @Column(name = "usuario")

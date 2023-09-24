@@ -4,9 +4,11 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActuali
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
@@ -34,6 +36,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     private final IVehiculoRepository vehiculoRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final IUsuarioRepository usuarioRepository;
+    private final ISolicitudValeRepository solicitudValeRepository;
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
         LocalDate fechaActual = LocalDate.now();
@@ -146,19 +149,54 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
-        ///SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+        SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+        data.setEstado(3);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
         return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
                 usuarioRepository)).toDto();
     }
 
     @Override
-    public SolicitudVehiculoActualizarEstadoDTO updateEstado(
-            UUID codigoSolicitudVehiculo, SolicitudVehiculoActualizarEstadoDTO nuevoEstado) {
+    public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Obtener el ID del usuario autenticado
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String jefeDeptoA = "";
+        String rol = "";
+        int estado = 0;
+
         SolicitudVehiculo solicitudExistente =
-                solicitudVehiculoServices.findById(codigoSolicitudVehiculo).orElseThrow(
+                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
-        solicitudExistente.setEstado(nuevoEstado.getEstado());
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            jefeDeptoA = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+            rol = String.valueOf(usuario.getRole());
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+        if (Objects.equals(rol, "JEFE_DEPTO")) {
+            solicitudExistente.setJefeDepto(jefeDeptoA);
+            estado = 2;
+        } else if (Objects.equals(rol, "SECR_DECANATO")) {
+            solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
+            estado = 3;
+        } else if (Objects.equals(rol, "DECANO")) {
+            solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
+            estado = 4;
+        }
+
+        if (data.getEstado() == 6){
+            solicitudExistente.setEstado(6);
+        } else if(data.getEstado() == 15){
+            solicitudExistente.setEstado(15);
+        }else{
+            solicitudExistente.setEstado(estado);
+        }
         solicitudVehiculoServices.save(solicitudExistente);
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
@@ -169,6 +207,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol) {
 
         int estadoFilter = 0;
+        int estadoRevision = 6;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -193,8 +232,10 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         List<SolicitudVehiculo> solicitudVehiculos;
-        if (Objects.equals(rol, "SECR_DECANATO")){
+        if (Objects.equals(rol, "DECANO")){
             solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
+        }else if(Objects.equals(rol, "SECR_DECANATO")){
+            solicitudVehiculos = solicitudVehiculoServices.findByAllSecre(estadoFilter, estadoRevision);
         }else{
             solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
         }
