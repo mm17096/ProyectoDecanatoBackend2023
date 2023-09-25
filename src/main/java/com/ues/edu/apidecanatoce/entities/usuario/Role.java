@@ -16,7 +16,6 @@ public enum Role {
   ADMIN(Collections.emptySet()),
   USER(Collections.emptySet()),
   JEFE_DEPTO(Collections.emptySet()),
-
   SECR_DECANATO(Collections.emptySet()),
   DECANO(Collections.emptySet() ),
   ASIS_FINANCIERO(Collections.emptySet()),
