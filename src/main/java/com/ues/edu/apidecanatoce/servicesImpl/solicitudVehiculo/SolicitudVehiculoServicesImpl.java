@@ -158,6 +158,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
@@ -254,5 +255,11 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             dto.setEstadoString(estadoAsString);
             return dto;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SolicitudVehiculoPeticionDtO> listarTodas() {
+        List<SolicitudVehiculo> solicitud=this.solicitudVehiculoServices.findAll();
+        return solicitud.stream().map(SolicitudVehiculo::toDto).toList();
     }
 }

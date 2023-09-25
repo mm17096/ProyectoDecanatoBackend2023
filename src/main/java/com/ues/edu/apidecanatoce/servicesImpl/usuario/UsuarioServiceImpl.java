@@ -5,9 +5,6 @@ import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterRequest;
-import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioDto;
-import com.ues.edu.apidecanatoce.dtos.usuario.UsuarioPeticionDto;
-import com.ues.edu.apidecanatoce.entities.cargos.Cargo;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
@@ -29,7 +26,6 @@ import java.util.List;
 
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
-
     private final IUsuarioRepository usuarioRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final EstadosServiceImpl estadosService;
@@ -140,7 +136,6 @@ no se esta usando
                 rol = Role.USER;
                 break;
             }
-
         }
 
 
@@ -203,7 +198,7 @@ no se esta usando
                 break;
             }
             default: {
-                rol = Role.USER;
+                rol = Role.ADMIN;
                 break;
             }
 

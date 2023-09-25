@@ -12,5 +12,10 @@ import lombok.NoArgsConstructor;
 public class BodyEmail {
     String asunto;
     String receptor;
+    String titulo;
+    String email;
     String mensaje;
+    String centro;
+    String codigo;
+    String abajo;
 }

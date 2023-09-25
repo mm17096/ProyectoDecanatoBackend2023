@@ -19,10 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
-import static com.ues.edu.apidecanatoce.entities.usuario.Role.DECANO;
-
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
