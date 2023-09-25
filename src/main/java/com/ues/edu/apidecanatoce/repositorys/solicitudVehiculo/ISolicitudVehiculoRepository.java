@@ -25,6 +25,6 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
     @Query("SELECT sv " +
             "FROM SolicitudVehiculo sv " +
             "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision")
-    List<SolicitudVehiculo> findByAllSecre(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
+    List<SolicitudVehiculo> findByAllSecreDec(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
 
 }
