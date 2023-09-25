@@ -13,6 +13,7 @@ import static com.ues.edu.apidecanatoce.entities.usuario.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {
+
   ADMIN(Set.of(
           ADMIN_LEER,
           ADMIN_CREAR,
