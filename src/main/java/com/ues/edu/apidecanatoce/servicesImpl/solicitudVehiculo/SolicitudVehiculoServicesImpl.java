@@ -158,6 +158,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
