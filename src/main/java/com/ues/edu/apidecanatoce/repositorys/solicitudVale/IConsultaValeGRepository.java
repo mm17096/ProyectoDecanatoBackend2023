@@ -41,4 +41,6 @@ public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacio
             "WHERE sv.solicitud_vehiculo_id = :id\n" +
             "ORDER BY v.correlativo ASC", nativeQuery = true)
     List<ConsultaCantidadValesDelAlDto> listarValesDelAl(UUID id);
+
+
 }
