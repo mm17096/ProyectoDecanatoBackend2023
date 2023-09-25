@@ -13,14 +13,56 @@ import static com.ues.edu.apidecanatoce.entities.usuario.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {
-  ADMIN(Collections.emptySet()),
-  USER(Collections.emptySet()),
-  JEFE_DEPTO(Collections.emptySet()),
-  SECR_DECANATO(Collections.emptySet()),
-  DECANO(Collections.emptySet() ),
-  ASIS_FINANCIERO(Collections.emptySet()),
-  JEFE_FINANACIERO(Collections.emptySet()),
-  VIGILANTE(Collections.emptySet()),
+
+  ADMIN(Set.of(
+          ADMIN_LEER,
+          ADMIN_CREAR,
+          ADMIN_MODIFICAR,
+          ADMIN_BUSCAR
+  )),
+  USER(Set.of(
+          USER_LEER,
+          USER_CREAR,
+          USER_MODIFICAR,
+          USER_BUSCAR
+  )),
+  JEFE_DEPTO(Set.of(
+          JEFE_DEPTO_LEER,
+          JEFE_DEPTO_CREAR,
+          JEFE_DEPTO_MODIFICAR,
+          JEFE_DEPTO_BUSCAR
+  )),
+
+  SECR_DECANATO(Set.of(
+          SECR_DECANATO_LEER,
+          SECR_DECANATO_CREAR,
+          SECR_DECANATO_MODIFICAR,
+          SECR_DECANATO_BUSCAR
+  )),
+  DECANO(Set.of(
+          DECANO_LEER,
+          DECANO_CREAR,
+          DECANO_MODIFICAR,
+          DECANO_BUSCAR
+  ) ),
+  ASIS_FINANCIERO(Set.of(
+          ASIS_FINANCIERO_LEER,
+          ASIS_FINANCIERO_CREAR,
+          ASIS_FINANCIERO_MODIFICAR,
+          ASIS_FINANCIERO_BUSCAR
+  )),
+  JEFE_FINANACIERO(Set.of(
+          JEFE_FINANACIERO_LEER,
+          JEFE_FINANACIERO_CREAR,
+          JEFE_FINANACIERO_MODIFICAR,
+          JEFE_FINANACIERO_BUSCAR
+  )),
+  VIGILANTE(Set.of(
+          VIGILANTE_LEER,
+          VIGILANTE_CREAR,
+          VIGILANTE_MODIFICAR,
+          VIGILANTE_BUSCAR
+  )),
 
   ;
 

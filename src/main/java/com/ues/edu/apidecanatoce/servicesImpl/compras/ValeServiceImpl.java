@@ -23,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +43,6 @@ public class ValeServiceImpl implements IValeService {
     private final IEmpleadoRepository empleadoRepository;
     private final EstadosServiceImpl estadosService;
     private final PasswordEncoder passwordEncoder;
-
-    private Usuario usuario;
-    private Empleado empleado;
 
     @Override
     public ValeDependeDto registrar(ValeDto data) {
@@ -136,18 +132,18 @@ public class ValeServiceImpl implements IValeService {
 
     @Override
     public UsuarioRespuestaDto validarUsuario(UsuarioMandarDto data) {
-        usuario = OptenerUsuario(data.getNombre());
+        Usuario usuario = OptenerUsuario(data.getNombre());
         if (usuario.getCodigoUsuario() == null) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario no existe");
         }
 
-        empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
+        Empleado empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
 
         if (!passwordEncoder.matches(data.getClave(), usuario.getPassword())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La contraseña no coincide");
         }
 
-        if (this.empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
+        if (empleado.getEstado() != estadosService.leerPorNombre("Activo").getCodigoEstado()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El usuario esta inactivo");
         }
 

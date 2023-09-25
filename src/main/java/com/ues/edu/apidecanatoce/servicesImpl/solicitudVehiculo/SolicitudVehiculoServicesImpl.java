@@ -158,6 +158,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
@@ -179,13 +180,15 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             System.out.println("USUARIO VACIO");
         }
 
-        if (Objects.equals(rol, "JEFE_DEPTO")) {
+        if (Objects.equals(rol, "JEFE_DEPTO") ||
+                Objects.equals(rol, "JEFE_FINANACIERO") ||
+                (Objects.equals(rol, "DECANO") && data.getEstado() == 1 )) {
             solicitudExistente.setJefeDepto(jefeDeptoA);
             estado = 2;
         } else if (Objects.equals(rol, "SECR_DECANATO")) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 3;
-        } else if (Objects.equals(rol, "DECANO")) {
+        } else if (Objects.equals(rol, "DECANO") && data.getEstado() == 3) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 4;
         }
@@ -208,6 +211,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         int estadoFilter = 0;
         int estadoRevision = 6;
+        int estadoDecanoJefe = 1;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -223,7 +227,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             System.out.println("USUARIO VACIO");
         }
 
-        if (Objects.equals(rol, "JEFE_DEPTO")) {
+        if (Objects.equals(rol, "JEFE_DEPTO") || Objects.equals(rol, "JEFE_FINANACIERO")) {
             estadoFilter = 1;
         } else if (Objects.equals(rol, "SECR_DECANATO")) {
             estadoFilter = 2;
@@ -233,9 +237,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         List<SolicitudVehiculo> solicitudVehiculos;
         if (Objects.equals(rol, "DECANO")){
-            solicitudVehiculos = solicitudVehiculoServices.findAllByEstado(estadoFilter);
+            solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoDecanoJefe);
         }else if(Objects.equals(rol, "SECR_DECANATO")){
-            solicitudVehiculos = solicitudVehiculoServices.findByAllSecre(estadoFilter, estadoRevision);
+            solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoRevision);
         }else{
             solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
         }
