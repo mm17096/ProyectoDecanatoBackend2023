@@ -113,4 +113,10 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(vehiculos);
     }
 
+    @GetMapping("/todas")
+    public ResponseEntity<List<SolicitudVehiculoPeticionDtO>> listarTodasSolicitudes(){
+        List<SolicitudVehiculoPeticionDtO> listSolicitudes = servicioSolicitudVehiculo.listarTodas();
+        return ResponseEntity.ok(listSolicitudes);
+    }
+
 }
