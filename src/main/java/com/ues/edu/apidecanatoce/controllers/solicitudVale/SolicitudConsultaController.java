@@ -9,6 +9,7 @@ import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
@@ -56,8 +57,10 @@ public class SolicitudConsultaController {
 
     @GetMapping("/listarvalesdelal/{id}")
     public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@PathVariable UUID id) throws Exception {
+        List<ConsultaCantidadValesDelAlDto> vehiculos = consultaValeService.lisConsultaValesDelAlDto(id);
+        return ResponseEntity.ok(vehiculos);
      //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
-        return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
+       // return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
     }
    /* @GetMapping("/api")
     public String obtenerDatos(@RequestParam("fecha") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fecha) {

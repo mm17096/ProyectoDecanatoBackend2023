@@ -9,6 +9,7 @@ import java.util.UUID;
 
 
 public interface ConsultaValeGDto {
+    UUID getSolicitudvehiculoid();
     UUID getIddetalleasignacionvale();
     UUID getIdasignacionvale();
     UUID getValeid();
