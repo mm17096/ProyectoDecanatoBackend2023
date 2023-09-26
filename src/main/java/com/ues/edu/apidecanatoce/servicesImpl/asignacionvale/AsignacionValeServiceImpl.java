@@ -19,6 +19,7 @@ import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.SolicitudVehiculoServicesImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -304,10 +305,20 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud) {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
-
         if (solicitudVale != null) {
             solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
+        }
+    }
+    @Override
+    public SolicitudValeEstadoEntradaDto actualizarEstadoEntradaSolicitud(UUID id, int estadoSolicitud) {
+        SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
+
+        if (solicitudVale != null) {
+            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            return solicitudValeRepository.save(solicitudVale).toSolicitudEstadoEntradadDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
         }

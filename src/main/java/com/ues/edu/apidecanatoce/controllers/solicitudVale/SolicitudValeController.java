@@ -2,10 +2,14 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVale;
 
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudValeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,5 +53,16 @@ public class SolicitudValeController {
     public ResponseEntity<List<SolicitudValeDependeDto>> listarSinPagina() {
         List<SolicitudValeDependeDto> solicitud = solicitudValeService.listarSinPaginas();
         return ResponseEntity.ok(solicitud);
+    }
+
+    @GetMapping("/buscarcodigosolicitudvale")
+    public ResponseEntity<SolicitudVale> buscandocodigo( @RequestParam("codigo") UUID id) {//correcto
+        SolicitudVale es=this.solicitudValeService.codigosolicitudvehiculo(id);
+        return ResponseEntity.ok(es);
+    }
+
+    @PutMapping("/actualizar2/{id}")
+    public ResponseEntity<SolicitudVale> modificarsolicitud_vale(@PathVariable UUID id, @Valid @RequestBody SolicitudVale solicitudvale){
+        return ResponseEntity.ok(solicitudValeService.actualizar_solicitudvale(id, solicitudvale));
     }
 }

@@ -31,6 +31,8 @@ public interface IAsignacionValeService {
 
     SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud);
 
+    SolicitudValeEstadoEntradaDto actualizarEstadoEntradaSolicitud(UUID id, int estadoSolicitud);
+
     SolicitudVehiculoModDto actualizarEstadoSolicitudVehiculo(UUID id, int estadoSolicitudVehiculo);
 
     LiquidarValesDto liquidarVales(LiquidarValesDto data);
