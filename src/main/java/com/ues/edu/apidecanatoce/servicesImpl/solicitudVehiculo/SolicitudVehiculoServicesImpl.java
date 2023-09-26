@@ -256,4 +256,10 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             return dto;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public List<SolicitudVehiculoPeticionDtO> listarTodas() {
+        List<SolicitudVehiculo> solicitud=this.solicitudVehiculoServices.findAll();
+        return solicitud.stream().map(SolicitudVehiculo::toDto).toList();
+    }
 }

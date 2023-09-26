@@ -20,7 +20,7 @@ public interface IVehiculoService{
 
     List<VehiculoDto> listarPorPlaca(String codigoplaca);
 
-    List<VehiculoDto> listarPorClase(String nombreClase);
+    List<String> listarPorClase();
 
     List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada);
 

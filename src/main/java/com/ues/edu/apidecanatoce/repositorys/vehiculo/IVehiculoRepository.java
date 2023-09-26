@@ -15,7 +15,8 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, UUID> {
     boolean existsByPlacaIgnoreCase(String placa);
     boolean existsByPlacaAndCodigoVehiculoNot(String placa, UUID codigoVehiculo);
     List<Vehiculo> findByPlacaIgnoreCase(String mio);
-    List<Vehiculo> findByClaseIgnoreCase(String clase);
+    @Query(value = "select tv.clase  from tb_vehiculo tv group by tv.clase", nativeQuery = true)
+    List<String> showByClassFiltrar();
     @Query(value = "SELECT * FROM tb_vehiculo v WHERE v.codigo_vehiculo NOT IN ( select  s.codigo_vehiculo \n" +
             "    FROM tb_solicitud_vehiculo s \n" +
             "    --fecha salida\n" +

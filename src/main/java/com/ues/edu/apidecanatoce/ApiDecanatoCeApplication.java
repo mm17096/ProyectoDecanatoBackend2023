@@ -19,6 +19,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.SpringVersion;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.UUID;
 
 import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
@@ -45,6 +47,8 @@ public class ApiDecanatoCeApplication {
                 data.setTelefono("0000-0000");
                 data.setNombrefoto("");
                 data.setUrlfoto("");
+                data.setLicencia("");
+                data.setTipolicencia("");
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
                 data.setCargo(cargoService.leerPorNombre("ADMINISTRADOR").getId());
                 data.setDepartamento(deptoServiceImp.leerPorNombre("ING DE SISTEMAS").getCodigoDepto());
