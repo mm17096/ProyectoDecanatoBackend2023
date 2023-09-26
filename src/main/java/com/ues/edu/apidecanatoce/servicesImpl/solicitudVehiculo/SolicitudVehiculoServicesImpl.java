@@ -1,10 +1,10 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
-import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
@@ -121,7 +121,17 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             return dto;
         });
     }
+    @Override
+    public EstadoSolicitudVehiculoDto actualizarEstadoSolcitudVehiculo(UUID id, int estado) {
+        SolicitudVehiculo solicitudVehiculo = this.solicitudVehiculoServices.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitudVehiculo"));
 
+        if (solicitudVehiculo != null) {
+            solicitudVehiculo.setEstado(estado);
+            return solicitudVehiculoServices.save(solicitudVehiculo).toEstadoSolicitudVehiculoDto();
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
+        }
+    }
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

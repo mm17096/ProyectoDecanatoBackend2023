@@ -41,8 +41,10 @@ public class AsignacionValeController {
 
 
     @PostMapping("/insertar")
-    public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionValeInDto asignacionVale) throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale));
+    public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionUsuarioDto data) throws Exception {
+        AsignacionValeInDto asignacionVale = data.getAsignacionValeInDto();
+        String usuario = data.getIdUsuarioLogueado();
+        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale, usuario));
     }
 
     @PostMapping("/devolver")

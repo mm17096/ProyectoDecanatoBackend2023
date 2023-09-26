@@ -1,8 +1,10 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
 import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
+import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVale.ISolicitudValeVRepository;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class SolicitudValeServiceImpl implements ISolicitudValeService {
     private final ISolicitudValeVRepository solicitudValeRepository;
     private final ISolicitudVehiculoRepository solicitudVehiculoRepository;
+
     @Override
     public SolicitudValeDependeDto registrar(SolicitudValeADto data) {
         return solicitudValeRepository.save(data.toEntityComplete(solicitudVehiculoRepository)).toDTOt();
@@ -58,5 +61,17 @@ public class SolicitudValeServiceImpl implements ISolicitudValeService {
     public List<SolicitudValeDependeDto> listarSinPaginas() {
         List<SolicitudVale> documento = this.solicitudValeRepository.findAll();
         return documento.stream().map(SolicitudVale::toDTOt).toList();
+    }
+
+    @Override
+    public SolicitudVale codigosolicitudvehiculo(UUID id) {
+        SolicitudVale buscar= solicitudValeRepository.findBySolicitudVehiculo_CodigoSolicitudVehiculo(id);
+        return buscar;
+    }
+
+    @Override
+    public SolicitudVale actualizar_solicitudvale(UUID id, SolicitudVale solicitudVale) {
+        solicitudVale.setIdSolicitudVale(id);
+        return solicitudValeRepository.save(solicitudVale);
     }
 }
