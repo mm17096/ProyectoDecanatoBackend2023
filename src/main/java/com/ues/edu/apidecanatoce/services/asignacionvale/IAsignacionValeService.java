@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 public interface IAsignacionValeService {
-    AsignacionValeInDto registrar(AsignacionValeInDto data);
+    AsignacionValeInDto registrar(AsignacionValeInDto data, String usuario);
 
     AnularMisionDto anularMision(AnularMisionDto data);
     AsignacionValeDto leerPorId(UUID id);

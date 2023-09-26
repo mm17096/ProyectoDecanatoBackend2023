@@ -53,7 +53,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
-    public AsignacionValeInDto registrar(AsignacionValeInDto data) {
+    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario) {
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -110,6 +110,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                         logVale.setFechaLogVale(fechaActualLog);
                         logVale.setActividad("Vale asignado a una misión");
                         logVale.setVale(valesAsignar.get(i));
+                        logVale.setUsuario(usario);
                         logVale(logVale);
 
                     } catch (Exception e) {
@@ -365,6 +366,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale consumido");
                 logVale.setVale(data.getValesLiquidar().get(i));
+                logVale.setUsuario("");
                 logVale(logVale);
             }
             //Cambian el estado de la asignación
@@ -405,6 +407,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         logVale.setEstadoVale(data.getEstadoVale());
         logVale.setFechaLogVale(data.getFechaLogVale());
         logVale.setActividad(data.getActividad());
+        logVale.setUsuario(data.getUsuario());
         logVale.setVale(vale);
 
         try {
