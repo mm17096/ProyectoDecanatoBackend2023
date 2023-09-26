@@ -21,7 +21,7 @@ public class MailController {
 
     @PostMapping("/enviarmail")
     public ResponseEntity<String> send(@RequestBody BodyEmail request) throws IOException {
-        return ResponseEntity.ok(mailService.sendTextEmail(request));
+        return ResponseEntity.ok(mailService.send(request));
     }
 
 

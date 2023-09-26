@@ -9,10 +9,12 @@ public enum Permission {
 
     ADMIN_LEER("admin:leer"),
     ADMIN_CREAR("admin:crear"),
-
     ADMIN_MODIFICAR("admin:modificar"),
-
     ADMIN_BUSCAR("admin:buscar"),
+
+    DOCENTE_BUSCAR("docente:buscar"),
+  
+    DOCENTE_LEER("docente:leer"),
 
     USER_LEER  ("user:leer"),
     USER_CREAR("user:crear"),
@@ -62,8 +64,6 @@ public enum Permission {
     VIGILANTE_MODIFICAR("vigilante:modificar"),
 
     VIGILANTE_BUSCAR("vigilante:buscar"),
-
-
 
     ;
 
