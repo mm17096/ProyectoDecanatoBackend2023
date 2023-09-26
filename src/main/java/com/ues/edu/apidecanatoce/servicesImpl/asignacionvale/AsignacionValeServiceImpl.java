@@ -355,6 +355,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale consumido");
                 logVale.setVale(data.getValesLiquidar().get(i));
+                logVale.setUsuario("");
                 logVale(logVale);
             }
             //Cambian el estado de la asignación
@@ -395,6 +396,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         logVale.setEstadoVale(data.getEstadoVale());
         logVale.setFechaLogVale(data.getFechaLogVale());
         logVale.setActividad(data.getActividad());
+        logVale.setUsuario(data.getUsuario());
         logVale.setVale(vale);
 
         try {
