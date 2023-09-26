@@ -40,7 +40,7 @@ public class DocumentosSoliCarServiceImpl implements IDocumentosSoliCarService{
             Files.write(destinationFile, archivo.getBytes());
 
             // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
-            soliCar.setNombreDocumento(generateUrlImage(filename));
+            soliCar.setNombreDocumento(filename);
             soliCar.setUrlDocumento(destinationFile.toString());
         } catch (IOException e) {
             e.printStackTrace();
