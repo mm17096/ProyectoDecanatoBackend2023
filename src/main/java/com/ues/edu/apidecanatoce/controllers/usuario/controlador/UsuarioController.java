@@ -32,12 +32,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.leerPorID(uuid));
     }
 
-    @GetMapping("/resetpass/{correo}/{dui}")
-    public ResponseEntity<Usuario> Resetpass(@PathVariable String correo, @PathVariable String dui) {
+    @PostMapping("/resetpass")
+    public ResponseEntity<Usuario> Resetpass(@RequestBody Respass respass) {
         usuario = new Usuario();
-        if(usuarioRepository.existsByEmpleadoCorreo(correo)){
-            if(usuarioRepository.existsByEmpleadoDui(dui)) {
-                usuario = usuarioRepository.findByEmpleadoDui(dui);
+        if(usuarioRepository.existsByEmpleadoCorreo(respass.getCorreo())){
+            if(usuarioRepository.existsByEmpleadoDui(respass.getDui())) {
+                usuario = usuarioRepository.findByEmpleadoDui(respass.getDui());
+                usuario.setCodigo(passwordEncoder.encode(respass.getCodigo()));
+                usuarioRepository.save(usuario);
             }
         }
         if(usuario.getCodigoUsuario() == null){
@@ -46,9 +48,20 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @GetMapping("/resetpass/confirmarcode/{codigo}")
+    public ResponseEntity<Usuario> Confirmarcode(@PathVariable String codigo) {
+        if(!passwordEncoder.matches(codigo, usuario.getCodigo())){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "El codigo no coincide");
+        }
+        return ResponseEntity.ok(usuario);
+    }
+
     @PutMapping("/credenciales")
     public ResponseEntity<Usuario> leerPorID(@RequestBody Usuario usuario) {
         Usuario usuarioM = usuarioService.OptenerUsuario(usuario.getUsername());
+        if(usuario.isNuevo()){
+            usuarioM.setNuevo(false);
+        }
         usuarioM.setClave(passwordEncoder.encode(usuario.getClave()));
         return ResponseEntity.ok(usuarioRepository.save(usuarioM));
     }
