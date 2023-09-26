@@ -12,4 +12,5 @@ import java.util.UUID;
 @Repository
 public interface ISolicitudValeVRepository extends JpaRepository<SolicitudVale, UUID> {
        //Page<SolicitudVale> findAll(Pageable pageable);
+    SolicitudVale  findBySolicitudVehiculo_CodigoSolicitudVehiculo(UUID codigosolicitudvehiculo);
 }
