@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Repository
 public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacionVale, UUID> {
-    @Query(value = "SELECT dav.id_detalle_asignacion_vale AS iddetalleasignacionvale," +
+    @Query(value = "SELECT sv.solicitud_vehiculo_id AS solicitudvehiculoid, dav.id_detalle_asignacion_vale AS iddetalleasignacionvale," +
             "dav.id_asignacion_vale AS idasignacionvale, dav.valeid AS valeid," +
             "av.estado AS estadoav, av.fecha AS fecha, sv.cantidad_vale AS cantidadvale, \n" +
             "sv.estado AS estadosv, sv.estado_entrada AS estadoentrada,\n" +

@@ -19,6 +19,7 @@ import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.SolicitudVehiculoServicesImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -52,7 +53,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
-    public AsignacionValeInDto registrar(AsignacionValeInDto data) {
+    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario) {
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -109,6 +110,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                         logVale.setFechaLogVale(fechaActualLog);
                         logVale.setActividad("Vale asignado a una misión");
                         logVale.setVale(valesAsignar.get(i));
+                        logVale.setUsuario(usario);
                         logVale(logVale);
 
                     } catch (Exception e) {
@@ -304,10 +306,20 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud) {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
-
         if (solicitudVale != null) {
             solicitudVale.setEstado(estadoSolicitud);
             return solicitudValeRepository.save(solicitudVale).toSolicitudValeModDto();
+        } else {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
+        }
+    }
+    @Override
+    public SolicitudValeEstadoEntradaDto actualizarEstadoEntradaSolicitud(UUID id, int estadoSolicitud) {
+        SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
+
+        if (solicitudVale != null) {
+            solicitudVale.setEstadoEntrada(estadoSolicitud);
+            return solicitudValeRepository.save(solicitudVale).toSolicitudEstadoEntradadDto();
         } else {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
         }
@@ -354,6 +366,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale consumido");
                 logVale.setVale(data.getValesLiquidar().get(i));
+                logVale.setUsuario("");
                 logVale(logVale);
             }
             //Cambian el estado de la asignación
@@ -394,6 +407,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         logVale.setEstadoVale(data.getEstadoVale());
         logVale.setFechaLogVale(data.getFechaLogVale());
         logVale.setActividad(data.getActividad());
+        logVale.setUsuario(data.getUsuario());
         logVale.setVale(vale);
 
         try {

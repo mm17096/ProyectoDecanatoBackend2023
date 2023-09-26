@@ -19,10 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
-import static com.ues.edu.apidecanatoce.entities.usuario.Role.DECANO;
-
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -42,12 +38,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/api/usuario/auth/**").permitAll()
-                                .requestMatchers("/api/usuario/auth/login").permitAll()
-                                .requestMatchers("/api/usuario/auth/sesion").permitAll()
+                                .requestMatchers("/api/usuario/**").permitAll()
+                                .requestMatchers("/api/correo/**").permitAll()
                                 .requestMatchers("/api/vehiculo/imagen/**").permitAll()
                                 .requestMatchers("/api/empleado/imagen/**").permitAll()
-                                //.requestMatchers("/api/depto/**").hasRole(DECANO.name())
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

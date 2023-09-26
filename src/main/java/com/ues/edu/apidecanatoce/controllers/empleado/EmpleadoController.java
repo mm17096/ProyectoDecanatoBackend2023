@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 
+import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.services.PathService;
 import com.ues.edu.apidecanatoce.servicesImpl.empleado.EmpleadoServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
@@ -24,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,14 +37,13 @@ public class EmpleadoController {
     private final EmpleadoServiceImpl empleadoServiceimpl;
     private final PathService pathService;
     private final HttpServletRequest request;
+    private final IEmpleadoRepository empleadoRepository;
 
-    private final UsuarioServiceImpl usuarioService;
-
-    public EmpleadoController(EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request, UsuarioServiceImpl usuarioService) {
+    public EmpleadoController(EmpleadoServiceImpl empleadoServiceimpl, PathService pathService, HttpServletRequest request, IEmpleadoRepository empleadoRepository) {
         this.empleadoServiceimpl = empleadoServiceimpl;
         this.pathService = pathService;
         this.request = request;
-        this.usuarioService = usuarioService;
+        this.empleadoRepository = empleadoRepository;
     }
 
 /////// Metodos reestructurados con EMpleadosServiceImplement /////////
@@ -49,6 +51,11 @@ public class EmpleadoController {
     @GetMapping("/{uuid}")
     public ResponseEntity<EmpleadoPeticionDto> leerPorID(@PathVariable UUID uuid) {
         return ResponseEntity.ok(empleadoServiceimpl.leerPorId(uuid));
+    }
+
+    @GetMapping("/motoristas")
+    public ResponseEntity<List<Empleado>> Motoristas() {
+        return ResponseEntity.ok(empleadoRepository.listaMotoristas());
     }
 
     @GetMapping("/lista")

@@ -33,6 +33,8 @@ public class LogValeDto {
     /*private String usuario;*/
     private UUID vale;
 
+    private  String usuario;
+
     public LogVale toEntity(IValeRepository vale){
         Vale vales = vale.findById(this.vale).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontro cargo"));
@@ -43,6 +45,7 @@ public class LogValeDto {
                 .fechaLogVale(this.fechaLogVale)
                 .actividad(this.actividad)
                 .vale(vales)
+                .usuario(this.usuario)
                 .build();
     }
 

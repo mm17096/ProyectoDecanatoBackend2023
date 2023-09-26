@@ -46,9 +46,9 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculoService.listarPorPlaca(codigoplaca));
     }
 
-    @GetMapping("/clase/{claseName}")
-    public ResponseEntity<List<VehiculoDto>> listadoPorClase(@PathVariable String claseName){
-        return ResponseEntity.ok(vehiculoService.listarPorClase(claseName));
+    @GetMapping("/clase")
+    public ResponseEntity<List<String>> listadoPorClase(){
+        return ResponseEntity.ok(vehiculoService.listarPorClase());
     }
 
     @GetMapping("/imagen/{nombrefoto}")

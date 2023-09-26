@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 public interface IAsignacionValeService {
-    AsignacionValeInDto registrar(AsignacionValeInDto data);
+    AsignacionValeInDto registrar(AsignacionValeInDto data, String usuario);
 
     AnularMisionDto anularMision(AnularMisionDto data);
     AsignacionValeDto leerPorId(UUID id);
@@ -30,6 +30,8 @@ public interface IAsignacionValeService {
     ValeModDto actualizarEstadoVale(UUID id, int estadoVale);
 
     SolicitudValeModDto actualizarEstadoSolicitud(UUID id, int estadoSolicitud);
+
+    SolicitudValeEstadoEntradaDto actualizarEstadoEntradaSolicitud(UUID id, int estadoSolicitud);
 
     SolicitudVehiculoModDto actualizarEstadoSolicitudVehiculo(UUID id, int estadoSolicitudVehiculo);
 

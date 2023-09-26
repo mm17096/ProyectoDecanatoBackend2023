@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.services.documentoVale;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovaleDto;
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
+import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,5 +25,7 @@ public interface Idocumentovaleservice {
     DocumentovalepeticionDto eliminar(UUID id);
 
     List<DocumentovaleDto> listarSinPagina(UUID id);
+
+
     List<DocumentovalepeticionDto> listarSinPaginas();
 }
