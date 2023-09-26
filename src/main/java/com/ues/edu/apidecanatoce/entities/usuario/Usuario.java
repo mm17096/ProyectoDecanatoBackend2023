@@ -40,6 +40,9 @@ no se esta usando
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "codigo")
+    private String codigo;
+
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false,
             foreignKey = @ForeignKey(name = "FK_usuario_empleado"))
