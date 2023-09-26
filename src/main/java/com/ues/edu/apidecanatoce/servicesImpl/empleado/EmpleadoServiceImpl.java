@@ -56,7 +56,6 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         this.deptopRepo = deptopRepo;
     }
 
-
     ///////// Metodos reestructurados /////////
     @Override
     public EmpleadoPeticionDto registrar(EmpleadoDto data) {
