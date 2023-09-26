@@ -4,13 +4,14 @@ import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActuali
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
-import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ILogSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.repositorys.vehiculo.IVehiculoRepository;
@@ -24,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,16 +38,36 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     private final IVehiculoRepository vehiculoRepository;
     private final IEmpleadoRepository empleadoRepository;
     private final IUsuarioRepository usuarioRepository;
-    private final ISolicitudValeRepository solicitudValeRepository;
+    private final ILogSoliVeRepository logSoliVeRepository;
+
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LocalDate fechaActual = LocalDate.now();
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String nombreUsuario= "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            nombreUsuario = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
         data.setFechaSolicitud(fechaActual);
         data.setEstado(1);
 
-        // uniad solicitante
-        return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
-                usuarioRepository)).toDto();
+        SolicitudVehiculo soliRegistrada = solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository, usuarioRepository));
+
+        LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
+        logSoliVe.setEstadoLogSolive(1);
+        logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
+        logSoliVe.setActividad("Solicitud de vehículo realizada");
+        logSoliVe.setUsuario(nombreUsuario);
+        logSoliVe.setSoliVe(soliRegistrada);
+        logSoliVeRepository.save(logSoliVe);
+        return soliRegistrada.toDto();
     }
 
     @Override
