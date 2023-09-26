@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
@@ -8,7 +9,6 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
-import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ILogSoliVeRepository;
@@ -44,16 +44,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LocalDate fechaActual = LocalDate.now();
-        String userName = authentication.getName();
-        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
-        String nombreUsuario= "";
-
-        if (user.isPresent()){
-            Usuario usuario = user.get();
-            nombreUsuario = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
-        }else{
-            System.out.println("USUARIO VACIO");
-        }
+        String nombreUsuario = obtenerUsuarioAutenticado(authentication);
 
         data.setFechaSolicitud(fechaActual);
         data.setEstado(1);
@@ -171,9 +162,22 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String nombreUsuario = obtenerUsuarioAutenticado(authentication);
+
         SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
         data.setEstado(3);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
+
+        LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
+        logSoliVe.setEstadoLogSolive(3);
+        logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
+        logSoliVe.setActividad("Modificacíon y asignación de motorista a la solicitud de vehículo");
+        logSoliVe.setUsuario(nombreUsuario);
+        logSoliVe.setSoliVe(codigoSolicitudVehiculo);
+        logSolicitudVehiculo(logSoliVe);
+
         return solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository,
                 usuarioRepository)).toDto();
     }
@@ -182,11 +186,13 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
+        String actividad = "";
 
         // Obtener el ID del usuario autenticado
         String userName = authentication.getName();
         Optional<Usuario> user = usuarioRepository.findByNombre(userName);
-        String jefeDeptoA = "";
+        String nombreCompletoUser = "";
         String rol = "";
         int estado = 0;
 
@@ -196,7 +202,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         if (user.isPresent()){
             Usuario usuario = user.get();
-            jefeDeptoA = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+            nombreCompletoUser = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
             rol = String.valueOf(usuario.getRole());
         }else{
             System.out.println("USUARIO VACIO");
@@ -205,24 +211,37 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         if (Objects.equals(rol, "JEFE_DEPTO") ||
                 Objects.equals(rol, "JEFE_FINANACIERO") ||
                 (Objects.equals(rol, "DECANO") && data.getEstado() == 1 )) {
-            solicitudExistente.setJefeDepto(jefeDeptoA);
+            solicitudExistente.setJefeDepto(nombreCompletoUser);
             estado = 2;
+            actividad = "Solicitud de vehículo aprobada por jefe de departamento";
         } else if (Objects.equals(rol, "SECR_DECANATO")) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 3;
+            actividad = "Asignación de vehiculo realizada";
         } else if (Objects.equals(rol, "DECANO") && data.getEstado() == 3) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 4;
+            actividad = "Solicitud de vehículo aprobada por decano";
         }
 
         if (data.getEstado() == 6){
             solicitudExistente.setEstado(6);
+            actividad = "Solicitud de vehículo enviada a revisión por decano";
         } else if(data.getEstado() == 15){
             solicitudExistente.setEstado(15);
+            actividad = "Solicitud de vehículo anulada por decano";
         }else{
             solicitudExistente.setEstado(estado);
         }
+
         solicitudVehiculoServices.save(solicitudExistente);
+        logSoliVe.setEstadoLogSolive(solicitudExistente.getEstado());
+        logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
+        logSoliVe.setUsuario(nombreCompletoUser);
+        logSoliVe.setSoliVe(solicitudExistente.getCodigoSolicitudVehiculo());
+        logSoliVe.setActividad(actividad);
+        logSolicitudVehiculo(logSoliVe);
+
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
                 .estado(solicitudExistente.getEstado()).build();
@@ -283,5 +302,41 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public List<SolicitudVehiculoPeticionDtO> listarTodas() {
         List<SolicitudVehiculo> solicitud=this.solicitudVehiculoServices.findAll();
         return solicitud.stream().map(SolicitudVehiculo::toDto).toList();
+    }
+
+    @Override
+    public LogSoliVeDTO logSolicitudVehiculo(LogSoliVeDTO data) {
+
+
+        SolicitudVehiculo soliVeh = this.solicitudVehiculoServices.findById(data.getSoliVe()).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solcitud de vehículo"));
+        LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
+
+        logSoliVe.setEstadoLogSolive(data.getEstadoLogSolive());
+        logSoliVe.setFechaLogSoliVe(data.getFechaLogSoliVe());
+        logSoliVe.setActividad(data.getActividad());
+        logSoliVe.setUsuario(data.getUsuario());
+        logSoliVe.setSoliVe(soliVeh);
+
+        try {
+            logSoliVeRepository.save(logSoliVe);
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
+        }
+        return data;
+    }
+
+    private String obtenerUsuarioAutenticado(Authentication authentication) {
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String nombreUsuario= "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            nombreUsuario = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+        return nombreUsuario;
     }
 }
