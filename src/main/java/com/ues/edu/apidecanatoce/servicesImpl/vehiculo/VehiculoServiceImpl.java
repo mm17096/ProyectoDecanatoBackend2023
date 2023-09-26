@@ -95,9 +95,9 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public List<VehiculoDto> listarPorClase(String nombreClase) {
-        List<Vehiculo> vehiculos = this.vehiculoRepository.findByClaseIgnoreCase(nombreClase);
-        return vehiculos.stream().map(Vehiculo::toDTO).toList();
+    public List<String> listarPorClase() {
+        List<String> vehiculos = this.vehiculoRepository.showByClassFiltrar();
+        return vehiculos;
     }
     @Override
     public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada) {
