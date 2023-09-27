@@ -1,10 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
@@ -349,5 +345,20 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             System.out.println("USUARIO VACIO");
         }
         return nombreUsuario;
+    }
+
+    @Override
+    public SoliVeActulizarFechaEntradaDTO updateFechaEntrada(SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO) {
+
+        SolicitudVehiculo solicitudExistente =
+                solicitudVehiculoServices.findById(fechaEntradaSoliVeDTO.getCodigoSolicitudVehiculo()).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+
+        solicitudExistente.setFechaEntrada(fechaEntradaSoliVeDTO.getFechaEntrada());
+        solicitudVehiculoServices.save(solicitudExistente);
+        return SoliVeActulizarFechaEntradaDTO.builder()
+                .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
+                .fechaEntrada(solicitudExistente.getFechaEntrada())
+                .build();
     }
 }
