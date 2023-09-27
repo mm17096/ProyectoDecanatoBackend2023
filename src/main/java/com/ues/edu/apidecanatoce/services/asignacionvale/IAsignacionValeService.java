@@ -16,10 +16,10 @@ import java.util.UUID;
 public interface IAsignacionValeService {
     AsignacionValeInDto registrar(AsignacionValeInDto data, String usuario);
 
-    AnularMisionDto anularMision(AnularMisionDto data);
+    AnularMisionDto anularMision(AnularMisionDto data, String usuario);
     AsignacionValeDto leerPorId(UUID id);
     Page<AsignacionValeDto> listar(Pageable pageable);
-    DevolucionValeDto devolverVale(DevolucionValeDto data);
+    DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario);
     AsignacionValeDto eliminar(UUID id);
     AsignacionValeOutDto verAsignacionesById(UUID id);
     DetalleAsignacionDto verDetalleById(UUID id);
@@ -35,7 +35,7 @@ public interface IAsignacionValeService {
 
     SolicitudVehiculoModDto actualizarEstadoSolicitudVehiculo(UUID id, int estadoSolicitudVehiculo);
 
-    LiquidarValesDto liquidarVales(LiquidarValesDto data);
+    LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario);
 
     AsignacionValeModDto actualizarEstadoAsignacion(UUID id, int estadoAsignacion);
 
