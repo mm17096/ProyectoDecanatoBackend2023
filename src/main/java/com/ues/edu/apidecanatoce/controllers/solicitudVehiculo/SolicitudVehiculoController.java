@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SoliVeActulizarFechaEntradaDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
@@ -119,8 +120,14 @@ public class SolicitudVehiculoController {
     }
 
     /*@PostMapping("/solitudaprobar")
-    public ResponseEntity<CambioestadosolicitudvehiculoDto> actualizarSolicitarVehiculoFinalizada(@RequestBody CambioestadosolicitudvehiculoDto cambioestado) throws Exception {
+    public ResponseEntity<ActualizarFechaEntradaSoliVeDTO> actualizarSolicitarVehiculoFinalizada(@RequestBody ActualizarFechaEntradaSoliVeDTO cambioestado) throws Exception {
         return ResponseEntity.ok(servicioSolicitudVehiculo.actualizarSolivehiculofinalizada(cambioestado));
     }*/
+
+    @PutMapping("/fecharegreso")
+    public ResponseEntity<SoliVeActulizarFechaEntradaDTO>
+    actualizar(@RequestBody SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO) {
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateFechaEntrada(fechaEntradaSoliVeDTO));
+    }
 
 }

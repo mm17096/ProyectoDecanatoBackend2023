@@ -1,12 +1,6 @@
 package com.ues.edu.apidecanatoce.services.solicitudVehiculo;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoActualizarEstadoDTO;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
-import com.ues.edu.apidecanatoce.dtos.vehiculo.VehiculoDto;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -33,4 +27,5 @@ public interface ISolicitudVehiculoServices {
     List<SolicitudVehiculoPeticionDtO> listarTodas();
 
     LogSoliVeDTO logSolicitudVehiculo(LogSoliVeDTO data);
+    SoliVeActulizarFechaEntradaDTO updateFechaEntrada(SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO);
 }
