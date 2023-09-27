@@ -1,8 +1,10 @@
 package com.ues.edu.apidecanatoce.services.solicitudVale;
 
 import com.ues.edu.apidecanatoce.dtos.documentovaleDto.DocumentovalepeticionDto;
+import com.ues.edu.apidecanatoce.dtos.documentovaleDto.SolicitudvaleDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudValeADto;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,4 +23,8 @@ public interface ISolicitudValeService {
     SolicitudValeDependeDto eliminar(UUID id);
 
     List<SolicitudValeDependeDto> listarSinPaginas();
+
+    SolicitudVale codigosolicitudvehiculo(UUID id);
+
+    SolicitudVale actualizar_solicitudvale(UUID id, SolicitudVale dto);
 }

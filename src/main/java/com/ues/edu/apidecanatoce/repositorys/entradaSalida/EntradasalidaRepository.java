@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface EntradasalidaRepository extends JpaRepository<Entrada_Salidas, UUID> {
-
+    Entrada_Salidas findByEstadoAndSolicitudvehiculo_CodigoSolicitudVehiculo(int dato,UUID id);
 }

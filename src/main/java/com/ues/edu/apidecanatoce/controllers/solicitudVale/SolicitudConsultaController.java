@@ -59,6 +59,7 @@ public class SolicitudConsultaController {
     public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@PathVariable UUID id) throws Exception {
         List<ConsultaCantidadValesDelAlDto> vehiculos = consultaValeService.lisConsultaValesDelAlDto(id);
         return ResponseEntity.ok(vehiculos);
+
     }
     @GetMapping("/listardocs/{id}")
     public ResponseEntity<List<ConsultaDocumentSoliCarDto>> listarDocumentoSoliCar(@PathVariable UUID id) throws Exception {
@@ -76,5 +77,9 @@ public class SolicitudConsultaController {
     public ResponseEntity<List<ConsultaSoliValeIdDto>> listarDocumentoValeid(@PathVariable UUID id) throws Exception {
         List<ConsultaSoliValeIdDto> vehiculos = consultaValeService.lisDocumentVale(id);
         return ResponseEntity.ok(vehiculos);
+      
+     //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
+       // return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
+
     }
 }

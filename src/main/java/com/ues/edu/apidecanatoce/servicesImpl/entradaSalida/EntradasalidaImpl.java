@@ -3,10 +3,13 @@ import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVale.SolicitudValeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -22,10 +25,23 @@ public class EntradasalidaImpl implements Ientradasalidaservice
 {
     private final EntradasalidaRepository entradasalidaRepository;
     private  final ISolicitudVehiculoRepository solicitudVehiculorepository;
+    private  final AsignacionValeServiceImpl asignacionValeServiceImpl;
+    private final SolicitudValeServiceImpl solicitudValeServiceImpl;
 
 
     @Override
     public EntradasalidaPeticionDto registrar(EntradasalidaDto data) {
+        if(data.getEstado()==2){
+            //entradasalida--- solicitudvehiculo-- solicitudvale
+            SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
+            asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
+
+            asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
+        }else if(data.getEstado()==1){
+            SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
+            asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),1);
+
+        }
         return entradasalidaRepository.save(data.toEntityComplete(solicitudVehiculorepository)).toDTO();
     }
 
@@ -68,5 +84,11 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     public EntradasalidaDto eliminar(UUID id) {
 
         return null;
+    }
+
+    @Override
+    public Entrada_Salidas listaEstado(int estadi, UUID id) {
+        Entrada_Salidas buscar= entradasalidaRepository.findByEstadoAndSolicitudvehiculo_CodigoSolicitudVehiculo(estadi, id);
+        return buscar;
     }
 }

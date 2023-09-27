@@ -2,6 +2,8 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeEstadoEntradaDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
@@ -176,5 +178,11 @@ public class SolicitudVehiculo {
                 .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
                 .horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
                 .cantidadPersonas(this.cantidadPersonas).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada).estado(this.estado).build();
+    }
+    public EstadoSolicitudVehiculoDto toEstadoSolicitudVehiculoDto(){
+        return EstadoSolicitudVehiculoDto.builder()
+                .idSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estado(this.estado)
+                .build();
     }
 }
