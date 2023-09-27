@@ -1,9 +1,6 @@
 package com.ues.edu.apidecanatoce.services.solicitudVale;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,4 +12,7 @@ public interface IConsultaValeService {
     List<ConsultaValeGDto> lisConsultaValeGDto(LocalDate fechaI, LocalDate fechaF) throws IOException;
     List<ConsultaCompraDto> lisConsultaCompraDto(LocalDate fechaI, LocalDate fechaF) throws IOException;
     List<ConsultaCantidadValesDelAlDto> lisConsultaValesDelAlDto(UUID id) throws IOException;
+    List<ConsultaDocumentSoliCarDto> lisDocumentSolicar(UUID id) throws IOException;
+    List<ConsultaSolisValeIdDto> lisDocumentValeid(UUID id) throws IOException;
+    List<ConsultaSoliValeIdDto> lisDocumentVale(UUID id) throws IOException;
 }
