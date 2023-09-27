@@ -52,6 +52,7 @@ public interface IAsignacionValeService {
     BuscarSolicitudVehiculoDto codigoSolicitudVehiculo(UUID id);
 
     List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) throws IOException;
+    List<ISolicitudValeFiltradasDto> findSolicitudValeByCodigo(UUID codigo) throws IOException;
 
     SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data);
 
