@@ -49,4 +49,12 @@ public class DocumentoSoliCarController {
         return ResponseEntity.ok(documentosService.registrar(file, soliCar));
     }
 
+    @PutMapping(value = "/edit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<MensajeRecord> updateFile(
+            @RequestPart(name = "archivo") MultipartFile file,
+            @RequestPart(name = "entidad") DocumentoSoliCar soliCar){
+        System.out.println(soliCar.getUrlDocumento());
+        return ResponseEntity.ok(documentosService.actualizar(file, soliCar));
+    }
+
 }

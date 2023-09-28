@@ -73,8 +73,32 @@ public class DocumentosSoliCarServiceImpl implements IDocumentosSoliCarService{
     }
 
     @Override
-    public DocumentoSoliCar actualizar(DocumentoSoliCar data) {
-        return null;
+    public MensajeRecord  actualizar(MultipartFile archivo, DocumentoSoliCar soliCar) {
+        try {
+            // borrar documento anterior
+            try {
+                Files.delete(Path.of(soliCar.getUrlDocumento()));
+                System.out.println("Imagen eliminada exitosamente.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error al eliminar la imagen.");
+            }
+            // Guardar la imagen en la carpeta del proyecto
+            String filename = pathService.generateFileName(archivo);
+            pathService.storeFile(archivo, filename);
+            Path destinationFile = pathService.generatePath(filename);
+            Files.write(destinationFile, archivo.getBytes());
+
+            // Guardar la URL de la imagen en el campo urlfoto y el nombre en nombrefoto del vehículo
+            soliCar.setNombreDocumento(filename);
+            soliCar.setUrlDocumento(destinationFile.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        documentosRepository.save(soliCar);
+
+        return new MensajeRecord("exito se guardo");
     }
 
     @Override
