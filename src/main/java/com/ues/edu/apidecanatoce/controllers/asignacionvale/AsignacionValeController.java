@@ -104,6 +104,11 @@ public class AsignacionValeController {
         return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByEstado(estado));
     }
 
+    @GetMapping("/listarsolicitudvalecodigo/{codigo}")
+    public ResponseEntity<List<ISolicitudValeFiltradasDto>> listarSolicitudValeEstado(@PathVariable UUID codigo) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByCodigo(codigo));
+    }
+
     @GetMapping("/solitudvale/{id}")
     public ResponseEntity<BuscarSolicitudValeDto> cantidadVales(@PathVariable UUID id) throws Exception {
         BuscarSolicitudValeDto cantidadValesDto = iAsignacionValeService.codigoSolictudVale(id);

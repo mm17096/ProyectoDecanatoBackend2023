@@ -468,6 +468,15 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByCodigo(UUID codigo) throws IOException {
+        if (this.solicitudValeRepository.findSolicitudValeByCodigo(codigo).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByCodigo(codigo);
+        }
+    }
+
+    @Override
     public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data) {
         System.out.println(data);
 
