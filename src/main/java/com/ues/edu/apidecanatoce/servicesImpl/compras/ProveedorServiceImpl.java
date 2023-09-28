@@ -8,6 +8,7 @@ import com.ues.edu.apidecanatoce.services.compras.IProveedorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,8 @@ public class ProveedorServiceImpl implements IProveedorService {
 
     @Override
     public List<ProveedorDto> listarSinPagina() {
-        List<Proveedor> proveedors= this.proveedorRepository.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<Proveedor> proveedors= this.proveedorRepository.findAll(sort);
         return proveedors.stream().map(Proveedor::toDTO).toList();
     }
 

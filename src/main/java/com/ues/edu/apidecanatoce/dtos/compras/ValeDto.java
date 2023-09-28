@@ -44,7 +44,7 @@ public class ValeDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @FutureOrPresent(message = "Debe ser una fecha superior o igual al presente")
-    private LocalDate fecha_vencimiento;
+    private LocalDate fechaVencimiento;
 
     @NotNull(message = "Correlativo es obligatorio")
     @Digits(integer = 19, fraction = 0, message = "Correlativo debe ser un número entero válido con máximo 19 dígitos")
@@ -55,7 +55,7 @@ public class ValeDto {
         Compra comprabuscar = compraRepository.findById(this.compra).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro compra"));
         return Vale.builder().id(this.id).estado(this.estado).valor(this.valor).compra(comprabuscar)
-                .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
+                .fechaVencimiento(this.fechaVencimiento).correlativo(this.correlativo).build();
     }
 
 
