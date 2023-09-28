@@ -31,7 +31,10 @@ public class DocumentoSoliCar {
     @Column(name = "urldocument")
     private String urlDocumento;
 
-    @DateTimeFormat(pattern = "yyyyur-MM-dd", iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "tipodocument")
+    private String tipoDocumento;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha")
     private LocalDate fecha;
