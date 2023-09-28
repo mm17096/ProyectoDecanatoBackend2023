@@ -48,13 +48,15 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/devolver")
-    public ResponseEntity<GenericResponse<?>> devolver(@RequestBody DevolucionValeDto listVales) {
+    public ResponseEntity<GenericResponse<?>> devolver(@RequestBody DevolucionValeUsuarioDto data) {
+        DevolucionValeDto listVales = data.getValeDevuelto();
+        String usuario = data.getUsuario();
         String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo realizar la Devolución", listVales);
         try {
-            this.asignacionValeService.devolverVale(listVales);
+            this.asignacionValeService.devolverVale(listVales, usuario);
             resp.setCode(1);
             if (listVales.getValesDevueltos().size() == 1) {
                 mensaje = "Vale devuelto!!";
@@ -71,13 +73,15 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/liquidar")
-    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesDto listVales) {
+    public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesUsuarioDto data) {
+        LiquidarValesDto listVales = data.getValesLiquidados();
+        String usuario = data.getUsuario();
         String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo finalizar la Misión", listVales);
         try {
-            this.asignacionValeService.liquidarVales(listVales);
+            this.asignacionValeService.liquidarVales(listVales, usuario);
             resp.setCode(1);
             resp.setMessage("Misión Finalizada!!");
             http = HttpStatus.OK;
@@ -104,6 +108,11 @@ public class AsignacionValeController {
         return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByEstado(estado));
     }
 
+    @GetMapping("/listarsolicitudvalecodigo/{codigo}")
+    public ResponseEntity<List<ISolicitudValeFiltradasDto>> listarSolicitudValeEstado(@PathVariable UUID codigo) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSolicitudValeByCodigo(codigo));
+    }
+
     @GetMapping("/solitudvale/{id}")
     public ResponseEntity<BuscarSolicitudValeDto> cantidadVales(@PathVariable UUID id) throws Exception {
         BuscarSolicitudValeDto cantidadValesDto = iAsignacionValeService.codigoSolictudVale(id);
@@ -127,8 +136,10 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/anular")
-    public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionDto anularMisionDto) throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto));
+    public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionUsuarioDto data) throws Exception {
+        AnularMisionDto anularMisionDto = data.getMisionAnulada();
+        String usuario = data.getUsuario();
+        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto, usuario));
     }
 
     @PostMapping("/solitudaprobar")

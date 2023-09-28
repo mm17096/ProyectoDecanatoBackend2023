@@ -142,7 +142,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public AnularMisionDto anularMision(AnularMisionDto data) {
+    public AnularMisionDto anularMision(AnularMisionDto data, String usuario){
         int estadoVale = 8;
         int estadoSolicitudes = 16;
         UUID codigoDetalleAsignacion;
@@ -176,6 +176,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale devuelto sin consumir, misión anulada");
                 logVale.setVale(data.getValesAsignacion().get(i));
+                logVale.setUsuario(usuario);
                 logVale(logVale);
             }
 
@@ -200,7 +201,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     //METODO PARA DEVOLVER LOS VALES
     @Override
-    public DevolucionValeDto devolverVale(DevolucionValeDto data) {
+    public DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario){
         LogValeDto logVale = new LogValeDto();
         LocalDateTime fechaActualLog = LocalDateTime.now();
         UUID codigoDetalleAsignacion;
@@ -224,6 +225,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale devuelto sin consumir en la misión");
                 logVale.setVale(data.getValesDevueltos().get(i));
+                logVale.setUsuario(usuario);
                 logVale(logVale);
             }
         } catch (Exception e) {
@@ -260,6 +262,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     }
 
+    //ESTE MÉTODO LISTA VALES PARA ASIGNAR PAGINADOS
     @Override
     public Page<IValeAsignarDto> lisIValeAsignarDtosPage(int cantidadVales, Pageable pageable) throws IOException {
         int pageNumber = pageable.getPageNumber();
@@ -342,7 +345,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA LIQUIDAR LOS VALES
     @Override
     @Transactional
-    public LiquidarValesDto liquidarVales(LiquidarValesDto data) {
+    public LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario) {
         System.out.println("Dto: " + data);
         LogValeDto logVale = new LogValeDto();
 
@@ -366,7 +369,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale.setFechaLogVale(fechaActualLog);
                 logVale.setActividad("Vale consumido");
                 logVale.setVale(data.getValesLiquidar().get(i));
-                logVale.setUsuario("");
+                logVale.setUsuario(usuario);
                 logVale(logVale);
             }
             //Cambian el estado de la asignación
@@ -464,6 +467,15 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
         } else {
             return this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+        }
+    }
+
+    @Override
+    public List<ISolicitudValeFiltradasDto> findSolicitudValeByCodigo(UUID codigo) throws IOException {
+        if (this.solicitudValeRepository.findSolicitudValeByCodigo(codigo).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
+        } else {
+            return this.solicitudValeRepository.findSolicitudValeByCodigo(codigo);
         }
     }
 

@@ -75,18 +75,20 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
                 throw new CustomException(HttpStatus.BAD_REQUEST, "La Licencia ya está registrada");
             }
         }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("DECANO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
+            }
+        }
+
         //metodo para verificar si ya existe un jefe de departamento
-        if (data.isJefe()) {
+        if (cargo.getNombreCargo().equals("JEFE DEPARTAMENTO")) {
             if (departamento != null && cargo != null) {
                 if (empleadoRepository.existsByDepartamentoAndCargo(departamento, cargo)) {
                     throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un jefe en el departamento");
                 }
-            }
-        }
-        //metodo para verificar si ya existe un decano
-        if (cargo.getNombreCargo().equals("Decano")) {
-            if (empleadoRepository.existsByCargo(cargo)) {
-                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
             }
         }
 
@@ -145,13 +147,13 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
             }
         }
 
-        if (cargo.getNombreCargo().equals("Decano")) {
+        if (cargo.getNombreCargo().equals("DECANO")) {
             if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)) {
                 throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
             }
         }
 
-        if (data.isJefe()) {
+        if (cargo.getNombreCargo().equals("JEFE DEPARTAMENTO")) {
             if (departamento != null && cargo != null) {
                 if (empleadoRepository.existsByDepartamentoAndCargoAndCodigoEmpleadoNot(departamento, cargo, id)) {
                     throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un jefe en el departamento");

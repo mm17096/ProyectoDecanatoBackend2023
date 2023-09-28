@@ -59,12 +59,27 @@ public class SolicitudConsultaController {
     public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@PathVariable UUID id) throws Exception {
         List<ConsultaCantidadValesDelAlDto> vehiculos = consultaValeService.lisConsultaValesDelAlDto(id);
         return ResponseEntity.ok(vehiculos);
+
+    }
+    @GetMapping("/listardocs/{id}")
+    public ResponseEntity<List<ConsultaDocumentSoliCarDto>> listarDocumentoSoliCar(@PathVariable UUID id) throws Exception {
+        List<ConsultaDocumentSoliCarDto> vehiculos = consultaValeService.lisDocumentSolicar(id);
+        return ResponseEntity.ok(vehiculos);
+    }
+
+    @GetMapping("/listardocv/{id}")
+    public ResponseEntity<List<ConsultaSolisValeIdDto>> listarDocumentoVale(@PathVariable UUID id) throws Exception {
+        List<ConsultaSolisValeIdDto> vehiculos = consultaValeService.lisDocumentValeid(id);
+        return ResponseEntity.ok(vehiculos);
+    }
+
+    @GetMapping("/listardocvid/{id}")
+    public ResponseEntity<List<ConsultaSoliValeIdDto>> listarDocumentoValeid(@PathVariable UUID id) throws Exception {
+        List<ConsultaSoliValeIdDto> vehiculos = consultaValeService.lisDocumentVale(id);
+        return ResponseEntity.ok(vehiculos);
+      
      //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
        // return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
+
     }
-   /* @GetMapping("/api")
-    public String obtenerDatos(@RequestParam("fecha") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fecha) {
-        // Aquí puedes usar la fecha (convertida en LocalDate) en tu lógica de negocio
-        return "Fecha recibida: " + fecha;
-    }*/
 }

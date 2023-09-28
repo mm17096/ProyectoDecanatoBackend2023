@@ -2,20 +2,15 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
 
 
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCantidadValesDelAlDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.*;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
-import com.ues.edu.apidecanatoce.repositorys.solicitudVale.IConsultaCompraRepository;
-import com.ues.edu.apidecanatoce.repositorys.solicitudVale.IConsultaValeGRepository;
-import com.ues.edu.apidecanatoce.repositorys.solicitudVale.IConsultaValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVale.*;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +25,8 @@ import java.util.*;
 public class ConsultaValeServiceImpl implements IConsultaValeService {
     private final IConsultaValeRepository consultaValeRepository;
     private final IConsultaCompraRepository consultaCompraRepository;
+    private final IConsultaDocumentSoliCarRepository consultaDocumentSoliCarRepository;
+    private final IConsultaDocumentValeRepository consultaDocumentValeRepository;
     private final IAsignacionValeRepository asignacionValeRepository;
     private final IValeRepository valeRepository;
     private final ILogValeRepository logValeRepository;
@@ -67,6 +64,33 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay vales para mostrar");
         } else {
             return this.consultaValeGRepository.listarValesDelAl(id);
+        }
+    }
+
+    @Override
+    public List<ConsultaDocumentSoliCarDto> lisDocumentSolicar(UUID id) throws IOException {
+        if (this.consultaDocumentSoliCarRepository.listarDocumentoSoli(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay documentos para mostrar");
+        } else {
+            return this.consultaDocumentSoliCarRepository.listarDocumentoSoli(id);
+        }
+    }
+
+    @Override
+    public List<ConsultaSolisValeIdDto> lisDocumentValeid(UUID id) throws IOException {
+        if (this.consultaDocumentValeRepository.listarDocumentoSoliValeid(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay documentos para mostrar");
+        } else {
+            return this.consultaDocumentValeRepository.listarDocumentoSoliValeid(id);
+        }
+    }
+
+    @Override
+    public List<ConsultaSoliValeIdDto> lisDocumentVale(UUID id) throws IOException {
+        if (this.consultaDocumentValeRepository.listarDocumentoSoliVale(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay documentos para mostrar");
+        } else {
+            return this.consultaDocumentValeRepository.listarDocumentoSoliVale(id);
         }
     }
 }
