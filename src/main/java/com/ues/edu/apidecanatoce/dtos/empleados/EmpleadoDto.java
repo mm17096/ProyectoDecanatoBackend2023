@@ -35,11 +35,11 @@ public class EmpleadoDto {
     private String dui;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 5, max = 35, message = "El nombre debe tener entre 5 y 35 caracteres")
+    @Size(min = 3, max = 35, message = "El nombre debe tener entre 5 y 35 caracteres")
     private String nombre;
 
     @NotBlank(message = "El apellido es obligatorio")
-    @Size(min = 5, max = 35, message = "El apellido debe tener entre 5 y 35 caracteres")
+    @Size(min = 3, max = 35, message = "El apellido debe tener entre 5 y 35 caracteres")
     private String apellido;
 
     @NotBlank(message = "El telefono es obligatorio")
@@ -61,8 +61,8 @@ public class EmpleadoDto {
     @NotNull(message = "La estado no puede ser nula")
     private int estado;
 
-    @NotNull(message = "Confirmar si es jefe o no, es obligatorio")
-    private boolean jefe;
+    //@NotNull(message = "Confirmar si es jefe o no, es obligatorio")
+    //private boolean jefe;
 
     @NotBlank(message = "El correo es obligatorio")
     @Size(min = 16, max = 35, message = "La licencia debe tener entre 16 y 35 caracteres")
@@ -89,7 +89,7 @@ public class EmpleadoDto {
         return Empleado.builder().codigoEmpleado(this.codigoEmpleado).dui(this.dui).nombre(this.nombre)
                 .apellido(this.apellido).telefono(this.telefono).licencia(this.licencia)
                 .tipolicencia(this.tipolicencia)
-                .fechalicencia(this.fechalicencia).estado(this.estado).jefe(this.jefe)
+                .fechalicencia(this.fechalicencia).estado(this.estado)
                 .correo(this.correo).nombrefoto(this.nombrefoto).urlfoto(this.urlfoto).cargo(cargobuscar)
                 .departamento(departamentobuscar).build();
     }
@@ -104,7 +104,7 @@ public class EmpleadoDto {
         return Empleado.builder().codigoEmpleado(this.codigoEmpleado).dui(this.dui).nombre(this.nombre)
                 .apellido(this.apellido).telefono(this.telefono).licencia(this.licencia)
                 .tipolicencia(this.tipolicencia)
-                .fechalicencia(this.fechalicencia).estado(this.estado).jefe(this.jefe)
+                .fechalicencia(this.fechalicencia).estado(this.estado)
                 .correo(this.correo).nombrefoto(this.nombrefoto).urlfoto(this.urlfoto).cargo(cargobuscar)
                 .departamento(departamentobuscar).build();
     }
