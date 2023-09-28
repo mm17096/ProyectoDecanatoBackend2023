@@ -37,14 +37,14 @@ public class Vale {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "fecha_vencimiento")
-    private LocalDate fecha_vencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(name ="correlativo")
     private long correlativo;
 
     public ValeDependeDto toDTO() {
         return ValeDependeDto.builder().id(this.id).estado(this.estado).valor(this.valor).compra(this.compra.toDepDTO())
-                .fecha_vencimiento(this.fecha_vencimiento).correlativo(this.correlativo).build();
+                .fechaVencimiento(this.fechaVencimiento).correlativo(this.correlativo).build();
     }
     public ValeModDto toValeModDto() {
         return ValeModDto.builder()
