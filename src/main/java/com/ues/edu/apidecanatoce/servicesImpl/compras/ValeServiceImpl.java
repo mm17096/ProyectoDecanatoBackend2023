@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.dtos.compras.UsuarioMandarDto;
 import com.ues.edu.apidecanatoce.dtos.compras.UsuarioRespuestaDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
+import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
@@ -24,10 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.ues.edu.apidecanatoce.entities.usuario.Role.JEFE_FINANACIERO;
 
@@ -84,6 +83,16 @@ public class ValeServiceImpl implements IValeService {
         }
 
         return valesDtoResultado;
+    }
+
+    @Override
+    public List<ValeDependeDto> obtenerValesPorCompra(UUID idCompra) {
+        List<Vale> valesPorCompra = valeRepository.findByCompraId(idCompra);
+
+        valesPorCompra.sort(Comparator.comparing(Vale::getCorrelativo));
+        return valesPorCompra.stream()
+                .map(Vale::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
