@@ -80,7 +80,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
 
-        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuario(userId);
+        List<SolicitudVehiculo> solicitudVehiculos = solicitudVehiculoServices.findByUsuarioCodigoUsuarioOrderByFechaSalidaDesc(userId);
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
         for (Estados estado: estados) {
@@ -168,7 +168,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
-    public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data) {
+    public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, ActualizacionSecretariaDTO data) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
