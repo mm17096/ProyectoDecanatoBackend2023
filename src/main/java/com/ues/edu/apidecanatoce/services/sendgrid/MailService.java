@@ -8,8 +8,10 @@ import com.sendgrid.helpers.mail.objects.Email;
 
 import com.sendgrid.helpers.mail.objects.Personalization;
 import com.ues.edu.apidecanatoce.controllers.sendgrid.BodyEmail;
+import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -80,7 +82,7 @@ public class MailService {
             logger.info(response.getBody());
             return response.getBody();
         } catch (IOException ex) {
-            throw ex;
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se envió el correo, verifique sus datos o la red");
         }
     }
 

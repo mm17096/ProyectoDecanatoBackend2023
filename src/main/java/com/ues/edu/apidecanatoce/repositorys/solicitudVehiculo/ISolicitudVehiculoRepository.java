@@ -18,7 +18,7 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
     List<SolicitudVehiculo> findAllByEstado(int estado);
     List<SolicitudVehiculo> findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(int estado,
                                                                                 String depto);
-    List<SolicitudVehiculo> findByUsuarioCodigoUsuario(String usuario);
+    List<SolicitudVehiculo> findByUsuarioCodigoUsuarioOrderByFechaSalidaDesc(String usuario);
     List<SolicitudVehiculo> findByUsuarioCodigoUsuarioAndEstado(String usuario, int estado);
     List<SolicitudVehiculo> findByVehiculoPlaca(String placa);
 
