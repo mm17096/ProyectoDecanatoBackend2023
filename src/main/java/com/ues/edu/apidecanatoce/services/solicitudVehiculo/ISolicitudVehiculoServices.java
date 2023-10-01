@@ -14,7 +14,7 @@ public interface ISolicitudVehiculoServices {
     Page<SolicitudVehiculoPeticionDtO> listar(Pageable pageable);
     Page<SolicitudVehiculoPeticionDtO> listarPorEstado(Integer id, Pageable pageable);
 
-    SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, SolicitudVehiculoDto data);
+    SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, ActualizacionSecretariaDTO data);
 
     List<SolicitudVehiculoPeticionDtO> listarSinPagina();
     List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol);
