@@ -20,7 +20,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/usuario/auth")
 @RequiredArgsConstructor
-@CrossOrigin
 public class AuthController {
     
     private final UsuarioServiceImpl authService;
