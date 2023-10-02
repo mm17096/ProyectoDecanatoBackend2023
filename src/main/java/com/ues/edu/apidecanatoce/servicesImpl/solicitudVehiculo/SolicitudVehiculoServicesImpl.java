@@ -289,7 +289,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }else if(Objects.equals(rol, "SECR_DECANATO")){
             solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoRevision);
         }else{
-            solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
+            solicitudVehiculos =
+                    solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombreOrderByFechaSalidaDesc
+                            (estadoFilter, depto);
         }
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();

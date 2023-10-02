@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, UUID> {
     Page<SolicitudVehiculo> findAllByEstado(int estado, Pageable pageable);
     List<SolicitudVehiculo> findAllByEstado(int estado);
-    List<SolicitudVehiculo> findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(int estado,
+    List<SolicitudVehiculo> findAllByEstadoAndUsuarioEmpleadoDepartamentoNombreOrderByFechaSalidaDesc(int estado,
                                                                                 String depto);
     List<SolicitudVehiculo> findByUsuarioCodigoUsuarioOrderByFechaSalidaDesc(String usuario);
     List<SolicitudVehiculo> findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(String usuario, int estado);
@@ -24,7 +24,8 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
 
     @Query("SELECT sv " +
             "FROM SolicitudVehiculo sv " +
-            "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision")
+            "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision " +
+            "ORDER BY sv.fechaSalida DESC ")
     List<SolicitudVehiculo> findByAllSecreDec(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
 
 }
