@@ -44,7 +44,7 @@ public class EntradasalidaController {
         return ResponseEntity.ok(es);
     }
 
-    @GetMapping("/estadofecha")
+    @GetMapping("/todas")//esto es para mostrar las card de los vehiculos con estado=5 y con las misiones del dia
     public ResponseEntity<List<SolicitudVehiculo>> ListaporestadoyFecha() {
         return ResponseEntity.ok(iSolicitudvehiculorepository.listaporestadofecha());
     }
