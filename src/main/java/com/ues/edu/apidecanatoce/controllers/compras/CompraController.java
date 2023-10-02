@@ -9,9 +9,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,5 +59,12 @@ public class CompraController {
         return ResponseEntity.ok(compraService.eliminar(id));
     }
 
+    @GetMapping("/listarPorRangoDeFechas")
+    public ResponseEntity<List<CompraPeticionDto>> listarPorRangoDeFechas(
+            @RequestParam(value = "fechaInicial", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicial,
+            @RequestParam(value = "fechaFinal", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFinal) {
+        List<CompraPeticionDto> comprasEnRango = compraService.listarComprasPorRangoDeFechas(fechaInicial, fechaFinal);
+        return ResponseEntity.ok(comprasEnRango);
+    }
 
 }

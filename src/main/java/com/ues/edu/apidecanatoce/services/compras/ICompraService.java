@@ -7,6 +7,7 @@ import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,5 +24,5 @@ public interface ICompraService {
 
     CompraPeticionDto eliminar(UUID id);
 
-
+    List<CompraPeticionDto> listarComprasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin);
 }

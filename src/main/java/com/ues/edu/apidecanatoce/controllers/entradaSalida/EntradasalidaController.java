@@ -1,7 +1,10 @@
 package com.ues.edu.apidecanatoce.controllers.entradaSalida;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
+import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import java.util.UUID;
 public class EntradasalidaController {
 
     private final Ientradasalidaservice ientradasalidaservice;
+    private final ISolicitudVehiculoRepository iSolicitudvehiculorepository;
 
     //SEGUNDA FORMA DE HACERLO
     @GetMapping
@@ -38,6 +42,11 @@ public class EntradasalidaController {
     public ResponseEntity<Entrada_Salidas> listaestado(@RequestParam("filtro") int estadi, @RequestParam("tipo") UUID id) {//correcto
         Entrada_Salidas es=this.ientradasalidaservice.listaEstado(estadi, id);
         return ResponseEntity.ok(es);
+    }
+
+    @GetMapping("/todas")//esto es para mostrar las card de los vehiculos con estado=5 y con las misiones del dia
+    public ResponseEntity<List<SolicitudVehiculo>> ListaporestadoyFecha() {
+        return ResponseEntity.ok(iSolicitudvehiculorepository.listaporestadofecha());
     }
 
 }

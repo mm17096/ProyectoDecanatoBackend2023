@@ -12,7 +12,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, String> {
     Optional<Usuario> findByNombre(String username);
     Usuario findByCodigoUsuario(String id);
     Usuario findUsuarioByNombre(String nombre);
-    Usuario findByEmpleadoDui(String correo);
+    Usuario findByEmpleadoCorreo(String correo);
     boolean existsByEmpleadoCorreo(String correo);
     boolean existsByEmpleadoDui(String dui);
     @Query("SELECT u.codigoUsuario " +

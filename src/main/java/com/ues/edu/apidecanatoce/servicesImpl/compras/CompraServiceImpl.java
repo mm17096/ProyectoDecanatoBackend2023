@@ -16,11 +16,18 @@ import com.ues.edu.apidecanatoce.services.compras.ICompraService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,30 +43,30 @@ public class CompraServiceImpl implements ICompraService {
 
         if (data.getFactura() != null && !data.getFactura().isEmpty() && compraRepository.existsByFactura(data.getFactura())) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "La factura ya está registrada");
-        } else if (data.getCod_inicio() > data.getCod_fin()) {
+        } else if (data.getCodInicio() > data.getCodFin()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El código de inicio debe ser inferior al código de fin");
         } else {
 
             Compra compraInsertar;
-            int cantidadVales = (data.getCod_fin() + 1) - data.getCod_inicio();
+            int cantidadVales = (data.getCodFin() + 1) - data.getCodInicio();
             compraInsertar = data.toEntityComplete(proveedorRepository);
             compraInsertar.setCantidad(cantidadVales);
             Compra compraEntity = compraRepository.save(compraInsertar);
             Proveedor proveedor = proveedorRepository.findById(data.getProveedor()).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentra proveedor"));
-            for (int i = data.getCod_inicio(); i <= data.getCod_fin(); i++) {
+            for (int i = data.getCodInicio(); i <= data.getCodFin(); i++) {
                 //Insertar log a Vales
                 Vale valeEntity = new Vale();
                 valeEntity.setEstado(8);
-                valeEntity.setValor(data.getPrecio_unitario());
+                valeEntity.setValor(data.getPrecioUnitario());
                 valeEntity.setCorrelativo(i);
-                valeEntity.setFecha_vencimiento(data.getFecha_vencimiento());
+                valeEntity.setFechaVencimiento(data.getFechaVencimiento());
                 valeEntity.setCompra(compraEntity);
                 valeRepository.save(valeEntity);
                 //Insertar log a LogVale
                 LogVale logEntity = new LogVale();
                 logEntity.setEstadoVale(8);
-                logEntity.setFechaLogVale(data.getFecha_compra());
+                logEntity.setFechaLogVale(data.getFechaCompra());
                 if (compraEntity.getProveedor().getTipo() == 14) {
 
                     logEntity.setActividad("Adquisición en préstamo a proveedor " + proveedor.getNombre() + "en concepto de:" + compraEntity.getDescripcion());
@@ -89,7 +96,9 @@ public class CompraServiceImpl implements ICompraService {
 
     @Override
     public List<CompraPeticionDto> listarSinPagina() {
-        List<Compra> compras = this.compraRepository.findAll();
+        // Crea un objeto Sort para ordenar por fecha_hora_compra de manera desc (descendente)
+        Sort sort = Sort.by(Sort.Direction.DESC, "fechaCompra");
+        List<Compra> compras = this.compraRepository.findAll(sort);
         return compras.stream().map(Compra::toDTO).toList();
     }
 
@@ -111,5 +120,32 @@ public class CompraServiceImpl implements ICompraService {
         CompraPeticionDto compra = leerPorId(id);
         compraRepository.delete(compra.toEntitySave());
         return compra;
+    }
+
+    @Override
+    public List<CompraPeticionDto> listarComprasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+        // Si ambas fechas son nulas, calcula el intervalo del mes actual
+        if (fechaInicio == null && fechaFin == null) {
+            YearMonth yearMonth = YearMonth.now();
+            fechaInicio = yearMonth.atDay(1);
+            fechaFin = yearMonth.atEndOfMonth();
+        } else {
+            // Si alguna de las fechas es nula, ajusta la otra fecha en función de la que esté presente
+            if (fechaInicio == null) {
+                fechaInicio = fechaFin;
+            }
+            if (fechaFin == null) {
+                fechaFin = fechaInicio;
+            }
+        }
+        // Añade la hora inicial (00:00:00) a las fechas LocalDate para convertirlas en LocalDateTime
+        LocalDateTime fechaInicioConHora = fechaInicio.atStartOfDay();
+        LocalDateTime fechaFinConHora = fechaFin.atTime(LocalTime.MAX);
+        List<Compra> compras = compraRepository.findByFechaCompraBetween(fechaInicioConHora, fechaFinConHora);
+        // Ordena la lista de compras por fecha_compra
+        compras.sort(Comparator.comparing(Compra::getFechaCompra));
+        return compras.stream()
+                .map(Compra::toDTO)
+                .collect(Collectors.toList());
     }
 }

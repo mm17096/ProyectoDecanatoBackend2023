@@ -19,6 +19,8 @@ public interface IValeService {
 
     List<ValeDependeDto> obtenerValesPorMontoTotal(double montoTotal);
 
+    List<ValeDependeDto> obtenerValesPorCompra(UUID idCompra);
+
     Page<ValeDependeDto> listar(Pageable pageable);
 
     List<ValeDependeDto> listarSinPagina();
