@@ -53,6 +53,7 @@ public class LogSolicitudVehiculo {
                 .estadoLogSolive(this.estadoLogSolive)
                 .fechaLogSoliVe(this.fechaLogSoliVe)
                 .actividad(this.actividad)
+                .usuario(this.usuario)
                 .soliVe(this.soliVe.getCodigoSolicitudVehiculo()).build();
     }
 
