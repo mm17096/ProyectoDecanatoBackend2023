@@ -122,8 +122,7 @@ public class SolicitudVehiculoController {
     }*/
 
     @PutMapping("/fecharegreso")
-    public ResponseEntity<SoliVeActulizarFechaEntradaDTO>
-    actualizar(@RequestBody SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO) {
+    public ResponseEntity<SoliVeActulizarFechaEntradaDTO> actualizar(@RequestBody SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO) {
         return ResponseEntity.ok(servicioSolicitudVehiculo.updateFechaEntrada(fechaEntradaSoliVeDTO));
     }
 
