@@ -124,10 +124,10 @@ public class AsignacionValeController {
        return ResponseEntity.ok(iAsignacionValeService.lisIValeAsignarDtos(cantidadVales));
     }
 
-    @GetMapping("/listarvalesasignarPage/{cantidadVales}")
+   /* @GetMapping("/listarvalesasignarPage/{cantidadVales}")
     public ResponseEntity<Page<IValeAsignarDto>> listarValesAsignar(@PathVariable int cantidadVales, Pageable pageable) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.lisIValeAsignarDtosPage(cantidadVales, pageable));
-    }
+    }*/
 
     @GetMapping("/codigoasignacionvale/{id}")
     public ResponseEntity<BuscarAsignacionValeDto> codigoAsignacionVale(@PathVariable UUID id) throws Exception {

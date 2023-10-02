@@ -19,7 +19,7 @@ public interface IDocumentosSoliCarService {
 
     List<DocumentoSoliCar> listarSinPagina();
 
-    DocumentoSoliCar actualizar(DocumentoSoliCar data);
+    MensajeRecord actualizar(MultipartFile data, DocumentoSoliCar soliCar);
 
     DocumentoSoliCar eliminar(UUID id);
 }

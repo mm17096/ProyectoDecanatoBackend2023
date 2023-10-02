@@ -121,6 +121,15 @@ public class VehiculoServiceImpl implements IVehiculoService {
         }
         if (imagen != null && !imagen.isEmpty()) {
             try {
+                // borrar la imagen exitente
+                try {
+                    Files.delete(Path.of(data.getUrlfoto()));
+                    System.out.println("Imagen eliminada exitosamente.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Error al eliminar la imagen.");
+                }
+
                 // Guardar la imagen en la carpeta del proyecto
                 String filename = pathService.generateFileName(imagen);
                 pathService.storeFile(imagen, filename);

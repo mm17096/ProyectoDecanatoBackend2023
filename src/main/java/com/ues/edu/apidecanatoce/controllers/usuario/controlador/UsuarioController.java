@@ -37,10 +37,23 @@ public class UsuarioController {
         usuario = new Usuario();
         if(usuarioRepository.existsByEmpleadoCorreo(respass.getCorreo())){
             if(usuarioRepository.existsByEmpleadoDui(respass.getDui())) {
-                usuario = usuarioRepository.findByEmpleadoDui(respass.getDui());
-                usuario.setCodigo(passwordEncoder.encode(respass.getCodigo()));
+                usuario = usuarioRepository.findByEmpleadoCorreo(respass.getCorreo());
                 usuarioRepository.save(usuario);
             }
+        }
+        if(usuario.getCodigoUsuario() == null){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No existen las credenciales");
+        }
+        return ResponseEntity.ok(usuario);
+    }
+
+    @PostMapping("/resetpassEmail")
+    public ResponseEntity<Usuario> ResetpassEmail(@RequestBody Respass respass) {
+        usuario = new Usuario();
+        if(usuarioRepository.existsByEmpleadoCorreo(respass.getCorreo())){
+                usuario = usuarioRepository.findByEmpleadoCorreo(respass.getCorreo());
+                usuario.setCodigo(passwordEncoder.encode(respass.getCodigo()));
+                usuarioRepository.save(usuario);
         }
         if(usuario.getCodigoUsuario() == null){
             throw new CustomException(HttpStatus.BAD_REQUEST, "No existen las credenciales");

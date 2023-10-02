@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.YearMonth;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -122,20 +124,28 @@ public class CompraServiceImpl implements ICompraService {
 
     @Override
     public List<CompraPeticionDto> listarComprasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin) {
-        if (fechaInicio == null || fechaFin == null) {
-            fechaInicio = LocalDate.now();
-            fechaFin = LocalDate.now();
+        // Si ambas fechas son nulas, calcula el intervalo del mes actual
+        if (fechaInicio == null && fechaFin == null) {
+            YearMonth yearMonth = YearMonth.now();
+            fechaInicio = yearMonth.atDay(1);
+            fechaFin = yearMonth.atEndOfMonth();
+        } else {
+            // Si alguna de las fechas es nula, ajusta la otra fecha en función de la que esté presente
+            if (fechaInicio == null) {
+                fechaInicio = fechaFin;
+            }
+            if (fechaFin == null) {
+                fechaFin = fechaInicio;
+            }
         }
         // Añade la hora inicial (00:00:00) a las fechas LocalDate para convertirlas en LocalDateTime
         LocalDateTime fechaInicioConHora = fechaInicio.atStartOfDay();
         LocalDateTime fechaFinConHora = fechaFin.atTime(LocalTime.MAX);
-
-        // Realiza la búsqueda en la base de datos utilizando las fechas procesadas
         List<Compra> compras = compraRepository.findByFechaCompraBetween(fechaInicioConHora, fechaFinConHora);
-
-        // Convierte las entidades Compra a DTOs CompraPeticionDto
+        // Ordena la lista de compras por fecha_compra
+        compras.sort(Comparator.comparing(Compra::getFechaCompra));
         return compras.stream()
-                .map(Compra::toDTO) // Suponiendo que Compra tiene un método toDTO para la conversión
+                .map(Compra::toDTO)
                 .collect(Collectors.toList());
     }
 }
