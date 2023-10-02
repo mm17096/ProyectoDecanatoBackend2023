@@ -150,7 +150,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
 
-        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
+        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(userId, id);
 
         List<Estados> estados = estadosRepository.findAll();
 
