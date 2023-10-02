@@ -27,4 +27,9 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
             "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision")
     List<SolicitudVehiculo> findByAllSecreDec(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
 
+
+    @Query("SELECT sv FROM SolicitudVehiculo sv " +
+            "INNER JOIN Vehiculo v ON v.codigoVehiculo = sv.vehiculo.codigoVehiculo\n" +
+            "WHERE sv.estado = 5 AND DATE_TRUNC('day', sv.fechaSalida) = CURRENT_DATE")
+    List<SolicitudVehiculo> listaporestadofecha();
 }
