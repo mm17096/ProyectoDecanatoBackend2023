@@ -28,4 +28,6 @@ public interface IValeRepository extends JpaRepository<Vale, UUID> {
     }
 
     List<Vale> findByCompraId(UUID idCompra);
+
+    List<Vale> findByEstado(int estado);
 }
