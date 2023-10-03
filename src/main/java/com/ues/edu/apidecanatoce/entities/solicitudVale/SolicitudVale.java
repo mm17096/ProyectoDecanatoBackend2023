@@ -102,4 +102,6 @@ public class SolicitudVale {
                 .estadoSolicitudVale(this.estadoEntrada)
                 .build();
     }
+
+
 }

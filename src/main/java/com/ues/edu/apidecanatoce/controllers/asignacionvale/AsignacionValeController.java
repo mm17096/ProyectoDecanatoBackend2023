@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.BuscarSolicitudValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudAprobarUsuarioDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeAprobarDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
 import com.ues.edu.apidecanatoce.entities.GenericResponse;
@@ -44,7 +45,8 @@ public class AsignacionValeController {
     public ResponseEntity<AsignacionValeInDto> registrar(@RequestBody AsignacionUsuarioDto data) throws Exception {
         AsignacionValeInDto asignacionVale = data.getAsignacionValeInDto();
         String usuario = data.getIdUsuarioLogueado();
-        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale, usuario));
+        String empleado = data.getEmpleado();
+        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale, usuario, empleado));
     }
 
     @PostMapping("/devolver")
@@ -124,11 +126,6 @@ public class AsignacionValeController {
        return ResponseEntity.ok(iAsignacionValeService.lisIValeAsignarDtos(cantidadVales));
     }
 
-   /* @GetMapping("/listarvalesasignarPage/{cantidadVales}")
-    public ResponseEntity<Page<IValeAsignarDto>> listarValesAsignar(@PathVariable int cantidadVales, Pageable pageable) throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.lisIValeAsignarDtosPage(cantidadVales, pageable));
-    }*/
-
     @GetMapping("/codigoasignacionvale/{id}")
     public ResponseEntity<BuscarAsignacionValeDto> codigoAsignacionVale(@PathVariable UUID id) throws Exception {
         BuscarAsignacionValeDto cantidadValesDto = iAsignacionValeService.codigoAsignacionVale(id);
@@ -143,7 +140,9 @@ public class AsignacionValeController {
     }
 
     @PostMapping("/solitudaprobar")
-    public ResponseEntity<SolicitudValeAprobarDto> actualizarSolicitudAprobar(@RequestBody SolicitudValeAprobarDto solicitudValeAprobarDto) throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto));
+    public ResponseEntity<SolicitudValeAprobarDto> actualizarSolicitudAprobar(@RequestBody SolicitudAprobarUsuarioDto data) throws Exception {
+        SolicitudValeAprobarDto solicitudValeAprobarDto = data.getSolicitudValeAprobarDto();
+        String usuario = data.getIdUsuarioLogueado();
+        return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto, usuario));
     }
 }
