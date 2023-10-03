@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.LogSolicitudValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import jakarta.persistence.*;
@@ -55,6 +56,16 @@ public class LogSolicitudVehiculo {
                 .actividad(this.actividad)
                 .usuario(this.usuario)
                 .soliVe(this.soliVe.getCodigoSolicitudVehiculo()).build();
+    }
+
+    public LogSolicitudValeDto toDtoSoliVale(){
+        return LogSolicitudValeDto.builder()
+                .idLogSolicitudes(this.idLogSoliVe)
+                .estadoLogSoli(this.estadoLogSolive)
+                .fechaLogSoli(this.fechaLogSoliVe)
+                .actividad(this.actividad)
+                .usuario(this.usuario)
+                .soliVale(this.soliVale.getIdSolicitudVale()).build();
     }
 
 }

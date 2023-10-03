@@ -23,6 +23,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class LogSoliVeDTO {
+
     private UUID idLogSoliVe;
     private Integer estadoLogSolive;
     private String estadoString;
