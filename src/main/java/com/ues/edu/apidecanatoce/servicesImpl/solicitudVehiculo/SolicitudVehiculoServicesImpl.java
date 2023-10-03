@@ -233,10 +233,19 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         if (data.getEstado() == 6){
             solicitudExistente.setEstado(6);
+            solicitudExistente.setObservaciones(data.getObservaciones());
             actividad = "Solicitud de vehículo enviada a revisión por decano";
         } else if(data.getEstado() == 15){
-            solicitudExistente.setEstado(15);
-            actividad = "Solicitud de vehículo anulada por decano";
+            if (Objects.equals(rol, "SECR_DECANATO")){
+                solicitudExistente.setEstado(15);
+                solicitudExistente.setObservaciones(data.getObservaciones());
+                actividad = "Solicitud de vehículo anulada por secretaria";
+            } else if (Objects.equals(rol, "DECANO")){
+                solicitudExistente.setEstado(15);
+                solicitudExistente.setObservaciones(data.getObservaciones());
+                actividad = "Solicitud de vehículo anulada por decano";
+            }
+
         }else{
             solicitudExistente.setEstado(estado);
         }
