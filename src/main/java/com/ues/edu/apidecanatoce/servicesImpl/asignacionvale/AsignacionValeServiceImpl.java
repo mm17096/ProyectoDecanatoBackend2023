@@ -10,6 +10,7 @@ import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
@@ -17,6 +18,7 @@ import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRe
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.ISolicitudValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.compras.IValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
+import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ILogSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.SolicitudVehiculoServicesImpl;
@@ -46,6 +48,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     private final IValeRepository valeRepository;
 
+    private final ILogSoliVeRepository logSoliVeRepository;
+
     private final ISolicitudVehiculoRepository solicitudVehiculoRepository;
 
     private final ILogValeRepository logValeRepository;
@@ -53,7 +57,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
-    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario) {
+    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario, String empleado) {
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -61,7 +65,10 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         int estadoVales = 5;
         int estadoSolicitud = 7;
 
+        String actividad = "Vales Asignados a Solicitud de vale";
+
         LogValeDto logVale = new LogValeDto();
+        LogSolicitudVehiculo logSolicitudVehiculo = new LogSolicitudVehiculo();
         LocalDateTime fechaActualLog = LocalDateTime.now();
 
 
@@ -70,6 +77,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
         List<UUID> valesAsignar = new ArrayList<>();
         int cantidadVales = data.getCantidadVales();
+
 
 
         //Evaluando su hay vales para asignar
@@ -129,6 +137,17 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
                 // Actuliza el estado de la Solictud del Vehículo
                 actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
+                SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getSolicitudVale()).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + data.getSolicitudVale())
+                );
+
+
+                logSolicitudVehiculo.setSoliVale(solicitudVale);
+                logSolicitudVehiculo.setEstadoLogSolive(5);
+                logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
+                logSolicitudVehiculo.setActividad(actividad);
+                logSolicitudVehiculo.setUsuario(empleado);
+                this.logSoliVeRepository.save(logSolicitudVehiculo);
 
 
                 // Retornar el mensaje que toso se guardó
@@ -142,7 +161,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public AnularMisionDto anularMision(AnularMisionDto data, String usuario){
+    public AnularMisionDto anularMision(AnularMisionDto data, String usuario) {
         int estadoVale = 8;
         int estadoSolicitudes = 16;
         UUID codigoDetalleAsignacion;
@@ -180,7 +199,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale(logVale);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo anular la misión");
         }
 
@@ -201,7 +220,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     //METODO PARA DEVOLVER LOS VALES
     @Override
-    public DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario){
+    public DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario) {
         LogValeDto logVale = new LogValeDto();
         LocalDateTime fechaActualLog = LocalDateTime.now();
         UUID codigoDetalleAsignacion;
@@ -316,6 +335,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
         }
     }
+
     @Override
     public SolicitudValeEstadoEntradaDto actualizarEstadoEntradaSolicitud(UUID id, int estadoSolicitud) {
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud"));
@@ -402,7 +422,6 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     public LogValeDto logVale(LogValeDto data) {
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MMMM/dd");
-        String fechaFormateadaLog = data.getFechaLogVale().format(formato);
 
         Vale vale = this.valeRepository.findById(data.getVale()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro el vale"));
         LogVale logVale = new LogVale();
@@ -418,6 +437,29 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
         }
+        return data;
+    }
+
+    @Override
+    public LogSolicitudValeDto logSolicitudVale(LogSolicitudValeDto data) {
+
+        SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getSoliVale()).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud del vale"));
+
+        LogSolicitudVehiculo logSolicitudVehiculo = new LogSolicitudVehiculo();
+
+        logSolicitudVehiculo.setSoliVale(solicitudVale);
+        logSolicitudVehiculo.setEstadoLogSolive(data.getEstadoLogSoli());
+        logSolicitudVehiculo.setFechaLogSoliVe(data.getFechaLogSoli());
+        logSolicitudVehiculo.setActividad(data.getActividad());
+        logSolicitudVehiculo.setUsuario(data.getUsuario());
+
+        try {
+            logSoliVeRepository.save(logSolicitudVehiculo);
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo realizar el log");
+        }
+
         return data;
     }
 
@@ -480,19 +522,42 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
-    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data) {
+    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario) {
+
+        LocalDateTime fechaActualLog = LocalDateTime.now();
         System.out.println(data);
+        String actividad = "";
+        if (data.getEstadoSolicitudVale() == 4) {
+            actividad = "Solicitud de vale aprobada ";
+        } else if (data.getEstadoSolicitudVale() == 6) {
+            actividad = "Solicitud de vale enviada a revisión ";
+        } else if (data.getEstadoSolicitudVale() == 1) {
+            actividad = "Solicitud de vale por aprobar enviada ";
+        } else if (data.getEstadoSolicitudVale() == 5) {
+            actividad = "Vales Asignados a Solicitud de vale ";
+        }
+
 
         SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getCodigoSolicitudVale()).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + data.getCodigoSolicitudVale())
         );
-        try{
+
+        LogSolicitudVehiculo logSolicitudVehiculo = new LogSolicitudVehiculo();
+
+        logSolicitudVehiculo.setSoliVale(solicitudVale);
+        logSolicitudVehiculo.setEstadoLogSolive(data.getEstadoSolicitudVale());
+        logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
+        logSolicitudVehiculo.setActividad(actividad);
+        logSolicitudVehiculo.setUsuario(usuario);
+
+        try {
             solicitudVale.setEstado(data.getEstadoSolicitudVale());
             solicitudVale.setCantidadVale(data.getCantidadVales());
             solicitudVale.setObservaciones(data.getObservaciones());
             this.solicitudValeRepository.save(solicitudVale).toSolicitudValeAprobarDto();
+            this.logSoliVeRepository.save(logSolicitudVehiculo);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo modificar la solicitud para aprobar");
         }
         return data;

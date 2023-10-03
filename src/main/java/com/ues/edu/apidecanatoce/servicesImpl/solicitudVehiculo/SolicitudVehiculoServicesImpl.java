@@ -150,7 +150,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
 
-        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstado(userId, id);
+        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(userId, id);
 
         List<Estados> estados = estadosRepository.findAll();
 
@@ -233,10 +233,19 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         if (data.getEstado() == 6){
             solicitudExistente.setEstado(6);
+            solicitudExistente.setObservaciones(data.getObservaciones());
             actividad = "Solicitud de vehículo enviada a revisión por decano";
         } else if(data.getEstado() == 15){
-            solicitudExistente.setEstado(15);
-            actividad = "Solicitud de vehículo anulada por decano";
+            if (Objects.equals(rol, "SECR_DECANATO")){
+                solicitudExistente.setEstado(15);
+                solicitudExistente.setObservaciones(data.getObservaciones());
+                actividad = "Solicitud de vehículo anulada por secretaria";
+            } else if (Objects.equals(rol, "DECANO")){
+                solicitudExistente.setEstado(15);
+                solicitudExistente.setObservaciones(data.getObservaciones());
+                actividad = "Solicitud de vehículo anulada por decano";
+            }
+
         }else{
             solicitudExistente.setEstado(estado);
         }
@@ -289,7 +298,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }else if(Objects.equals(rol, "SECR_DECANATO")){
             solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoRevision);
         }else{
-            solicitudVehiculos = solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(estadoFilter, depto);
+            solicitudVehiculos =
+                    solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombreOrderByFechaSalidaDesc
+                            (estadoFilter, depto);
         }
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();

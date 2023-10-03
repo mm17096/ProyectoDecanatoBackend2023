@@ -32,6 +32,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.leerPorID(uuid));
     }
 
+    @GetMapping("/datacards")
+    public ResponseEntity<DatosCards> DataCards() {
+        return ResponseEntity.ok(usuarioRepository.datoscard());
+    }
+
     @PostMapping("/resetpass")
     public ResponseEntity<Usuario> Resetpass(@RequestBody Respass respass) {
         usuario = new Usuario();

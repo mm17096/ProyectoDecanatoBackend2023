@@ -23,9 +23,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class LogSoliVeDTO {
+
     private UUID idLogSoliVe;
     private Integer estadoLogSolive;
-
+    private String estadoString;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fecha_logsolive", nullable = false)

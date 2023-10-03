@@ -16,20 +16,20 @@ import java.util.UUID;
 public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVehiculo, UUID> {
     Page<SolicitudVehiculo> findAllByEstado(int estado, Pageable pageable);
     List<SolicitudVehiculo> findAllByEstado(int estado);
-    List<SolicitudVehiculo> findAllByEstadoAndUsuarioEmpleadoDepartamentoNombre(int estado,
+    List<SolicitudVehiculo> findAllByEstadoAndUsuarioEmpleadoDepartamentoNombreOrderByFechaSalidaDesc(int estado,
                                                                                 String depto);
     List<SolicitudVehiculo> findByUsuarioCodigoUsuarioOrderByFechaSalidaDesc(String usuario);
-    List<SolicitudVehiculo> findByUsuarioCodigoUsuarioAndEstado(String usuario, int estado);
+    List<SolicitudVehiculo> findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(String usuario, int estado);
     List<SolicitudVehiculo> findByVehiculoPlaca(String placa);
 
     @Query("SELECT sv " +
             "FROM SolicitudVehiculo sv " +
-            "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision")
+            "WHERE sv.estado = :estadoFilter OR sv.estado = :estadoRevision " +
+            "ORDER BY sv.fechaSalida DESC ")
     List<SolicitudVehiculo> findByAllSecreDec(@Param("estadoFilter") int estadoFilter, @Param("estadoRevision") int estadoRevision);
 
 
-    @Query("SELECT sv FROM SolicitudVehiculo sv " +
-            "INNER JOIN Vehiculo v ON v.codigoVehiculo = sv.vehiculo.codigoVehiculo\n" +
-            "WHERE sv.estado = 5 AND DATE_TRUNC('day', sv.fechaSalida) = CURRENT_DATE")
+    @Query(" FROM SolicitudVehiculo sv INNER JOIN Vehiculo v ON v.codigoVehiculo = sv.vehiculo.codigoVehiculo LEFT join  Entrada_Salidas  et on et.solicitudvehiculo.codigoSolicitudVehiculo= sv.codigoSolicitudVehiculo WHERE sv.estado = 5 AND (DATE_TRUNC('day', sv.fechaSalida) = CURRENT_DATE OR et.solicitudvehiculo.codigoSolicitudVehiculo= sv.codigoSolicitudVehiculo) ")
+
     List<SolicitudVehiculo> listaporestadofecha();
 }
