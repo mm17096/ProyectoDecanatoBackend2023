@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -94,6 +95,7 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
+    //@PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','DECANO','JEFE_DEPTO')")
     @PutMapping("/estadoupdate")
     public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
             @RequestBody SolicitudVehiculoActualizarEstadoDTO data
