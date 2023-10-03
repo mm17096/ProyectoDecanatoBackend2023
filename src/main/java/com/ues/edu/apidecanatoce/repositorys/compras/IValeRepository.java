@@ -26,4 +26,6 @@ public interface IValeRepository extends JpaRepository<Vale, UUID> {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No existe esa cantidad de vales disponibles");
         }
     }
+
+    List<Vale> findByCompraId(UUID idCompra);
 }

@@ -32,15 +32,14 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     @Override
     public EntradasalidaPeticionDto registrar(EntradasalidaDto data) {
         if(data.getEstado()==2){
-            //entradasalida--- solicitudvehiculo-- solicitudvale
-            SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
-            asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
-
-            asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
+                //entradasalida--- solicitudvehiculo-- solicitudvale
+                SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
+                asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
+                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
         }else if(data.getEstado()==1){
-            SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
-            asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),1);
 
+                SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
+                asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),1);
         }
         return entradasalidaRepository.save(data.toEntityComplete(solicitudVehiculorepository)).toDTO();
     }

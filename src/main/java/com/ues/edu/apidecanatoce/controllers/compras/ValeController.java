@@ -41,6 +41,12 @@ public class ValeController {
         return ResponseEntity.ok(valesDevueltos);
     }
 
+    @GetMapping("/valesporcompra/{idCompra}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorCompra(@PathVariable UUID idCompra) {
+        List<ValeDependeDto> valesPorCompra = valeService.obtenerValesPorCompra(idCompra);
+        return ResponseEntity.ok(valesPorCompra);
+    }
+
     @GetMapping("/listasinpagina")
     public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
         List<ValeDependeDto> vale = valeService.listarSinPagina();
