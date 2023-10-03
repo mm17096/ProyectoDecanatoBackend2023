@@ -47,6 +47,19 @@ public class ValeController {
         return ResponseEntity.ok(valesPorCompra);
     }
 
+    @GetMapping("/valesporestado/{estado}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorEstado(@PathVariable int estado) {
+        List<ValeDependeDto> valesPorEstado = valeService.obtenerValesPorEstado(estado);
+        return ResponseEntity.ok(valesPorEstado);
+    }
+
+    @GetMapping("/cantidadvalesporestado/{estado}")
+    public ResponseEntity<Integer> obtenerCantidadValesPorEstado(@PathVariable int estado) {
+        int cantidadValesPorEstado = valeService.obtenerCantidadValesPorEstado(estado);
+        return ResponseEntity.ok(cantidadValesPorEstado);
+    }
+
+
     @GetMapping("/listasinpagina")
     public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
         List<ValeDependeDto> vale = valeService.listarSinPagina();

@@ -27,6 +27,9 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
     private final IConsultaCompraRepository consultaCompraRepository;
     private final IConsultaDocumentSoliCarRepository consultaDocumentSoliCarRepository;
     private final IConsultaDocumentValeRepository consultaDocumentValeRepository;
+    private final IConsultaEmpleadoRepository consultaEmpleadoRepository;
+    private final IConsultaLogSoliVehiRepository consultaLogSoliVehiRepository;
+    private  final IConsultaLogValeRepository consultaLogValeRepository;
     private final IAsignacionValeRepository asignacionValeRepository;
     private final IValeRepository valeRepository;
     private final ILogValeRepository logValeRepository;
@@ -91,6 +94,49 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay documentos para mostrar");
         } else {
             return this.consultaDocumentValeRepository.listarDocumentoSoliVale(id);
+        }
+    }
+
+    @Override
+    public List<ConsultaEmpleadoDto> lisDecano() throws IOException {
+        if (this.consultaEmpleadoRepository.listarDecanos().isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay Empleados para mostrar");
+        } else {
+            return this.consultaEmpleadoRepository.listarDecanos();
+        }
+    }
+
+    @Override
+    public List<ConsultaLogValeDto> lisLogVale(UUID id) throws IOException {
+        if (this.consultaLogValeRepository.listarLogVale(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaLogValeRepository.listarLogVale(id);
+        }
+    }
+
+    @Override
+    public List<ConsultaLogSoliVeDto> lisLogSoliVehi(UUID id) throws IOException {
+        if (this.consultaLogSoliVehiRepository.listarLogSoliVehi(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaLogSoliVehiRepository.listarLogSoliVehi(id);
+        }
+    }
+    @Override
+    public List<ConsultaIdCompraDto> lisIdCompra(UUID id) throws IOException {
+        if (this.consultaValeGRepository.listarIdCompra(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaValeGRepository.listarIdCompra(id);
+        }
+    }
+    @Override
+    public List<ConsultaIdValeDto> lisIdVale(UUID id) throws IOException {
+        if (this.consultaValeGRepository.listarIdVale(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaValeGRepository.listarIdVale(id);
         }
     }
 }

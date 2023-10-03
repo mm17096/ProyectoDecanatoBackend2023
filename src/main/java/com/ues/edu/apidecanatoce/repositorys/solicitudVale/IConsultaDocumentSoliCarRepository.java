@@ -13,6 +13,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface IConsultaDocumentSoliCarRepository extends JpaRepository<DocumentoSoliCar, UUID> {
-    @Query(value = "SELECT ds.codigo_documento AS codigodocumento, ds.fecha AS fecha, ds.nombredocment AS nombredocment, ds.urldocument AS urldocument, ds.codigo_solicitud_vehiculo AS codigosolicitudvehiculo FROM tb_documentosolicar ds WHERE ds.codigo_solicitud_vehiculo = :id ORDER BY ds.fecha ASC", nativeQuery = true)
+    @Query(value = "SELECT ds.codigo_documento AS codigodocumento, ds.fecha AS fecha, ds.nombredocment AS nombredocment, ds.urldocument AS urldocument, ds.codigo_solicitud_vehiculo AS codigosolicitudvehiculo, ds.tipodocument AS tipodocument FROM tb_documentosolicar ds WHERE ds.codigo_solicitud_vehiculo = :id ORDER BY ds.fecha ASC", nativeQuery = true)
     List<ConsultaDocumentSoliCarDto> listarDocumentoSoli(UUID id);
 }

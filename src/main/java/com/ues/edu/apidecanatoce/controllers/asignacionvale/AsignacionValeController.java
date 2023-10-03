@@ -78,12 +78,13 @@ public class AsignacionValeController {
     public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesUsuarioDto data) {
         LiquidarValesDto listVales = data.getValesLiquidados();
         String usuario = data.getUsuario();
+        String empleado = data.getEmpleado();
         String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo finalizar la Misión", listVales);
         try {
-            this.asignacionValeService.liquidarVales(listVales, usuario);
+            this.asignacionValeService.liquidarVales(listVales, usuario, empleado);
             resp.setCode(1);
             resp.setMessage("Misión Finalizada!!");
             http = HttpStatus.OK;
@@ -136,7 +137,8 @@ public class AsignacionValeController {
     public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionUsuarioDto data) throws Exception {
         AnularMisionDto anularMisionDto = data.getMisionAnulada();
         String usuario = data.getUsuario();
-        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto, usuario));
+        String empleado = data.getEmpleado();
+        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto, usuario, empleado));
     }
 
     @PostMapping("/solitudaprobar")
@@ -144,5 +146,10 @@ public class AsignacionValeController {
         SolicitudValeAprobarDto solicitudValeAprobarDto = data.getSolicitudValeAprobarDto();
         String usuario = data.getIdUsuarioLogueado();
         return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto, usuario));
+    }
+
+    @GetMapping("/solicivaleEstado/{estado}")
+    public ResponseEntity<Integer> findSoliciVByEstado(@PathVariable int estado) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSoliciVByEstado(estado));
     }
 }
