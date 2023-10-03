@@ -108,7 +108,7 @@ no se esta usando
                 rol = Role.JEFE_DEPTO;
                 break;
             }
-            case "SECRETARIA DECANATO" : {
+            case "SECRETARIO DECANATO" : {
                 rol = Role.SECR_DECANATO;
                 break;
             }
@@ -173,7 +173,7 @@ no se esta usando
                 rol = Role.JEFE_DEPTO;
                 break;
             }
-            case "SECRETARIA DECANATO": {
+            case "SECRETARIO DECANATO": {
                 rol = Role.SECR_DECANATO;
                 break;
             }
@@ -198,23 +198,26 @@ no se esta usando
                 break;
             }
             default: {
-                rol = Role.ADMIN;
+                rol = Role.USER;
                 break;
             }
 
         }
 
         Usuario carga = usuarioRepository.findUsuarioByNombre(request.getNombre());
+        System.out.println("contraseña :" + passwordEncoder.encode(carga.getPassword()));
         Usuario user = Usuario.builder()
                 .codigoUsuario(carga.getCodigoUsuario())
                 .nombre(carga.getUsername())
-                .clave(passwordEncoder.encode(carga.getClave()))
+                .clave(carga.getPassword())
                 .nuevo(carga.isNuevo())
                 //.activo(false)no se esta usando
                 .role(rol)
                 .empleado(carga.getEmpleado())
                 .token(carga.getToken())
                 .build();
+
+
         usuarioRepository.save(user);
 
     }
