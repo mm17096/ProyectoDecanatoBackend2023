@@ -74,6 +74,7 @@ solo para cambiar el estado de la sesion, no se esta usando
             authResponse.setToken(newToken);
             authResponse.setCodigoUsuario(usuario.getCodigoUsuario());
             authResponse.setEmpleado(empleado);
+            authResponse.setUsuario(usuario);
 
             return ResponseEntity.ok(authResponse);
         } else {

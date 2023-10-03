@@ -108,7 +108,7 @@ no se esta usando
                 rol = Role.JEFE_DEPTO;
                 break;
             }
-            case "ASISTENTE DE DECANATO" : {
+            case "SECRETARIA DECANATO" : {
                 rol = Role.SECR_DECANATO;
                 break;
             }
@@ -173,7 +173,7 @@ no se esta usando
                 rol = Role.JEFE_DEPTO;
                 break;
             }
-            case "ASISTENTE DE DECANATO": {
+            case "SECRETARIA DECANATO": {
                 rol = Role.SECR_DECANATO;
                 break;
             }
