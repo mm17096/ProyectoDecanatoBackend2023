@@ -10,6 +10,7 @@ import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
+import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ILogSoliVeService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class SolicitudVehiculoController {
 
     private final ISolicitudVehiculoServices servicioSolicitudVehiculo;
     private final IEstadosService estadosService;
+    private final ILogSoliVeService logSoliVeService;
 
 
 
@@ -92,6 +95,7 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.modificar(codigoSolicitudVehiculo, solicitudVehiculoDto));
     }
 
+    //@PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','DECANO','JEFE_DEPTO')")
     @PutMapping("/estadoupdate")
     public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstado(
             @RequestBody SolicitudVehiculoActualizarEstadoDTO data
@@ -126,4 +130,10 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.updateFechaEntrada(fechaEntradaSoliVeDTO));
     }
 
+    @GetMapping("/log/{id}")
+    public ResponseEntity<List<LogSoliVeDTO>> obtenerLogSoli(
+            @PathVariable (name = "id") UUID codigoSolicitudVehiculo) throws IOException{
+        List<LogSoliVeDTO> log = logSoliVeService.obtenerLog(codigoSolicitudVehiculo);
+        return ResponseEntity.ok(log);
+    }
 }

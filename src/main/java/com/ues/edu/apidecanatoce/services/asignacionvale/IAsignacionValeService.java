@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 public interface IAsignacionValeService {
-    AsignacionValeInDto registrar(AsignacionValeInDto data, String usuario);
+    AsignacionValeInDto registrar(AsignacionValeInDto data, String usuario, String empleado);
 
     AnularMisionDto anularMision(AnularMisionDto data, String usuario);
     AsignacionValeDto leerPorId(UUID id);
@@ -41,6 +41,8 @@ public interface IAsignacionValeService {
 
     LogValeDto logVale(LogValeDto data);
 
+    LogSolicitudValeDto logSolicitudVale(LogSolicitudValeDto data);
+
     Page<SolicitudVale> listarSolicitudVale(Pageable pageable);
 
     CantidadValesDto cantidadVales();
@@ -54,7 +56,7 @@ public interface IAsignacionValeService {
     List<ISolicitudValeFiltradasDto> findSolicitudValeByEstado(int estado) throws IOException;
     List<ISolicitudValeFiltradasDto> findSolicitudValeByCodigo(UUID codigo) throws IOException;
 
-    SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data);
+    SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario);
 
 
 
