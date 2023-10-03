@@ -551,12 +551,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     @Override
     public int findSoliciVByEstado(int estado) throws IOException {
-        if (this.solicitudValeRepository.findSolicitudValeByEstado(estado).isEmpty()) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
-        } else {
             List<ISolicitudValeFiltradasDto> lista = this.solicitudValeRepository.findSolicitudValeByEstado(estado);
             return lista.size();
-        }
     }
 
 
