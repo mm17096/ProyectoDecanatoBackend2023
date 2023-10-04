@@ -294,9 +294,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         List<SolicitudVehiculo> solicitudVehiculos;
         if (Objects.equals(rol, "DECANO")){
-            solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoDecanoJefe);
+            solicitudVehiculos = solicitudVehiculoServices.findByAllDec(estadoFilter, estadoDecanoJefe, depto);
         }else if(Objects.equals(rol, "SECR_DECANATO")){
-            solicitudVehiculos = solicitudVehiculoServices.findByAllSecreDec(estadoFilter, estadoRevision);
+            solicitudVehiculos = solicitudVehiculoServices.findByAllSecre(estadoFilter, estadoRevision);
         }else{
             solicitudVehiculos =
                     solicitudVehiculoServices.findAllByEstadoAndUsuarioEmpleadoDepartamentoNombreOrderByFechaSalidaDesc
