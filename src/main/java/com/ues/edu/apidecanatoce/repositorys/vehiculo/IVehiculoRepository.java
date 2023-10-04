@@ -21,11 +21,8 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, UUID> {
             "    FROM tb_solicitud_vehiculo s \n" +
             "    --fecha salida\n" +
             "    WHERE (:fechaSalida between s.fecha_salida  and s.fecha_entrada )\n" +
-            "    --fecha entrada\n" +
-            "    OR (:fechaEntrada between s.fecha_salida  and s.fecha_entrada )\n" +
             ") and v.clase =:claseName",nativeQuery = true)
     List<Vehiculo> buscarDisponibilidad(@Param("claseName") String claseName,
-                                        @Param("fechaSalida") Date fechaSalida,
-                                        @Param("fechaEntrada") Date fechaEntrada);
+                                        @Param("fechaSalida") Date fechaSalida);
 
 }

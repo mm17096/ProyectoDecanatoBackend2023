@@ -100,12 +100,11 @@ public class VehiculoServiceImpl implements IVehiculoService {
         return vehiculos;
     }
     @Override
-    public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada) {
+    public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida) {
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaSalidaDate = dateFormat.parse(fechaSalida);
-            Date fechaEntradaDate = dateFormat.parse(fechaEntrada);
-            List<Vehiculo> vehiculos = this.vehiculoRepository.buscarDisponibilidad(claseName, fechaSalidaDate, fechaEntradaDate);
+            List<Vehiculo> vehiculos = this.vehiculoRepository.buscarDisponibilidad(claseName, fechaSalidaDate);
             return vehiculos.stream().map(Vehiculo::toDTO).toList();
         }catch (ParseException e){
             return new ArrayList<>();
