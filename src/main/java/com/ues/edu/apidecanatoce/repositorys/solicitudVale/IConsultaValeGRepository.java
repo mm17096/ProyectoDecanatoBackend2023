@@ -43,7 +43,7 @@ public interface IConsultaValeGRepository extends JpaRepository<DetalleAsignacio
 
     @Query(value = "SELECT v.codigo_compra AS codigocompra FROM tb_detalle_asignacion_vale dav FULL JOIN tb_asignacion_vale as av ON dav.id_asignacion_vale = av.codigo_asignacion FULL JOIN tb_solicitud_vale as sv ON av.solicitud_vale_id = sv.id_solicitud_vale FULL JOIN tb_vale AS v ON dav.valeid = v.id_vale WHERE sv.solicitud_vehiculo_id = :id", nativeQuery = true)
     List<ConsultaIdCompraDto> listarIdCompra(UUID id);
-    @Query(value = "SELECT v.id_vale AS idvale, v.correlativo AS correlativo, v.estado AS estado, v.fecha_vencimiento AS fechavencimiento, v.valor AS valor, v.codigo_compra AS codigocompra FROM tb_detalle_asignacion_vale dav FULL JOIN tb_asignacion_vale as av ON dav.id_asignacion_vale = av.codigo_asignacion FULL JOIN tb_solicitud_vale as sv ON av.solicitud_vale_id = sv.id_solicitud_vale FULL JOIN tb_vale AS v ON dav.valeid = v.id_vale WHERE sv.solicitud_vehiculo_id = :id ORDER BY v.correlativo ASC", nativeQuery = true)
+    @Query(value = "SELECT v.id_vale AS idvale, v.correlativo AS correlativo, v.estado AS estado, v.fecha_vencimiento AS fechavencimiento, v.valor AS valor, v.codigo_compra AS codigocompra FROM tb_detalle_asignacion_vale dav FULL JOIN tb_asignacion_vale as av ON dav.id_asignacion_vale = av.codigo_asignacion FULL JOIN tb_solicitud_vale as sv ON av.solicitud_vale_id = sv.id_solicitud_vale FULL JOIN tb_vale AS v ON dav.valeid = v.id_vale WHERE sv.id_solicitud_vale = :id ORDER BY v.correlativo ASC", nativeQuery = true)
     List<ConsultaIdValeDto> listarIdVale(UUID id);
 
 
