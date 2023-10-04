@@ -2,12 +2,10 @@ package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
-import com.ues.edu.apidecanatoce.entities.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
-import com.ues.edu.apidecanatoce.repositorys.ConfigSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
 import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ILogSoliVeService;
@@ -17,9 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -30,14 +26,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SolicitudVehiculoController {
 
-    @Autowired
-    private ConfigSoliVeRepository configuracionRepository;
-
     private final ISolicitudVehiculoServices servicioSolicitudVehiculo;
     private final IEstadosService estadosService;
     private final ILogSoliVeService logSoliVeService;
-
-
 
     private final IEstadosRepository estadosRepository;
     private SolicitudVehiculo solicitudVehiculo;
@@ -76,12 +67,6 @@ public class SolicitudVehiculoController {
     public ResponseEntity<List<EstadosDTO>> obtenerEstadosSoliVe() {
         List<EstadosDTO> estados = estadosService.estadosSoliVe();
         return ResponseEntity.ok(estados);
-    }
-
-    @GetMapping("/config")
-    public ResponseEntity<List<ConfigSoliVe>> obtenerConfiguracion(){
-        List<ConfigSoliVe> configSoliVes = this.configuracionRepository.findAll();
-        return new ResponseEntity<>(configSoliVes, HttpStatus.OK);
     }
 
     @PostMapping("/insert")
