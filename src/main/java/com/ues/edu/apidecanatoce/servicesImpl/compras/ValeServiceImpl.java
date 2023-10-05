@@ -96,6 +96,22 @@ public class ValeServiceImpl implements IValeService {
     }
 
     @Override
+    public List<ValeDependeDto> obtenerValesPorEstado(int estado) {
+        List<Vale> valesPorCompra = valeRepository.findByEstado(estado);
+
+        valesPorCompra.sort(Comparator.comparing(Vale::getCorrelativo));
+        return valesPorCompra.stream()
+                .map(Vale::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int obtenerCantidadValesPorEstado(int estado) {
+        List<Vale> valesPorCompra = valeRepository.findByEstado(estado);
+        return valesPorCompra.size(); // Retorna la cantidad de elementos en la lista
+    }
+
+    @Override
     public Page<ValeDependeDto> listar(Pageable pageable) {
         Page<Vale> vales = valeRepository.findAll(pageable);
         return vales.map(Vale::toDTO);
