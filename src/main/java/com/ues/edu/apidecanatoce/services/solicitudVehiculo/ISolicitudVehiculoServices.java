@@ -23,7 +23,7 @@ public interface ISolicitudVehiculoServices {
 
     //EstadoSolicitudVehiculoDto actualizarEstadoSolcitudVehiculo(UUID id, int estado);
 
-    List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id);
+    List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer estado);
     List<SolicitudVehiculoPeticionDtO> listarTodas();
 
     LogSoliVeDTO logSolicitudVehiculo(LogSoliVeDTO data);

@@ -40,6 +40,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         LocalDate fechaActual = LocalDate.now();
@@ -169,20 +170,37 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
     }*/
     @Override
-    public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer id) {
+    public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer estado) {
+        System.out.println("el estado es" + estado);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
         String username = authentication.getName();
         String userId = usuarioRepository.findIdByUsername(username);
+        Optional<Usuario> user = usuarioRepository.findByNombre(username);
+        String rol = "";
 
-        List<SolicitudVehiculo> listSoliVe = solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(userId, id);
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            rol = String.valueOf(usuario.getRole());
+
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+        List<SolicitudVehiculo> listSoliVe ;
+        if ( Objects.equals(rol, "ADMIN")) {
+            listSoliVe = solicitudVehiculoServices.findAllByEstado(estado);
+        }else{
+            listSoliVe =solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(userId, estado);
+        }
+
 
         List<Estados> estados = estadosRepository.findAll();
 
         Map<Integer, String> estadoStringMap = new HashMap<>();
-        for (Estados estado: estados) {
-            estadoStringMap.put(estado.getCodigoEstado(), estado.getNombreEstado());
+        for (Estados est: estados) {
+            estadoStringMap.put(est.getCodigoEstado(), est.getNombreEstado());
         }
 
         return listSoliVe.stream().map(solicitud -> {
@@ -300,6 +318,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         solicitudVehiculoServices.save(solicitudExistente);
+        System.out.println("Cargo"+ nombreCargo);
         logSoliVe.setEstadoLogSolive(solicitudExistente.getEstado());
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setUsuario(nombreCompletoUser);
@@ -384,6 +403,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         logSoliVe.setFechaLogSoliVe(data.getFechaLogSoliVe());
         logSoliVe.setActividad(data.getActividad());
         logSoliVe.setUsuario(data.getUsuario());
+        logSoliVe.setCargo(data.getCargo());
         logSoliVe.setSoliVe(soliVeh);
 
         try {
