@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/asignacionvale")
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class AsignacionValeController {
     private final AsignacionValeServiceImpl asignacionValeService;
 
@@ -46,7 +48,8 @@ public class AsignacionValeController {
         AsignacionValeInDto asignacionVale = data.getAsignacionValeInDto();
         String usuario = data.getIdUsuarioLogueado();
         String empleado = data.getEmpleado();
-        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale, usuario, empleado));
+        String cargo = data.getCargo();
+        return ResponseEntity.ok(iAsignacionValeService.registrar(asignacionVale, usuario, empleado, cargo));
     }
 
     @PostMapping("/devolver")
@@ -78,12 +81,14 @@ public class AsignacionValeController {
     public ResponseEntity<GenericResponse<?>> liquidar(@RequestBody LiquidarValesUsuarioDto data) {
         LiquidarValesDto listVales = data.getValesLiquidados();
         String usuario = data.getUsuario();
+        String empleado = data.getEmpleado();
+        String cargo = data.getCargo();
         String mensaje = "";
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         GenericResponse<?> resp = new GenericResponse<>(0,
                 "No se pudo finalizar la Misión", listVales);
         try {
-            this.asignacionValeService.liquidarVales(listVales, usuario);
+            this.asignacionValeService.liquidarVales(listVales, usuario, empleado, cargo);
             resp.setCode(1);
             resp.setMessage("Misión Finalizada!!");
             http = HttpStatus.OK;
@@ -136,13 +141,21 @@ public class AsignacionValeController {
     public ResponseEntity<AnularMisionDto> anularMision(@RequestBody AnularMisionUsuarioDto data) throws Exception {
         AnularMisionDto anularMisionDto = data.getMisionAnulada();
         String usuario = data.getUsuario();
-        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto, usuario));
+        String empleado = data.getEmpleado();
+        String cargo = data.getCargo();
+        return ResponseEntity.ok(iAsignacionValeService.anularMision(anularMisionDto, usuario, empleado, cargo));
     }
 
     @PostMapping("/solitudaprobar")
     public ResponseEntity<SolicitudValeAprobarDto> actualizarSolicitudAprobar(@RequestBody SolicitudAprobarUsuarioDto data) throws Exception {
         SolicitudValeAprobarDto solicitudValeAprobarDto = data.getSolicitudValeAprobarDto();
         String usuario = data.getIdUsuarioLogueado();
-        return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto, usuario));
+        String cargo = data.getCargo();
+        return ResponseEntity.ok(iAsignacionValeService.actualizarSolicitudAprobar(solicitudValeAprobarDto, usuario, cargo));
+    }
+
+    @GetMapping("/solicivaleEstado/{estado}")
+    public ResponseEntity<Integer> findSoliciVByEstado(@PathVariable int estado) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.findSoliciVByEstado(estado));
     }
 }

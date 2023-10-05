@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/vale")
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class ValeController {
 
     private final IValeService valeService;
@@ -46,6 +48,19 @@ public class ValeController {
         List<ValeDependeDto> valesPorCompra = valeService.obtenerValesPorCompra(idCompra);
         return ResponseEntity.ok(valesPorCompra);
     }
+
+    @GetMapping("/valesporestado/{estado}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorEstado(@PathVariable int estado) {
+        List<ValeDependeDto> valesPorEstado = valeService.obtenerValesPorEstado(estado);
+        return ResponseEntity.ok(valesPorEstado);
+    }
+
+    @GetMapping("/cantidadvalesporestado/{estado}")
+    public ResponseEntity<Integer> obtenerCantidadValesPorEstado(@PathVariable int estado) {
+        int cantidadValesPorEstado = valeService.obtenerCantidadValesPorEstado(estado);
+        return ResponseEntity.ok(cantidadValesPorEstado);
+    }
+
 
     @GetMapping("/listasinpagina")
     public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {

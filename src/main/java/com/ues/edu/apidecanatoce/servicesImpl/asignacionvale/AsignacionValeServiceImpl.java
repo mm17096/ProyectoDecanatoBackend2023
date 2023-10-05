@@ -57,7 +57,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
-    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario, String empleado) {
+    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario, String empleado, String cargo) {
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -78,6 +78,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         List<UUID> valesAsignar = new ArrayList<>();
         int cantidadVales = data.getCantidadVales();
 
+        String movimientoVale = "";
 
 
         //Evaluando su hay vales para asignar
@@ -108,6 +109,8 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                     detalleAsignacionInDto.setCodigoAsignacionVale(codigoAsignacion);
                     detalleAsignacionInDto.setIdVale(valesAsignar.get(i));
 
+                    movimientoVale = data.toAsignacionValeComplete(solicitudValeRepository).getSolicitudVale().getSolicitudVehiculo().getObjetivoMision() + " "
+                            + data.toAsignacionValeComplete(solicitudValeRepository).getSolicitudVale().getSolicitudVehiculo().getLugarMision();
                     try {
                         //Cambiar el estado del Vale
                         actualizarEstadoVale(valesAsignar.get(i), estadoVales);
@@ -116,7 +119,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                         System.out.println("El detalle: " + detalleAsignacionInDto);
                         logVale.setEstadoVale(estadoVales);
                         logVale.setFechaLogVale(fechaActualLog);
-                        logVale.setActividad("Vale asignado a una misión");
+                        logVale.setActividad("Vale asignado a la misión " +  movimientoVale);
                         logVale.setVale(valesAsignar.get(i));
                         logVale.setUsuario(usario);
                         logVale(logVale);
@@ -137,6 +140,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
                 // Actuliza el estado de la Solictud del Vehículo
                 actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
+
                 SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getSolicitudVale()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + data.getSolicitudVale())
                 );
@@ -147,6 +151,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
                 logSolicitudVehiculo.setActividad(actividad);
                 logSolicitudVehiculo.setUsuario(empleado);
+                logSolicitudVehiculo.setCargo(cargo);
                 this.logSoliVeRepository.save(logSolicitudVehiculo);
 
 
@@ -160,13 +165,16 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     }
 
+    @Transactional
     @Override
-    public AnularMisionDto anularMision(AnularMisionDto data, String usuario) {
+    public AnularMisionDto anularMision(AnularMisionDto data, String usuario, String empleado, String cargo) {
         int estadoVale = 8;
         int estadoSolicitudes = 16;
         UUID codigoDetalleAsignacion;
         LocalDateTime fechaActualLog = LocalDateTime.now();
+        String actividad = "Misión anulada";
         LogValeDto logVale = new LogValeDto();
+        LogSolicitudVehiculo logSolicitudVehiculo = new LogSolicitudVehiculo();
         try {
             //actualizar el estado de la asignación
             actualizarEstadoAsignacion(data.getCosdigoAsignacion(), estadoSolicitudes);
@@ -199,6 +207,19 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logVale(logVale);
             }
 
+            SolicitudVale solicitudVale = this.solicitudValeRepository.findById(asignacionVale.getSolicitudVale().getIdSolicitudVale()).orElseThrow(
+                    () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + asignacionVale.getSolicitudVale().getIdSolicitudVale())
+            );
+
+
+            logSolicitudVehiculo.setSoliVale(solicitudVale);
+            logSolicitudVehiculo.setEstadoLogSolive(11);
+            logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
+            logSolicitudVehiculo.setActividad(actividad);
+            logSolicitudVehiculo.setUsuario(empleado);
+            logSolicitudVehiculo.setCargo(cargo);
+            this.logSoliVeRepository.save(logSolicitudVehiculo);
+
         } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo anular la misión");
         }
@@ -219,6 +240,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     //METODO PARA DEVOLVER LOS VALES
+    @Transactional
     @Override
     public DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario) {
         LogValeDto logVale = new LogValeDto();
@@ -308,6 +330,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     //METODO PARA ACTUALIZAR EL ESTADO DEL VALE
+   
     @Override
     public ValeModDto actualizarEstadoVale(UUID id, int estadoVale) {
         System.out.println("entra a actualizarEstadoVale");
@@ -365,17 +388,23 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA LIQUIDAR LOS VALES
     @Override
     @Transactional
-    public LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario) {
+    public LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario, String empleado, String cargo) {
         System.out.println("Dto: " + data);
         LogValeDto logVale = new LogValeDto();
 
         LocalDateTime fechaActualLog = LocalDateTime.now();
 
 
+        LogSolicitudVehiculo logSolicitudVehiculo = new LogSolicitudVehiculo();
+
+
         // 11 = vale consumido
         // 7 = Finalizado para las solicitudes y la asignación
         int estadoVale = 11;
         int estadoSolicitudes = 7;
+        String movimientoVale = "";
+
+        String actividad = "Misón finalizada";
 
         // Se Utiliza para buscar el ID de la Solicitud del Vale
         AsignacionVale asignacionVale = this.asignacionValeRepository.findById(data.getIdAsignacionVale()).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la asignacion"));
@@ -383,11 +412,13 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         //Cambio el estado de las solicitudes, los vales y la asignación
         try {
             for (int i = 0; i < data.getValesLiquidar().size(); i++) {
+                movimientoVale = asignacionVale.getSolicitudVale().getSolicitudVehiculo().getObjetivoMision() + " "
+                        + asignacionVale.getSolicitudVale().getSolicitudVehiculo().getLugarMision();
                 //Cambian el estado de los vales
                 actualizarEstadoVale(data.getValesLiquidar().get(i), estadoVale);
                 logVale.setEstadoVale(estadoVale);
                 logVale.setFechaLogVale(fechaActualLog);
-                logVale.setActividad("Vale consumido");
+                logVale.setActividad("Vale consumido en la misión " + movimientoVale);
                 logVale.setVale(data.getValesLiquidar().get(i));
                 logVale.setUsuario(usuario);
                 logVale(logVale);
@@ -398,6 +429,18 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             actualizarEstadoSolicitud(asignacionVale.getSolicitudVale().getIdSolicitudVale(), estadoSolicitudes);
             //Cambian el estado de la solicitud del vehículo
             actualizarEstadoSolicitudVehiculo(asignacionVale.getSolicitudVale().getSolicitudVehiculo().getCodigoSolicitudVehiculo(), estadoSolicitudes);
+
+            SolicitudVale solicitudVale = this.solicitudValeRepository.findById(asignacionVale.getSolicitudVale().getIdSolicitudVale()).orElseThrow(
+                    () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + asignacionVale.getSolicitudVale().getIdSolicitudVale())
+            );
+
+            logSolicitudVehiculo.setSoliVale(solicitudVale);
+            logSolicitudVehiculo.setEstadoLogSolive(7);
+            logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
+            logSolicitudVehiculo.setActividad(actividad);
+            logSolicitudVehiculo.setUsuario(empleado);
+            logSolicitudVehiculo.setCargo(cargo);
+            this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo liquidar el vale");
@@ -513,6 +556,13 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     @Override
+    public int findSoliciVByEstado(int estado) throws IOException {
+            List<ISolicitudValeFiltradasDto> lista = this.solicitudValeRepository.findSolicitudValeByEstado(estado);
+            return lista.size();
+    }
+
+
+    @Override
     public List<ISolicitudValeFiltradasDto> findSolicitudValeByCodigo(UUID codigo) throws IOException {
         if (this.solicitudValeRepository.findSolicitudValeByCodigo(codigo).isEmpty()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "no hay solicitudes de Vales");
@@ -521,8 +571,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         }
     }
 
+    @Transactional
     @Override
-    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario) {
+    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario, String cargo){
 
         LocalDateTime fechaActualLog = LocalDateTime.now();
         System.out.println(data);
@@ -548,6 +599,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         logSolicitudVehiculo.setEstadoLogSolive(data.getEstadoSolicitudVale());
         logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
         logSolicitudVehiculo.setActividad(actividad);
+        logSolicitudVehiculo.setCargo(cargo);
         logSolicitudVehiculo.setUsuario(usuario);
 
         try {

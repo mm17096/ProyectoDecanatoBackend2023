@@ -8,7 +8,9 @@ import lombok.Setter;
 @Setter
 @Builder
 public class AsignacionUsuarioDto {
-    AsignacionValeInDto asignacionValeInDto;
-    String idUsuarioLogueado;
-    String empleado;
+    private AsignacionValeInDto asignacionValeInDto;
+    private String idUsuarioLogueado;
+    private String empleado;
+    private String cargo;
+
 }

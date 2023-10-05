@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/empleado")
 @CrossOrigin(origins = "*")
+//@PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
 public class EmpleadoController {
 
     private final EmpleadoServiceImpl empleadoServiceimpl;
@@ -48,29 +50,35 @@ public class EmpleadoController {
 
 /////// Metodos reestructurados con EMpleadosServiceImplement /////////
 
+
     @GetMapping("/{uuid}")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<EmpleadoPeticionDto> leerPorID(@PathVariable UUID uuid) {
         return ResponseEntity.ok(empleadoServiceimpl.leerPorId(uuid));
     }
 
     @GetMapping("/motoristas")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<List<Empleado>> Motoristas() {
         return ResponseEntity.ok(empleadoRepository.listaMotoristas());
     }
 
     @GetMapping("/lista")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<Page<EmpleadoPeticionDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(empleadoServiceimpl.listar(pageable));
     }
 
     /////// endpoint para editar sin imagen ////////
     @PostMapping("/insertar")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public EmpleadoPeticionDto InsertarEmpleado(@RequestBody EmpleadoDto empleado) {
         return this.empleadoServiceimpl.registrar(empleado);
     }
 
     /////// endpoint para insertar con imagen ////////
     @PostMapping("/insertarconImagen")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public EmpleadoPeticionDto InsertarEmpleadoconImagen(@PathVariable MultipartFile imagen, @Valid @RequestParam("empleado") String empleadoJson) {
         try {
             // Crear el objetmapper y agregar el mapeo de fechas
@@ -101,6 +109,7 @@ public class EmpleadoController {
 
     /////// endpoint para editar sin imagen ////////
     @PutMapping("/editar/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<EmpleadoPeticionDto> actualizar(
             @PathVariable UUID id, @Valid @RequestBody EmpleadoDto empleado) {
         return ResponseEntity.ok(empleadoServiceimpl.actualizar(id, empleado));
@@ -108,6 +117,7 @@ public class EmpleadoController {
 
     /////// endpoint para editar con imagen ////////
     @PutMapping("/editarconImagen/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<EmpleadoPeticionDto> actualizarconImagen(
             @PathVariable UUID id, @PathVariable MultipartFile imagen, @Valid @RequestParam("empleado") String empleadoJson) {
         try {

@@ -8,8 +8,6 @@ import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
-
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,6 +27,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/api/consulta")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class SolicitudConsultaController {
     private final ISolicitudVehiculoConsultaService servicioSolicitudVehiculo;
     private final IConsultaValeService consultaValeService;
@@ -77,9 +77,38 @@ public class SolicitudConsultaController {
     public ResponseEntity<List<ConsultaSoliValeIdDto>> listarDocumentoValeid(@PathVariable UUID id) throws Exception {
         List<ConsultaSoliValeIdDto> vehiculos = consultaValeService.lisDocumentVale(id);
         return ResponseEntity.ok(vehiculos);
-      
-     //   public ResponseEntity<List<ConsultaCantidadValesDelAlDto>> listarValesDelAl(@RequestParam("id") UUID id) throws Exception {
-       // return ResponseEntity.ok(consultaValeService.lisConsultaValesDelAlDto(id));
+
+    }
+
+    @GetMapping("/decano")
+    public ResponseEntity<List<ConsultaEmpleadoDto>> ListarDecano() throws Exception {
+        List<ConsultaEmpleadoDto> vehiculos = consultaValeService.lisDecano();
+        return ResponseEntity.ok(vehiculos);
+    }
+
+    @GetMapping("/logsolivhe/{id}")
+    public ResponseEntity<List<ConsultaLogSoliVeDto>> listarLogSoliVehi(@PathVariable UUID id) throws Exception {
+        List<ConsultaLogSoliVeDto> vehiculos = consultaValeService.lisLogSoliVehi(id);
+        return ResponseEntity.ok(vehiculos);
+
+    }
+
+    @GetMapping("/logvale/{id}")
+    public ResponseEntity<List<ConsultaLogValeDto>> listarLogVale(@PathVariable UUID id) throws Exception {
+        List<ConsultaLogValeDto> vehiculos = consultaValeService.lisLogVale(id);
+        return ResponseEntity.ok(vehiculos);
+
+    }
+    @GetMapping("/idcompra/{id}")
+    public ResponseEntity<List<ConsultaIdCompraDto>> listarIdCompra(@PathVariable UUID id) throws Exception {
+        List<ConsultaIdCompraDto> vehiculos = consultaValeService.lisIdCompra(id);
+        return ResponseEntity.ok(vehiculos);
+
+    }
+    @GetMapping("/idvale/{id}")
+    public ResponseEntity<List<ConsultaIdValeDto>> listarIdVale(@PathVariable UUID id) throws Exception {
+        List<ConsultaIdValeDto> vehiculos = consultaValeService.lisIdVale(id);
+        return ResponseEntity.ok(vehiculos);
 
     }
 }
