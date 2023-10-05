@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -40,19 +41,41 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     @Override
     public SolicitudVehiculoPeticionDtO registrar(SolicitudVehiculoDto data) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         LocalDate fechaActual = LocalDate.now();
+        String userName = authentication.getName();
+
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
+        String rol = "";
+        LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
+        SolicitudVehiculo soliRegistrada;
+
+
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            rol = String.valueOf(usuario.getRole());
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+        if (Objects.equals(rol, "JEFE_DEPTO") || Objects.equals(rol, "JEFE_FINANACIERO") ||
+        Objects.equals(rol, "DECANO")){
+            data.setEstado(2);
+            logSoliVe.setEstadoLogSolive(2);
+        } else {
+            data.setEstado(1);
+            logSoliVe.setEstadoLogSolive(1);
+        }
 
         data.setFechaSolicitud(fechaActual);
-        data.setEstado(1);
 
-        SolicitudVehiculo soliRegistrada = solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository, usuarioRepository));
-
-        LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
-        logSoliVe.setEstadoLogSolive(1);
+        logSoliVe.setUsuario(nombreUsuario);
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setActividad("Solicitud de vehículo realizada");
-        logSoliVe.setUsuario(nombreUsuario);
+        soliRegistrada = solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository, usuarioRepository));
+
         logSoliVe.setSoliVe(soliRegistrada);
         logSoliVeRepository.save(logSoliVe);
         return soliRegistrada.toDto();
