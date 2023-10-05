@@ -71,7 +71,7 @@ public class MailService {
         mail.addPersonalization(personalization);
         mail.setTemplateId(System.getenv("TEMPLATE_ID"));
         // this is the api key
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+        SendGrid sg = new SendGrid(System.getenv("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"));
         Request request = new Request();
 
         try {
