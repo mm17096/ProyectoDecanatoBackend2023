@@ -200,6 +200,18 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
 
         SolicitudVehiculoPeticionDtO buscarSoliVe = leerPorId(codigoSolicitudVehiculo);
+
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String nombreCargo = "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
         data.setEstado(3);
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
 
@@ -208,6 +220,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setActividad("Modificacíon y asignación de motorista a la solicitud de vehículo");
         logSoliVe.setUsuario(nombreUsuario);
+        logSoliVe.setCargo(nombreCargo);
         logSoliVe.setSoliVe(codigoSolicitudVehiculo);
         logSolicitudVehiculo(logSoliVe);
 
@@ -228,6 +241,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String nombreCompletoUser = "";
         String rol = "";
         int estado = 0;
+        String nombreCargo= "";
 
         SolicitudVehiculo solicitudExistente =
                 solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
@@ -237,6 +251,8 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             Usuario usuario = user.get();
             nombreCompletoUser = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
             rol = String.valueOf(usuario.getRole());
+            nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
+
         }else{
             System.out.println("USUARIO VACIO");
         }
@@ -289,6 +305,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         logSoliVe.setUsuario(nombreCompletoUser);
         logSoliVe.setSoliVe(solicitudExistente.getCodigoSolicitudVehiculo());
         logSoliVe.setActividad(actividad);
+        logSoliVe.setCargo(nombreCargo);
         logSolicitudVehiculo(logSoliVe);
 
         return SolicitudVehiculoActualizarEstadoDTO.builder()
