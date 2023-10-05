@@ -40,6 +40,9 @@ public class LogSolicitudVehiculo {
     @Column(name = "usuario", nullable = false)
     private String usuario;
 
+    @Column(name = "cargo", nullable = false)
+    private String cargo;
+
     @ManyToOne
     @JoinColumn(name = "codigo_solive")
     private SolicitudVehiculo soliVe;
@@ -55,6 +58,7 @@ public class LogSolicitudVehiculo {
                 .fechaLogSoliVe(this.fechaLogSoliVe)
                 .actividad(this.actividad)
                 .usuario(this.usuario)
+                .cargo(this.cargo)
                 .soliVe(this.soliVe.getCodigoSolicitudVehiculo()).build();
     }
 

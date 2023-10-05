@@ -47,6 +47,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
         String rol = "";
+        String nombreCargo = "";
         LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
         SolicitudVehiculo soliRegistrada;
 
@@ -56,6 +57,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         if (user.isPresent()){
             Usuario usuario = user.get();
             rol = String.valueOf(usuario.getRole());
+            nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
         }else{
             System.out.println("USUARIO VACIO");
         }
@@ -72,6 +74,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         data.setFechaSolicitud(fechaActual);
 
         logSoliVe.setUsuario(nombreUsuario);
+        logSoliVe.setCargo(nombreCargo);
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setActividad("Solicitud de vehículo realizada");
         soliRegistrada = solicitudVehiculoServices.save(data.toEntityComplete(vehiculoRepository, empleadoRepository, usuarioRepository));

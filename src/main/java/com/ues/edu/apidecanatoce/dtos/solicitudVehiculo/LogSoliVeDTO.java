@@ -36,6 +36,8 @@ public class LogSoliVeDTO {
 
     private String usuario;
 
+    private String cargo;
+
     private UUID soliVe;
 
     private UUID soliVale;
@@ -57,6 +59,8 @@ public class LogSoliVeDTO {
                 .estadoLogSolive(this.estadoLogSolive)
                 .fechaLogSoliVe(this.fechaLogSoliVe)
                 .actividad(this.actividad)
+                .usuario(this.usuario)
+                .cargo(this.cargo)
                 .soliVe(solisVe).build();
     }
 }
