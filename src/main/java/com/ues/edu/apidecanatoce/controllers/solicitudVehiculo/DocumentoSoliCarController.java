@@ -6,6 +6,7 @@ import com.ues.edu.apidecanatoce.services.solicitudVehiculo.IDocumentosSoliCarSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/documentosoli")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
 public class DocumentoSoliCarController {
     private final IDocumentosSoliCarService documentosService;
 

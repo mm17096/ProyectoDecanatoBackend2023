@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/entradasalida")
+@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
 public class EntradasalidaController {
 
     private final Ientradasalidaservice ientradasalidaservice;

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/api/consulta")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class SolicitudConsultaController {
     private final ISolicitudVehiculoConsultaService servicioSolicitudVehiculo;
     private final IConsultaValeService consultaValeService;
