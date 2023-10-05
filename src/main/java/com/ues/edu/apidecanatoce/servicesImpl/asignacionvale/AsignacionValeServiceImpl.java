@@ -57,7 +57,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA GUARDAR LA ASIGNACIÓN
     @Override
     @Transactional
-    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario, String empleado) {
+    public AsignacionValeInDto registrar(AsignacionValeInDto data, String usario, String empleado, String cargo) {
 
         // 5 = Asignado para los vales
         //7 = Finalizado para la solicitud
@@ -151,6 +151,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                 logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
                 logSolicitudVehiculo.setActividad(actividad);
                 logSolicitudVehiculo.setUsuario(empleado);
+                logSolicitudVehiculo.setCargo(cargo);
                 this.logSoliVeRepository.save(logSolicitudVehiculo);
 
 
@@ -164,8 +165,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
     }
 
+    @Transactional
     @Override
-    public AnularMisionDto anularMision(AnularMisionDto data, String usuario, String empleado) {
+    public AnularMisionDto anularMision(AnularMisionDto data, String usuario, String empleado, String cargo) {
         int estadoVale = 8;
         int estadoSolicitudes = 16;
         UUID codigoDetalleAsignacion;
@@ -215,6 +217,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
+            logSolicitudVehiculo.setCargo(cargo);
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
@@ -237,6 +240,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     //METODO PARA DEVOLVER LOS VALES
+    @Transactional
     @Override
     public DevolucionValeDto devolverVale(DevolucionValeDto data, String usuario) {
         LogValeDto logVale = new LogValeDto();
@@ -326,6 +330,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     }
 
     //METODO PARA ACTUALIZAR EL ESTADO DEL VALE
+   
     @Override
     public ValeModDto actualizarEstadoVale(UUID id, int estadoVale) {
         System.out.println("entra a actualizarEstadoVale");
@@ -383,7 +388,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     //METODO PARA LIQUIDAR LOS VALES
     @Override
     @Transactional
-    public LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario, String empleado) {
+    public LiquidarValesDto liquidarVales(LiquidarValesDto data, String usuario, String empleado, String cargo) {
         System.out.println("Dto: " + data);
         LogValeDto logVale = new LogValeDto();
 
@@ -434,6 +439,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
+            logSolicitudVehiculo.setCargo(cargo);
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
@@ -565,8 +571,9 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         }
     }
 
+    @Transactional
     @Override
-    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario) {
+    public SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario, String cargo){
 
         LocalDateTime fechaActualLog = LocalDateTime.now();
         System.out.println(data);
@@ -592,6 +599,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         logSolicitudVehiculo.setEstadoLogSolive(data.getEstadoSolicitudVale());
         logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
         logSolicitudVehiculo.setActividad(actividad);
+        logSolicitudVehiculo.setCargo(cargo);
         logSolicitudVehiculo.setUsuario(usuario);
 
         try {

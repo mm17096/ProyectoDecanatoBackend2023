@@ -11,5 +11,6 @@ public class LiquidarValesUsuarioDto {
     private LiquidarValesDto valesLiquidados;
     private String usuario;
     private String empleado;
+    private String cargo;
 
 }
