@@ -1,8 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.solicitudVale;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaLogSoliVeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaLogValeDto;
-import com.ues.edu.apidecanatoce.entities.compras.Compra;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

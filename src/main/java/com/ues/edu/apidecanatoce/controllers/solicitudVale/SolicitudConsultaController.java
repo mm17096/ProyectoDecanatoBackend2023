@@ -8,8 +8,6 @@ import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
-
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
