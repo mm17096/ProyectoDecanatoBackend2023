@@ -1,5 +1,4 @@
 package com.ues.edu.apidecanatoce.repositorys.solicitudVale;
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaEmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaLogSoliVeDto;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
