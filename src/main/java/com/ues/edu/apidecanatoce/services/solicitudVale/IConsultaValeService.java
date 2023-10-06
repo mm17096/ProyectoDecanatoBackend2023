@@ -17,7 +17,9 @@ public interface IConsultaValeService {
     List<ConsultaSoliValeIdDto> lisDocumentVale(UUID id) throws IOException;
     List<ConsultaEmpleadoDto> lisDecano() throws IOException;
     List<ConsultaLogSoliVeDto> lisLogSoliVehi(UUID id) throws IOException;
+    List<ConsultaLogSoliVeIDDto> lisLogSoliVehiID(UUID id) throws IOException;
     List<ConsultaLogValeDto> lisLogVale(UUID id) throws IOException;
     List<ConsultaIdCompraDto> lisIdCompra(UUID id) throws IOException;
     List<ConsultaIdValeDto> lisIdVale(UUID id) throws IOException;
+    List<ConsultaUsuarioDto> lisUsuario(LocalDate fechaI, LocalDate fechaF) throws IOException;
 }
