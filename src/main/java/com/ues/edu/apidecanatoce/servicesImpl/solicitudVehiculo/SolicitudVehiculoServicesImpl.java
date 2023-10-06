@@ -73,6 +73,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         data.setFechaSolicitud(fechaActual);
+        data.setTieneVale(true);
 
         logSoliVe.setUsuario(nombreUsuario);
         logSoliVe.setCargo(nombreCargo);

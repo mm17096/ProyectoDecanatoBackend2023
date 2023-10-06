@@ -106,6 +106,8 @@ public class SolicitudVehiculoDto {
 
     private String observaciones;
 
+    private boolean tieneVale;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository,
                                               IUsuarioRepository usuarioRepository){
@@ -129,7 +131,7 @@ public class SolicitudVehiculoDto {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
     }
 
     public SolicitudVehiculo toEntityComplete2() {
