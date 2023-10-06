@@ -9,4 +9,5 @@ public interface ConsultaDocumentSoliCarDto {
     String getNombredocment();
     String getUrldocument();
     UUID getCodigosolicitudvehiculo();
+    String getTipodocument();
 }
