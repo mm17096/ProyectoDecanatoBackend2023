@@ -124,6 +124,14 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
         }
     }
     @Override
+    public List<ConsultaLogSoliVeIDDto> lisLogSoliVehiID(UUID id) throws IOException {
+        if (this.consultaLogSoliVehiRepository.listarLogSoliVehiID(id).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaLogSoliVehiRepository.listarLogSoliVehiID(id);
+        }
+    }
+    @Override
     public List<ConsultaIdCompraDto> lisIdCompra(UUID id) throws IOException {
         if (this.consultaValeGRepository.listarIdCompra(id).isEmpty()) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
@@ -137,6 +145,14 @@ public class ConsultaValeServiceImpl implements IConsultaValeService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
         } else {
             return this.consultaValeGRepository.listarIdVale(id);
+        }
+    }
+    @Override
+    public List<ConsultaUsuarioDto> lisUsuario(LocalDate fechaI, LocalDate fechaF) throws IOException {
+        if (this.consultaLogSoliVehiRepository.listarUsuario(fechaI,fechaF).isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "No hay datos para mostrar");
+        } else {
+            return this.consultaLogSoliVehiRepository.listarUsuario(fechaI,fechaF);
         }
     }
 }

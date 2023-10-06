@@ -51,7 +51,7 @@ public class MailService {
 
     public String send(BodyEmail email) throws IOException {
         // the sender email should be the same as we used to Create a Single Sender Verification
-        Email from = new Email("misionesdecanato@gmail.com");
+        Email from = new Email("decanatomisiones@gmail.com");
         Email to = new Email(email.getEmail());
         Mail mail = new Mail();
         // we create an object of our static class feel free to change the class on it's own file
@@ -71,7 +71,7 @@ public class MailService {
         mail.addPersonalization(personalization);
         mail.setTemplateId(System.getenv("TEMPLATE_ID"));
         // this is the api key
-        SendGrid sg = new SendGrid(System.getenv("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"));
+        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
         Request request = new Request();
 
         try {

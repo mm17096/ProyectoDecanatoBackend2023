@@ -93,6 +93,13 @@ public class SolicitudConsultaController {
 
     }
 
+    @GetMapping("/logsolivheid/{id}")
+    public ResponseEntity<List<ConsultaLogSoliVeIDDto>> listarLogSoliVehiID(@PathVariable UUID id) throws Exception {
+        List<ConsultaLogSoliVeIDDto> vehiculos = consultaValeService.lisLogSoliVehiID(id);
+        return ResponseEntity.ok(vehiculos);
+
+    }
+
     @GetMapping("/logvale/{id}")
     public ResponseEntity<List<ConsultaLogValeDto>> listarLogVale(@PathVariable UUID id) throws Exception {
         List<ConsultaLogValeDto> vehiculos = consultaValeService.lisLogVale(id);
@@ -110,5 +117,10 @@ public class SolicitudConsultaController {
         List<ConsultaIdValeDto> vehiculos = consultaValeService.lisIdVale(id);
         return ResponseEntity.ok(vehiculos);
 
+    }
+
+    @GetMapping("/usuario")
+    public ResponseEntity<List<ConsultaUsuarioDto>> listarUsuario(@RequestParam("fechaI") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaI,@RequestParam("fechaF") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaF) throws Exception {
+        return ResponseEntity.ok(consultaValeService.lisUsuario(fechaI, fechaF));
     }
 }
