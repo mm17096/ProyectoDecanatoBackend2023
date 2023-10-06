@@ -277,17 +277,17 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
 
         if (Objects.equals(rol, "JEFE_DEPTO") ||
                 Objects.equals(rol, "JEFE_FINANACIERO") ||
-                (Objects.equals(rol, "DECANO") && data.getEstado() == 1 )) {
+                ((Objects.equals(rol, "DECANO") || Objects.equals(rol, "ADMIN")) && data.getEstado() == 1 ) ) {
             solicitudExistente.setJefeDepto(nombreCompletoUser);
             estado = 2;
             solicitudExistente.setObservaciones(data.getObservaciones());
             actividad = "Solicitud de vehículo aprobada por jefe de departamento";
-        } else if (Objects.equals(rol, "SECR_DECANATO")) {
+        } else if (Objects.equals(rol, "SECR_DECANATO") || Objects.equals(rol, "ADMIN")) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 3;
             solicitudExistente.setObservaciones(data.getObservaciones());
             actividad = "Asignación de vehiculo realizada";
-        } else if (Objects.equals(rol, "DECANO") && data.getEstado() == 3) {
+        } else if ( (Objects.equals(rol, "DECANO") || Objects.equals(rol, "ADMIN") ) && data.getEstado() == 3) {
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 4;
             solicitudExistente.setObservaciones(data.getObservaciones());
@@ -297,16 +297,16 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         if (data.getEstado() == 6){
             solicitudExistente.setEstado(6);
             solicitudExistente.setObservaciones(data.getObservaciones());
-            actividad = "Solicitud de vehículo enviada a revisión por decano";
+            actividad = "Solicitud de vehículo enviada a revisión por " + nombreCargo;
         } else if(data.getEstado() == 15){
             if (Objects.equals(rol, "SECR_DECANATO")){
                 solicitudExistente.setEstado(15);
                 solicitudExistente.setObservaciones(data.getObservaciones());
                 actividad = "Solicitud de vehículo anulada por secretaria";
-            } else if (Objects.equals(rol, "DECANO")){
+            } else if (Objects.equals(rol, "DECANO") || Objects.equals(rol, "ADMIN")){
                 solicitudExistente.setEstado(15);
                 solicitudExistente.setObservaciones(data.getObservaciones());
-                actividad = "Solicitud de vehículo anulada por decano";
+                actividad = "Solicitud de vehículo anulada por "+nombreCargo;
             }else if (Objects.equals(rol, "JEFE_DEPTO") || Objects.equals(rol, "JEFE_FINANACIERO")){
                 solicitudExistente.setEstado(15);
                 solicitudExistente.setObservaciones(data.getObservaciones());
@@ -318,7 +318,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         solicitudVehiculoServices.save(solicitudExistente);
-        System.out.println("Cargo"+ nombreCargo);
         logSoliVe.setEstadoLogSolive(solicitudExistente.getEstado());
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setUsuario(nombreCompletoUser);
