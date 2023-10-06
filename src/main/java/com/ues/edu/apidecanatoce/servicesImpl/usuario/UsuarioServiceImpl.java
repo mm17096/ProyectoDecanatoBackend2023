@@ -138,10 +138,12 @@ no se esta usando
             }
         }
 
+        String[] partes = request.getNombre().split("@");
+        String nombre = partes[0];
 
         Usuario user = Usuario.builder()
                 .codigoUsuario(generalmethods.generarCodigo())
-                .nombre(request.getNombre())
+                .nombre(nombre)
                 .clave(passwordEncoder.encode(request.getClave()))
                 .nuevo(true)
                 //.activo(false)no se esta usando
