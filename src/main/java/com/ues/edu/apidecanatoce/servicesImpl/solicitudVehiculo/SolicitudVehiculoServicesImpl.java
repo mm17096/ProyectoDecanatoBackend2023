@@ -171,7 +171,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }*/
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer estado) {
-        System.out.println("el estado es" + estado);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // Obtener el ID del usuario autenticado
@@ -249,8 +248,6 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     @Override
     public SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO data) {
 
-        System.out.println("DATA RECIBIDA: "+ data);
-        System.out.println("DATA ESTADO RECIBIDA: "+ data.getEstado());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
         String actividad = "";
