@@ -7,6 +7,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
+import com.ues.edu.apidecanatoce.services.empleado.IEmpleadoService;
 import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ILogSoliVeService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
@@ -122,5 +123,11 @@ public class SolicitudVehiculoController {
             @PathVariable (name = "id") UUID codigoSolicitudVehiculo) throws IOException{
         List<LogSoliVeDTO> log = logSoliVeService.obtenerLog(codigoSolicitudVehiculo);
         return ResponseEntity.ok(log);
+    }
+
+    @GetMapping("/obtenerjefe/{depto}")
+    public ResponseEntity<String> obtenerJefeDepto(@PathVariable (name = "depto") String depto) throws IOException{
+        String correo = servicioSolicitudVehiculo.obtenerCorreo(depto);
+        return ResponseEntity.ok(correo);
     }
 }

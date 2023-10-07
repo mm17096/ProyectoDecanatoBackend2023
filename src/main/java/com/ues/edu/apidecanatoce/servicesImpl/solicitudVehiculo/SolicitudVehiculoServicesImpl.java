@@ -443,4 +443,10 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
                 .fechaEntrada(solicitudExistente.getFechaEntrada())
                 .build();
     }
+
+    @Override
+    public String obtenerCorreo(String depto) {
+        String correo = solicitudVehiculoServices.obtenerCorreoJefeDepto(depto);
+        return correo;
+    }
 }
