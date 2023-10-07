@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/document")
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class Documentosvalecontroller {
 
 

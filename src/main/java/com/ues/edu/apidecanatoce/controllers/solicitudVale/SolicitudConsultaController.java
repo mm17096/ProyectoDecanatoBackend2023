@@ -8,8 +8,6 @@ import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaCompraDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaValeGDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
-
-import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.services.solicitudVale.IConsultaValeService;
 import com.ues.edu.apidecanatoce.services.solicitudVale.ISolicitudVehiculoConsultaService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,6 +27,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/api/consulta")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class SolicitudConsultaController {
     private final ISolicitudVehiculoConsultaService servicioSolicitudVehiculo;
     private final IConsultaValeService consultaValeService;
@@ -93,6 +93,13 @@ public class SolicitudConsultaController {
 
     }
 
+    @GetMapping("/logsolivheid/{id}")
+    public ResponseEntity<List<ConsultaLogSoliVeIDDto>> listarLogSoliVehiID(@PathVariable UUID id) throws Exception {
+        List<ConsultaLogSoliVeIDDto> vehiculos = consultaValeService.lisLogSoliVehiID(id);
+        return ResponseEntity.ok(vehiculos);
+
+    }
+
     @GetMapping("/logvale/{id}")
     public ResponseEntity<List<ConsultaLogValeDto>> listarLogVale(@PathVariable UUID id) throws Exception {
         List<ConsultaLogValeDto> vehiculos = consultaValeService.lisLogVale(id);
@@ -110,5 +117,10 @@ public class SolicitudConsultaController {
         List<ConsultaIdValeDto> vehiculos = consultaValeService.lisIdVale(id);
         return ResponseEntity.ok(vehiculos);
 
+    }
+
+    @GetMapping("/usuario")
+    public ResponseEntity<List<ConsultaUsuarioDto>> listarUsuario(@RequestParam("fechaI") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaI,@RequestParam("fechaF") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaF) throws Exception {
+        return ResponseEntity.ok(consultaValeService.lisUsuario(fechaI, fechaF));
     }
 }

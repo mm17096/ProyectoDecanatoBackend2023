@@ -27,7 +27,7 @@ public class Generalmethods {
         String letrasMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
         String numeros = "0123456789";
-        String caracteresEspeciales = "!@#$^&*()-_+=<>?";
+        String caracteresEspeciales = "!@$^&*()-_+=<>";
 
         StringBuilder hash = new StringBuilder();
 

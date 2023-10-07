@@ -1,10 +1,8 @@
 package com.ues.edu.apidecanatoce.repositorys.solicitudVale;
 
-import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaDocumentSoliCarDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaSoliValeIdDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.ConsultaSolisValeIdDto;
 import com.ues.edu.apidecanatoce.entities.documentoVale.Documentovale;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

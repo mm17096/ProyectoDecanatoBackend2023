@@ -11,4 +11,5 @@ public class AnularMisionUsuarioDto {
     private AnularMisionDto misionAnulada;
     private String usuario;
     private String empleado;
+    private String cargo;
 }
