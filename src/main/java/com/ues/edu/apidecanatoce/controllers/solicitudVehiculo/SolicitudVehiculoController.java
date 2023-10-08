@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
@@ -7,13 +8,11 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
 import com.ues.edu.apidecanatoce.repositorys.estados.IEstadosRepository;
-import com.ues.edu.apidecanatoce.services.empleado.IEmpleadoService;
 import com.ues.edu.apidecanatoce.services.estados.IEstadosService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ILogSoliVeService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 @RestController
 @RequestMapping("/api/solicitudvehiculo")
@@ -126,8 +126,13 @@ public class SolicitudVehiculoController {
     }
 
     @GetMapping("/obtenerjefe/{depto}")
-    public ResponseEntity<String> obtenerJefeDepto(@PathVariable (name = "depto") String depto) throws IOException{
-        String correo = servicioSolicitudVehiculo.obtenerCorreo(depto);
-        return ResponseEntity.ok(correo);
+    public ResponseEntity obtenerJefeDepto(@PathVariable(name = "depto") String depto) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreo(depto);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
     }
+
 }
