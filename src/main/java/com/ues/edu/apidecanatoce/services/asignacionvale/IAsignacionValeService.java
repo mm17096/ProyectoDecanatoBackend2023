@@ -59,7 +59,9 @@ public interface IAsignacionValeService {
 
     SolicitudValeAprobarDto actualizarSolicitudAprobar(SolicitudValeAprobarDto data, String usuario, String cargo);
 
+    List<EmpleadosCorreosSolicitudesDto> correosFinanciero() throws IOException;
 
+    List<EmpleadosCorreosSolicitudesDto> correoById(UUID codigoEmpleado) throws IOException;
 
 
 

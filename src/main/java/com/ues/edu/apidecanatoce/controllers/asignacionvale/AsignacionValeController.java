@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.controllers.asignacionvale;
 
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.BuscarSolicitudValeDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudAprobarUsuarioDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeAprobarDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
@@ -157,5 +158,15 @@ public class AsignacionValeController {
     @GetMapping("/solicivaleEstado/{estado}")
     public ResponseEntity<Integer> findSoliciVByEstado(@PathVariable int estado) throws Exception {
         return ResponseEntity.ok(iAsignacionValeService.findSoliciVByEstado(estado));
+    }
+
+    @GetMapping("/correosfinanciero")
+    public ResponseEntity<List<EmpleadosCorreosSolicitudesDto>> correosFinanciero() throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.correosFinanciero());
+    }
+
+    @GetMapping("/correobyid/{codigoEmpleado}")
+    public ResponseEntity<List<EmpleadosCorreosSolicitudesDto>> correoById(@PathVariable UUID codigoEmpleado) throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.correoById(codigoEmpleado));
     }
 }
