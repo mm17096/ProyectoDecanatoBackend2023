@@ -615,6 +615,16 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         return data;
     }
 
+    @Override
+    public List<EmpleadosCorreosSolicitudesDto> correosFinanciero() {
+        return asignacionValeRepository.correosFinanciero();
+    }
+
+    @Override
+    public List<EmpleadosCorreosSolicitudesDto> correoById(UUID codigoEmpleado) throws IOException {
+        return asignacionValeRepository.correoById(codigoEmpleado);
+    }
+
 }
 
 
