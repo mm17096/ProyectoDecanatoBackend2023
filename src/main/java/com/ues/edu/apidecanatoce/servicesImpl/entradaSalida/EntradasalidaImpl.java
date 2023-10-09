@@ -4,12 +4,14 @@ import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.entities.departamentos.Departamento;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
 import com.ues.edu.apidecanatoce.servicesImpl.asignacionvale.AsignacionValeServiceImpl;
 import com.ues.edu.apidecanatoce.servicesImpl.solicitudVale.SolicitudValeServiceImpl;
+import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.SolicitudVehiculoServicesImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -27,19 +29,28 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     private  final ISolicitudVehiculoRepository solicitudVehiculorepository;
     private  final AsignacionValeServiceImpl asignacionValeServiceImpl;
     private final SolicitudValeServiceImpl solicitudValeServiceImpl;
+    private final SolicitudVehiculoServicesImpl solicitudvehiculoServices;
+
 
 
     @Override
     public EntradasalidaPeticionDto registrar(EntradasalidaDto data) {
         if(data.getEstado()==2){
+            SolicitudVehiculo solicitud1=solicitudvehiculoServices.ConsinVale(data.getSolicitudvehiculo());
+            if (solicitud1.isTieneVale()==true){
                 //entradasalida--- solicitudvehiculo-- solicitudvale
                 SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
                 asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
                 asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
+            }else {
+                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
+            }
         }else if(data.getEstado()==1){
-
+            SolicitudVehiculo solicitud=solicitudvehiculoServices.ConsinVale(data.getSolicitudvehiculo());
+            if (solicitud.isTieneVale()==true){
                 SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
                 asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),1);
+            }
         }
         return entradasalidaRepository.save(data.toEntityComplete(solicitudVehiculorepository)).toDTO();
     }
