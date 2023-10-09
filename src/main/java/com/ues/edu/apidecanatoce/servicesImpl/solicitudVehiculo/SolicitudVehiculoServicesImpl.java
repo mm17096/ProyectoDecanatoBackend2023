@@ -291,7 +291,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             solicitudExistente.setJefeDepto(solicitudExistente.getJefeDepto());
             estado = 4;
             solicitudExistente.setObservaciones(data.getObservaciones());
-            actividad = "Solicitud de vehículo aprobada por " + nombreCargo;
+            actividad = "Solicitud de vehículo con vales aprobada por " + nombreCargo;
         }
 
         if (data.getEstado() == 6){
@@ -341,6 +341,31 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
                 solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
         solicitudExistente.setEstado(data.getEstado());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
+
+        String userName = authentication.getName();
+        Optional<Usuario> user = usuarioRepository.findByNombre(userName);
+        String nombreCompletoUser = "";
+        String nombreCargo= "";
+
+        if (user.isPresent()){
+            Usuario usuario = user.get();
+            nombreCompletoUser = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
+            nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
+
+        }else{
+            System.out.println("USUARIO VACIO");
+        }
+
+        logSoliVe.setEstadoLogSolive(solicitudExistente.getEstado());
+        logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
+        logSoliVe.setUsuario(nombreCompletoUser);
+        logSoliVe.setSoliVe(solicitudExistente.getCodigoSolicitudVehiculo());
+        logSoliVe.setActividad("Solicitud de vehículo sin vales aprobada por " +nombreCompletoUser);
+        logSoliVe.setCargo(nombreCargo);
+        logSolicitudVehiculo(logSoliVe);
 
         solicitudVehiculoServices.save(solicitudExistente);
         return SolicitudVehiculoActualizarEstadoDTO.builder()
