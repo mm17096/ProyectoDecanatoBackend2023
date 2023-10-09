@@ -363,7 +363,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
         logSoliVe.setUsuario(nombreCompletoUser);
         logSoliVe.setSoliVe(solicitudExistente.getCodigoSolicitudVehiculo());
-        logSoliVe.setActividad("Solicitud de vehículo sin vales aprobada por" +nombreCompletoUser);
+        logSoliVe.setActividad("Solicitud de vehículo sin vales aprobada por " +nombreCompletoUser);
         logSoliVe.setCargo(nombreCargo);
         logSolicitudVehiculo(logSoliVe);
 
