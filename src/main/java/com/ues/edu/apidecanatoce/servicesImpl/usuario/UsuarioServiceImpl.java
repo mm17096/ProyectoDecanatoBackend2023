@@ -218,6 +218,7 @@ no se esta usando
                 .nuevo(carga.isNuevo())
                 //.activo(false)no se esta usando
                 .role(rol)
+                .codigo(carga.getCodigo())
                 .empleado(carga.getEmpleado())
                 .token(carga.getToken())
                 .build();
