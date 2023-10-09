@@ -211,6 +211,7 @@ no se esta usando
 
         Usuario carga = usuarioRepository.findUsuarioByNombre(nombre);
 
+        /*
         Usuario user = Usuario.builder()
                 .codigoUsuario(carga.getCodigoUsuario())
                 .nombre(carga.getUsername())
@@ -222,9 +223,9 @@ no se esta usando
                 .empleado(carga.getEmpleado())
                 .token(carga.getToken())
                 .build();
-
-
-        usuarioRepository.save(user);
+*/
+                carga.setRole(rol);
+        usuarioRepository.save(carga);
 
     }
 
