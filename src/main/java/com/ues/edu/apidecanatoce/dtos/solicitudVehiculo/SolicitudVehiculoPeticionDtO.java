@@ -101,6 +101,8 @@ public class SolicitudVehiculoPeticionDtO {
 
     private String observaciones;
 
+    private boolean tieneVale;
+
     public SolicitudVehiculo toEntitySave() {
 
         //this.vehiculo.toEntityComlete
@@ -111,6 +113,6 @@ public class SolicitudVehiculoPeticionDtO {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(this.solicitante).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
     }
 }

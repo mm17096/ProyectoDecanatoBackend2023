@@ -73,6 +73,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         data.setFechaSolicitud(fechaActual);
+        data.setTieneVale(true);
 
         logSoliVe.setUsuario(nombreUsuario);
         logSoliVe.setCargo(nombreCargo);
@@ -328,6 +329,20 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         logSoliVe.setCargo(nombreCargo);
         logSolicitudVehiculo(logSoliVe);
 
+        return SolicitudVehiculoActualizarEstadoDTO.builder()
+                .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
+                .estado(solicitudExistente.getEstado()).build();
+    }
+
+    @Override
+    public SolicitudVehiculoActualizarEstadoDTO updateEstadoSinVales(SolicitudVehiculoActualizarEstadoDTO data) {
+
+        SolicitudVehiculo solicitudExistente =
+                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+        solicitudExistente.setEstado(data.getEstado());
+
+        solicitudVehiculoServices.save(solicitudExistente);
         return SolicitudVehiculoActualizarEstadoDTO.builder()
                 .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
                 .estado(solicitudExistente.getEstado()).build();

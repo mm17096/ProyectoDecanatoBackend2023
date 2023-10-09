@@ -22,7 +22,7 @@ public interface IVehiculoService{
 
     List<String> listarPorClase();
 
-    List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada);
+    List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida);
 
     MensajeRecord actualizar(MultipartFile imagen, VehiculoDto data);
 

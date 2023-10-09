@@ -91,6 +91,12 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(data));
     }
 
+    @PutMapping("/updatesinvale")
+    public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstadoSinVale(
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO data){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstadoSinVales(data));
+    }
+
     // LISTADO
 
     // listar solicitudes
