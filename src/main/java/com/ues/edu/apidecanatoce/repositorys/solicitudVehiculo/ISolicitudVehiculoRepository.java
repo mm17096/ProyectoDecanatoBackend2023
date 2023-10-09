@@ -38,4 +38,33 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
             "ORDER BY sv.fechaSalida DESC")
     List<SolicitudVehiculo> findByAllDec(@Param("estadoFilter") int estadoFilter, @Param("estadoJefe") int estadoJefe, @Param("departamentoFilter") String departamentoFilter);
 
+    @Query(value = "SELECT\n" +
+            "\t json_build_object('correo', e.correo, 'nombreCompleto', e.nombre || ' ' || e.apellido) as resultado \n" +
+            "FROM\n" +
+            "\ttb_empleado e\n" +
+            "\tINNER JOIN tb_usuario u ON u.id_empleado = e.codigo_empleado\n" +
+            "\tINNER JOIN tb_departamento d ON d.codigo_depto = e.id_departamento \n" +
+            "WHERE\n" +
+            "\td.nombre = :depto \n" +
+            "\tAND ( u.\"role\" = 'JEFE_FINANACIERO' OR u.\"role\" = 'JEFE_DEPTO' OR u.\"role\" = 'DECANO' )",
+    nativeQuery = true)
+    String obtenerCorreoJefeDepto(@Param("depto") String depto);
+
+    @Query(value = "SELECT\n" +
+            "\t json_build_object('correo', e.correo, 'nombreCompleto', e.nombre || ' ' || e.apellido) as resultado \n" +
+            "FROM\n" +
+            "\ttb_empleado e\n" +
+            "\tINNER JOIN tb_usuario u ON e.codigo_empleado = u.id_empleado \n" +
+            "WHERE\n" +
+            "\tu.codigo_usuario = :id ", nativeQuery = true)
+    String obtenerSolicitanteDatos(@Param("id") String id);
+
+    @Query(value = "SELECT\n" +
+            "\tjson_build_object('correo', e.correo, 'nombreCompleto', e.nombre || ' ' || e.apellido) as resultado \n" +
+            "FROM\n" +
+            "\ttb_empleado e\n" +
+            "\tINNER JOIN tb_usuario u ON e.codigo_empleado = u.id_empleado \n" +
+            "WHERE\n" +
+            "\tu.\"role\" = :rol ", nativeQuery = true)
+    String obtenerEmailNombreRol(@Param("rol") String rol);
 }

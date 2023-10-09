@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.IValeAsignarDto;
 import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale,
 
     @Query(value = "SELECT codigo_asignacion FROM tb_asignacion_vale WHERE solicitud_vale_id =:solicitudID ORDER BY codigo_asignacion DESC LIMIT 1", nativeQuery = true)
     UUID findTopByOrderByIdDesc(UUID solicitudID);
+
     @Query(value = "SELECT tb_v.id_vale AS idvale, tb_v.correlativo AS correlativovale, tb_v.valor AS valorvale, tb_v.fecha_vencimiento AS fechaVencimiento FROM tb_vale AS tb_v INNER JOIN tb_compra AS tb_c ON tb_v.codigo_compra = tb_c.codigo_compra WHERE tb_v.estado = 8 ORDER BY tb_c.fecha_compra, tb_v.correlativo ASC LIMIT :cantidadVales", nativeQuery = true)
     List<IValeAsignarDto> listarValesAsignar(int cantidadVales);
 
@@ -37,11 +39,15 @@ public interface IAsignacionValeRepository extends JpaRepository<AsignacionVale,
     UUID findByIdAsignacionVale(UUID codigoAsignacionVale);
 
 
-
     @Query(value = "SELECT tb_sv.solicitud_vehiculo_id FROM tb_solicitud_vale AS tb_sv WHERE tb_sv.id_solicitud_vale =:codigoSolicituVehiculo", nativeQuery = true)
     UUID findByIdSolicitudVehiculo(UUID codigoSolicituVehiculo);
 
     @Query(value = "SELECT * FROM tb_detalle_asignacion_vale AS tb_dav WHERE tb_dav.valeid =:codigoVale", nativeQuery = true)
     UUID findDetalleAsigancionVale(UUID codigoVale);
 
+    @Query(value = "SELECT us.codigo_usuario AS codigoUsuario, us.role AS rol, concat ( e.nombre, ' ', e.apellido ) AS nombre, e.correo AS correo FROM tb_usuario AS us INNER JOIN tb_empleado AS e ON us.id_empleado = e.codigo_empleado WHERE us.role = 'JEFE_FINANACIERO' OR us.role = 'ASIS_FINANCIERO'", nativeQuery = true)
+    List<EmpleadosCorreosSolicitudesDto> correosFinanciero();
+
+    @Query(value = "SELECT us.codigo_usuario AS codigoUsuario, us.\"role\" AS rol, concat ( e.nombre, ' ', e.apellido ) AS nombre, e.correo AS correo FROM tb_usuario AS us INNER JOIN tb_empleado AS e ON us.id_empleado = e.codigo_empleado WHERE e.codigo_empleado =:codigoEmpleado", nativeQuery = true)
+    List<EmpleadosCorreosSolicitudesDto> correoById(UUID codigoEmpleado);
 }

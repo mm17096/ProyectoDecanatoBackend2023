@@ -30,4 +30,10 @@ public interface ISolicitudVehiculoServices {
 
     LogSoliVeDTO logSolicitudVehiculo(LogSoliVeDTO data);
     SoliVeActulizarFechaEntradaDTO updateFechaEntrada(SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO);
+
+    String obtenerCorreo(String depto);
+
+    String obtenerCorreoNombre(String id);
+
+    String obtenerCorreoNombreRol(String rol);
 }

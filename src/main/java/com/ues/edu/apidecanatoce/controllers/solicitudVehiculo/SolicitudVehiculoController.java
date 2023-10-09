@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.solicitudVehiculo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ues.edu.apidecanatoce.dtos.estados.EstadosDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
@@ -12,7 +13,6 @@ import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ILogSoliVeService;
 import com.ues.edu.apidecanatoce.services.solicitudVehiculo.ISolicitudVehiculoServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 @RestController
 @RequestMapping("/api/solicitudvehiculo")
@@ -129,4 +130,36 @@ public class SolicitudVehiculoController {
         List<LogSoliVeDTO> log = logSoliVeService.obtenerLog(codigoSolicitudVehiculo);
         return ResponseEntity.ok(log);
     }
+
+    @GetMapping("/obtenerjefe/{depto}")
+    public ResponseEntity obtenerJefeDepto(@PathVariable(name = "depto") String depto) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreo(depto);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/obtenersolicitante/{id}")
+    public ResponseEntity obtenerSolcitante(@PathVariable(name = "id") String id) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombre(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+
+    @GetMapping("/obtenercrol/{rol}")
+    public ResponseEntity obtenerEmailNameRol(@PathVariable(name = "rol") String rol) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombreRol(rol);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
 }

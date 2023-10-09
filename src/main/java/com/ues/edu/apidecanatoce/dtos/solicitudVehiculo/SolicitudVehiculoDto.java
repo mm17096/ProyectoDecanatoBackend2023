@@ -80,6 +80,12 @@ public class SolicitudVehiculoDto {
         return true;
     }
 
+    @AssertTrue(message = "La fecha de regreso debe ser mayor o igual a la fecha de salida")
+    public boolean isFechasValidas() {
+        return fechaSalida == null || fechaEntrada == null || !fechaEntrada.isBefore(fechaSalida);
+    }
+
+
 
     @NotNull(message = "La cantidad de pasajeros es obligatoria")
     @Min(value = 1, message = "La cantidad de personas debe ser mayor o igual a 1")
