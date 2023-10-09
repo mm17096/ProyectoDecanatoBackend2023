@@ -334,6 +334,20 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     }
 
     @Override
+    public SolicitudVehiculoActualizarEstadoDTO updateEstadoSinVales(SolicitudVehiculoActualizarEstadoDTO data) {
+
+        SolicitudVehiculo solicitudExistente =
+                solicitudVehiculoServices.findById(data.getCodigoSolicitudVehiculo()).orElseThrow(
+                        () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
+        solicitudExistente.setEstado(data.getEstado());
+
+        solicitudVehiculoServices.save(solicitudExistente);
+        return SolicitudVehiculoActualizarEstadoDTO.builder()
+                .codigoSolicitudVehiculo(solicitudExistente.getCodigoSolicitudVehiculo())
+                .estado(solicitudExistente.getEstado()).build();
+    }
+
+    @Override
     public List<SolicitudVehiculoPeticionDtO> listarSinPaginaRol(String rol) {
 
         int estadoFilter = 0;
