@@ -449,4 +449,16 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String correo = solicitudVehiculoServices.obtenerCorreoJefeDepto(depto);
         return correo;
     }
+
+    @Override
+    public String obtenerCorreoNombre(String id) {
+        String datos = solicitudVehiculoServices.obtenerSolicitanteDatos(id);
+        return datos;
+    }
+
+    @Override
+    public String obtenerCorreoNombreRol(String rol) {
+        String datos  = solicitudVehiculoServices.obtenerEmailNombreRol(rol);
+        return datos;
+    }
 }
