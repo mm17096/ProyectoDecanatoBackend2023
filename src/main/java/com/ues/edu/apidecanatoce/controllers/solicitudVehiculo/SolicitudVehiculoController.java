@@ -135,4 +135,25 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(respuesta);
     }
 
+    @GetMapping("/obtenersolicitante/{id}")
+    public ResponseEntity obtenerSolcitante(@PathVariable(name = "id") String id) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombre(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+
+    @GetMapping("/obtenercrol/{rol}")
+    public ResponseEntity obtenerEmailNameRol(@PathVariable(name = "rol") String rol) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombreRol(rol);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
 }
