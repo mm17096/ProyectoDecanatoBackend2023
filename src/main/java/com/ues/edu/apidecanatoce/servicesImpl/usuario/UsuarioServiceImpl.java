@@ -206,8 +206,11 @@ no se esta usando
 
         }
 
-        Usuario carga = usuarioRepository.findUsuarioByNombre(request.getNombre());
-        System.out.println("contraseña :" + passwordEncoder.encode(carga.getPassword()));
+        String[] partes = request.getNombre().split("@");
+        String nombre = partes[0];
+
+        Usuario carga = usuarioRepository.findUsuarioByNombre(nombre);
+
         Usuario user = Usuario.builder()
                 .codigoUsuario(carga.getCodigoUsuario())
                 .nombre(carga.getUsername())
