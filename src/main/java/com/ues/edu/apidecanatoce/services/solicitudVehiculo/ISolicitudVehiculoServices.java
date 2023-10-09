@@ -21,6 +21,8 @@ public interface ISolicitudVehiculoServices {
 
     SolicitudVehiculoActualizarEstadoDTO updateEstado(SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
 
+    SolicitudVehiculoActualizarEstadoDTO updateEstadoSinVales(SolicitudVehiculoActualizarEstadoDTO nuevoEstado);
+
     //EstadoSolicitudVehiculoDto actualizarEstadoSolcitudVehiculo(UUID id, int estado);
 
     List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer estado);
@@ -30,4 +32,8 @@ public interface ISolicitudVehiculoServices {
     SoliVeActulizarFechaEntradaDTO updateFechaEntrada(SoliVeActulizarFechaEntradaDTO fechaEntradaSoliVeDTO);
 
     String obtenerCorreo(String depto);
+
+    String obtenerCorreoNombre(String id);
+
+    String obtenerCorreoNombreRol(String rol);
 }

@@ -91,6 +91,12 @@ public class SolicitudVehiculoController {
         return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstado(data));
     }
 
+    @PutMapping("/updatesinvale")
+    public ResponseEntity<SolicitudVehiculoActualizarEstadoDTO> updateEstadoSinVale(
+            @RequestBody SolicitudVehiculoActualizarEstadoDTO data){
+        return ResponseEntity.ok(servicioSolicitudVehiculo.updateEstadoSinVales(data));
+    }
+
     // LISTADO
 
     // listar solicitudes
@@ -128,6 +134,27 @@ public class SolicitudVehiculoController {
     @GetMapping("/obtenerjefe/{depto}")
     public ResponseEntity obtenerJefeDepto(@PathVariable(name = "depto") String depto) throws IOException {
         String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreo(depto);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/obtenersolicitante/{id}")
+    public ResponseEntity obtenerSolcitante(@PathVariable(name = "id") String id) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombre(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+
+    @GetMapping("/obtenercrol/{rol}")
+    public ResponseEntity obtenerEmailNameRol(@PathVariable(name = "rol") String rol) throws IOException {
+        String resultadoConsulta = servicioSolicitudVehiculo.obtenerCorreoNombreRol(rol);
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map respuesta = objectMapper.readValue(resultadoConsulta, Map.class);

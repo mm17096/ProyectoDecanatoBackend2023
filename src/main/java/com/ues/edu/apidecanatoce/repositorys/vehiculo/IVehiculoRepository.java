@@ -17,15 +17,21 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, UUID> {
     List<Vehiculo> findByPlacaIgnoreCase(String mio);
     @Query(value = "select tv.clase  from tb_vehiculo tv group by tv.clase", nativeQuery = true)
     List<String> showByClassFiltrar();
-    @Query(value = "SELECT * FROM tb_vehiculo v WHERE v.codigo_vehiculo NOT IN ( select  s.codigo_vehiculo \n" +
-            "    FROM tb_solicitud_vehiculo s \n" +
-            "    --fecha salida\n" +
-            "    WHERE (:fechaSalida between s.fecha_salida  and s.fecha_entrada )\n" +
-            "    --fecha entrada\n" +
-            "    OR (:fechaEntrada between s.fecha_salida  and s.fecha_entrada )\n" +
-            ") and v.clase =:claseName",nativeQuery = true)
+    @Query(value = """
+            SELECT * FROM tb_vehiculo as v WHERE v.codigo_vehiculo\s
+            NOT IN ( select s.codigo_vehiculo FROM tb_solicitud_vehiculo s\s
+            --fecha salida
+            WHERE (:fechaSalida between s.fecha_salida  and s.fecha_entrada)
+            and s.codigo_solicitud_vehiculo IN (select tsv.solicitud_vehiculo_id from tb_solicitud_vale as tsv
+            where tsv.estado_entrada != 2))
+            and v.codigo_vehiculo NOT IN(select car.codigo_vehiculo from tb_solicitud_vehiculo as car
+            --fecha salida
+            WHERE (:fechaSalida between car.fecha_salida  and car.fecha_entrada)\s
+            and car.codigo_solicitud_vehiculo NOT IN (select tsv.solicitud_vehiculo_id from tb_solicitud_vale as tsv)
+            and car.estado !=15)
+            and v.clase =:claseName
+            """,nativeQuery = true)
     List<Vehiculo> buscarDisponibilidad(@Param("claseName") String claseName,
-                                        @Param("fechaSalida") Date fechaSalida,
-                                        @Param("fechaEntrada") Date fechaEntrada);
+                                        @Param("fechaSalida") Date fechaSalida);
 
 }

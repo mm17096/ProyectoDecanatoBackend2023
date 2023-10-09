@@ -76,8 +76,8 @@ public class VehiculoController {
     @GetMapping("/disponibilidad")
     @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
     public ResponseEntity<List<VehiculoDto>> listadoPorDisponibilidad(
-            @RequestParam String claseName, @RequestParam String fechaSalida, @RequestParam String fechaEntrada) {
-        return ResponseEntity.ok(vehiculoService.listarPorDisponibilidad(claseName, fechaSalida, fechaEntrada));
+            @RequestParam String claseName, @RequestParam String fechaSalida) {
+        return ResponseEntity.ok(vehiculoService.listarPorDisponibilidad(claseName, fechaSalida));
     }
 
     @PostMapping(value = "/insertar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
