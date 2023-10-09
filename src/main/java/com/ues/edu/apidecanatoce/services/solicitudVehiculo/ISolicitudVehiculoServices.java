@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.services.solicitudVehiculo;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.*;
+import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -36,4 +37,6 @@ public interface ISolicitudVehiculoServices {
     String obtenerCorreoNombre(String id);
 
     String obtenerCorreoNombreRol(String rol);
+
+    SolicitudVehiculo ConsinVale(UUID id);
 }
