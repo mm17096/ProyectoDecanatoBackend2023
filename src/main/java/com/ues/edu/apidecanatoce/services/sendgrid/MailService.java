@@ -76,9 +76,9 @@ public class MailService {
         personalization.addDynamicTemplateData("code", email.getCodigo());
         personalization.addDynamicTemplateData("content_down", email.getAbajo());
         mail.addPersonalization(personalization);
-        mail.setTemplateId(plantillaKey);
+        mail.setTemplateId("d-87c54ebd6bb8406ba16b44afc606bca6");
         // this is the api key
-        SendGrid sg = new SendGrid(secretKey);
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
 
         try {
