@@ -158,17 +158,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             return dto;
         });
     }
-    /*@Override
-    public EstadoSolicitudVehiculoDto actualizarEstadoSolcitudVehiculo(UUID id, int estado) {
-        SolicitudVehiculo solicitudVehiculo = this.solicitudVehiculoServices.findById(id).orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitudVehiculo"));
 
-        if (solicitudVehiculo != null) {
-            solicitudVehiculo.setEstado(estado);
-            return solicitudVehiculoServices.save(solicitudVehiculo).toEstadoSolicitudVehiculoDto();
-        } else {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "No se pudo actualizar la solicitud");
-        }
-    }*/
     @Override
     public List<SolicitudVehiculoPeticionDtO> listarPorEstadoSinPagina(Integer estado) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -188,7 +178,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         }
 
         List<SolicitudVehiculo> listSoliVe ;
-        if ( Objects.equals(rol, "ADMIN")) {
+        if ( Objects.equals(rol, "ADMIN") || Objects.equals(rol, "SECR_DECANATO")) {
             listSoliVe = solicitudVehiculoServices.findAllByEstado(estado);
         }else{
             listSoliVe =solicitudVehiculoServices.findByUsuarioCodigoUsuarioAndEstadoOrderByFechaSalidaDesc(userId, estado);
@@ -213,6 +203,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     @Override
     public SolicitudVehiculoPeticionDtO modificar(UUID codigoSolicitudVehiculo, ActualizacionSecretariaDTO data) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
 
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
 
@@ -229,13 +220,19 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             System.out.println("USUARIO VACIO");
         }
 
-        data.setEstado(3);
+        if (buscarSoliVe.getEstado() == 2 || buscarSoliVe.getEstado() == 6){
+            //aprobada por el jefe
+            data.setEstado(3);
+            logSoliVe.setActividad("Modificación y asignación de motorista a la solicitud de vehículo por " + nombreCargo);
+            logSoliVe.setEstadoLogSolive(3);
+        }else{
+            // editada en otro estado
+            data.setEstado(buscarSoliVe.getEstado());
+            logSoliVe.setActividad("Modificación a la solicitud de vehículo por " + nombreCargo);
+            logSoliVe.setEstadoLogSolive(buscarSoliVe.getEstado());
+        }
         data.setCodigoSolicitudVehiculo(codigoSolicitudVehiculo);
-
-        LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
-        logSoliVe.setEstadoLogSolive(3);
         logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
-        logSoliVe.setActividad("Modificación y asignación de motorista a la solicitud de vehículo por " + nombreCargo);
         logSoliVe.setUsuario(nombreUsuario);
         logSoliVe.setCargo(nombreCargo);
         logSoliVe.setSoliVe(codigoSolicitudVehiculo);
