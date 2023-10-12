@@ -21,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -500,5 +499,11 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
     public String obtenerCorreoNombreRol(String rol) {
         String datos  = solicitudVehiculoServices.obtenerEmailNombreRol(rol);
         return datos;
+    }
+
+    @Override
+    public SolicitudVehiculo ConsinVale(UUID id) {
+        SolicitudVehiculo buscar= solicitudVehiculoServices.findByCodigoSolicitudVehiculo(id);
+        return buscar;
     }
 }
