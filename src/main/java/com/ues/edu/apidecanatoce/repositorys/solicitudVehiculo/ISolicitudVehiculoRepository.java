@@ -31,6 +31,7 @@ public interface ISolicitudVehiculoRepository extends JpaRepository<SolicitudVeh
 
 
     @Query(" FROM SolicitudVehiculo sv INNER JOIN Vehiculo v ON v.codigoVehiculo = sv.vehiculo.codigoVehiculo LEFT join  Entrada_Salidas  et on et.solicitudvehiculo.codigoSolicitudVehiculo= sv.codigoSolicitudVehiculo WHERE sv.estado=5 AND (DATE_TRUNC('day', sv.fechaSalida) = CURRENT_DATE or et.solicitudvehiculo.codigoSolicitudVehiculo= sv.codigoSolicitudVehiculo) AND (SELECT COUNT(*) FROM Entrada_Salidas c WHERE c.solicitudvehiculo.codigoSolicitudVehiculo=sv.codigoSolicitudVehiculo)<=1")
+
     List<SolicitudVehiculo> listaporestadofecha();
 
     @Query("SELECT sv " +
