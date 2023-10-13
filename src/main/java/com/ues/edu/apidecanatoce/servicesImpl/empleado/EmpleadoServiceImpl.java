@@ -83,6 +83,34 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
             }
         }
 
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("SECRETARIO DECANATO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Secretario de Decanato");
+            }
+        }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("JEFE FINANCIERO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Jefe de Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("ASISTENTE FINANCIERA")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Asistente Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("ADMINISTRADOR")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Administrador");
+            }
+        }
+
         //metodo para verificar si ya existe un jefe de departamento
         if (cargo.getNombreCargo().equals("JEFE DEPARTAMENTO")) {
             if (departamento != null && cargo != null) {
