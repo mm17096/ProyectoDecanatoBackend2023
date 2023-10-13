@@ -5,4 +5,5 @@ public interface DatosCards {
     String getMisiones();
     String getMisioneshoy();
     String getMisionesmes();
+    String getMotoristas();
 }
