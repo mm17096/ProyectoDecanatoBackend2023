@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,21 +48,20 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     @Override
     public EntradasalidaPeticionDto registrar(EntradasalidaDto data) {
 
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LogSoliVeDTO logSoliVe = new LogSoliVeDTO();
-
         String nombreUsuario = obtenerUsuarioAutenticado(authentication);
-
         String userName = authentication.getName();
         Optional<Usuario> user = usuarioRepository.findByNombre(userName);
         String nombreCargo = "";
+
 
         if (user.isPresent()){
             Usuario usuario = user.get();
             nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
         }else{
             System.out.println("USUARIO VACIO");
-        }*/
+        }
 
         if(data.getEstado()==2){
             SolicitudVehiculo solicitud1=solicitudvehiculoServices.ConsinVale(data.getSolicitudvehiculo());
@@ -69,17 +69,17 @@ public class EntradasalidaImpl implements Ientradasalidaservice
                 //entradasalida--- solicitudvehiculo-- solicitudvale
                 SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
                 asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
-                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),5);
 
             }else {
-                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
-                /*logSoliVe.setEstadoLogSolive(7);
-                logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
+
                 logSoliVe.setActividad("Misión sin vales finalizada");
-                logSoliVe.setCargo(nombreCargo);
+                logSoliVe.setEstadoLogSolive(7);
+                logSoliVe.setFechaLogSoliVe(LocalDateTime.now());
                 logSoliVe.setUsuario(nombreUsuario);
-                logSoliVe.setIdLogSoliVe(data.getSolicitudvehiculo());
-                logSolicitudVehiculo(logSoliVe);*/
+                logSoliVe.setCargo(nombreCargo);
+                logSoliVe.setSoliVe(data.getSolicitudvehiculo());
+                logSolicitudVehiculo(logSoliVe);
+                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
             }
         }else if(data.getEstado()==1){
             SolicitudVehiculo solicitud=solicitudvehiculoServices.ConsinVale(data.getSolicitudvehiculo());
@@ -114,18 +114,6 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     public EntradasalidaDto actualizar(UUID id, EntradasalidaDto data) {
         return null;
     }
-
-    /*@Override
-    public List<EntradasalidaDto> listarSinPagina() {
-        List<Entrada_Salidas> entradaSalidas= this.entradasalidaRepository.findAll();
-        return entradaSalidas.stream().map(Entrada_Salidas::toDTO).toList();
-    }*/
-
-    /*@Override
-    public EntradasalidaDto actualizar(UUID id, EntradasalidaDto data) {
-        return entradasalidaRepository.save(data.toEntityComplete()).toDTO();
-    }*/
-
     @Override
     public EntradasalidaDto eliminar(UUID id) {
 
@@ -161,7 +149,6 @@ public class EntradasalidaImpl implements Ientradasalidaservice
         }
         return data;
     }
-/*
     private String obtenerUsuarioAutenticado(Authentication authentication) {
         String userName = authentication.getName();
         Optional<Usuario> user = usuarioRepository.findByNombre(userName);
@@ -174,5 +161,5 @@ public class EntradasalidaImpl implements Ientradasalidaservice
             System.out.println("USUARIO VACIO");
         }
         return nombreUsuario;
-    }*/
+    }
 }
