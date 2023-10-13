@@ -41,7 +41,6 @@ public class EntradasalidaImpl implements Ientradasalidaservice
                 //entradasalida--- solicitudvehiculo-- solicitudvale
                 SolicitudVale solicitudVale= solicitudValeServiceImpl.codigosolicitudvehiculo(data.getSolicitudvehiculo());
                 asignacionValeServiceImpl.actualizarEstadoEntradaSolicitud(solicitudVale.getIdSolicitudVale(),2);
-                asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),5);
             }else {
                 asignacionValeServiceImpl.actualizarEstadoSolicitudVehiculo(data.getSolicitudvehiculo(),7);
             }
