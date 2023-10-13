@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.services;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,5 @@ public interface Ientradasalidaservice {
     EntradasalidaDto eliminar(UUID id);
     Entrada_Salidas listaEstado(int estadi, UUID id);
 
+    LogSoliVeDTO logSolicitudVehiculo(LogSoliVeDTO data);
 }
