@@ -1,4 +1,5 @@
 package com.ues.edu.apidecanatoce.servicesImpl.entradaSalida;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
@@ -8,6 +9,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
+import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ILogSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +37,7 @@ import java.util.UUID;
 @Service
 public class EntradasalidaImpl implements Ientradasalidaservice
 {
+    private final IAsignacionValeRepository asignacionValeRepository;
     private final EntradasalidaRepository entradasalidaRepository;
     private  final ISolicitudVehiculoRepository solicitudVehiculorepository;
     private  final AsignacionValeServiceImpl asignacionValeServiceImpl;
@@ -149,6 +153,12 @@ public class EntradasalidaImpl implements Ientradasalidaservice
         }
         return data;
     }
+
+    @Override
+    public List<EmpleadosCorreosSolicitudesDto> correosFinanciero() throws IOException {
+        return asignacionValeRepository.correosFinanciero();
+    }
+
     private String obtenerUsuarioAutenticado(Authentication authentication) {
         String userName = authentication.getName();
         Optional<Usuario> user = usuarioRepository.findByNombre(userName);
