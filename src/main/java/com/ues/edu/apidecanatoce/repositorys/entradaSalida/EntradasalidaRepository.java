@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.entradaSalida;
 
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,8 @@ public interface EntradasalidaRepository extends JpaRepository<Entrada_Salidas, 
 
     @Query("FROM Entrada_Salidas es INNER JOIN SolicitudVehiculo sv on sv.codigoSolicitudVehiculo=es.solicitudvehiculo.codigoSolicitudVehiculo  where es.estado=1 AND sv.codigoSolicitudVehiculo=:filtro")
     Entrada_Salidas mostrandokilometraje(@Param("filtro") UUID filtro);
+
+    @Query(value = "SELECT us.codigo_usuario AS codigoUsuario, us.role AS rol, concat ( e.nombre, ' ', e.apellido ) AS nombre, e.correo AS correo FROM tb_usuario AS us INNER JOIN tb_empleado AS e ON us.id_empleado = e.codigo_empleado WHERE us.role = 'JEFE_FINANACIERO' OR us.role = 'ASIS_FINANCIERO'", nativeQuery = true)
+    List<EmpleadosCorreosSolicitudesDto> correosFinanciero();
 
 }
