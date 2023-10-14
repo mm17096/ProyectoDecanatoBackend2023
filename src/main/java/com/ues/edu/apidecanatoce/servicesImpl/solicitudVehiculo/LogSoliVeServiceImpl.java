@@ -3,6 +3,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.estados.Estados;
+import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.LogSolicitudVehiculo;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
@@ -43,7 +44,20 @@ public class LogSoliVeServiceImpl implements ILogSoliVeService {
 
         SolicitudVehiculo solicitudVehiculo = solicitudVehiculoRepository.findById(codigoSolicitudVehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
-        List<LogSolicitudVehiculo> logSoli = logSoliVeRepository.findBySoliVe(solicitudVehiculo);
+
+        SolicitudVale solicitudVale = logSoliVeRepository.findBySoliVa(solicitudVehiculo.getCodigoSolicitudVehiculo());
+
+        UUID codigoSoliVe = solicitudVehiculo.getCodigoSolicitudVehiculo();
+        UUID codSoliVa = solicitudVale.getIdSolicitudVale();
+
+        List<LogSolicitudVehiculo> logSoli = logSoliVeRepository.obtenerLogSoliM(codigoSoliVe,
+                codSoliVa);
+
+        logSoli.forEach(solicitud -> {
+            if (solicitud.getSoliVe() == null) {
+                solicitud.setSoliVe(solicitudVehiculo);
+            }
+        });
 
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
@@ -57,5 +71,6 @@ public class LogSoliVeServiceImpl implements ILogSoliVeService {
             dto.setEstadoString(estadoAsString);
             return dto;
         }).collect(Collectors.toList());
+
     }
 }
