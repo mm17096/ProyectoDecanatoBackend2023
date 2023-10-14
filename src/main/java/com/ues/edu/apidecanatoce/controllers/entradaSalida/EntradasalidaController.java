@@ -1,4 +1,5 @@
 package com.ues.edu.apidecanatoce.controllers.entradaSalida;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
@@ -6,6 +7,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ public class EntradasalidaController {
     private final Ientradasalidaservice ientradasalidaservice;
     private final ISolicitudVehiculoRepository iSolicitudvehiculorepository;
     private final EntradasalidaRepository entradasalidarepository;
+    private final IAsignacionValeService iAsignacionValeService;
 
     //SEGUNDA FORMA DE HACERLO
     @GetMapping
@@ -56,6 +59,11 @@ public class EntradasalidaController {
         Entrada_Salidas es=this.entradasalidarepository.mostrandokilometraje(filtro);
         //return this.entradasalidarepository.mostrandokilometraje(filtro);
         return ResponseEntity.ok(es);
+    }
+
+    @GetMapping("/correosfinanciero")
+    public ResponseEntity<List<EmpleadosCorreosSolicitudesDto>> correosFinanciero() throws Exception {
+        return ResponseEntity.ok(iAsignacionValeService.correosFinanciero());
     }
 
 }
