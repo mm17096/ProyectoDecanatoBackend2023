@@ -1,4 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.entradaSalida;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.CorreosESDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
@@ -6,6 +8,7 @@ import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import com.ues.edu.apidecanatoce.repositorys.entradaSalida.EntradasalidaRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.Ientradasalidaservice;
+import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +24,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/entradasalida")
-@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
+@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE', 'ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class EntradasalidaController {
 
     private final Ientradasalidaservice ientradasalidaservice;
@@ -56,6 +59,11 @@ public class EntradasalidaController {
         Entrada_Salidas es=this.entradasalidarepository.mostrandokilometraje(filtro);
         //return this.entradasalidarepository.mostrandokilometraje(filtro);
         return ResponseEntity.ok(es);
+    }
+
+    @GetMapping("/correos")
+    public ResponseEntity<List<CorreosESDto>> correos() throws Exception {
+        return ResponseEntity.ok(ientradasalidaservice.correos());
     }
 
 }

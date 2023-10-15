@@ -218,6 +218,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
             logSolicitudVehiculo.setCargo(cargo);
+            logSolicitudVehiculo.setSoliVe(solicitudVale.getSolicitudVehiculo());
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
@@ -440,6 +441,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
             logSolicitudVehiculo.setCargo(cargo);
+            logSolicitudVehiculo.setSoliVe(solicitudVale.getSolicitudVehiculo());
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
