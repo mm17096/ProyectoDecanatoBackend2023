@@ -29,6 +29,6 @@ public interface ILogSoliVeRepository extends JpaRepository<LogSolicitudVehiculo
     @Query("SELECT sva FROM SolicitudVale sva WHERE sva.solicitudVehiculo.codigoSolicitudVehiculo = :codigoSolicitudVehiculo")
     SolicitudVale findBySoliVa(@Param("codigoSolicitudVehiculo") UUID codigoSolicitudVehiculo);
 
-
+    List<LogSolicitudVehiculo> findBySoliVe(SolicitudVehiculo solicitudVehiculo);
 
 }

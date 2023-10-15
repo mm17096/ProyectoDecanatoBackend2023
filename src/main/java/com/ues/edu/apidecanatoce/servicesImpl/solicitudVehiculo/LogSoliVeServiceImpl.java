@@ -42,22 +42,30 @@ public class LogSoliVeServiceImpl implements ILogSoliVeService {
     @Override
     public List<LogSoliVeDTO> obtenerLog(UUID codigoSolicitudVehiculo) {
 
+        List<LogSolicitudVehiculo> logSoli;
+
         SolicitudVehiculo solicitudVehiculo = solicitudVehiculoRepository.findById(codigoSolicitudVehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud de vehículo"));
 
         SolicitudVale solicitudVale = logSoliVeRepository.findBySoliVa(solicitudVehiculo.getCodigoSolicitudVehiculo());
 
         UUID codigoSoliVe = solicitudVehiculo.getCodigoSolicitudVehiculo();
-        UUID codSoliVa = solicitudVale.getIdSolicitudVale();
 
-        List<LogSolicitudVehiculo> logSoli = logSoliVeRepository.obtenerLogSoliM(codigoSoliVe,
-                codSoliVa);
+        if (solicitudVale == null){
+            //Solicitud no tiene vale
+            logSoli = logSoliVeRepository.findBySoliVe(solicitudVehiculo);
+        }else{
+            //solicitud tiene vale
+            UUID codSoliVa = solicitudVale.getIdSolicitudVale();
+            logSoli = logSoliVeRepository.obtenerLogSoliM(codigoSoliVe,
+                    codSoliVa);
 
-        logSoli.forEach(solicitud -> {
-            if (solicitud.getSoliVe() == null) {
-                solicitud.setSoliVe(solicitudVehiculo);
-            }
-        });
+            logSoli.forEach(solicitud -> {
+                if (solicitud.getSoliVe() == null) {
+                    solicitud.setSoliVe(solicitudVehiculo);
+                }
+            });
+        }
 
         List<Estados> estados = estadosRepository.findAll();
         Map<Integer, String> estadoStringMap = new HashMap<>();
