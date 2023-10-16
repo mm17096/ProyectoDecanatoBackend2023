@@ -65,6 +65,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         if (Objects.equals(rol, "JEFE_DEPTO") || Objects.equals(rol, "JEFE_FINANACIERO") ||
         Objects.equals(rol, "DECANO")){
             data.setEstado(2);
+            data.setNombreJefeDepto(nombreCargo);
             logSoliVe.setEstadoLogSolive(2);
         } else {
             data.setEstado(1);
