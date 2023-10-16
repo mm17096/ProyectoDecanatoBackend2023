@@ -213,7 +213,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
 
             logSolicitudVehiculo.setSoliVale(solicitudVale);
-            logSolicitudVehiculo.setEstadoLogSolive(11);
+            logSolicitudVehiculo.setEstadoLogSolive(15);
             logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
