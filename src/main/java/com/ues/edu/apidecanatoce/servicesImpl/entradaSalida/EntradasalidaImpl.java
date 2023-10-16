@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.entradaSalida;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.CorreosESDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
@@ -155,8 +156,8 @@ public class EntradasalidaImpl implements Ientradasalidaservice
     }
 
     @Override
-    public List<EmpleadosCorreosSolicitudesDto> correosFinanciero() throws IOException {
-        return asignacionValeRepository.correosFinanciero();
+    public List<CorreosESDto> correos() throws IOException {
+        return entradasalidaRepository.correos();
     }
 
     private String obtenerUsuarioAutenticado(Authentication authentication) {

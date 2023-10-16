@@ -1,5 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.entradaSalida;
 import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
+import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.CorreosESDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.EntradasalidaPeticionDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
@@ -23,13 +24,12 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/entradasalida")
-@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
+@PreAuthorize("hasAnyRole('ADMIN','VIGILANTE', 'ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class EntradasalidaController {
 
     private final Ientradasalidaservice ientradasalidaservice;
     private final ISolicitudVehiculoRepository iSolicitudvehiculorepository;
     private final EntradasalidaRepository entradasalidarepository;
-    private final IAsignacionValeService iAsignacionValeService;
 
     //SEGUNDA FORMA DE HACERLO
     @GetMapping
@@ -61,9 +61,9 @@ public class EntradasalidaController {
         return ResponseEntity.ok(es);
     }
 
-    @GetMapping("/correosfinanciero")
-    public ResponseEntity<List<EmpleadosCorreosSolicitudesDto>> correosFinanciero() throws Exception {
-        return ResponseEntity.ok(iAsignacionValeService.correosFinanciero());
+    @GetMapping("/correos")
+    public ResponseEntity<List<CorreosESDto>> correos() throws Exception {
+        return ResponseEntity.ok(ientradasalidaservice.correos());
     }
 
 }
