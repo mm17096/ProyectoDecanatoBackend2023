@@ -51,7 +51,7 @@ public class ApiDecanatoCeApplication {
                 data.setTipolicencia("");
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
                 data.setCargo(cargoService.leerPorNombre("ADMINISTRADOR").getId());
-                data.setDepartamento(deptoServiceImp.leerPorNombre("ING DE SISTEMAS").getCodigoDepto());
+                data.setDepartamento(deptoServiceImp.leerPorNombre("UTI").getCodigoDepto());
 
                 //primero se almacena el empleado
                 EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
