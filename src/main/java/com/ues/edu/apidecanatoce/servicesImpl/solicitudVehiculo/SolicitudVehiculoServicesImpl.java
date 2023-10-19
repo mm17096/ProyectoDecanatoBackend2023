@@ -49,6 +49,9 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         String rol = "";
         String nombreCargo = "";
         LogSolicitudVehiculo logSoliVe = new LogSolicitudVehiculo();
+        String nombreCompleto ="";
+
+
         SolicitudVehiculo soliRegistrada;
 
 
@@ -58,6 +61,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
             Usuario usuario = user.get();
             rol = String.valueOf(usuario.getRole());
             nombreCargo = usuario.getEmpleado().getCargo().getNombreCargo();
+            nombreCompleto = usuario.getEmpleado().getNombre() + " "+ usuario.getEmpleado().getApellido();
         }else{
             System.out.println("USUARIO VACIO");
         }
@@ -65,7 +69,7 @@ public class SolicitudVehiculoServicesImpl implements ISolicitudVehiculoServices
         if (Objects.equals(rol, "JEFE_DEPTO") || Objects.equals(rol, "JEFE_FINANACIERO") ||
         Objects.equals(rol, "DECANO")){
             data.setEstado(2);
-            data.setNombreJefeDepto(nombreCargo);
+            data.setNombreJefeDepto(nombreCompleto);
             logSoliVe.setEstadoLogSolive(2);
         } else {
             data.setEstado(1);
