@@ -51,6 +51,7 @@ public class Vale {
                 .idVale(this.id)
                 .estadoVale(this.estado)
                 .correlativo(this.correlativo)
+                .fechaVencimiento(this.fechaVencimiento)
                 .build();                
 
     }
