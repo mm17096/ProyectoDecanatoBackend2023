@@ -35,11 +35,11 @@ public class EmpleadoDto {
     private String dui;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 3, max = 35, message = "El nombre debe tener entre 5 y 35 caracteres")
+    @Size(min = 3, max = 35, message = "El nombre debe tener entre 3 y 35 caracteres")
     private String nombre;
 
     @NotBlank(message = "El apellido es obligatorio")
-    @Size(min = 3, max = 35, message = "El apellido debe tener entre 5 y 35 caracteres")
+    @Size(min = 3, max = 35, message = "El apellido debe tener entre 3 y 35 caracteres")
     private String apellido;
 
     @NotBlank(message = "El telefono es obligatorio")
@@ -65,7 +65,7 @@ public class EmpleadoDto {
     //private boolean jefe;
 
     @NotBlank(message = "El correo es obligatorio")
-    @Size(min = 16, max = 35, message = "La licencia debe tener entre 16 y 35 caracteres")
+    @Size(min = 15, max = 35, message = "La licencia debe tener entre 16 y 35 caracteres")
     private String correo;
 
     //@NotBlank(message = "El nombre de la foto es obligatorio")
