@@ -20,6 +20,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.SpringVersion;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -67,6 +69,38 @@ public class ApiDecanatoCeApplication {
                 System.out.println("Token: " + usuarioService.register(request, empleado).getToken());
             }else{
                 System.out.println("Ya existe el usuario admin");
+            }
+
+            if (!empleadoRepository.existsByCorreo("motorista@ues.edu.sv")) {
+
+    //            LocalDate fecha;
+
+
+  //  fecha = LocalDate.parse("01/01/2900");
+
+
+    EmpleadoDto data = new EmpleadoDto();
+
+    data.setNombre("Motorista por");
+    data.setApellido("Acuerdo de Junta");
+    data.setCorreo("motorista@ues.edu.sv");
+    data.setDui("00000000");
+    data.setTelefono("7111-0000");
+    data.setNombrefoto("");
+    data.setUrlfoto("");
+    data.setLicencia("00000000");
+    data.setTipolicencia("Pesada");
+  //  data.setFechalicencia(fecha);
+
+    data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
+    data.setCargo(cargoService.leerPorNombre("MOTORISTA").getId());
+    data.setDepartamento(deptoServiceImp.leerPorNombre("DECANATO").getCodigoDepto());
+
+    //se almacena el empleado MOTORISTA
+    empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
+
+            }else{
+                System.out.println("Ya existe el usuario empleado");
             }
         };
     }
