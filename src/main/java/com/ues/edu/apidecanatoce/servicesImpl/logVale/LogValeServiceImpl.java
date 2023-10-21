@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.logVale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.LogValeDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.vales.LogValeDto;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.services.logVale.ILogValeService;

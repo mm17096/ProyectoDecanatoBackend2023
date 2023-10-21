@@ -2,10 +2,9 @@ package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeEstadoEntradaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudVehiculoModDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.solicitudes.SolicitudVehiculoModDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;

@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.services.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.detalles.DetalleAsignacionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;

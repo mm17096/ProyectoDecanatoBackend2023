@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.usuario;
 
-import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
+import com.ues.edu.apidecanatoce.dataLoaders.Generalmethods;
 import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;

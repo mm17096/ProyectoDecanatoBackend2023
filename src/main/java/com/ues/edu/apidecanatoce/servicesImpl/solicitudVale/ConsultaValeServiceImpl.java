@@ -4,7 +4,7 @@ package com.ues.edu.apidecanatoce.servicesImpl.solicitudVale;
 
 import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.*;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IAsignacionValeRepository;
