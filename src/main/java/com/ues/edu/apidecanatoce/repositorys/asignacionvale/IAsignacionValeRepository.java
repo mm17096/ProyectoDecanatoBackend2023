@@ -1,10 +1,8 @@
 package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.IValeAsignarDto;
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.vales.IValeAsignarDto;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.AsignacionVale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

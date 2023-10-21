@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.LogSolicitudValeDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.solicitudes.LogSolicitudValeDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.LogSoliVeDTO;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
 import jakarta.persistence.*;
