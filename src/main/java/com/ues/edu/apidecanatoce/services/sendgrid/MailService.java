@@ -77,8 +77,8 @@ public class MailService {
         personalization.addDynamicTemplateData("content_down", email.getAbajo());
         mail.addPersonalization(personalization);
         mail.setTemplateId("d-87c54ebd6bb8406ba16b44afc606bca6");
-        // this is the api key
-        SendGrid sg = new SendGrid("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");
+        // this is the api key create 19/10/2023
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
 
         try {
