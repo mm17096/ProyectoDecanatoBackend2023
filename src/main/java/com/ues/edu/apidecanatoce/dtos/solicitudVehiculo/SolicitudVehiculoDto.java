@@ -1,6 +1,7 @@
 package com.ues.edu.apidecanatoce.dtos.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.entities.compras.Proveedor;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.DocumentoSoliCar;
 import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.Pasajeros;
@@ -31,7 +32,7 @@ public class SolicitudVehiculoDto {
 
     @NotNull(message = "Fecha de realización de la solicitud es obligatoria")
     @PastOrPresent(message = "La fecha de solicitud es superior a la actual")
-    @FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
+    //@FutureOrPresent(message = "La fecha de solicitud es inferior a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaSolicitud;
@@ -79,6 +80,12 @@ public class SolicitudVehiculoDto {
         return true;
     }
 
+    @AssertTrue(message = "La fecha de regreso debe ser mayor o igual a la fecha de salida")
+    public boolean isFechasValidas() {
+        return fechaSalida == null || fechaEntrada == null || !fechaEntrada.isBefore(fechaSalida);
+    }
+
+
 
     @NotNull(message = "La cantidad de pasajeros es obligatoria")
     @Min(value = 1, message = "La cantidad de personas debe ser mayor o igual a 1")
@@ -105,6 +112,8 @@ public class SolicitudVehiculoDto {
 
     private String observaciones;
 
+    private boolean tieneVale;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository,
                                               IUsuarioRepository usuarioRepository){
@@ -112,12 +121,12 @@ public class SolicitudVehiculoDto {
         Vehiculo vehiculoBuscar = vehiculoRepository.findById(this.vehiculo).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el vehículo"));
 
-        Empleado motoristaBuscar;
+        Empleado motoristaBuscar = null;
         if (this.motorista != null){
             motoristaBuscar = empleadoRepository.findById(this.motorista).orElseThrow(
                     () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el motorista"));
         }
-        motoristaBuscar = null;
+
         Usuario usurioExiste = usuarioRepository.findById(this.solicitante).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró el usuario"));
 
@@ -128,6 +137,15 @@ public class SolicitudVehiculoDto {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
-                .build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
+    }
+
+    public SolicitudVehiculo toEntityComplete2() {
+        return SolicitudVehiculo.builder().fechaSolicitud(this.fechaSolicitud)
+                .unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision)
+                .lugarMision(this.lugarMision).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).jefeDepto(this.nombreJefeDepto)
+                .fechaEntrada(this.fechaEntrada).fechaSalida(this.fechaSalida).build();
     }
 }

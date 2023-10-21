@@ -18,7 +18,11 @@ public interface IVehiculoService{
 
     List<VehiculoDto> listarSinPagina();
 
-    List<VehiculoDto> listarPorClase(String nombreClase);
+    List<VehiculoDto> listarPorPlaca(String codigoplaca);
+
+    List<String> listarPorClase();
+
+    List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada);
 
     MensajeRecord actualizar(MultipartFile imagen, VehiculoDto data);
 

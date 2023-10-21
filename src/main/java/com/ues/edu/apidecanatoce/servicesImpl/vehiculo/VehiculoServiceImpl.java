@@ -20,6 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -85,9 +89,28 @@ public class VehiculoServiceImpl implements IVehiculoService {
     }
 
     @Override
-    public List<VehiculoDto> listarPorClase(String nombreClase) {
-        List<Vehiculo> vehiculos = this.vehiculoRepository.findByClaseIgnoreCase(nombreClase);
+    public List<VehiculoDto> listarPorPlaca(String codigoplaca) {
+        List<Vehiculo> vehiculos = this.vehiculoRepository.findByPlacaIgnoreCase(codigoplaca);
         return vehiculos.stream().map(Vehiculo::toDTO).toList();
+    }
+
+    @Override
+    public List<String> listarPorClase() {
+        List<String> vehiculos = this.vehiculoRepository.showByClassFiltrar();
+        return vehiculos;
+    }
+    @Override
+    public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada) {
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaSalidaDate = dateFormat.parse(fechaSalida);
+            Date fechaEntradaDate = dateFormat.parse(fechaEntrada);
+            List<Vehiculo> vehiculos = this.vehiculoRepository.buscarDisponibilidad(claseName,fechaSalidaDate, fechaEntradaDate);
+            return vehiculos.stream().map(Vehiculo::toDTO).toList();
+        }catch (ParseException e){
+            return new ArrayList<>();
+        }
+
     }
 
     @Override
@@ -98,6 +121,16 @@ public class VehiculoServiceImpl implements IVehiculoService {
         }
         if (imagen != null && !imagen.isEmpty()) {
             try {
+                // borrar la imagen exitente
+                if (buscarProveedor.getUrlfoto() != null || buscarProveedor.getNombrefoto() != null){
+                    try {
+                        Files.delete(Path.of(data.getUrlfoto()));
+                        System.out.println("Imagen eliminada exitosamente.");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("Error al eliminar la imagen.");
+                    }
+                }
                 // Guardar la imagen en la carpeta del proyecto
                 String filename = pathService.generateFileName(imagen);
                 pathService.storeFile(imagen, filename);

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface IValeRepository extends JpaRepository<Vale, UUID> {
     // Devulve de vales por activos ordenados
-    @Query("SELECT v FROM Vale v JOIN v.compra c WHERE v.estado = 8 ORDER BY c.fecha_compra, v.correlativo ASC")
+    @Query("SELECT v FROM Vale v JOIN v.compra c WHERE v.estado = 8 ORDER BY c.fechaCompra, v.correlativo ASC")
     List<Vale> findValesActivosOrderByFechaCompraCorrelativo();
 
     default List<Vale> findValesActivosOrderByFechaCompraCorrelativoWithLimit(int cantidad) {
@@ -26,4 +26,8 @@ public interface IValeRepository extends JpaRepository<Vale, UUID> {
             throw new CustomException(HttpStatus.BAD_REQUEST, "No existe esa cantidad de vales disponibles");
         }
     }
+
+    List<Vale> findByCompraId(UUID idCompra);
+
+    List<Vale> findByEstado(int estado);
 }

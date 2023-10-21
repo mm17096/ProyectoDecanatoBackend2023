@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/cargo")
+@RequestMapping("/api/cargo")
+@PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
 public class CargoController {
 
     private final ICargoService cargoService;
@@ -29,7 +31,7 @@ public class CargoController {
     }
 */
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<CargosDto>> showCargo(){
         List<CargosDto> obj = this.cargoService.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);

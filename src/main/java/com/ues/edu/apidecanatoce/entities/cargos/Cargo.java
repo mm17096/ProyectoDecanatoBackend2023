@@ -2,6 +2,7 @@ package com.ues.edu.apidecanatoce.entities.cargos;
 import com.ues.edu.apidecanatoce.dtos.cargosDto.CargosDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.core.annotation.Order;
 
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name="tb_cargo")
+@Order(2)
 public class Cargo {
 
     @Id

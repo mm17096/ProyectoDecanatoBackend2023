@@ -5,22 +5,19 @@ import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="tb_usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})})
+@Table(name = "tb_usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nombre"})})
 public class Usuario implements UserDetails {
     @Id
-    @Column(name ="codigo_usuario")
+    @Column(name = "codigo_usuario")
     private String codigoUsuario;
 
     @Basic
@@ -32,9 +29,19 @@ public class Usuario implements UserDetails {
 
     @Column(name = "nuevo")
     private boolean nuevo;
+/*
+no se esta usando
+    @Column(name = "activo")
+    private boolean activo;
+*/
+    @Column(name = "token")
+    private String token;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
+
+    @Column(name = "codigo")
+    private String codigo;
 
     @OneToOne
     @JoinColumn(name = "id_empleado", nullable = false,
@@ -43,12 +50,13 @@ public class Usuario implements UserDetails {
 
     public UsuarioPeticionDto toDTO() {
         return UsuarioPeticionDto.builder().codigoUsuario(this.codigoUsuario).nombre(this.nombre).clave(this.clave)
-                .nuevo(this.nuevo).empleado(this.empleado).build();
+                .nuevo(this.nuevo).role(this.role).empleado(this.empleado).build();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((role.name())));
+         //  return List.of(new SimpleGrantedAuthority((role.name())));
+       return role.getAuthorities();
     }
 
     @Override
@@ -65,16 +73,20 @@ public class Usuario implements UserDetails {
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
     }
+
 }

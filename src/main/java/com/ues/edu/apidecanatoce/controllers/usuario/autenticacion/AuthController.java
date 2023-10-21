@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
+import com.ues.edu.apidecanatoce.repositorys.usuario.IUsuarioRepository;
 import com.ues.edu.apidecanatoce.servicesImpl.usuario.UsuarioServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/usuario/auth")
+@RequestMapping("/api/usuario/auth")
 @RequiredArgsConstructor
 public class AuthController {
     
     private final UsuarioServiceImpl authService;
 
     private final IEmpleadoRepository empleadoRepository;
+
+    private final IUsuarioRepository usuarioRepository;
 
     @Autowired
     private JwtService jwtTokenUtil;
@@ -40,19 +43,30 @@ public class AuthController {
         Empleado empleado = empleadoRepository.findById(request.getEmpleado()).orElse(null);
         return ResponseEntity.ok(authService.register(request, empleado));
     }
-
+/*
+solo para cambiar el estado de la sesion, no se esta usando
+    @PutMapping("/sesion")
+    public ResponseEntity<?> cambiarSesion(@RequestBody String id) {
+        Usuario usuario = usuarioRepository.findByCodigoUsuario(id);
+        usuario.setActivo(false);
+        usuarioRepository.save(usuario);
+        return ResponseEntity.ok(true);
+    }
+*/
     // Endpoint para renovar el token
     @GetMapping("/renew")
     public ResponseEntity<AuthResponse> renewToken(HttpServletRequest request) {
         // Obtén el token de la cabecera 'x-token'
         String token = request.getHeader("x-token");
+        UserDetails userDetails = jwtTokenUtil.getUserDetailsFromToken(token);
+        Usuario usuario = authService.OptenerUsuario(userDetails.getUsername());
 
-        if (token != null && jwtTokenUtil.validateToken(token)) {
+        if (token != null && jwtTokenUtil.isTokenValid(token, userDetails, usuario)) {
             // El token es válido, genera un nuevo token y devuélvelo
-            UserDetails userDetails = jwtTokenUtil.getUserDetailsFromToken(token);
-            Usuario usuario = authService.OptenerUsuario(userDetails.getUsername());
             Empleado empleado = empleadoRepository.findById(usuario.getEmpleado().getCodigoEmpleado()).orElse(null);
             String newToken = jwtTokenUtil.getToken(userDetails);
+            usuario.setToken(newToken);
+            usuarioRepository.save(usuario);
 
             Map<String, Object> response = new HashMap<>();
             AuthResponse authResponse = new AuthResponse();
@@ -60,6 +74,7 @@ public class AuthController {
             authResponse.setToken(newToken);
             authResponse.setCodigoUsuario(usuario.getCodigoUsuario());
             authResponse.setEmpleado(empleado);
+            authResponse.setUsuario(usuario);
 
             return ResponseEntity.ok(authResponse);
         } else {

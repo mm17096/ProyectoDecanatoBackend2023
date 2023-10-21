@@ -7,18 +7,22 @@ import com.ues.edu.apidecanatoce.dtos.compras.CompraPeticionDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface ICompraService {
-    CompraPeticionDto registrar(CompraInsertarDto data);
+    CompraPeticionDto registrar(CompraInsertarDto data, String idUsuarioLogueado);
 
     CompraPeticionDto leerPorId(UUID id);
 
     Page<CompraPeticionDto> listar(Pageable pageable);
 
+    List<CompraPeticionDto> listarSinPagina();
+
     CompraPeticionDto actualizar(UUID id, CompraModificarDto data);
 
     CompraPeticionDto eliminar(UUID id);
 
-
+    List<CompraPeticionDto> listarComprasPorRangoDeFechas(LocalDate fechaInicio, LocalDate fechaFin);
 }

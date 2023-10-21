@@ -4,6 +4,7 @@ import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.RegisterReque
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoPeticionDto;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.repositorys.cargo.ICargoRepository;
 import com.ues.edu.apidecanatoce.repositorys.departamentos.IDeptopRepo;
 import com.ues.edu.apidecanatoce.repositorys.empleado.IEmpleadoRepository;
@@ -18,7 +19,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.SpringVersion;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.UUID;
+
+import static com.ues.edu.apidecanatoce.entities.usuario.Role.ADMIN;
 
 @SpringBootApplication
 public class ApiDecanatoCeApplication {
@@ -42,9 +47,11 @@ public class ApiDecanatoCeApplication {
                 data.setTelefono("0000-0000");
                 data.setNombrefoto("");
                 data.setUrlfoto("");
+                data.setLicencia("");
+                data.setTipolicencia("");
                 data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
-                data.setCargo(cargoService.leerPorNombre("Docente").getId());
-                data.setDepartamento(deptoServiceImp.leerPorNombre("Ing. De Sistemas").getCodigoDepto());
+                data.setCargo(cargoService.leerPorNombre("ADMINISTRADOR").getId());
+                data.setDepartamento(deptoServiceImp.leerPorNombre("UTI").getCodigoDepto());
 
                 //primero se almacena el empleado
                 EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
@@ -55,6 +62,7 @@ public class ApiDecanatoCeApplication {
                 request.setNombre(empleadoPeticionDto.getCorreo());
                 request.setClave(empleadoPeticionDto.getDui());
                 request.setEmpleado(empleadoPeticionDto.getCodigoEmpleado());
+                request.setRole(Role.ADMIN);
 
                 System.out.println("Token: " + usuarioService.register(request, empleado).getToken());
             }else{

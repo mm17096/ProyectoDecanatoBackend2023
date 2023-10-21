@@ -1,22 +1,22 @@
 package com.ues.edu.apidecanatoce.controllers.compras;
 
-import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
-import com.ues.edu.apidecanatoce.dtos.compras.ValeDto;
+import com.ues.edu.apidecanatoce.dtos.compras.*;
 import com.ues.edu.apidecanatoce.services.compras.IValeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/vale")
+@RequestMapping("/api/vale")
+@PreAuthorize("hasAnyRole('ADMIN','ASIS_FINANCIERO','JEFE_FINANACIERO')")
 public class ValeController {
 
     private final IValeService valeService;
@@ -43,6 +43,31 @@ public class ValeController {
         return ResponseEntity.ok(valesDevueltos);
     }
 
+    @GetMapping("/valesporcompra/{idCompra}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorCompra(@PathVariable UUID idCompra) {
+        List<ValeDependeDto> valesPorCompra = valeService.obtenerValesPorCompra(idCompra);
+        return ResponseEntity.ok(valesPorCompra);
+    }
+
+    @GetMapping("/valesporestado/{estado}")
+    public ResponseEntity<List<ValeDependeDto>> obtenerValesPorEstado(@PathVariable int estado) {
+        List<ValeDependeDto> valesPorEstado = valeService.obtenerValesPorEstado(estado);
+        return ResponseEntity.ok(valesPorEstado);
+    }
+
+    @GetMapping("/cantidadvalesporestado/{estado}")
+    public ResponseEntity<Integer> obtenerCantidadValesPorEstado(@PathVariable int estado) {
+        int cantidadValesPorEstado = valeService.obtenerCantidadValesPorEstado(estado);
+        return ResponseEntity.ok(cantidadValesPorEstado);
+    }
+
+
+    @GetMapping("/listasinpagina")
+    public ResponseEntity<List<ValeDependeDto>> listarSinPagina() {
+        List<ValeDependeDto> vale = valeService.listarSinPagina();
+        return ResponseEntity.ok(vale);
+    }
+
     @GetMapping("/lista")
     public ResponseEntity<Page<ValeDependeDto>> listar(Pageable pageable) {
         return ResponseEntity.ok(valeService.listar(pageable));
@@ -54,12 +79,20 @@ public class ValeController {
         return ResponseEntity.ok(valeService.actualizar(id, vale));
     }
 
-    @PutMapping("/actualizarValesCantidad/{idproveedor}")
+    @PutMapping("/actualizarValesCantidad")
     public ResponseEntity<List<ValeDependeDto>> actualizarVales(
-            @RequestBody List<ValeDependeDto> valesDto,
-            @PathVariable("idproveedor") UUID idProveedor
+            @RequestBody ActualizacionValesRequestDto request
     ) {
-        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, idProveedor));
+        List<ValeDependeDto> valesDto = request.getVales();
+        String concepto = request.getConcepto();
+        String idusuariologueado = request.getIdusuariologueado();
+        return ResponseEntity.ok(valeService.actualizarTodosValesPorCantidad(valesDto, concepto, idusuariologueado));
+    }
+
+    @PostMapping("/validarusuario")
+    public ResponseEntity<UsuarioRespuestaDto> validarUsuario(@RequestBody UsuarioMandarDto request)
+    {
+        return ResponseEntity.ok(valeService.validarUsuario(request));
     }
 
     @DeleteMapping("/eliminar/{id}")

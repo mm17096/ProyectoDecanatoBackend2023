@@ -1,13 +1,16 @@
 package com.ues.edu.apidecanatoce.entities.solicitudVehiculo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.SolicitudVehiculoModDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudValeEstadoEntradaDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.EstadoSolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoDto;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.SolicitudVehiculoModDto;
+import com.ues.edu.apidecanatoce.dtos.solicitudValeDto.SolicitudVahiculoConsultaDto;
 import com.ues.edu.apidecanatoce.dtos.solicitudVehiculo.SolicitudVehiculoPeticionDtO;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
 import com.ues.edu.apidecanatoce.entities.vehiculo.Vehiculo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ues.edu.apidecanatoce.entities.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.Set;
 
 @Entity
 @Data
@@ -30,7 +31,6 @@ import java.util.Set;
 @Table(name = "tb_solicitud_vehiculo")
 public class SolicitudVehiculo {
     @Id
-
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "codigo_solicitud_vehiculo")
     private UUID codigoSolicitudVehiculo;
@@ -113,21 +113,25 @@ public class SolicitudVehiculo {
 
     // Mortorista asignado
     @ManyToOne
-    @JoinColumn(name = "DUI_MOTORISTA", nullable = true,
+    @JoinColumn(name = "codigo_motorista", nullable = true,
             foreignKey = @ForeignKey(name = "FK_solicitud_vehiculo_motorista"))
     private Empleado motorista;
 
     //Lista de documentos que tiene la solicitud de vehiculo
 
-    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL },orphanRemoval=true)
+    @OneToMany(mappedBy = "codigoSolicitudVehiculo", cascade = { CascadeType.ALL })
+    @JsonManagedReference
     private List<DocumentoSoliCar> listDocumentos;
 
 
-    @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
-    private Set<SolicitudVale> solicitudVale = new HashSet<>();
+   // @OneToMany(mappedBy = "solicitudVehiculo", cascade = CascadeType.ALL)
+    //private Set<SolicitudVale> solicitudVale = new HashSet<>();
 
     @Column(name = "observaciones")
     private String observaciones;
+
+    @Column(name = "tieneVale", columnDefinition = "BOOLEAN DEFAULT true")
+    private boolean tieneVale;
 
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
@@ -138,7 +142,18 @@ public class SolicitudVehiculo {
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
+    }
+
+    public SolicitudVahiculoConsultaDto toDtot(){
+        return SolicitudVahiculoConsultaDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo.toDTO())
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas)
+                .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(this.motorista).build();
     }
 
     public SolicitudVehiculoModDto totoSolicitudVehiculoModDto(){
@@ -148,4 +163,29 @@ public class SolicitudVehiculo {
                 .build();
     }
 
+    public SolicitudVehiculo toDepDTO() {
+        return SolicitudVehiculo.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
+                .unidadSolicitante(this.unidadSolicitante).vehiculo(this.vehiculo)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .direccion(this.direccion).horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
+                .fechaEntrada(this.fechaEntrada)
+                .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
+                .observaciones(this.observaciones).build();
+    }
+
+    public SolicitudVehiculoDto toDto2() {
+        return SolicitudVehiculoDto.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .fechaSolicitud(this.fechaSolicitud).unidadSolicitante(this.unidadSolicitante)
+                .objetivoMision(this.objetivoMision).lugarMision(this.lugarMision)
+                .horaEntrada(this.horaEntrada).horaSalida(this.horaSalida)
+                .cantidadPersonas(this.cantidadPersonas).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada).estado(this.estado).build();
+    }
+    public EstadoSolicitudVehiculoDto toEstadoSolicitudVehiculoDto(){
+        return EstadoSolicitudVehiculoDto.builder()
+                .idSolicitudVehiculo(this.codigoSolicitudVehiculo)
+                .estado(this.estado)
+                .build();
+    }
 }

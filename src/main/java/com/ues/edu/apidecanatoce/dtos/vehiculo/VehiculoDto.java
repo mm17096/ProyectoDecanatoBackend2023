@@ -39,7 +39,7 @@ public class VehiculoDto {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "Fecha vecimiento superior al presente")
+    //@FutureOrPresent(message = "Fecha vecimiento superior al presente")
     private LocalDate fecha_tarjeta;
 
     @NotNull(message = "La capacidad personas es obligario")

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,10 +19,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity // metodo agregado
 public class SecurityConfig {
 
     @Autowired
@@ -37,9 +38,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/usuario/auth/**").permitAll()
-                                .requestMatchers("/usuario/auth/login").permitAll()
-                                .requestMatchers("/empleado/imagen/**").permitAll()
+                                .requestMatchers("/api/usuario/**").permitAll()
+                                .requestMatchers("/api/correo/**").permitAll()
+                                .requestMatchers("/api/vehiculo/imagen/**").permitAll()
+                                .requestMatchers("/api/empleado/imagen/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->

@@ -47,8 +47,8 @@ public class Empleado {
     @Column(name = "estado")
     private int estado;
 
-    @Column(name = "jefe")
-    private boolean jefe;
+    //@Column(name = "jefe")
+    //private boolean jefe;
 
     @Column(name = "correo")
     private String correo;
@@ -74,7 +74,7 @@ public class Empleado {
         return EmpleadoPeticionDto.builder().codigoEmpleado(this.codigoEmpleado).dui(this.dui).nombre(this.nombre)
                 .apellido(this.apellido).telefono(this.telefono).licencia(this.licencia)
                 .tipolicencia(this.tipolicencia)
-                .fechalicencia(this.fechalicencia).estado(this.estado).jefe(this.jefe)
+                .fechalicencia(this.fechalicencia).estado(this.estado)
                 .correo(this.correo).nombrefoto(this.nombrefoto).urlfoto(this.urlfoto)
                 .cargo(this.cargo.toDto()).departamento(this.departamento.toDto()).build();
     }

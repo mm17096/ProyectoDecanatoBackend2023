@@ -2,7 +2,10 @@ package com.ues.edu.apidecanatoce.dtos.usuario;
 
 import com.ues.edu.apidecanatoce.dtos.empleados.EmpleadoDto;
 import com.ues.edu.apidecanatoce.entities.empleado.Empleado;
+import com.ues.edu.apidecanatoce.entities.usuario.Role;
 import com.ues.edu.apidecanatoce.entities.usuario.Usuario;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -30,10 +33,13 @@ public class UsuarioPeticionDto {
     @NotBlank(message = "El estado nuevo es obligatorio")
     private boolean nuevo;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private Empleado empleado;
 
     public Usuario toEntitySave() {
         return Usuario.builder().codigoUsuario(this.codigoUsuario).nombre(this.nombre).clave(this.clave)
-                .empleado(this.empleado).build();
+                .role(this.role).empleado(this.empleado).build();
     }
 }

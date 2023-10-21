@@ -56,7 +56,6 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         this.deptopRepo = deptopRepo;
     }
 
-
     ///////// Metodos reestructurados /////////
     @Override
     public EmpleadoPeticionDto registrar(EmpleadoDto data) {
@@ -76,18 +75,48 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
                 throw new CustomException(HttpStatus.BAD_REQUEST, "La Licencia ya está registrada");
             }
         }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("DECANO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
+            }
+        }
+
+        //metodo para verificar si ya existe un secretario de financiero
+        if (cargo.getNombreCargo().equals("SECRETARIO DECANATO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Secretario de Decanato");
+            }
+        }
+
+        //metodo para verificar si ya existe un jefe de financiero
+        if (cargo.getNombreCargo().equals("JEFE FINANCIERO")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Jefe de Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un asistente de financiero
+        if (cargo.getNombreCargo().equals("ASISTENTE FINANCIERA")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Asistente Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("ADMINISTRADOR")) {
+            if (empleadoRepository.existsByCargo(cargo)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Administrador");
+            }
+        }
+
         //metodo para verificar si ya existe un jefe de departamento
-        if (data.isJefe()) {
+        if (cargo.getNombreCargo().equals("JEFE DEPARTAMENTO")) {
             if (departamento != null && cargo != null) {
                 if (empleadoRepository.existsByDepartamentoAndCargo(departamento, cargo)) {
                     throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un jefe en el departamento");
                 }
-            }
-        }
-        //metodo para verificar si ya existe un decano
-        if (cargo.getNombreCargo().equals("Decano")) {
-            if (empleadoRepository.existsByCargo(cargo)) {
-                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
             }
         }
 
@@ -146,13 +175,42 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
             }
         }
 
-        if (cargo.getNombreCargo().equals("Decano")) {
+        if (cargo.getNombreCargo().equals("DECANO")) {
             if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)) {
                 throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Decano");
             }
         }
 
-        if (data.isJefe()) {
+
+        //metodo para verificar si ya existe un secretario de financiero
+        if (cargo.getNombreCargo().equals("SECRETARIO DECANATO")) {
+            if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Secretario de Decanato");
+            }
+        }
+
+        //metodo para verificar si ya existe un jefe de financiero
+        if (cargo.getNombreCargo().equals("JEFE FINANCIERO")) {
+            if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Jefe de Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un asistente de financiero
+        if (cargo.getNombreCargo().equals("ASISTENTE FINANCIERA")) {
+            if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)){
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Asistente Financiero");
+            }
+        }
+
+        //metodo para verificar si ya existe un decano
+        if (cargo.getNombreCargo().equals("ADMINISTRADOR")) {
+            if (empleadoRepository.existsByCargoAndCodigoEmpleadoNot(cargo, id)) {
+                throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un Administrador");
+            }
+        }
+
+        if (cargo.getNombreCargo().equals("JEFE DEPARTAMENTO")) {
             if (departamento != null && cargo != null) {
                 if (empleadoRepository.existsByDepartamentoAndCargoAndCodigoEmpleadoNot(departamento, cargo, id)) {
                     throw new CustomException(HttpStatus.BAD_REQUEST, "Ya existe un jefe en el departamento");
@@ -161,6 +219,25 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         }
 
         data.setCodigoEmpleado(id);
-        return empleadoRepository.save(data.toEntityCompletes(cargoRepository, deptopRepo)).toDTO();
+        EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
+        //codigo agregado para probar el modificar el rol si el cargo cambio
+            if(!buscarEmpleado.getCargo().getNombreCargo().equals(cargo.getNombreCargo()) ){
+
+                if (data.getCargo() != cargoService.leerPorNombre("MOTORISTA").getId()) {
+                    RegisterRequest request = new RegisterRequest();
+
+                    request.setNombre(empleadoPeticionDto.getCorreo());
+                    request.setClave(empleadoPeticionDto.getDui());
+                    request.setEmpleado(empleadoPeticionDto.getCodigoEmpleado());
+
+                    Empleado empleado = empleadoRepository.findById(request.getEmpleado()).orElse(null); //Buscamos el empleado y lo mandamos a insertar
+
+                    usuarioService.modificar(request, empleado); //Almacenamos el usuario
+                }
+            }
+        // final del segmento -----------------------------------------
+
+       // return empleadoRepository.save(data.toEntityCompletes(cargoRepository, deptopRepo)).toDTO();
+            return empleadoPeticionDto;
     }
 }

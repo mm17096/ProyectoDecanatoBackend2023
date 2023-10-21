@@ -33,15 +33,20 @@ public class CargoServiceImpl implements ICargoService {
        if (cargoRepository.existsByNombreCargo(data.getNombreCargo())) {
            throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
        }
+
+
        return cargoRepository.save(data.toEntityComplete()).toDto();
     }
 
     @Override
     public CargosDto modificar(UUID id, CargosDto data){
         //CargosDto buscarCargo = leerPorId(id);
+
         if (this.cargoRepository.existsByNombreCargoAndIdNot(data.getNombreCargo(), id)) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "El Cargo ya está registrado");
         }
+
+
         //data.setId(id);
         return this.cargoRepository.save(data.toEntityComplete()).toDto();
     }
@@ -59,7 +64,7 @@ public class CargoServiceImpl implements ICargoService {
         Cargo cargoOb = new Cargo();
 
         for (Cargo cargo: cargos) {
-            if(cargo.getNombreCargo().equals(nombre)){
+            if(cargo.getNombreCargo().equals(nombre.toUpperCase())){
                 cargoOb = cargo;
             }
         }

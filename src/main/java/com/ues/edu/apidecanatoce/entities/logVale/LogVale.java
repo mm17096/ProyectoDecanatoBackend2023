@@ -1,15 +1,13 @@
 package com.ues.edu.apidecanatoce.entities.logVale;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.LogValeDto;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,6 +16,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "tb_logvale")
+@Builder
 public class LogVale {
 
     @Id
@@ -28,12 +27,12 @@ public class LogVale {
     @Column(name = "estado_vale")
     private int estadoVale;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_logvale", nullable = false)
-    private LocalDate fechaLogVale;
+    private LocalDateTime fechaLogVale;
 
-    @Column(name = "actividad")
+    @Column(name = "actividad", length = 1000)
     private String actividad;
 
     @Column(name = "usuario")
@@ -42,4 +41,14 @@ public class LogVale {
     @ManyToOne
     @JoinColumn(name = "id_vale")
     private Vale vale;
+
+    public LogValeDto toLogValeDto(){
+        return LogValeDto.builder()
+                .idLogVale(this.id)
+                .estadoVale(this.estadoVale)
+                .fechaLogVale(this.fechaLogVale)
+                .actividad(this.actividad)
+                .vale(this.vale.getId())
+                .build();
+    }
 }

@@ -41,37 +41,37 @@ public class Compra {
     private int cantidad;
 
     @Column(name = "codigo_inicio")
-    private int cod_inicio;
+    private int codInicio;
 
     @Column(name = "codigo_fin")
-    private int cod_fin;
+    private int codFin;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @Column(name = "fecha_hora_compra")
-    private LocalDateTime fecha_compra;
+    @Column(name = "fecha_compra")
+    private LocalDateTime fechaCompra;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Column(name = "fecha_vencimiento_vale")
-    private LocalDate fecha_vencimiento;
+    @Column(name = "fecha_vencimiento")
+    private LocalDate fechaVencimiento;
 
     @Column(name = "precio_unitario")
-    private double precio_unitario;
+    private double precioUnitario;
 
     public CompraPeticionDto toDTO() {
         return CompraPeticionDto.builder().id(this.id).factura(this.factura)
                 .proveedor(this.proveedor.toDTO())
-                .descripcion(this.descripcion).cantidad(this.cantidad).cod_inicio(this.cod_inicio)
-                .cod_fin(this.cod_fin).fecha_compra(this.fecha_compra).fecha_vencimiento(this.fecha_vencimiento).precio_unitario(this.precio_unitario)
-                .total_compra(this.cantidad * this.precio_unitario).build();
+                .descripcion(this.descripcion).cantidad(this.cantidad).codInicio(this.codInicio)
+                .codFin(this.codFin).fechaCompra(this.fechaCompra).fechaVencimiento(this.fechaVencimiento).precioUnitario(this.precioUnitario)
+                .totalCompra(this.cantidad * this.precioUnitario).build();
     }
 
     public Compra toDepDTO() {
         return Compra.builder().id(this.id).factura(this.factura)
                 .proveedor(this.proveedor)
-                .descripcion(this.descripcion).cantidad(this.cantidad).cod_inicio(this.cod_inicio)
-                .cod_fin(this.cod_fin).fecha_compra(this.fecha_compra).fecha_vencimiento(this.fecha_vencimiento).precio_unitario(this.precio_unitario).build();
+                .descripcion(this.descripcion).cantidad(this.cantidad).codInicio(this.codInicio)
+                .codFin(this.codFin).fechaCompra(this.fechaCompra).fechaVencimiento(this.fechaVencimiento).precioUnitario(this.precioUnitario).build();
     }
 
 }

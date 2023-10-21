@@ -36,34 +36,33 @@ public class CompraInsertarDto {
 
     @NotNull(message = "Cod inicio es obligatorio")
     @Min(value = 0, message = "Cod inicio debe ser mayor o igual a 0")
-    private int cod_inicio;
+    private int codInicio;
 
     @NotNull(message = "Cod fin es obligatorio")
     @Min(value = 0, message = "Cod fin debe ser mayor o igual a 0")
-    private int cod_fin;
+    private int codFin;
 
     @NotNull(message = "La fecha de compra es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
-    @PastOrPresent(message = "Fecha de compra debe ser inferior o igual al presente")
-    private LocalDateTime fecha_compra;
+    private LocalDateTime fechaCompra;
 
     @NotNull(message = "La fecha de vencimiento es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @FutureOrPresent(message = "Fecha de vencimiento debe ser superior o igual al presente")
-    private LocalDate fecha_vencimiento;
+    private LocalDate fechaVencimiento;
 
     @NotNull(message = "El precio unitario es obligatorio")
     @Digits(integer = 10, fraction = 2, message = "El precio unitario debe ser un número válido con máximo 10 dígitos en total y 2 decimales")
     @Min(value = 0, message = "El precio unitario debe ser mayor o igual a 0")
-    private double precio_unitario;
+    private double precioUnitario;
 
     public Compra toEntityComplete(IProveedorRepository proveedorRepository) {
         Proveedor proveedorbuscar = proveedorRepository.findById(this.proveedor).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro proveedor"));
         return Compra.builder().id(this.id).factura(this.factura).proveedor(proveedorbuscar).descripcion(this.descripcion)
-                .cod_inicio(this.cod_inicio).cod_fin(this.cod_fin).fecha_compra(this.fecha_compra).fecha_vencimiento(this.fecha_vencimiento).precio_unitario(this.precio_unitario).build();
+                .codInicio(this.codInicio).codFin(this.codFin).fechaCompra(this.fechaCompra).fechaVencimiento(this.fechaVencimiento).precioUnitario(this.precioUnitario).build();
     }
 
 }
