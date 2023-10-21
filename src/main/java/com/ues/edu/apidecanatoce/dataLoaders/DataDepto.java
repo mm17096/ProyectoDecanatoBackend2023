@@ -24,7 +24,7 @@ public class DataDepto implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         UUID id = UUID.fromString("0107bbee-87cf-42e3-8155-0c62edd2a1bd");
-        Departamento obj = new Departamento(id,"ING DE SISTEMAS","departamento de inicio","Administrativo",8);
+        Departamento obj = new Departamento(id,"UTI","Unidad de tecnologia de la información","Administrativo",8);
 
         if(!iDeptopRepo.existsByNombre(obj.getNombre())){
             iDeptopRepo.save(obj);

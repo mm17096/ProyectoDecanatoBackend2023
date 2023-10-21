@@ -27,6 +27,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,8 +62,19 @@ public class EmpleadoController {
 
     @GetMapping("/motoristas")
     @PreAuthorize("hasAnyRole('ADMIN','SECR_DECANATO','JEFE_DEPTO','VIGILANTE','DECANO','ASIS_FINANCIERO','USER','JEFE_FINANACIERO')")
-    public ResponseEntity<List<Empleado>> Motoristas() {
-        return ResponseEntity.ok(empleadoRepository.listaMotoristas());
+    public ResponseEntity<List<Empleado>> Motoristas(@RequestParam String fechaSalida, @RequestParam String fechaEntrada) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaSalidaDate;
+        Date fechaEntradaDate;
+        try {
+            fechaSalidaDate = dateFormat.parse(fechaSalida);
+            fechaEntradaDate = dateFormat.parse(fechaEntrada);
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(empleadoRepository.listaMotoristas(fechaSalidaDate,fechaEntradaDate));
+
     }
 
     @GetMapping("/lista")

@@ -100,11 +100,12 @@ public class VehiculoServiceImpl implements IVehiculoService {
         return vehiculos;
     }
     @Override
-    public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida) {
+    public List<VehiculoDto> listarPorDisponibilidad(String claseName, String fechaSalida, String fechaEntrada) {
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date fechaSalidaDate = dateFormat.parse(fechaSalida);
-            List<Vehiculo> vehiculos = this.vehiculoRepository.buscarDisponibilidad(claseName, fechaSalidaDate);
+            Date fechaEntradaDate = dateFormat.parse(fechaEntrada);
+            List<Vehiculo> vehiculos = this.vehiculoRepository.buscarDisponibilidad(claseName,fechaSalidaDate, fechaEntradaDate);
             return vehiculos.stream().map(Vehiculo::toDTO).toList();
         }catch (ParseException e){
             return new ArrayList<>();
@@ -121,14 +122,15 @@ public class VehiculoServiceImpl implements IVehiculoService {
         if (imagen != null && !imagen.isEmpty()) {
             try {
                 // borrar la imagen exitente
-                try {
-                    Files.delete(Path.of(data.getUrlfoto()));
-                    System.out.println("Imagen eliminada exitosamente.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("Error al eliminar la imagen.");
+                if (buscarProveedor.getUrlfoto() != null || buscarProveedor.getNombrefoto() != null){
+                    try {
+                        Files.delete(Path.of(data.getUrlfoto()));
+                        System.out.println("Imagen eliminada exitosamente.");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("Error al eliminar la imagen.");
+                    }
                 }
-
                 // Guardar la imagen en la carpeta del proyecto
                 String filename = pathService.generateFileName(imagen);
                 pathService.storeFile(imagen, filename);

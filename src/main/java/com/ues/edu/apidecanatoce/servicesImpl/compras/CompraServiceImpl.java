@@ -69,7 +69,7 @@ public class CompraServiceImpl implements ICompraService {
                 logEntity.setFechaLogVale(data.getFechaCompra());
                 if (compraEntity.getProveedor().getTipo() == 14) {
 
-                    logEntity.setActividad("Adquisición en préstamo a proveedor " + proveedor.getNombre() + "en concepto de:" + compraEntity.getDescripcion());
+                    logEntity.setActividad("Adquisición en préstamo a proveedor " + proveedor.getNombre() + " en concepto de: " + compraEntity.getDescripcion());
                 } else {
                     logEntity.setActividad("Adquisición en compra a proveedor " + proveedor.getNombre() + " en concepto de: " + compraEntity.getDescripcion());
                 }

@@ -62,7 +62,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
         //7 = Finalizado para la solicitud
         //8 = Activo para la asignación
         int estadoVales = 5;
-        int estadoSolicitud = 7;
+        int estadoSolicitud = 5;
 
         String actividad = "Vales Asignados a Solicitud de vale";
 
@@ -135,10 +135,10 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
                         .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "No se encuentro la solicitud del vehículo"));
 
                 //cambiar el estado de la solicitud del vale y del vehículo
-                actualizarEstadoSolicitud(data.getSolicitudVale(), 5);
+                actualizarEstadoSolicitud(data.getSolicitudVale(), estadoSolicitud);
 
                 // Actuliza el estado de la Solictud del Vehículo
-                actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), 5);
+                actualizarEstadoSolicitudVehiculo(solicitudVehiculo.getCodigoSolicitudVehiculo(), estadoSolicitud);
 
                 SolicitudVale solicitudVale = this.solicitudValeRepository.findById(data.getSolicitudVale()).orElseThrow(
                         () -> new CustomException(HttpStatus.NOT_FOUND, "No se encontró la solicitud: " + data.getSolicitudVale())
@@ -146,7 +146,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
 
                 logSolicitudVehiculo.setSoliVale(solicitudVale);
-                logSolicitudVehiculo.setEstadoLogSolive(5);
+                logSolicitudVehiculo.setEstadoLogSolive(estadoSolicitud);
                 logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
                 logSolicitudVehiculo.setActividad(actividad);
                 logSolicitudVehiculo.setUsuario(empleado);
@@ -168,7 +168,7 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
     @Override
     public AnularMisionDto anularMision(AnularMisionDto data, String usuario, String empleado, String cargo) {
         int estadoVale = 8;
-        int estadoSolicitudes = 16;
+        int estadoSolicitudes = 15;
         UUID codigoDetalleAsignacion;
         LocalDateTime fechaActualLog = LocalDateTime.now();
         String actividad = "Misión anulada";
@@ -212,11 +212,12 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
 
 
             logSolicitudVehiculo.setSoliVale(solicitudVale);
-            logSolicitudVehiculo.setEstadoLogSolive(11);
+            logSolicitudVehiculo.setEstadoLogSolive(estadoSolicitudes);
             logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
             logSolicitudVehiculo.setCargo(cargo);
+            logSolicitudVehiculo.setSoliVe(solicitudVale.getSolicitudVehiculo());
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
@@ -434,11 +435,12 @@ public class AsignacionValeServiceImpl implements IAsignacionValeService {
             );
 
             logSolicitudVehiculo.setSoliVale(solicitudVale);
-            logSolicitudVehiculo.setEstadoLogSolive(7);
+            logSolicitudVehiculo.setEstadoLogSolive(estadoSolicitudes);
             logSolicitudVehiculo.setFechaLogSoliVe(fechaActualLog);
             logSolicitudVehiculo.setActividad(actividad);
             logSolicitudVehiculo.setUsuario(empleado);
             logSolicitudVehiculo.setCargo(cargo);
+            logSolicitudVehiculo.setSoliVe(solicitudVale.getSolicitudVehiculo());
             this.logSoliVeRepository.save(logSolicitudVehiculo);
 
         } catch (Exception e) {
