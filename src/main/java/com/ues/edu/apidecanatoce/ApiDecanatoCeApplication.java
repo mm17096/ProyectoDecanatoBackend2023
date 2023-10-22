@@ -100,7 +100,7 @@ public class ApiDecanatoCeApplication {
     empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
 
             }else{
-                System.out.println("Ya existe el usuario empleado");
+                System.out.println("Ya existe el motorista default");
             }
         };
     }
