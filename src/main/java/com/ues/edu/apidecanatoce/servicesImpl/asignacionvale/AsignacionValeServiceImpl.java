@@ -1,12 +1,12 @@
 package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.asignaciones.*;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionInDto;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.*;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.*;
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.AsignacionVale;
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.asignaciones.*;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.detalles.DetalleAsignacionInDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.solicitudes.*;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.vales.*;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.AsignacionVale;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.entities.compras.Vale;
 import com.ues.edu.apidecanatoce.entities.logVale.LogVale;
 import com.ues.edu.apidecanatoce.entities.solicitudVale.SolicitudVale;
@@ -21,7 +21,6 @@ import com.ues.edu.apidecanatoce.repositorys.logVale.ILogValeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ILogSoliVeRepository;
 import com.ues.edu.apidecanatoce.repositorys.solicitudVehiculo.ISolicitudVehiculoRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IAsignacionValeService;
-import com.ues.edu.apidecanatoce.servicesImpl.solicitudVehiculo.SolicitudVehiculoServicesImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

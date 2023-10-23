@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.repositorys.asignacionvale;
 
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.DetalleAsignacionVale;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
