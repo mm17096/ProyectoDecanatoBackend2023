@@ -132,6 +132,9 @@ public class SolicitudVehiculo {
     @Column(name = "tieneVale", columnDefinition = "BOOLEAN DEFAULT true")
     private boolean tieneVale;
 
+    @Column(name = "motorista_junta", nullable = true)
+    private String motoristaJunta;
+
     public SolicitudVehiculoPeticionDtO toDto(){
         return SolicitudVehiculoPeticionDtO.builder().codigoSolicitudVehiculo(this.codigoSolicitudVehiculo)
                 .fechaSolicitud(this.fechaSolicitud).fechaSalida(this.fechaSalida)
@@ -141,7 +144,8 @@ public class SolicitudVehiculo {
                 .cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .solicitante(this.usuario).nombreJefeDepto(this.jefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(this.motorista).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale)
+                .motoristaJunta(this.motoristaJunta).build();
     }
 
     public SolicitudVahiculoConsultaDto toDtot(){
