@@ -1,9 +1,7 @@
 package com.ues.edu.apidecanatoce.repositorys.entradaSalida;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.solicitudes.EmpleadosCorreosSolicitudesDto;
 import com.ues.edu.apidecanatoce.dtos.entradasalidaDto.CorreosESDto;
 import com.ues.edu.apidecanatoce.entities.entradaSalida.Entrada_Salidas;
-import com.ues.edu.apidecanatoce.entities.solicitudVehiculo.SolicitudVehiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

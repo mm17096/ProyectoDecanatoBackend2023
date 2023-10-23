@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.controllers.logVale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.LogValeDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.vales.LogValeDto;
 import com.ues.edu.apidecanatoce.services.logVale.ILogValeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.ues.edu.apidecanatoce.servicesImpl.asignacionvale;
 
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.detalles.DetalleAsignacionDto;
-import com.ues.edu.apidecanatoce.entities.AsignacionVales.DetalleAsignacionVale;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.detalles.DetalleAsignacionDto;
+import com.ues.edu.apidecanatoce.entities.asignacionVales.DetalleAsignacionVale;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
 import com.ues.edu.apidecanatoce.repositorys.asignacionvale.IDetalleAsignacionRepository;
 import com.ues.edu.apidecanatoce.services.asignacionvale.IDetalleAsignacionService;

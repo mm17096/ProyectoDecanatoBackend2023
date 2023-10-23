@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.entities.compras;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ues.edu.apidecanatoce.dtos.AsignacionValesDto.vales.ValeModDto;
+import com.ues.edu.apidecanatoce.dtos.asignacionValesDto.vales.ValeModDto;
 import com.ues.edu.apidecanatoce.dtos.compras.ValeDependeDto;
 import jakarta.persistence.*;
 import lombok.*;
