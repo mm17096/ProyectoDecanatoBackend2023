@@ -47,6 +47,4 @@ public class MailController {
     public ResponseEntity<String> send(@RequestBody BodyEmail request) throws IOException {
         return ResponseEntity.ok(mailService.send(request));
     }
-
-
 }

@@ -67,39 +67,39 @@ public class ApiDecanatoCeApplication {
                 request.setRole(Role.ADMIN);
 
                 System.out.println("Token: " + usuarioService.register(request, empleado).getToken());
-            }else{
+            } else {
                 System.out.println("Ya existe el usuario admin");
             }
 
             if (!empleadoRepository.existsByCorreo("motorista@ues.edu.sv")) {
 
-    //            LocalDate fecha;
+                //            LocalDate fecha;
 
 
-  //  fecha = LocalDate.parse("01/01/2900");
+                //  fecha = LocalDate.parse("01/01/2900");
 
 
-    EmpleadoDto data = new EmpleadoDto();
+                EmpleadoDto data = new EmpleadoDto();
 
-    data.setNombre("Motorista por");
-    data.setApellido("Acuerdo de Junta");
-    data.setCorreo("motorista@ues.edu.sv");
-    data.setDui("00000000");
-    data.setTelefono("7111-0000");
-    data.setNombrefoto("");
-    data.setUrlfoto("");
-    data.setLicencia("00000000");
-    data.setTipolicencia("Pesada");
-  //  data.setFechalicencia(fecha);
+                data.setNombre("Motorista por");
+                data.setApellido("Acuerdo de Junta");
+                data.setCorreo("motorista@ues.edu.sv");
+                data.setDui("00000000");
+                data.setTelefono("7111-0000");
+                data.setNombrefoto("");
+                data.setUrlfoto("");
+                data.setLicencia("000000000");
+                data.setTipolicencia("Pesada");
+                //  data.setFechalicencia(fecha);
 
-    data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
-    data.setCargo(cargoService.leerPorNombre("MOTORISTA").getId());
-    data.setDepartamento(deptoServiceImp.leerPorNombre("DECANATO").getCodigoDepto());
+                data.setEstado(estadosService.leerPorNombre("Activo").getCodigoEstado());
+                data.setCargo(cargoService.leerPorNombre("MOTORISTA").getId());
+                data.setDepartamento(deptoServiceImp.leerPorNombre("DECANATO").getCodigoDepto());
 
-    //se almacena el empleado MOTORISTA
-    empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
+                //se almacena el empleado MOTORISTA
+                empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
 
-            }else{
+            } else {
                 System.out.println("Ya existe el motorista default");
             }
         };
