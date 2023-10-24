@@ -84,7 +84,7 @@ public class ApiDecanatoCeApplication {
                 data.setNombre("Motorista por");
                 data.setApellido("Acuerdo de Junta");
                 data.setCorreo("motorista@ues.edu.sv");
-                data.setDui("00000000");
+                data.setDui("000000000");
                 data.setTelefono("7111-0000");
                 data.setNombrefoto("");
                 data.setUrlfoto("");
