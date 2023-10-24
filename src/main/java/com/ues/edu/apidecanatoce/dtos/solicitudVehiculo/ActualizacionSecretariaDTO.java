@@ -104,6 +104,8 @@ public class ActualizacionSecretariaDTO {
 
     private boolean tieneVale;
 
+    private String motoristaJunta;
+
     public SolicitudVehiculo toEntityComplete(IVehiculoRepository vehiculoRepository,
                                               IEmpleadoRepository empleadoRepository,
                                               IUsuarioRepository usuarioRepository){
@@ -127,7 +129,8 @@ public class ActualizacionSecretariaDTO {
                 .horaSalida(this.horaSalida).cantidadPersonas(this.cantidadPersonas).listaPasajeros(this.listaPasajeros)
                 .usuario(usurioExiste).jefeDepto(this.nombreJefeDepto).fechaEntrada(this.fechaEntrada)
                 .estado(this.estado).motorista(motoristaBuscar).listDocumentos(this.listDocumentos)
-                .observaciones(this.observaciones).tieneVale(this.tieneVale).build();
+                .observaciones(this.observaciones).tieneVale(this.tieneVale).motoristaJunta(this.motoristaJunta)
+                .build();
     }
 
     public SolicitudVehiculo toEntityComplete2() {
