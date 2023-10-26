@@ -219,9 +219,13 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
         }
 
         data.setCodigoEmpleado(id);
+        String correoActual = buscarEmpleado.getCorreo();
         EmpleadoPeticionDto empleadoPeticionDto = empleadoRepository.save(data.toEntityComplete(cargoRepository, deptopRepo)).toDTO();
         //codigo agregado para probar el modificar el rol si el cargo cambio
-            if(!buscarEmpleado.getCargo().getNombreCargo().equals(cargo.getNombreCargo()) ){
+
+
+
+            if(!buscarEmpleado.getCargo().getNombreCargo().equals(cargo.getNombreCargo()) || !buscarEmpleado.getCorreo().equals(data.getCorreo()) ){
 
                 if (data.getCargo() != cargoService.leerPorNombre("MOTORISTA").getId()) {
                     RegisterRequest request = new RegisterRequest();
@@ -232,7 +236,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 
                     Empleado empleado = empleadoRepository.findById(request.getEmpleado()).orElse(null); //Buscamos el empleado y lo mandamos a insertar
 
-                    usuarioService.modificar(request, empleado); //Almacenamos el usuario
+                    usuarioService.modificar(request, empleado,correoActual); //Almacenamos el usuario
                 }
             }
         // final del segmento -----------------------------------------

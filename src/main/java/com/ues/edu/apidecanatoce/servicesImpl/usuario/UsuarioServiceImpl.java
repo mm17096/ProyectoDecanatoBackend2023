@@ -1,6 +1,6 @@
 package com.ues.edu.apidecanatoce.servicesImpl.usuario;
 
-import com.ues.edu.apidecanatoce.DataLoaders.Generalmethods;
+import com.ues.edu.apidecanatoce.dataLoaders.Generalmethods;
 import com.ues.edu.apidecanatoce.Jwt.JwtService;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.AuthResponse;
 import com.ues.edu.apidecanatoce.controllers.usuario.autenticacion.LoginRequest;
@@ -165,7 +165,7 @@ no se esta usando
     }
 
     // codigo agregado de prueba
-    public void modificar(RegisterRequest request, Empleado empleado) {
+    public void modificar(RegisterRequest request, Empleado empleado, String correoActual) {
 
         System.out.println("ingreso al modificar");
         Role rol;
@@ -209,7 +209,12 @@ no se esta usando
         String[] partes = request.getNombre().split("@");
         String nombre = partes[0];
 
-        Usuario carga = usuarioRepository.findUsuarioByNombre(nombre);
+        String[] partes2 = correoActual.split("@");
+        String nombre2 = partes2[0];
+
+
+
+        Usuario carga = usuarioRepository.findUsuarioByNombre(nombre2);
 
         /*
         Usuario user = Usuario.builder()
@@ -224,6 +229,7 @@ no se esta usando
                 .token(carga.getToken())
                 .build();
 */
+                carga.setNombre(nombre);
                 carga.setRole(rol);
         usuarioRepository.save(carga);
 

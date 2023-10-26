@@ -8,10 +8,11 @@ import com.sendgrid.helpers.mail.objects.Email;
 
 import com.sendgrid.helpers.mail.objects.Personalization;
 import com.ues.edu.apidecanatoce.controllers.sendgrid.BodyEmail;
+import com.ues.edu.apidecanatoce.entities.sendgrid.Sendgrid;
 import com.ues.edu.apidecanatoce.exceptions.CustomException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -24,39 +25,15 @@ import java.util.Map;
 @Service
 public class MailService {
     private static final Logger logger = LoggerFactory.getLogger(MailService.class);
-    /*
-    public String sendTextEmail(BodyEmail email) throws IOException {
-        Email from = new Email("misionesdecanato@gmail.com");
-        String subject = email.getAsunto();
-        Email to = new Email(email.getReceptor());
-        Content content = new Content("text/plain", email.getMensaje());
-        Mail mail = new Mail(from, subject, to, content);
+    private final ISendGridService sendGridService;
 
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
-        Request request = new Request();
-
-
-        try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-
-            logger.info(response.getBody());
-            return response.getBody();
-        } catch (IOException ex) {
-            throw ex;
-        }
+    public MailService(ISendGridService sendGridService) {
+        this.sendGridService = sendGridService;
     }
-     */
-
-    @Value("${SENDGRID_API_KEY}")
-    private String secretKey;
-
-    @Value("${TEMPLATE_ID}")
-    private String plantillaKey;
 
     public String send(BodyEmail email) throws IOException {
+        Sendgrid sendgrid = this.sendGridService.listar();
+
         // the sender email should be the same as we used to Create a Single Sender Verification
         Email from = new Email("decanatomisiones@gmail.com");
         Email to = new Email(email.getEmail());
@@ -76,9 +53,10 @@ public class MailService {
         personalization.addDynamicTemplateData("code", email.getCodigo());
         personalization.addDynamicTemplateData("content_down", email.getAbajo());
         mail.addPersonalization(personalization);
-        mail.setTemplateId("d-87c54ebd6bb8406ba16b44afc606bca6");
-        // this is the api key create 19/10/2023
-        SendGrid sg = new SendGrid("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");
+        // this is the api key plantilla sendgrid
+        mail.setTemplateId(sendgrid.getKeyplantilla());
+        // this is the api key sendgrid
+        SendGrid sg = new SendGrid(sendgrid.getKeysendgrid());
         Request request = new Request();
 
         try {
